@@ -142,3 +142,15 @@ document.querySelectorAll('[data-r]').forEach(el=>obs.observe(el));
 /* NAV */
 window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
 document.querySelectorAll('#nmenu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nmenu').classList.remove('open')));
+
+/* ════════════════════════════════════════
+   TAWK.TO LIVE CHAT
+════════════════════════════════════════ */
+var Tawk_API=Tawk_API||{},Tawk_LoadStart=new Date();
+(function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/69ea5ef5d82ba41c3038b856/1jmto5sbf';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+})();
