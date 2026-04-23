@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Data Science Academia Pvt. Ltd.</title>
+<meta name="description" content="Reach Data Science Academia for course enrolment, corporate training, internship applications, or institutional collaborations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Validation states */
+  .fi.invalid{border-color:rgba(255,100,100,.5);background:rgba(255,60,60,.04);}
+  .fi.invalid:focus{box-shadow:0 0 0 3px rgba(255,80,80,.12);}
+  .fi.valid{border-color:rgba(62,207,178,.3);}
+  .field-err{font-family:var(--fb);font-size:.68rem;color:#ff7070;margin-top:4px;display:none;}
+  .field-err.show{display:block;}
+  .field-hint{font-family:var(--fb);font-size:.65rem;color:var(--fog3);margin-top:4px;line-height:1.4;}
+
+  /* Conditional field */
+  .cond-field{display:none;}
+
+  /* Form states */
+  .fsub:disabled{opacity:.6;cursor:not-allowed;transform:none!important;box-shadow:none!important;}
+  .form-success{display:none;text-align:center;padding:3rem 2rem;}
+  .form-success-icon{font-size:3.2rem;margin-bottom:1.1rem;}
+  .form-success-title{font-family:var(--fd);font-size:1.9rem;font-weight:600;color:var(--cream);margin-bottom:.5rem;}
+  .form-success-sub{font-family:var(--fb);font-size:.9rem;font-weight:300;color:var(--fog);line-height:1.8;margin-bottom:1.75rem;max-width:340px;margin-left:auto;margin-right:auto;}
+  .form-error-banner{display:none;background:rgba(255,60,60,.07);border:1px solid rgba(255,80,80,.25);border-radius:8px;padding:.85rem 1.1rem;font-family:var(--fb);font-size:.82rem;color:#ff9090;margin-bottom:1rem;line-height:1.55;}
+  .form-error-banner.show{display:block;}
+
+  /* WhatsApp button */
+  .wa-btn{display:inline-flex;align-items:center;justify-content:center;gap:.65rem;width:100%;background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.25);color:#25d366;border-radius:8px;padding:.8rem 1.25rem;font-family:var(--fb);font-size:.82rem;font-weight:600;transition:all .25s;}
+  .wa-btn:hover{background:rgba(37,211,102,.16);border-color:rgba(37,211,102,.42);transform:translateY(-2px);}
+
+  /* Social icon brand hover colours */
+  .soc-li:hover{border-color:rgba(10,102,194,.4);color:#0a66c2!important;background:rgba(10,102,194,.1);}
+  .soc-wa:hover{border-color:rgba(37,211,102,.4);color:#25d366!important;background:rgba(37,211,102,.1);}
+  .soc-yt:hover{border-color:rgba(255,0,0,.35);color:#ff0000!important;background:rgba(255,0,0,.08);}
+  .soc-ig:hover{border-color:rgba(225,48,108,.4);color:#e1306c!important;background:rgba(225,48,108,.1);}
+
+  /* Response time badge */
+  .resp-badge{display:flex;align-items:center;gap:.75rem;font-family:var(--fb);font-size:.92rem;font-weight:500;color:var(--teal);background:rgba(62,207,178,.07);border:1px solid rgba(62,207,178,.28);border-radius:10px;padding:.9rem 1.25rem;animation:resp-pulse 2.8s ease-in-out infinite;}
+  @keyframes resp-pulse{0%,100%{box-shadow:0 0 0 0 rgba(62,207,178,.18);border-color:rgba(62,207,178,.28);}50%{box-shadow:0 0 14px 4px rgba(62,207,178,.12);border-color:rgba(62,207,178,.55);}}
+  .resp-dot{width:9px;height:9px;border-radius:50%;background:var(--teal);flex-shrink:0;animation:rdot 2s ease-in-out infinite;}
+  @keyframes rdot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.45;transform:scale(1.6);}}
+
+  /* Map */
+  .contact-map{border-radius:12px;overflow:hidden;border:1px solid var(--border);height:248px;}
+  .contact-map iframe{width:100%;height:100%;border:none;filter:invert(.88) hue-rotate(185deg) saturate(.65) brightness(.85);}
+
+  /* FAQ strip */
+  .contact-faq{margin-bottom:1.5rem;}
+  .contact-faq-label{font-family:var(--fb);font-size:.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--fog2);margin-bottom:.75rem;}
+  .cfaq-item{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:.45rem;background:rgba(11,12,14,.4);}
+  .cfaq-q{display:flex;justify-content:space-between;align-items:center;padding:.75rem 1rem;cursor:pointer;font-family:var(--fb);font-size:.82rem;font-weight:500;color:var(--cream);user-select:none;gap:.75rem;}
+  .cfaq-icon{color:var(--champ);font-size:.8rem;transition:transform .25s;flex-shrink:0;}
+  .cfaq-item.open .cfaq-icon{transform:rotate(45deg);}
+  .cfaq-a{display:none;padding:.6rem 1rem .85rem;font-family:var(--fb);font-size:.78rem;font-weight:300;color:var(--fog);line-height:1.7;border-top:1px solid var(--border);}
+  .cfaq-item.open .cfaq-a{display:block;}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<canvas id="fluid-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-name">Data Science Academia</div>
+    <div class="nav-sub">Private Limited &nbsp;&middot;&nbsp; Chennai</div>
+  </a>
+  <ul class="nav-menu" id="nmenu">
+    <li><a href="courses.html">Courses</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="programmes.html">Programmes</a></li>
+    <li><a href="codechamps.html">Code Champs</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta">Enroll Now &rarr;</a></li>
+  </ul>
+  <div class="nav-tog" onclick="document.getElementById('nmenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <div class="eyebrow" data-r>Get In Touch</div>
+    <h1 class="sh" data-r="1">Begin Your <em>Journey</em></h1>
+    <p class="page-hero-sub" data-r="2">Ready to transform your career in Data Science and AI? Reach us for course enrolment, corporate training, internship applications, or institutional collaborations.</p>
+  </div>
+</div>
+
+<!-- CONTACT CONTENT -->
+<section id="contact">
+  <div class="container">
+    <div class="cong">
+
+      <!-- LEFT: Contact Details -->
+      <div class="cdet" data-r>
+
+        <div class="cit">
+          <div class="cion">📍</div>
+          <div><div class="cilbl">Location</div><div class="cival">2nd Floor, Arasan Complex, No. 69, Grand Southern Trunk Rd, West Tambaram, Chennai, Tamil Nadu 600045</div></div>
+        </div>
+
+        <div class="cit">
+          <div class="cion">📧</div>
+          <div>
+            <div class="cilbl">Email</div>
+            <div class="cival"><a href="mailto:info@datascienceacademia.in" style="color:var(--champ2);transition:opacity .2s;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">info@datascienceacademia.in</a></div>
+          </div>
+        </div>
+
+        <div class="cit">
+          <div class="cion">📞</div>
+          <div>
+            <div class="cilbl">Phone / WhatsApp</div>
+            <div class="cival"><a href="tel:+919176498814" style="color:var(--champ2);">+91 91764 98814</a></div>
+          </div>
+        </div>
+
+        <div class="cit">
+          <div class="cion">🕐</div>
+          <div>
+            <div class="cilbl">Office Hours</div>
+            <div class="cival">Mon – Sat &nbsp;·&nbsp; 9:00 AM – 7:00 PM IST</div>
+          </div>
+        </div>
+
+        <div class="cit">
+          <div class="cion">🌐</div>
+          <div><div class="cilbl">Website</div><div class="cival">datascienceacademia.in <span style="color:var(--teal);font-size:.72rem">(launching soon)</span></div></div>
+        </div>
+        
+<!--
+        <div class="cit">
+          <div class="cion">🏢</div>
+          <div><div class="cilbl">Legal Entity</div><div class="cival">Data Science Academia Private Limited<br><span style="color:var(--fog2);font-size:.78rem">Formerly under Sai Chamundeeswari Academy (MSME)</span></div></div>
+        </div>
+
+        <div class="cit">
+          <div class="cion">📋</div>
+          <div><div class="cilbl">Registration</div><div class="cival">MSME Registered &nbsp;·&nbsp; <span style="color:var(--teal)">Pvt Ltd In Progress</span></div></div>
+        </div>
+
+        <div class="cit">
+          <div class="cion">🎓</div>
+          <div><div class="cilbl">Affiliation</div><div class="cival">AICTE Affiliated &nbsp;·&nbsp; Anna University Aligned</div></div>
+        </div>
+-->
+
+        <!-- WhatsApp CTA -->
+        <a href="https://wa.me/919176498814?text=Hello%20DSA%2C%20I%27d%20like%20to%20know%20more%20about%20your%20courses." class="wa-btn" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Chat on WhatsApp
+        </a>
+
+        <!-- Response time -->
+        <div class="resp-badge">
+          <div class="resp-dot"></div>
+          We typically respond within 1 business day
+        </div>
+
+        <!-- Socials -->
+        <div class="socs">
+          <a href="https://www.linkedin.com/company/data-science-academia/" class="soc soc-li" title="LinkedIn" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://wa.me/919176498814" class="soc soc-wa" title="WhatsApp" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://youtube.com/@datascienceacademia3805?si=dIrDFQJcr-ZZ0R6N" class="soc soc-yt" title="YouTube" target="_blank" rel="noopener">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/data_science_academia?igsh=MXBlYnF5cnFoZG1hag==" class="soc soc-ig" title="Instagram" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+        </div>
+
+        <!-- Map -->
+        <div class="contact-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15554.696888476936!2d80.1193835!3d12.9286478!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525f63da0acd75%3A0x4309ce616da11096!2sData%20Science%20Academia!5e0!3m2!1sen!2sin!4v1776943605305!5m2!1sen!2sin"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+            title="Data Science Academia — West Tambaram, Chennai">
+          </iframe>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: FAQ + Form -->
+      <div data-r="2">
+
+        <!-- Quick-answers FAQ -->
+        <div class="contact-faq">
+          <div class="contact-faq-label">Quick Answers</div>
+          <div class="cfaq-item open">
+            <div class="cfaq-q">Is the trial session really free? <span class="cfaq-icon">+</span></div>
+            <div class="cfaq-a">Yes — completely free, no commitment required. We want you to experience the teaching quality and learning environment before making any decision.</div>
+          </div>
+          <div class="cfaq-item">
+            <div class="cfaq-q">How soon can I start after enrolling? <span class="cfaq-icon">+</span></div>
+            <div class="cfaq-a">Most batches begin within 1–2 weeks of enrolment. We'll confirm your exact start date during the onboarding call after you submit this form.</div>
+          </div>
+          <div class="cfaq-item">
+            <div class="cfaq-q">Do you offer online sessions? <span class="cfaq-icon">+</span></div>
+            <div class="cfaq-a">Yes — live online, recorded, and hybrid options are all available. All sessions are fully interactive and faculty-led.</div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <form class="fw" id="contact-form" action="https://formspree.io/f/xdaypadg" method="POST" novalidate>
+          <!-- Honeypot spam trap -->
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+          <input type="hidden" name="_subject" value="New DSA Enquiry">
+
+          <!-- Error banner -->
+          <div class="form-error-banner" id="form-error">Something went wrong. Please try again or reach us directly on WhatsApp.</div>
+
+          <div class="frow">
+            <div class="fg">
+              <label class="flbl" for="cf-name">Full Name</label>
+              <input type="text" id="cf-name" name="name" class="fi" placeholder="Your full name" required autocomplete="name">
+              <div class="field-err" id="err-name">Please enter your full name.</div>
+            </div>
+            <div class="fg">
+              <label class="flbl" for="cf-email">Email Address</label>
+              <input type="email" id="cf-email" name="email" class="fi" placeholder="your@email.com" required autocomplete="email">
+              <div class="field-err" id="err-email">Please enter a valid email address.</div>
+            </div>
+          </div>
+
+          <div class="frow">
+            <div class="fg">
+              <label class="flbl" for="cf-phone">Phone Number</label>
+              <input type="tel" id="cf-phone" name="phone" class="fi" placeholder="+91 9XXXXX XXXXX" pattern="[+]?[\d\s\-]{10,15}" autocomplete="tel">
+              <div class="field-err" id="err-phone">Please enter a valid phone number (10–15 digits).</div>
+              <div class="field-hint">We may WhatsApp you to confirm your session time.</div>
+            </div>
+            <div class="fg">
+              <label class="flbl" for="cf-type">I Am A</label>
+              <select id="cf-type" name="type" class="fi">
+                <option value="">Select...</option>
+                <option>Student</option>
+                <option>Working Professional</option>
+                <option>College Faculty</option>
+                <option>Corporate / HR Manager</option>
+                <option>College / Institution</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Conditional: shown for Faculty / Corporate / Institution -->
+          <div class="fg cond-field" id="cond-org">
+            <label class="flbl" for="cf-org">Organisation / Institution Name</label>
+            <input type="text" id="cf-org" name="organisation" class="fi" placeholder="Your company or institution name" autocomplete="organization">
+          </div>
+
+          <div class="fg">
+            <label class="flbl" for="cf-interest">Programme of Interest</label>
+            <select id="cf-interest" name="interest" class="fi">
+              <option value="">Select a programme</option>
+              <optgroup label="Foundation">
+                <option>Python Programming</option>
+                <option>SQL for Data Science</option>
+                <option>R Programming</option>
+              </optgroup>
+              <optgroup label="Core ML">
+                <option>Machine Learning</option>
+                <option>Natural Language Processing</option>
+                <option>Feature Engineering &amp; Model Selection</option>
+              </optgroup>
+              <optgroup label="Advanced AI">
+                <option>Deep Learning</option>
+                <option>Computer Vision</option>
+                <option>Large Language Models</option>
+                <option>Generative AI</option>
+                <option>Reinforcement Learning</option>
+                <option>MLOps &amp; Model Deployment</option>
+              </optgroup>
+              <optgroup label="Analytics">
+                <option>Data Visualization</option>
+                <option>Excel for Data Analysis</option>
+                <option>Tableau</option>
+              </optgroup>
+              <optgroup label="Cloud &amp; BI">
+                <option>Power BI</option>
+                <option>Microsoft Azure</option>
+                <option>AWS for Data Science</option>
+              </optgroup>
+              <optgroup label="Special Programmes">
+                <option>AI Mastery Track (12-Month Programme)</option>
+                <option>Student Internship Programme</option>
+                <option>Microsoft Certification Program</option>
+                <option>Competitive Examination Training</option>
+                <option>DSA Code Champs (School Outreach)</option>
+                <option>Research Assistance &amp; Interdisciplinary Guidance</option>
+                <option>Language &amp; Communication for Tech Professionals</option>
+                <option>Corporate Training</option>
+                <option>Faculty Development Programme</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="fg">
+            <label class="flbl" for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" class="fi" placeholder="Tell us about your goals, background, or any questions you have..."></textarea>
+          </div>
+
+          <button type="submit" class="fsub" id="form-submit">Send Message &nbsp;&rarr;</button>
+        </form>
+
+        <!-- Success state -->
+        <div class="fw form-success" id="form-success">
+          <div class="form-success-icon">✅</div>
+          <div class="form-success-title">Message Received!</div>
+          <div class="form-success-sub">Thank you for reaching out. We'll get back to you within 1 business day. Check your inbox — a confirmation is on its way.</div>
+          <a href="contact.html" class="btn-o" style="display:inline-flex;">Send Another Message</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer><div class="fi2">
+  <div><div class="fbn">Data Science Academia</div><div class="fbs">Private Limited &nbsp;&middot;&nbsp; Chennai, Tamil Nadu</div></div>
+  <div class="fc">&copy; 2025 Data Science Academia Private Limited. All rights reserved.<br><span style="font-size:.62rem">Formerly Data Science Academia under Sai Chamundeeswari Academy (MSME Registered)</span></div>
+  <div class="fr">MSME Reg &nbsp;&middot;&nbsp; Pvt Ltd In Progress</div>
+</div></footer>
+
+<script src="script.js"></script>
+<script>
+/* ── Auto-select programme + scroll from ?course= URL param ── */
+(function(){
+  const param = new URLSearchParams(window.location.search).get('course');
+  if(!param) return;
+  const sel = document.getElementById('cf-interest');
+  if(!sel) return;
+  for(let i = 0; i < sel.options.length; i++){
+    if(sel.options[i].text.trim() === param.trim()){ sel.selectedIndex = i; break; }
+  }
+  setTimeout(() => {
+    document.getElementById('contact-form').scrollIntoView({behavior:'smooth', block:'start'});
+  }, 400);
+})();
+
+/* ── Conditional Organisation field ── */
+document.getElementById('cf-type').addEventListener('change', function(){
+  const show = ['College Faculty','Corporate / HR Manager','College / Institution'];
+  document.getElementById('cond-org').style.display = show.includes(this.value) ? 'block' : 'none';
+});
+
+/* ── Inline validation helpers ── */
+const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phoneRe = /^[+]?[\d\s\-]{10,15}$/;
+
+function validate(input, errId, check){
+  const v = input.value.trim();
+  const ok = check(v);
+  input.classList.toggle('invalid', !ok);
+  input.classList.toggle('valid', ok && v.length > 0);
+  document.getElementById(errId).classList.toggle('show', !ok && v.length > 0);
+  return ok;
+}
+
+document.getElementById('cf-name').addEventListener('blur', function(){
+  validate(this, 'err-name', v => v.length >= 2);
+});
+document.getElementById('cf-email').addEventListener('blur', function(){
+  if(!this.value.trim()) return;
+  validate(this, 'err-email', v => emailRe.test(v));
+});
+document.getElementById('cf-phone').addEventListener('blur', function(){
+  const v = this.value.trim();
+  if(!v){ this.classList.remove('invalid','valid'); document.getElementById('err-phone').classList.remove('show'); return; }
+  validate(this, 'err-phone', val => phoneRe.test(val));
+});
+
+/* ── FAQ accordion ── */
+document.querySelectorAll('.cfaq-item').forEach(item => {
+  item.querySelector('.cfaq-q').addEventListener('click', () => item.classList.toggle('open'));
+});
+
+/* ── Async form submission ── */
+const form       = document.getElementById('contact-form');
+const submitBtn  = document.getElementById('form-submit');
+const successEl  = document.getElementById('form-success');
+const errorEl    = document.getElementById('form-error');
+
+form.addEventListener('submit', async function(e){
+  e.preventDefault();
+  const nameOk  = validate(document.getElementById('cf-name'),  'err-name',  v => v.length >= 2);
+  const emailOk = validate(document.getElementById('cf-email'), 'err-email', v => emailRe.test(v));
+  if(!nameOk || !emailOk) return;
+
+  submitBtn.disabled    = true;
+  submitBtn.textContent = 'Sending…';
+  errorEl.classList.remove('show');
+
+  try {
+    const res = await fetch(form.action, {
+      method:  'POST',
+      body:    new FormData(form),
+      headers: { Accept: 'application/json' }
+    });
+    if(res.ok){
+      form.style.display    = 'none';
+      successEl.style.display = 'block';
+    } else {
+      throw new Error();
+    }
+  } catch {
+    errorEl.classList.add('show');
+    submitBtn.disabled    = false;
+    submitBtn.textContent = 'Send Message →';
+  }
+});
+</script>
+</body>
+</html>

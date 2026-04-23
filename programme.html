@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Programme — Data Science Academia Pvt. Ltd.</title>
+<meta name="description" id="page-desc" content="Programme details — Data Science Academia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<canvas id="fluid-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-name">Data Science Academia</div>
+    <div class="nav-sub">Private Limited &nbsp;&middot;&nbsp; Chennai</div>
+  </a>
+  <ul class="nav-menu" id="nmenu">
+    <li><a href="courses.html">Courses</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="programmes.html">Programmes</a></li>
+    <li><a href="codechamps.html">Code Champs</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta" id="nav-enroll">Enroll Now &rarr;</a></li>
+  </ul>
+  <div class="nav-tog" onclick="document.getElementById('nmenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero" id="prog-hero">
+  <div class="container">
+    <div class="eyebrow" id="hero-eyebrow">Loading...</div>
+    <h1 class="sh" id="hero-title">&nbsp;</h1>
+    <p class="page-hero-sub" id="hero-sub">&nbsp;</p>
+    <div style="display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap;margin-top:1.25rem;" id="hero-badges"></div>
+  </div>
+</div>
+
+<!-- AI MASTERY: inline info strip (replaces sidebar) -->
+<div id="am-infostrip" style="display:none;position:relative;z-index:1;padding:0 0 2rem;">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr) auto;gap:0;background:var(--glass2);border:1px solid rgba(240,192,64,.22);border-radius:16px;overflow:hidden;">
+      <div style="padding:1.25rem 1.5rem;border-right:1px solid var(--border);">
+        <div style="font-family:var(--fb);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fog2);margin-bottom:.35rem;">Duration</div>
+        <div style="font-family:var(--fb);font-size:.9rem;font-weight:500;color:var(--cream);">12 Months · 4 Quarters</div>
+      </div>
+      <div style="padding:1.25rem 1.5rem;border-right:1px solid var(--border);">
+        <div style="font-family:var(--fb);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fog2);margin-bottom:.35rem;">Format</div>
+        <div style="font-family:var(--fb);font-size:.9rem;font-weight:500;color:var(--cream);">Live · Recorded · Bootcamps</div>
+      </div>
+      <div style="padding:1.25rem 1.5rem;border-right:1px solid var(--border);">
+        <div style="font-family:var(--fb);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fog2);margin-bottom:.35rem;">Certificate</div>
+        <div style="font-family:var(--fb);font-size:.9rem;font-weight:500;color:var(--cream);">Mastery + Internship</div>
+      </div>
+      <div style="padding:1.25rem 1.5rem;border-right:1px solid var(--border);">
+        <div style="font-family:var(--fb);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fog2);margin-bottom:.35rem;">Eligibility</div>
+        <div style="font-family:var(--fb);font-size:.9rem;font-weight:500;color:var(--cream);">Any graduate · No prior exp.</div>
+      </div>
+      <div style="padding:1rem 1.5rem;display:flex;align-items:center;">
+        <a id="am-enroll-strip" href="contact.html" class="btn-g" style="white-space:nowrap;">Apply Now &nbsp;&rarr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT: switches to full-width for ai-mastery via JS -->
+<div class="container">
+  <div id="main-layout" class="course-layout">
+
+    <!-- MAIN CONTENT -->
+    <div class="course-main" id="course-main-col">
+
+      <!-- Stats strip (ai-mastery only) -->
+      <div id="stats-block" style="display:none;" data-r>
+        <div class="am-stats">
+          <div class="am-stat"><div class="am-stat-n">16</div><div class="am-stat-l">Courses</div></div>
+          <div class="am-stat"><div class="am-stat-n">4</div><div class="am-stat-l">Capstone Projects</div></div>
+          <div class="am-stat"><div class="am-stat-n">12</div><div class="am-stat-l">Months</div></div>
+          <div class="am-stat"><div class="am-stat-n">1</div><div class="am-stat-l">Complete Portfolio</div></div>
+        </div>
+      </div>
+
+      <!-- Overview -->
+      <div class="course-overview-block" data-r>
+        <div class="section-label">Overview</div>
+        <p id="prog-overview"></p>
+      </div>
+
+      <!-- Generic stats strip (non-mastery programmes) -->
+      <div id="prog-stats-block" style="display:none;" data-r="1">
+        <div class="prog-stats" id="prog-stats-grid"></div>
+      </div>
+
+      <!-- Generic domain/topic cards -->
+      <div id="prog-cards-block" style="display:none;" data-r="2">
+        <div class="section-label" id="prog-cards-title"></div>
+        <div class="prog-cards" id="prog-cards-grid"></div>
+      </div>
+
+      <!-- Generic process steps -->
+      <div id="prog-steps-block" style="display:none;" data-r="3">
+        <div class="section-label" id="prog-steps-title"></div>
+        <div class="prog-steps" id="prog-steps-list"></div>
+      </div>
+
+      <!-- Quarter journey (ai-mastery only) -->
+      <div id="journey-block" style="display:none;" data-r="1">
+        <div class="section-label">Your Learning Journey</div>
+        <div class="am-journey">
+          <div class="am-q am-q1">
+            <span class="am-q-badge">Q1 · Months 1–3</span>
+            <span class="am-q-icon">🧱</span>
+            <div class="am-q-title">Foundations of Data Science</div>
+            <div class="am-q-months">Python · SQL · R · Excel</div>
+            <ul class="am-q-list">
+              <li>Python for data pipelines</li>
+              <li>SQL for business queries</li>
+              <li>Statistical analysis with R</li>
+              <li>Excel dashboards & reporting</li>
+            </ul>
+            <div class="am-q-cap">⚡ Capstone: End-to-end EDA</div>
+          </div>
+          <div class="am-q am-q2">
+            <span class="am-q-badge">Q2 · Months 4–6</span>
+            <span class="am-q-icon">📊</span>
+            <div class="am-q-title">Data Engineering & Analytics</div>
+            <div class="am-q-months">Tableau · EDA · Ethics · Engineering</div>
+            <ul class="am-q-list">
+              <li>Tableau interactive dashboards</li>
+              <li>Exploratory data analysis</li>
+              <li>Data ethics & privacy</li>
+              <li>ETL pipelines with Python</li>
+            </ul>
+            <div class="am-q-cap">⚡ Capstone: Analytics dashboard</div>
+          </div>
+          <div class="am-q am-q3">
+            <span class="am-q-badge">Q3 · Months 7–9</span>
+            <span class="am-q-icon">🧠</span>
+            <div class="am-q-title">Machine Learning & BI</div>
+            <div class="am-q-months">Power BI · ML · Time Series</div>
+            <ul class="am-q-list">
+              <li>Power BI enterprise reports</li>
+              <li>ML — supervised & unsupervised</li>
+              <li>Time series forecasting</li>
+              <li>Portfolio & interview prep begins</li>
+            </ul>
+            <div class="am-q-cap">⚡ Capstone: Deploy an ML model</div>
+          </div>
+          <div class="am-q am-q4">
+            <span class="am-q-badge">Q4 · Months 10–12</span>
+            <span class="am-q-icon">🚀</span>
+            <div class="am-q-title">Advanced AI & Cloud</div>
+            <div class="am-q-months">Deep Learning · NLP · Big Data · Cloud</div>
+            <ul class="am-q-list">
+              <li>Deep learning & Transformers</li>
+              <li>NLP with Python & LLMs</li>
+              <li>Big data with Spark</li>
+              <li>AWS & Azure deployment</li>
+            </ul>
+            <div class="am-q-cap">🏆 Capstone: Full-stack AI · Demo Day</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tech stack (ai-mastery only) -->
+      <div id="stack-block" style="display:none;" data-r="2">
+        <div class="section-label">Technologies You'll Master</div>
+        <div class="am-stack">
+          <div class="am-stack-row">
+            <span class="am-stack-q" style="color:var(--teal);">Q1</span>
+            <div class="am-stack-divider"></div>
+            <span class="am-tech am-tech-t">🐍 Python</span>
+            <span class="am-tech am-tech-t">🗄️ SQL</span>
+            <span class="am-tech am-tech-t">📐 R</span>
+            <span class="am-tech am-tech-t">📋 Excel</span>
+            <span class="am-tech am-tech-t">🐼 Pandas</span>
+            <span class="am-tech am-tech-t">🔢 NumPy</span>
+          </div>
+          <div class="am-stack-row">
+            <span class="am-stack-q" style="color:#7a9fff;">Q2</span>
+            <div class="am-stack-divider"></div>
+            <span class="am-tech am-tech-b">🔷 Tableau</span>
+            <span class="am-tech am-tech-b">📊 Matplotlib</span>
+            <span class="am-tech am-tech-b">📈 Seaborn</span>
+            <span class="am-tech am-tech-b">⚙️ Plotly</span>
+            <span class="am-tech am-tech-b">🔌 REST APIs</span>
+            <span class="am-tech am-tech-b">🔄 ETL</span>
+          </div>
+          <div class="am-stack-row">
+            <span class="am-stack-q" style="color:#c792ea;">Q3</span>
+            <div class="am-stack-divider"></div>
+            <span class="am-tech am-tech-p">📈 Power BI</span>
+            <span class="am-tech am-tech-p">🤖 Scikit-learn</span>
+            <span class="am-tech am-tech-p">📉 ARIMA</span>
+            <span class="am-tech am-tech-p">🔁 Prophet</span>
+            <span class="am-tech am-tech-p">🧪 MLflow</span>
+            <span class="am-tech am-tech-p">⚗️ FastAPI</span>
+          </div>
+          <div class="am-stack-row">
+            <span class="am-stack-q" style="color:#f0c040;">Q4</span>
+            <div class="am-stack-divider"></div>
+            <span class="am-tech am-tech-g">⚡ PyTorch</span>
+            <span class="am-tech am-tech-g">🔤 Transformers</span>
+            <span class="am-tech am-tech-g">💬 spaCy</span>
+            <span class="am-tech am-tech-g">✨ PySpark</span>
+            <span class="am-tech am-tech-g">☁️ AWS SageMaker</span>
+            <span class="am-tech am-tech-g">🔵 Azure ML</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Roadmap image (ai-mastery only) -->
+      <div id="roadmap-block" style="display:none;" data-r="2">
+        <div class="section-label">12-Month Roadmap</div>
+        <img src="12 Month AI Mastery Programme Roadmap.png" alt="12-Month AI Mastery Programme Roadmap — Q1 to Q4 course pathway" style="width:100%;border-radius:14px;border:1px solid var(--border);margin-bottom:2.5rem;display:block;">
+      </div>
+
+      <!-- What's Included (ai-mastery only) -->
+      <div id="includes-block" style="display:none;" data-r="3">
+        <div class="section-label">What's Included</div>
+        <div class="am-includes">
+          <div class="am-inc">
+            <div class="am-inc-icon">🎥</div>
+            <div><div class="am-inc-title">Live + Recorded Sessions</div><div class="am-inc-desc">3 live classes per week with full recordings. Never miss a session — replay anytime, forever.</div></div>
+          </div>
+          <div class="am-inc">
+            <div class="am-inc-icon">🧑‍🏫</div>
+            <div><div class="am-inc-title">Dedicated Mentor</div><div class="am-inc-desc">Weekly 1-on-1 check-ins with a PhD-qualified faculty mentor throughout all 12 months.</div></div>
+          </div>
+          <div class="am-inc">
+            <div class="am-inc-icon">💼</div>
+            <div><div class="am-inc-title">Project Portfolio</div><div class="am-inc-desc">4 capstone projects — one per quarter — compiled into a GitHub portfolio reviewed by DSA faculty.</div></div>
+          </div>
+          <div class="am-inc">
+            <div class="am-inc-icon">🏅</div>
+            <div><div class="am-inc-title">Dual Certification</div><div class="am-inc-desc">DSA AI Mastery Certificate + Internship Certificate. Both issued on successful completion.</div></div>
+          </div>
+          <div class="am-inc">
+            <div class="am-inc-icon">🎯</div>
+            <div><div class="am-inc-title">Placement Assistance</div><div class="am-inc-desc">Resume review, mock technical + HR interviews, LinkedIn optimisation, and referral network access.</div></div>
+          </div>
+          <div class="am-inc">
+            <div class="am-inc-icon">🏛️</div>
+            <div><div class="am-inc-title">Quarterly Bootcamps</div><div class="am-inc-desc">Offline intensive sessions in Chennai at the end of each quarter — hands-on, immersive, collaborative.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- What You'll Gain -->
+      <div data-r="3">
+        <div class="section-label">What You'll Gain</div>
+        <div class="outcomes-grid" id="outcomes-grid"></div>
+      </div>
+
+      <!-- Programme Sections (accordion) -->
+      <div data-r="4">
+        <div class="section-label" id="sections-label">Programme Details</div>
+        <div class="modules-list" id="sections-list"></div>
+      </div>
+
+      <!-- CTA row (ai-mastery only, bottom of content) -->
+      <div id="am-cta-bottom" style="display:none;text-align:center;padding:2rem 0 1rem;" data-r="4">
+        <a id="am-enroll-bottom" href="contact.html" class="btn-g" style="font-size:.95rem;padding:18px 48px;">Apply for AI Mastery Track &nbsp;&rarr;</a>
+        <div style="font-family:var(--fb);font-size:.72rem;color:var(--fog2);margin-top:.85rem;">Rolling admissions · Cohorts start quarterly · Chennai &amp; Online</div>
+      </div>
+
+    </div>
+
+    <!-- SIDEBAR (hidden for ai-mastery) -->
+    <div class="course-sidebar" id="prog-sidebar" data-r="1">
+      <div class="info-card">
+        <div class="info-card-icon" id="sb-icon"></div>
+        <div class="info-card-title" id="sb-title"></div>
+        <div class="info-card-cat" id="sb-cat"></div>
+        <div class="info-rows">
+          <div class="info-row"><span class="info-row-label">Duration</span><span class="info-row-val" id="sb-duration"></span></div>
+          <div class="info-row"><span class="info-row-label">Certificate</span><span class="info-row-val" id="sb-cert"></span></div>
+          <div class="info-row"><span class="info-row-label">Format</span><span class="info-row-val" id="sb-delivery"></span></div>
+        </div>
+        <div class="section-label" style="margin-bottom:.75rem;margin-top:1.25rem;">Ideal For</div>
+        <div class="tools-wrap" id="sb-audience"></div>
+        <div class="section-label" style="margin-bottom:.85rem;margin-top:1.25rem;">Prerequisites</div>
+        <div class="prereq-block"><p id="sb-prereq"></p></div>
+        <a class="enroll-btn" id="enroll-btn" href="contact.html">Apply / Enroll &nbsp;&rarr;</a>
+      </div>
+      <a href="programmes.html" class="btn-o" style="display:block;text-align:center;width:100%;">&larr; All Programmes</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer><div class="fi2">
+  <div><div class="fbn">Data Science Academia</div><div class="fbs">Private Limited &nbsp;&middot;&nbsp; Chennai, Tamil Nadu</div></div>
+  <div class="fc">&copy; 2025 Data Science Academia Private Limited. All rights reserved.<br><span style="font-size:.62rem">Formerly Data Science Academia under Sai Chamundeeswari Academy (MSME Registered)</span></div>
+  <div class="fr">MSME Reg &nbsp;&middot;&nbsp; Pvt Ltd In Progress</div>
+</div></footer>
+
+<script src="programmes-data.js"></script>
+<script src="script.js"></script>
+<script>
+(function(){
+  const id = new URLSearchParams(window.location.search).get('id');
+  const prog = id && DSA_PROGRAMMES[id];
+
+  if(!prog){
+    document.getElementById('hero-title').textContent = 'Programme not found';
+    document.getElementById('prog-overview').textContent = 'Please return to the programmes page and select a valid programme.';
+    return;
+  }
+
+  /* ── Meta ── */
+  document.title = prog.title + ' — Data Science Academia Pvt. Ltd.';
+  document.getElementById('page-desc').content = prog.overview.slice(0, 155);
+
+  /* ── Enroll URLs ── */
+  const enrollUrl = 'contact.html?course=' + encodeURIComponent(prog.ctaParam);
+  document.getElementById('nav-enroll').href = enrollUrl;
+  const enrollBtn = document.getElementById('enroll-btn');
+  enrollBtn.href = enrollUrl;
+  enrollBtn.textContent = prog.cta + ' →';
+
+  /* ── Hero ── */
+  document.getElementById('hero-eyebrow').textContent = prog.subtitle;
+  document.getElementById('hero-title').innerHTML = prog.title.replace(/&/g,'&amp;');
+  document.getElementById('hero-sub').textContent = prog.delivery.join(' · ');
+
+  const badgesEl = document.getElementById('hero-badges');
+  const iconSpan = document.createElement('span');
+  iconSpan.style.cssText = 'font-size:1.6rem;line-height:1;';
+  iconSpan.textContent = prog.icon;
+  const tagBadge = document.createElement('span');
+  tagBadge.className = 'ptag ' + prog.tagClass;
+  tagBadge.style.marginBottom = '0';
+  tagBadge.textContent = prog.tag;
+  badgesEl.appendChild(iconSpan);
+  badgesEl.appendChild(tagBadge);
+
+  /* ── AI Mastery: full-width layout ── */
+  if(id === 'ai-mastery'){
+    /* Switch layout to single column */
+    document.getElementById('main-layout').style.cssText = 'display:block;padding-bottom:110px;position:relative;z-index:1;';
+    document.getElementById('prog-sidebar').style.display = 'none';
+
+    /* Show info strip + extra blocks */
+    document.getElementById('am-infostrip').style.display = '';
+    document.getElementById('am-enroll-strip').href = enrollUrl;
+    document.getElementById('am-cta-bottom').style.display = '';
+    document.getElementById('am-enroll-bottom').href = enrollUrl;
+
+    ['stats-block','journey-block','stack-block','roadmap-block','includes-block'].forEach(bid => {
+      document.getElementById(bid).style.display = '';
+    });
+    document.getElementById('sections-label').textContent = 'Programme Structure & FAQs';
+
+    /* Widen outcomes grid to 3 cols on mastery */
+    document.getElementById('outcomes-grid').style.gridTemplateColumns = 'repeat(3,1fr)';
+  }
+
+  /* ── Generic graphics (all programmes except ai-mastery) ── */
+  if(id !== 'ai-mastery'){
+
+    /* Stats strip */
+    if(prog.stats){
+      const sg = document.getElementById('prog-stats-grid');
+      prog.stats.forEach(s => {
+        const el = document.createElement('div');
+        el.className = 'prog-stat';
+        el.innerHTML = `<div class="prog-stat-n">${s.n}</div><div class="prog-stat-l">${s.label}</div>`;
+        sg.appendChild(el);
+      });
+      document.getElementById('prog-stats-block').style.display = '';
+    }
+
+    /* Domain / topic cards */
+    if(prog.cards){
+      document.getElementById('prog-cards-title').textContent = prog.cards.sectionTitle;
+      const cg = document.getElementById('prog-cards-grid');
+      prog.cards.items.forEach(c => {
+        const el = document.createElement('div');
+        el.className = 'prog-card';
+        el.style.borderColor = prog.cards.glowColor;
+        el.innerHTML = `
+          <div class="prog-card-icon">${c.icon}</div>
+          <div class="prog-card-name">${c.name}</div>
+          <div class="prog-card-desc">${c.desc}</div>`;
+        cg.appendChild(el);
+      });
+      document.getElementById('prog-cards-block').style.display = '';
+    }
+
+    /* Process steps */
+    if(prog.steps){
+      document.getElementById('prog-steps-title').textContent = prog.steps.sectionTitle;
+      const sl = document.getElementById('prog-steps-list');
+      prog.steps.items.forEach(s => {
+        const el = document.createElement('div');
+        el.className = 'prog-step';
+        el.innerHTML = `
+          <div class="prog-step-num">${s.icon}</div>
+          <div class="prog-step-body">
+            <div class="prog-step-title">${s.title}</div>
+            <div class="prog-step-desc">${s.desc}</div>
+          </div>`;
+        sl.appendChild(el);
+      });
+      document.getElementById('prog-steps-block').style.display = '';
+    }
+  }
+
+  /* ── Overview ── */
+  document.getElementById('prog-overview').textContent = prog.overview;
+
+  /* ── Sidebar (non-mastery) ── */
+  document.getElementById('sb-icon').textContent = prog.icon;
+  document.getElementById('sb-title').textContent = prog.title;
+  document.getElementById('sb-cat').textContent = prog.subtitle;
+  document.getElementById('sb-duration').textContent = prog.duration;
+  document.getElementById('sb-cert').textContent = prog.certificate;
+  document.getElementById('sb-delivery').textContent = prog.delivery.join(' / ');
+  document.getElementById('sb-prereq').textContent = prog.prereqs;
+
+  const audEl = document.getElementById('sb-audience');
+  prog.audience.forEach(a => {
+    const s = document.createElement('span');
+    s.className = 'tool-tag';
+    s.textContent = a;
+    audEl.appendChild(s);
+  });
+
+  /* ── Outcomes ── */
+  const outcomesEl = document.getElementById('outcomes-grid');
+  prog.outcomes.forEach(o => {
+    const div = document.createElement('div');
+    div.className = 'outcome-item';
+    div.textContent = o;
+    outcomesEl.appendChild(div);
+  });
+
+  /* ── Accordion sections ── */
+  const sectionsEl = document.getElementById('sections-list');
+  prog.sections.forEach((sec, idx) => {
+    const card = document.createElement('div');
+    card.className = 'module-card' + (idx === 0 ? ' open' : '');
+
+    const header = document.createElement('div');
+    header.className = 'module-header';
+    header.innerHTML = `
+      <span class="module-week-badge" style="background:rgba(${id==='ai-mastery'?'240,192,64':'200,169,110'},.14);color:inherit;min-width:auto;padding:4px 14px;">${idx + 1}</span>
+      <span class="module-title">${sec.title}</span>
+      <span class="module-toggle">▼</span>`;
+
+    const body = document.createElement('div');
+    body.className = 'module-body';
+    const ul = document.createElement('ul');
+    ul.className = 'module-topics';
+    sec.points.forEach(p => {
+      const li = document.createElement('li');
+      li.textContent = p;
+      ul.appendChild(li);
+    });
+    body.appendChild(ul);
+    header.addEventListener('click', () => card.classList.toggle('open'));
+    card.appendChild(header);
+    card.appendChild(body);
+    sectionsEl.appendChild(card);
+  });
+
+  /* ── Back link for mastery appended after accordion ── */
+  if(id !== 'ai-mastery'){
+    /* sidebar already has back link */
+  } else {
+    const back = document.createElement('a');
+    back.href = 'programmes.html';
+    back.className = 'btn-o';
+    back.style.cssText = 'display:inline-flex;margin-top:1rem;';
+    back.innerHTML = '&larr; All Programmes';
+    sectionsEl.after(back);
+  }
+
+})();
+</script>
+</body>
+</html>

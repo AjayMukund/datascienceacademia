@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Courses — Data Science Academia Pvt. Ltd.</title>
+<meta name="description" content="18 specialised Data Science and AI courses — Python, ML, Deep Learning, LLMs, NLP, Computer Vision, Generative AI, RL, MLOps, SQL, R, Data Visualization, Tableau, Excel, Power BI, Azure, and AWS.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<canvas id="fluid-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-name">Data Science Academia</div>
+    <div class="nav-sub">Private Limited &nbsp;&middot;&nbsp; Chennai</div>
+  </a>
+  <ul class="nav-menu" id="nmenu">
+    <li><a href="courses.html" class="active">Courses</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="programmes.html">Programmes</a></li>
+    <li><a href="codechamps.html">Code Champs</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta">Enroll Now &rarr;</a></li>
+  </ul>
+  <div class="nav-tog" onclick="document.getElementById('nmenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <div class="eyebrow" data-r>What We Teach</div>
+    <h1 class="sh" data-r="1">Our <em>Courses</em></h1>
+    <p class="page-hero-sub" data-r="2">18 carefully designed programmes — grounded in research, delivered with industry precision. From first principles to frontier AI.</p>
+  </div>
+</div>
+
+<!-- COURSES CONTENT -->
+<section id="courses">
+  <div class="container">
+
+    <div class="courses-top" data-r>
+      <div><p class="c-lead">Every course is taught by a practising AI Engineer with Ph.D.-level academic depth. Hands-on projects, real datasets, industry outcomes.</p></div>
+      <a href="contact.html" class="btn-o" style="white-space:nowrap;align-self:flex-end">Enroll Now &rarr;</a>
+    </div>
+
+    <!-- FILTER TABS -->
+    <div class="filter-tabs">
+      <button class="ftab on" data-filter="all">All Courses</button>
+      <button class="ftab" data-filter="foundation">Foundation</button>
+      <button class="ftab" data-filter="core-ml">Core ML</button>
+      <button class="ftab" data-filter="advanced-ai">Advanced AI</button>
+      <button class="ftab" data-filter="analytics">Analytics</button>
+      <button class="ftab" data-filter="cloud-bi">Cloud &amp; BI</button>
+    </div>
+
+    <!-- COURSE GRID -->
+    <div class="c-grid">
+
+      <!-- Foundation -->
+      <a href="course.html?id=python" class="cc" data-cat="foundation" data-r>
+        <div class="cc-top"><div class="ci ipy">🐍</div><span class="lp lb">Beginner</span></div>
+        <div class="ccat">Foundation</div>
+        <div class="cname">Python Programming</div>
+        <div class="cdesc">Master Python from first principles — data structures, OOP, file handling and the scientific libraries powering modern AI.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 8 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <a href="course.html?id=sql" class="cc" data-cat="foundation" data-r="1">
+        <div class="cc-top"><div class="ci isql">🗄️</div><span class="lp lb">Beginner</span></div>
+        <div class="ccat">Foundation</div>
+        <div class="cname">SQL for Data Science</div>
+        <div class="cdesc">Write production-grade SQL — joins, window functions, aggregations, CTEs and query optimisation on real business databases.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 5 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <a href="course.html?id=r-programming" class="cc" data-cat="foundation" data-r="2">
+        <div class="cc-top"><div class="ci ir">📐</div><span class="lp lb">Beginner</span></div>
+        <div class="ccat">Foundation</div>
+        <div class="cname">R Programming</div>
+        <div class="cdesc">Statistical computing with R — data wrangling with tidyverse, ggplot2 visualisations, and inferential statistics for research.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 6 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <!-- Core ML -->
+      <a href="course.html?id=machine-learning" class="cc" data-cat="core-ml" data-r>
+        <div class="cc-top"><div class="ci iml">🧠</div><span class="lp li">Intermediate</span></div>
+        <div class="ccat">Core ML</div>
+        <div class="cname">Machine Learning</div>
+        <div class="cdesc">Supervised, unsupervised and ensemble learning — applied to real-world datasets with Scikit-learn and hands-on projects.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 10 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <a href="course.html?id=nlp" class="cc" data-cat="core-ml" data-r="1">
+        <div class="cc-top"><div class="ci inlp">💬</div><span class="lp li">Intermediate</span></div>
+        <div class="ccat">Core ML</div>
+        <div class="cname">Natural Language Processing</div>
+        <div class="cdesc">Text preprocessing, sentiment analysis, named entity recognition, topic modelling and sequence models using NLTK and spaCy.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 8 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <a href="course.html?id=feature-engineering" class="cc" data-cat="core-ml" data-r="2">
+        <div class="cc-top"><div class="ci iml">⚙️</div><span class="lp li">Intermediate</span></div>
+        <div class="ccat">Core ML</div>
+        <div class="cname">Feature Engineering &amp; Model Selection</div>
+        <div class="cdesc">The craft behind model performance — handling missing data, encoding, scaling, dimensionality reduction, cross-validation and hyperparameter tuning.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 6 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <!-- Advanced AI -->
+      <a href="course.html?id=deep-learning" class="cc" data-cat="advanced-ai" data-r>
+        <div class="cc-top"><div class="ci idl">⚡</div><span class="lp la">Advanced</span></div>
+        <div class="ccat">Advanced AI</div>
+        <div class="cname">Deep Learning</div>
+        <div class="cdesc">Neural networks, CNNs, RNNs, Transformers and LLMs — built with TensorFlow and PyTorch. Industry capstone included.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 12 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <a href="course.html?id=computer-vision" class="cc" data-cat="advanced-ai" data-r="1">
+        <div class="cc-top"><div class="ci icv">👁️</div><span class="lp la">Advanced</span></div>
+        <div class="ccat">Advanced AI</div>
+        <div class="cname">Computer Vision</div>
+        <div class="cdesc">Image classification, object detection, segmentation and face recognition using OpenCV, YOLO and PyTorch — real project deployments.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 10 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <a href="course.html?id=llm" class="cc" data-cat="advanced-ai" data-r="2">
+        <div class="cc-top"><div class="ci illm">🔤</div><span class="lp la">Advanced</span></div>
+        <div class="ccat">Advanced AI</div>
+        <div class="cname">Large Language Models</div>
+        <div class="cdesc">Architecture of GPT, BERT and LLaMA — fine-tuning, prompt engineering, RAG pipelines and deploying LLMs in production applications.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 10 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <a href="course.html?id=generative-ai" class="cc" data-cat="advanced-ai" data-r="3">
+        <div class="cc-top"><div class="ci igenai">✨</div><span class="lp la">Advanced</span></div>
+        <div class="ccat">Advanced AI</div>
+        <div class="cname">Generative AI</div>
+        <div class="cdesc">GANs, Diffusion Models, VAEs and multimodal AI — build image, text and audio generation systems. Covers Stable Diffusion and OpenAI APIs.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 10 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <a href="course.html?id=reinforcement-learning" class="cc" data-cat="advanced-ai" data-r="4">
+        <div class="cc-top"><div class="ci icv">🎮</div><span class="lp la">Advanced</span></div>
+        <div class="ccat">Advanced AI</div>
+        <div class="cname">Reinforcement Learning</div>
+        <div class="cdesc">Markov Decision Processes, Q-learning, Deep Q-Networks and Policy Gradient methods — train agents to solve complex real-world decision problems.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 8 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <a href="course.html?id=mlops" class="cc" data-cat="advanced-ai" data-r="4">
+        <div class="cc-top"><div class="ci illm">🚀</div><span class="lp la">Advanced</span></div>
+        <div class="ccat">Advanced AI</div>
+        <div class="cname">MLOps &amp; Model Deployment</div>
+        <div class="cdesc">Take models to production — Docker, FastAPI, CI/CD pipelines, model monitoring, MLflow experiment tracking and deployment on cloud platforms.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 8 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <!-- Analytics -->
+      <a href="course.html?id=data-visualization" class="cc" data-cat="analytics" data-r>
+        <div class="cc-top"><div class="ci idv">📊</div><span class="lp lb">Beginner</span></div>
+        <div class="ccat">Analytics</div>
+        <div class="cname">Data Visualization</div>
+        <div class="cdesc">Transform raw numbers into compelling narratives using Matplotlib, Seaborn, Plotly and Tableau dashboards.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 6 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <a href="course.html?id=excel" class="cc" data-cat="analytics" data-r="1">
+        <div class="cc-top"><div class="ci isql">📋</div><span class="lp lb">Beginner</span></div>
+        <div class="ccat">Analytics</div>
+        <div class="cname">Excel for Data Analysis</div>
+        <div class="cdesc">PivotTables, Power Query, advanced formulas, statistical functions and Excel dashboards — the analyst's Swiss Army knife for business reporting.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 4 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <a href="course.html?id=tableau" class="cc" data-cat="analytics" data-r="2">
+        <div class="cc-top"><div class="ci ipbi">🔷</div><span class="lp li">Intermediate</span></div>
+        <div class="ccat">Analytics</div>
+        <div class="cname">Tableau</div>
+        <div class="cdesc">Build interactive, shareable dashboards in Tableau — data blending, LOD expressions, calculated fields and publishing to Tableau Server and Public.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 5 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <!-- Cloud & BI -->
+      <a href="course.html?id=power-bi" class="cc" data-cat="cloud-bi" data-r>
+        <div class="cc-top"><div class="ci ipbi">📈</div><span class="lp li">Intermediate</span></div>
+        <div class="ccat">Business Intelligence</div>
+        <div class="cname">Power BI</div>
+        <div class="cdesc">Enterprise dashboards, DAX mastery, data modelling and Microsoft certification preparation — career-ready outcomes.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 6 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <a href="course.html?id=azure" class="cc" data-cat="cloud-bi" data-r="1">
+        <div class="cc-top"><div class="ci iaz">☁️</div><span class="lp li">Intermediate</span></div>
+        <div class="ccat">Cloud</div>
+        <div class="cname">Microsoft Azure</div>
+        <div class="cdesc">Cloud fundamentals, Azure AI services, and AZ-900 / DP-900 certification preparation for cloud-ready professionals.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 8 weeks</span><span class="carr">→</span></div>
+      </a>
+
+      <a href="course.html?id=aws" class="cc" data-cat="cloud-bi" data-r="2">
+        <div class="cc-top"><div class="ci ir">🟠</div><span class="lp li">Intermediate</span></div>
+        <div class="ccat">Cloud</div>
+        <div class="cname">AWS for Data Science</div>
+        <div class="cdesc">S3, EC2, SageMaker, Lambda and Glue — build, train and deploy ML models on AWS with CLF-C02 Cloud Practitioner certification preparation.</div>
+        <div class="cfoot"><span class="cdur">⏱&nbsp; 8 weeks</span><span class="carr">→</span></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer><div class="fi2">
+  <div><div class="fbn">Data Science Academia</div><div class="fbs">Private Limited &nbsp;&middot;&nbsp; Chennai, Tamil Nadu</div></div>
+  <div class="fc">&copy; 2025 Data Science Academia Private Limited. All rights reserved.<br><span style="font-size:.62rem">Formerly Data Science Academia under Sai Chamundeeswari Academy (MSME Registered)</span></div>
+  <div class="fr">MSME Reg &nbsp;&middot;&nbsp; Pvt Ltd In Progress</div>
+</div></footer>
+
+<script src="script.js"></script>
+<script>
+/* Filter tabs */
+document.querySelectorAll('.ftab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('on'));
+    tab.classList.add('on');
+    const f=tab.dataset.filter;
+    document.querySelectorAll('.cc').forEach(card=>{
+      card.classList.toggle('hidden', f!=='all' && card.dataset.cat!==f);
+    });
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pg-title">Code Champs — Data Science Academia</title>
+<meta name="description" content="DSA Code Champs learning track detail — Data Science Academia, Chennai.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── Level colour token — overridden by JS ─────────────────── */
+:root { --lvc:#3ecfb2; --lvc-rgb:62,207,178; }
+
+/* ── HERO ──────────────────────────────────────────────────── */
+.lv-hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:110px clamp(1.5rem,5vw,4rem) 0;position:relative;overflow:hidden;}
+.lv-ghost{position:absolute;top:50%;right:-1%;transform:translateY(-55%);font-family:var(--fd);font-size:clamp(12rem,26vw,24rem);font-weight:700;line-height:1;letter-spacing:-.06em;color:rgba(var(--lvc-rgb),.045);user-select:none;pointer-events:none;}
+.lv-hero-glow{position:absolute;top:25%;left:15%;width:700px;height:700px;border-radius:50%;background:radial-gradient(ellipse,rgba(var(--lvc-rgb),.07) 0%,transparent 70%);pointer-events:none;}
+.lv-hero-inner{max-width:920px;position:relative;z-index:1;}
+.lv-pill{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(var(--lvc-rgb),.3);background:rgba(var(--lvc-rgb),.07);padding:7px 20px 7px 12px;border-radius:100px;margin-bottom:2rem;}
+.lv-pill-dot{width:8px;height:8px;border-radius:50%;background:var(--lvc);animation:lvpulse 2s ease-in-out infinite;}
+@keyframes lvpulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.45);}}
+.lv-pill-txt{font-family:var(--fb);font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--lvc);}
+.lv-h1{font-family:var(--fd);font-size:clamp(3rem,6vw,5.5rem);font-weight:600;line-height:1.05;letter-spacing:-.03em;color:var(--cream);margin-bottom:.6rem;}
+.lv-tagline{font-family:var(--fd);font-size:clamp(1rem,1.7vw,1.25rem);font-weight:300;font-style:italic;color:rgba(var(--lvc-rgb),.85);margin-bottom:1.85rem;}
+.lv-hero-desc{font-family:var(--fb);font-size:1rem;font-weight:300;color:var(--fog);max-width:680px;line-height:1.9;margin-bottom:2rem;}
+.lv-badges{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2.75rem;}
+.lv-badge{font-family:var(--fm);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:5px 13px;border-radius:6px;border:1px solid rgba(var(--lvc-rgb),.25);background:rgba(var(--lvc-rgb),.07);color:var(--lvc);}
+
+/* Info strip sits at the base of the hero */
+.lv-strip{display:flex;border:1px solid var(--border);border-bottom:none;border-radius:16px 16px 0 0;overflow:hidden;margin-top:2.5rem;}
+.lv-strip-item{flex:1;padding:1.2rem 1.4rem;background:rgba(11,12,14,.7);border-right:1px solid var(--border);backdrop-filter:blur(16px);transition:background .3s;}
+.lv-strip-item:last-child{border-right:none;background:rgba(var(--lvc-rgb),.07);}
+.lv-strip-item:last-child:hover{background:rgba(var(--lvc-rgb),.12);}
+.lv-strip-label{font-family:var(--fm);font-size:.56rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--fog3);margin-bottom:4px;}
+.lv-strip-val{font-family:var(--fb);font-size:.85rem;font-weight:500;color:var(--cream);}
+.lv-strip-cta{font-family:var(--fb);font-size:.82rem;font-weight:700;color:var(--lvc);display:flex;align-items:center;gap:5px;}
+
+/* ── SHARED SECTION STYLES ─────────────────────────────────── */
+.lv-sec{padding:5.5rem clamp(1.5rem,5vw,4rem);position:relative;z-index:1;border-top:1px solid var(--border);}
+.lv-eyebrow{font-family:var(--fb);font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--lvc);margin-bottom:.85rem;display:flex;align-items:center;gap:10px;}
+.lv-eyebrow::before{content:'';width:28px;height:1px;background:var(--lvc);flex-shrink:0;}
+.lv-sh{font-family:var(--fd);font-size:clamp(1.85rem,3.5vw,2.8rem);font-weight:600;line-height:1.1;letter-spacing:-.02em;color:var(--cream);margin-bottom:2.5rem;}
+.lv-sh em{font-style:italic;font-weight:300;color:var(--lvc);}
+
+/* ── JOURNEY — horizontal scroll cards ─────────────────────── */
+.lv-scroll{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:rgba(var(--lvc-rgb),.22) transparent;padding-bottom:1.25rem;cursor:grab;}
+.lv-scroll:active{cursor:grabbing;}
+.lv-scroll::-webkit-scrollbar{height:3px;}
+.lv-scroll::-webkit-scrollbar-track{background:transparent;}
+.lv-scroll::-webkit-scrollbar-thumb{background:rgba(var(--lvc-rgb),.22);border-radius:2px;}
+.lv-phase{flex:0 0 270px;scroll-snap-align:start;border:1px solid rgba(var(--lvc-rgb),.16);background:linear-gradient(160deg,rgba(var(--lvc-rgb),.05),var(--glass2));border-radius:16px;padding:1.5rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s cubic-bezier(.23,1,.32,1);}
+.lv-phase:hover{border-color:rgba(var(--lvc-rgb),.38);transform:translateY(-4px);}
+.lv-phase-ghost{position:absolute;bottom:-18px;right:10px;font-family:var(--fd);font-size:4.5rem;font-weight:700;color:rgba(var(--lvc-rgb),.06);line-height:1;pointer-events:none;}
+.lv-phase-icon{font-size:1.75rem;margin-bottom:.75rem;display:block;}
+.lv-phase-tag{font-family:var(--fm);font-size:.58rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--lvc);margin-bottom:.35rem;}
+.lv-phase-title{font-family:var(--fd);font-size:1.1rem;font-weight:600;color:var(--cream);line-height:1.25;margin-bottom:.25rem;}
+.lv-phase-weeks{font-family:var(--fb);font-size:.65rem;color:var(--fog3);margin-bottom:.9rem;}
+.lv-phase-topics{list-style:none;display:flex;flex-direction:column;gap:.4rem;}
+.lv-phase-topics li{font-family:var(--fb);font-size:.74rem;font-weight:300;color:var(--fog);line-height:1.45;display:flex;align-items:flex-start;gap:.45rem;}
+.lv-phase-topics li::before{content:'›';color:var(--lvc);flex-shrink:0;font-size:.9rem;margin-top:-1px;}
+.lv-scroll-hint{font-family:var(--fb);font-size:.65rem;color:var(--fog3);margin-top:.75rem;letter-spacing:.06em;}
+
+/* ── PROJECTS GRID ─────────────────────────────────────────── */
+.lv-projects{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+.lv-proj{background:var(--glass2);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:border-color .3s,transform .4s cubic-bezier(.23,1,.32,1);}
+.lv-proj:hover{border-color:rgba(var(--lvc-rgb),.3);transform:translateY(-6px);}
+.lv-proj-vis{height:150px;background:linear-gradient(135deg,rgba(var(--lvc-rgb),.1),rgba(var(--lvc-rgb),.03));border-bottom:1px solid rgba(var(--lvc-rgb),.1);display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;}
+.lv-proj-vis::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(var(--lvc-rgb),.1),transparent 70%);}
+.lv-proj-body{padding:1.4rem;}
+.lv-proj-tag{font-family:var(--fm);font-size:.56rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--lvc);padding:3px 10px;border:1px solid rgba(var(--lvc-rgb),.25);background:rgba(var(--lvc-rgb),.07);border-radius:100px;display:inline-block;margin-bottom:.7rem;}
+.lv-proj-title{font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--cream);margin-bottom:.4rem;letter-spacing:-.01em;}
+.lv-proj-desc{font-family:var(--fb);font-size:.78rem;font-weight:300;color:var(--fog);line-height:1.7;}
+
+/* ── SKILLS CLOUD ──────────────────────────────────────────── */
+.lv-cloud{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:2rem;}
+.lv-skill{font-family:var(--fm);font-size:.72rem;padding:7px 16px;border-radius:100px;border:1px solid rgba(var(--lvc-rgb),.2);background:rgba(var(--lvc-rgb),.05);color:var(--fog);transition:border-color .25s,color .25s,background .25s,transform .2s;}
+.lv-skill:hover{border-color:rgba(var(--lvc-rgb),.5);color:var(--lvc);background:rgba(var(--lvc-rgb),.1);transform:translateY(-2px);}
+
+/* ── FOR / OUTCOMES ────────────────────────────────────────── */
+.lv-for-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem;}
+.lv-for-card{background:var(--glass2);border:1px solid var(--border);border-radius:18px;padding:2rem;}
+.lv-for-card.accent{border-color:rgba(var(--lvc-rgb),.22);background:linear-gradient(145deg,rgba(var(--lvc-rgb),.05),var(--glass2));}
+.lv-for-title{font-family:var(--fd);font-size:1.15rem;font-weight:600;color:var(--cream);margin-bottom:1.25rem;line-height:1.2;}
+.lv-for-list{list-style:none;display:flex;flex-direction:column;gap:.7rem;}
+.lv-for-list li{font-family:var(--fb);font-size:.85rem;font-weight:300;color:var(--fog);display:flex;align-items:flex-start;gap:.65rem;line-height:1.55;}
+.lv-for-list li::before{content:'✓';color:var(--lvc);font-weight:700;font-size:.75rem;flex-shrink:0;margin-top:2px;}
+
+/* ── NEXT LEVEL BANNER ─────────────────────────────────────── */
+.lv-next{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;border-radius:20px;padding:2.75rem 3rem;border:1px solid rgba(var(--nxc-rgb,62,207,178),.22);background:linear-gradient(135deg,rgba(var(--nxc-rgb,62,207,178),.07),rgba(var(--nxc-rgb,62,207,178),.02));}
+.lv-next-label{font-family:var(--fm);font-size:.6rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--fog3);margin-bottom:.5rem;}
+.lv-next-name{font-family:var(--fd);font-size:2.2rem;font-weight:600;color:var(--cream);letter-spacing:-.02em;line-height:1.15;margin-bottom:.2rem;}
+.lv-next-grade{font-family:var(--fb);font-size:.82rem;color:var(--fog);}
+.lv-next-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--fb);font-size:.88rem;font-weight:700;letter-spacing:.04em;padding:15px 34px;border-radius:10px;color:var(--ink);transition:all .35s cubic-bezier(.23,1,.32,1);white-space:nowrap;flex-shrink:0;}
+.lv-next-btn:hover{transform:translateX(5px) translateY(-2px);box-shadow:0 12px 36px rgba(var(--nxc-rgb,62,207,178),.38);}
+
+/* ── CTA BLOCK ─────────────────────────────────────────────── */
+.lv-cta{background:linear-gradient(135deg,rgba(var(--lvc-rgb),.1),rgba(var(--lvc-rgb),.03));border:1px solid rgba(var(--lvc-rgb),.2);border-radius:22px;padding:4.5rem 3rem;text-align:center;}
+.lv-cta-icon{font-size:3rem;margin-bottom:1.25rem;}
+.lv-cta h2{font-family:var(--fd);font-size:clamp(1.8rem,3.2vw,2.6rem);font-weight:600;color:var(--cream);margin-bottom:.75rem;letter-spacing:-.02em;}
+.lv-cta h2 em{font-style:italic;font-weight:300;color:var(--lvc);}
+.lv-cta p{font-family:var(--fb);font-size:.95rem;font-weight:300;color:var(--fog);max-width:500px;margin:0 auto 2.25rem;line-height:1.9;}
+.lv-cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.lv-cta-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--fb);font-size:.9rem;font-weight:700;letter-spacing:.04em;padding:15px 40px;border-radius:10px;color:var(--ink);transition:all .35s cubic-bezier(.23,1,.32,1);}
+.lv-cta-btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(var(--lvc-rgb),.42);}
+
+/* ── FLOATING ENROLL BAR ───────────────────────────────────── */
+.lv-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(11,12,14,.93);backdrop-filter:blur(22px);border-top:1px solid var(--border2);padding:1rem clamp(1.5rem,5vw,4rem);transform:translateY(110%);transition:transform .42s cubic-bezier(.23,1,.32,1);}
+.lv-bar.show{transform:translateY(0);}
+.lv-bar-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem;}
+.lv-bar-left{display:flex;align-items:center;gap:1rem;}
+.lv-bar-icon{font-size:1.5rem;flex-shrink:0;}
+.lv-bar-name{font-family:var(--fd);font-size:1.1rem;font-weight:600;color:var(--cream);}
+.lv-bar-sub{font-family:var(--fb);font-size:.68rem;color:var(--fog2);margin-top:1px;}
+.lv-bar-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--fb);font-size:.85rem;font-weight:700;letter-spacing:.04em;color:var(--ink);padding:12px 28px;border-radius:9px;transition:all .3s cubic-bezier(.23,1,.32,1);flex-shrink:0;white-space:nowrap;}
+.lv-bar-btn:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(var(--lvc-rgb),.42);}
+
+/* ── RESPONSIVE ────────────────────────────────────────────── */
+@media(max-width:960px){
+  .lv-projects{grid-template-columns:repeat(2,1fr);}
+  .lv-for-grid{grid-template-columns:1fr;}
+  .lv-strip{flex-wrap:wrap;border-radius:12px;border-bottom:1px solid var(--border);}
+  .lv-strip-item{flex:1 0 45%;border-bottom:1px solid var(--border);}
+  .lv-strip-item:last-child{border-bottom:none;}
+}
+@media(max-width:600px){
+  .lv-projects{grid-template-columns:1fr;}
+  .lv-strip{flex-direction:column;}
+  .lv-phase{flex:0 0 240px;}
+  .lv-next{flex-direction:column;align-items:flex-start;}
+  .lv-bar-left .lv-bar-sub{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="cur-ring"></div>
+<canvas id="fluid-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-name">Data Science Academia</div>
+    <div class="nav-sub">Private Limited &nbsp;&middot;&nbsp; Chennai</div>
+  </a>
+  <ul class="nav-menu" id="nmenu">
+    <li><a href="courses.html">Courses</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="programmes.html">Programmes</a></li>
+    <li><a href="codechamps.html" class="active">Code Champs</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta">Enroll Now &rarr;</a></li>
+  </ul>
+  <div class="nav-tog" onclick="document.getElementById('nmenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── HERO ──────────────────────────────────────────── -->
+<section class="lv-hero" id="lv-hero">
+  <div class="lv-ghost" id="lv-ghost"></div>
+  <div class="lv-hero-glow"></div>
+  <div class="lv-hero-inner">
+    <div class="lv-pill" data-r>
+      <div class="lv-pill-dot"></div>
+      <span class="lv-pill-txt" id="lv-pill-txt">Code Champs · Level 1</span>
+    </div>
+    <h1 class="lv-h1" data-r="1" id="lv-name"></h1>
+    <div class="lv-tagline" data-r="2" id="lv-tagline"></div>
+    <div class="lv-badges" data-r="3" id="lv-badges"></div>
+    <p class="lv-hero-desc" data-r="4" id="lv-desc"></p>
+    <div class="lv-strip" data-r="5" id="lv-strip"></div>
+  </div>
+</section>
+
+<!-- ── LEARNING JOURNEY ──────────────────────────────── -->
+<section class="lv-sec">
+  <div class="container">
+    <div class="lv-eyebrow" data-r>Learning Journey</div>
+    <h2 class="lv-sh" data-r="1">Phase by Phase. <em>One Step at a Time.</em></h2>
+    <div class="lv-scroll" id="lv-journey"></div>
+    <div class="lv-scroll-hint" data-r="3">← Scroll to explore all phases &nbsp;·&nbsp; Drag to navigate</div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ──────────────────────────────────────── -->
+<section class="lv-sec" style="background:rgba(255,255,255,.012);">
+  <div class="container">
+    <div class="lv-eyebrow" data-r>What They Will Build</div>
+    <h2 class="lv-sh" data-r="1">Real Projects. <em>Real Portfolio.</em></h2>
+    <div class="lv-projects" id="lv-projects"></div>
+  </div>
+</section>
+
+<!-- ── SKILLS ────────────────────────────────────────── -->
+<section class="lv-sec">
+  <div class="container">
+    <div class="lv-eyebrow" data-r>Technologies & Skills</div>
+    <h2 class="lv-sh" data-r="1">The <em>Toolkit</em> They'll Master</h2>
+    <div class="lv-cloud" id="lv-skills"></div>
+  </div>
+</section>
+
+<!-- ── IS THIS RIGHT FOR YOU ────────────────────────── -->
+<section class="lv-sec" style="background:rgba(255,255,255,.012);">
+  <div class="container">
+    <div class="lv-eyebrow" data-r>Enrolment</div>
+    <h2 class="lv-sh" data-r="1">Is This the <em>Right Level?</em></h2>
+    <div class="lv-for-grid" id="lv-for"></div>
+  </div>
+</section>
+
+<!-- ── NEXT LEVEL ─────────────────────────────────────── -->
+<section class="lv-sec" id="lv-next-sec">
+  <div class="container">
+    <div class="lv-eyebrow" data-r>Level Up</div>
+    <h2 class="lv-sh" data-r="1">After This, <em>The Next Adventure Awaits</em></h2>
+    <div id="lv-next"></div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────── -->
+<section class="lv-sec">
+  <div class="container">
+    <div class="lv-cta" id="lv-cta"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer><div class="fi2">
+  <div><div class="fbn">Data Science Academia</div><div class="fbs">Private Limited &nbsp;&middot;&nbsp; Chennai, Tamil Nadu</div></div>
+  <div class="fc">&copy; 2025 Data Science Academia Private Limited. All rights reserved.<br><span style="font-size:.62rem">Formerly Data Science Academia under Sai Chamundeeswari Academy (MSME Registered)</span></div>
+  <div class="fr">MSME Reg &nbsp;&middot;&nbsp; Pvt Ltd In Progress</div>
+</div></footer>
+
+<!-- FLOATING ENROLL BAR -->
+<div class="lv-bar" id="lv-bar">
+  <div class="lv-bar-inner">
+    <div class="lv-bar-left">
+      <div class="lv-bar-icon" id="bar-icon"></div>
+      <div>
+        <div class="lv-bar-name" id="bar-name"></div>
+        <div class="lv-bar-sub" id="bar-sub"></div>
+      </div>
+    </div>
+    <a href="#" class="lv-bar-btn" id="bar-btn">Book Free Trial &nbsp;&rarr;</a>
+  </div>
+</div>
+
+<!-- Injection runs BEFORE script.js so data-r elements are ready for the observer -->
+<script src="cc-levels-data.js"></script>
+<script>
+(function(){
+  const id = new URLSearchParams(location.search).get('id') || 'explorers';
+  const d = CC_LEVELS[id];
+  if(!d){ location.href = 'codechamps.html'; return; }
+
+  /* ── Apply level colour ── */
+  document.documentElement.style.setProperty('--lvc', d.color);
+  document.documentElement.style.setProperty('--lvc-rgb', d.rgb);
+
+  /* ── Page meta ── */
+  document.title = d.name + ' — DSA Code Champs · Data Science Academia';
+  document.getElementById('pg-title').textContent = document.title;
+
+  /* ── Hero ── */
+  document.getElementById('lv-ghost').textContent = d.levelPad;
+  document.getElementById('lv-pill-txt').textContent = 'Code Champs · ' + d.badge;
+  document.getElementById('lv-name').textContent = d.name;
+  document.getElementById('lv-tagline').textContent = d.tagline;
+  document.getElementById('lv-desc').textContent = d.hero;
+  document.getElementById('lv-badges').innerHTML =
+    [d.grade, d.age, d.duration, d.sessions, d.format]
+      .map(b => `<span class="lv-badge">${b}</span>`).join('');
+  const ctaParam = encodeURIComponent('Code Champs — ' + d.name);
+  document.getElementById('lv-strip').innerHTML = `
+    <div class="lv-strip-item"><div class="lv-strip-label">Duration</div><div class="lv-strip-val">${d.duration}</div></div>
+    <div class="lv-strip-item"><div class="lv-strip-label">Sessions</div><div class="lv-strip-val">${d.sessions}</div></div>
+    <div class="lv-strip-item"><div class="lv-strip-label">Format</div><div class="lv-strip-val">${d.format}</div></div>
+    <div class="lv-strip-item"><div class="lv-strip-label">Certificate</div><div class="lv-strip-val">${d.cert}</div></div>
+    <div class="lv-strip-item"><div class="lv-strip-label">Get Started</div><a href="contact.html?course=${ctaParam}" class="lv-strip-cta">Free Trial &nbsp;&rarr;</a></div>`;
+
+  /* ── Journey ── */
+  document.getElementById('lv-journey').innerHTML = d.journey.map((ph, i) => `
+    <div class="lv-phase" data-r="${i}">
+      <div class="lv-phase-ghost">${i + 1}</div>
+      <span class="lv-phase-icon">${ph.icon}</span>
+      <div class="lv-phase-tag">${ph.phase}</div>
+      <div class="lv-phase-title">${ph.title}</div>
+      <div class="lv-phase-weeks">${ph.weeks}</div>
+      <ul class="lv-phase-topics">${ph.topics.map(t => `<li>${t}</li>`).join('')}</ul>
+    </div>`).join('');
+
+  /* ── Projects ── */
+  document.getElementById('lv-projects').innerHTML = d.projects.map(p => `
+    <div class="lv-proj" data-r>
+      <div class="lv-proj-vis">${p.icon}</div>
+      <div class="lv-proj-body">
+        <span class="lv-proj-tag">${p.tag}</span>
+        <div class="lv-proj-title">${p.title}</div>
+        <p class="lv-proj-desc">${p.desc}</p>
+      </div>
+    </div>`).join('');
+
+  /* ── Skills cloud ── */
+  document.getElementById('lv-skills').innerHTML = d.skills.map(s =>
+    `<span class="lv-skill" data-r>${s}</span>`).join('');
+
+  /* ── Perfect for / Outcomes ── */
+  document.getElementById('lv-for').innerHTML = `
+    <div class="lv-for-card" data-r>
+      <div class="lv-for-title">Perfect for a student who&hellip;</div>
+      <ul class="lv-for-list">${d.forList.map(f => `<li>${f}</li>`).join('')}</ul>
+    </div>
+    <div class="lv-for-card accent" data-r="1">
+      <div class="lv-for-title">By the end, you will&hellip;</div>
+      <ul class="lv-for-list">${d.outcomes.map(o => `<li>${o}</li>`).join('')}</ul>
+    </div>`;
+
+  /* ── Next level ── */
+  if(d.next){
+    const nx = CC_LEVELS[d.next];
+    document.documentElement.style.setProperty('--nxc-rgb', nx.rgb);
+    document.getElementById('lv-next').innerHTML = `
+      <div class="lv-next" data-r>
+        <div>
+          <div class="lv-next-label">Coming up next</div>
+          <div class="lv-next-name" style="color:var(--cream);">${nx.name} <span style="color:${nx.color};">${nx.icon}</span></div>
+          <div class="lv-next-grade">${nx.grade} &nbsp;&middot;&nbsp; ${nx.age}</div>
+        </div>
+        <a href="cc-level.html?id=${nx.id}" class="lv-next-btn" style="background:${nx.color};">
+          Explore ${nx.name} &nbsp;&rarr;
+        </a>
+      </div>`;
+  } else {
+    document.getElementById('lv-next-sec').style.display = 'none';
+  }
+
+  /* ── CTA ── */
+  document.getElementById('lv-cta').innerHTML = `
+    <div class="lv-cta-icon">${d.icon}</div>
+    <h2>Ready to Start Your <em>${d.name}</em> Journey?</h2>
+    <p>Book a free trial session — no commitment required. Let your child experience what it feels like to create with code and AI for the very first time.</p>
+    <div class="lv-cta-btns">
+      <a href="contact.html?course=${ctaParam}" class="lv-cta-btn" style="background:var(--lvc);">Book Free Trial &nbsp;&rarr;</a>
+      <a href="codechamps.html" class="btn-o">Back to Code Champs</a>
+    </div>`;
+
+  /* ── Floating bar ── */
+  document.getElementById('bar-icon').textContent = d.icon;
+  document.getElementById('bar-name').textContent = d.name;
+  document.getElementById('bar-sub').textContent = d.grade + ' · ' + d.age;
+  const barBtn = document.getElementById('bar-btn');
+  barBtn.href = 'contact.html?course=' + ctaParam;
+  barBtn.style.background = d.color;
+
+  window.addEventListener('scroll', () => {
+    const nearBottom = (window.scrollY + window.innerHeight) >= (document.body.scrollHeight - 80);
+    document.getElementById('lv-bar').classList.toggle('show', scrollY > 380 && !nearBottom);
+  }, {passive:true});
+
+  /* ── Drag-to-scroll journey ── */
+  const sc = document.getElementById('lv-journey');
+  let isDown = false, startX, left;
+  sc.addEventListener('mousedown', e => { isDown = true; startX = e.pageX - sc.offsetLeft; left = sc.scrollLeft; });
+  sc.addEventListener('mouseleave', () => { isDown = false; });
+  sc.addEventListener('mouseup', () => { isDown = false; });
+  sc.addEventListener('mousemove', e => {
+    if(!isDown) return;
+    e.preventDefault();
+    sc.scrollLeft = left - (e.pageX - sc.offsetLeft - startX);
+  });
+})();
+</script>
+<script src="script.js"></script>
+</body>
+</html>

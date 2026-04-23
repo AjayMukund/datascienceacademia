@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Course — Data Science Academia Pvt. Ltd.</title>
+<meta name="description" id="page-desc" content="Detailed course information — Data Science Academia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<canvas id="fluid-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-name">Data Science Academia</div>
+    <div class="nav-sub">Private Limited &nbsp;&middot;&nbsp; Chennai</div>
+  </a>
+  <ul class="nav-menu" id="nmenu">
+    <li><a href="courses.html" class="active">Courses</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="programmes.html">Programmes</a></li>
+    <li><a href="codechamps.html">Code Champs</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta" id="nav-enroll">Enroll Now &rarr;</a></li>
+  </ul>
+  <div class="nav-tog" onclick="document.getElementById('nmenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- PAGE HERO — injected by JS -->
+<div class="page-hero" id="course-hero">
+  <div class="container">
+    <div class="eyebrow" id="hero-eyebrow">Loading...</div>
+    <h1 class="sh" id="hero-title">&nbsp;</h1>
+    <p class="page-hero-sub" id="hero-sub">&nbsp;</p>
+    <div style="display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap;margin-top:1.25rem;" id="hero-badges"></div>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="container">
+  <div class="course-layout">
+
+    <!-- LEFT: MAIN CONTENT -->
+    <div class="course-main">
+
+      <!-- Overview -->
+      <div class="course-overview-block" data-r>
+        <div class="section-label">Overview</div>
+        <p id="course-overview"></p>
+      </div>
+
+      <!-- What You'll Learn -->
+      <div data-r="1">
+        <div class="section-label">What You'll Learn</div>
+        <div class="outcomes-grid" id="outcomes-grid"></div>
+      </div>
+
+      <!-- Weekly Modules -->
+      <div data-r="2">
+        <div class="section-label">Week-by-Week Syllabus</div>
+        <div class="modules-list" id="modules-list"></div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: SIDEBAR -->
+    <div class="course-sidebar" data-r="1">
+
+      <!-- Quick Info Card -->
+      <div class="info-card">
+        <div class="info-card-icon" id="sb-icon"></div>
+        <div class="info-card-title" id="sb-title"></div>
+        <div class="info-card-cat" id="sb-cat"></div>
+        <div class="info-rows">
+          <div class="info-row"><span class="info-row-label">Level</span><span class="info-row-val" id="sb-level"></span></div>
+          <div class="info-row"><span class="info-row-label">Duration</span><span class="info-row-val" id="sb-duration"></span></div>
+          <div class="info-row"><span class="info-row-label">Contact Hours</span><span class="info-row-val" id="sb-hours"></span></div>
+          <div class="info-row"><span class="info-row-label">Format</span><span class="info-row-val">Live + Recorded</span></div>
+          <div class="info-row"><span class="info-row-label">Certificate</span><span class="info-row-val">Yes, on completion</span></div>
+        </div>
+
+        <div class="section-label" style="margin-bottom:.85rem;">Tools & Technologies</div>
+        <div class="tools-wrap" id="sb-tools"></div>
+
+        <div class="section-label" style="margin-bottom:.85rem;margin-top:1.25rem;">Prerequisites</div>
+        <div class="prereq-block"><p id="sb-prereq"></p></div>
+
+        <a class="enroll-btn" id="enroll-btn" href="contact.html">Enroll in This Course &rarr;</a>
+      </div>
+
+      <!-- Back link -->
+      <a href="courses.html" class="btn-o" style="display:block;text-align:center;width:100%;">&larr; All Courses</a>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer><div class="fi2">
+  <div><div class="fbn">Data Science Academia</div><div class="fbs">Private Limited &nbsp;&middot;&nbsp; Chennai, Tamil Nadu</div></div>
+  <div class="fc">&copy; 2025 Data Science Academia Private Limited. All rights reserved.<br><span style="font-size:.62rem">Formerly Data Science Academia under Sai Chamundeeswari Academy (MSME Registered)</span></div>
+  <div class="fr">MSME Reg &nbsp;&middot;&nbsp; Pvt Ltd In Progress</div>
+</div></footer>
+
+<script src="courses-data.js"></script>
+<script src="script.js"></script>
+<script>
+(function(){
+  /* ── Read ?id= from URL ── */
+  const id = new URLSearchParams(window.location.search).get('id');
+  const course = id && DSA_COURSES[id];
+
+  if(!course){
+    document.getElementById('hero-title').textContent = 'Course not found';
+    document.getElementById('course-overview').textContent = 'Please return to the courses page and select a valid course.';
+    return;
+  }
+
+  /* ── Page meta ── */
+  document.title = course.title + ' — Data Science Academia Pvt. Ltd.';
+  document.getElementById('page-desc').content = course.overview.slice(0, 155);
+
+  /* ── Enroll URL — pre-fill contact form ── */
+  const enrollUrl = 'contact.html?course=' + encodeURIComponent(course.title);
+  document.getElementById('enroll-btn').href = enrollUrl;
+  document.getElementById('nav-enroll').href = enrollUrl;
+
+  /* ── Hero ── */
+  document.getElementById('hero-eyebrow').textContent = course.category;
+  document.getElementById('hero-title').textContent = course.title;
+  document.getElementById('hero-sub').textContent = course.duration + ' · ' + course.hours;
+
+  const badgesEl = document.getElementById('hero-badges');
+  const levelBadge = document.createElement('span');
+  levelBadge.className = 'lp ' + course.levelClass;
+  levelBadge.textContent = course.level;
+  badgesEl.appendChild(levelBadge);
+
+  /* ── Overview ── */
+  document.getElementById('course-overview').textContent = course.overview;
+
+  /* ── Sidebar ── */
+  document.getElementById('sb-icon').textContent = course.icon;
+  document.getElementById('sb-title').textContent = course.title;
+  document.getElementById('sb-cat').textContent = course.category;
+  document.getElementById('sb-level').textContent = course.level;
+  document.getElementById('sb-duration').textContent = course.duration;
+  document.getElementById('sb-hours').textContent = course.hours;
+  document.getElementById('sb-prereq').textContent = course.prereqs;
+
+  const toolsEl = document.getElementById('sb-tools');
+  course.tools.forEach(t => {
+    const s = document.createElement('span');
+    s.className = 'tool-tag';
+    s.textContent = t;
+    toolsEl.appendChild(s);
+  });
+
+  /* ── Outcomes ── */
+  const outcomesEl = document.getElementById('outcomes-grid');
+  course.outcomes.forEach(o => {
+    const div = document.createElement('div');
+    div.className = 'outcome-item';
+    div.textContent = o;
+    outcomesEl.appendChild(div);
+  });
+
+  /* ── Modules (accordion) ── */
+  const modulesEl = document.getElementById('modules-list');
+  course.modules.forEach((mod, idx) => {
+    const card = document.createElement('div');
+    card.className = 'module-card' + (idx === 0 ? ' open' : '');
+
+    const header = document.createElement('div');
+    header.className = 'module-header';
+    header.innerHTML = `
+      <span class="module-week-badge">Week ${mod.week}</span>
+      <span class="module-title">${mod.title}</span>
+      <span class="module-toggle">▼</span>`;
+
+    const body = document.createElement('div');
+    body.className = 'module-body';
+    const ul = document.createElement('ul');
+    ul.className = 'module-topics';
+    mod.topics.forEach(t => {
+      const li = document.createElement('li');
+      li.textContent = t;
+      ul.appendChild(li);
+    });
+    body.appendChild(ul);
+
+    header.addEventListener('click', () => {
+      card.classList.toggle('open');
+    });
+
+    card.appendChild(header);
+    card.appendChild(body);
+    modulesEl.appendChild(card);
+  });
+
+})();
+</script>
+</body>
+</html>

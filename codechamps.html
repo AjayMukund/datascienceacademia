@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA Code Champs — AI & Coding for Young Minds · Data Science Academia</title>
+<meta name="description" content="DSA Code Champs — Data Science Academia's dedicated school wing nurturing the next generation of AI innovators. Coding, Python, AI, and robotics for students from Grade 3 to Grade 12 across Chennai.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Code Champs exclusive styles */
+  :root {
+    --cc1:#c792ea; --cc2:#7a9fff; --cc3:#3ecfb2; --cc4:#f0c040;
+    --cc-grd:linear-gradient(135deg,#c792ea,#7a9fff);
+  }
+  .cc-hero{min-height:100vh;display:grid;place-items:center;padding:130px clamp(1.5rem,5vw,4rem) 80px;position:relative;overflow:hidden;}
+  .cc-hero-glow{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);width:1000px;height:700px;background:radial-gradient(ellipse,rgba(199,146,234,.09) 0%,rgba(122,159,255,.05) 50%,transparent 70%);pointer-events:none;}
+  .cc-hero-wrap{max-width:1100px;width:100%;margin:0 auto;text-align:center;}
+  .cc-pill{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(199,146,234,.3);background:rgba(199,146,234,.07);padding:7px 20px 7px 12px;border-radius:100px;margin-bottom:2rem;}
+  .cc-pill-dot{width:8px;height:8px;border-radius:50%;background:var(--cc1);animation:ccpulse 2s ease-in-out infinite;}
+  @keyframes ccpulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.4);}}
+  .cc-pill-txt{font-family:var(--fb);font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--cc1);}
+  .cc-h1{font-family:var(--fd);font-size:clamp(3rem,6vw,5.2rem);font-weight:600;line-height:1.06;letter-spacing:-.03em;color:var(--cream);margin-bottom:1.5rem;}
+  .cc-h1 em{font-style:italic;font-weight:300;background:var(--cc-grd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .cc-hero-sub{font-family:var(--fb);font-size:1.1rem;font-weight:300;color:var(--fog);max-width:640px;margin:0 auto 2.5rem;line-height:1.85;}
+  .cc-hero-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem;}
+  .cc-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--fb);font-size:.88rem;font-weight:600;letter-spacing:.04em;color:var(--ink);background:var(--cc-grd);padding:14px 32px;border-radius:8px;transition:all .35s cubic-bezier(.23,1,.32,1);}
+  .cc-btn:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(199,146,234,.38);}
+  .cc-nasa{display:inline-flex;align-items:center;gap:.85rem;background:rgba(199,146,234,.06);border:1px solid rgba(199,146,234,.18);border-radius:10px;padding:.85rem 1.5rem;font-family:var(--fb);font-size:.78rem;color:var(--fog);line-height:1.5;}
+  .cc-nasa strong{color:var(--cc1);}
+
+  /* Stats */
+  .cc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(199,146,234,.15);border:1px solid rgba(199,146,234,.18);border-radius:16px;overflow:hidden;}
+  .cc-stat{background:var(--ink2);padding:1.5rem 1rem;text-align:center;}
+  .cc-stat-n{font-family:var(--fd);font-size:2.6rem;font-weight:700;letter-spacing:-.03em;background:var(--cc-grd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+  .cc-stat-l{font-family:var(--fb);font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--fog2);margin-top:6px;}
+
+  /* Section titles */
+  .cc-section{position:relative;z-index:1;padding:5rem 0;}
+  .cc-eyebrow{font-family:var(--fb);font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--cc1);margin-bottom:.85rem;display:flex;align-items:center;gap:10px;}
+  .cc-eyebrow::before{content:'';width:28px;height:1px;background:var(--cc1);flex-shrink:0;}
+  .cc-sh{font-family:var(--fd);font-size:clamp(2rem,3.8vw,3rem);font-weight:600;line-height:1.1;letter-spacing:-.02em;color:var(--cream);margin-bottom:1rem;}
+  .cc-sh em{font-style:italic;font-weight:300;color:var(--cc1);}
+  .cc-body{font-family:var(--fb);font-size:.95rem;font-weight:300;color:var(--fog);line-height:1.85;}
+
+  /* Level cards */
+  .cc-levels{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-top:2.5rem;}
+  .cc-level{border-radius:16px;padding:1.75rem;border:1px solid;position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.23,1,.32,1);}
+  .cc-level:hover{transform:translateY(-4px);}
+  .cc-level::after{content:'';position:absolute;top:-50px;right:-50px;width:160px;height:160px;border-radius:50%;opacity:.12;filter:blur(40px);}
+  .cc-lv1{border-color:rgba(62,207,178,.25);background:linear-gradient(145deg,rgba(62,207,178,.06),var(--glass2));}.cc-lv1::after{background:var(--cc3);}
+  .cc-lv2{border-color:rgba(122,159,255,.25);background:linear-gradient(145deg,rgba(122,159,255,.06),var(--glass2));}.cc-lv2::after{background:var(--cc2);}
+  .cc-lv3{border-color:rgba(199,146,234,.25);background:linear-gradient(145deg,rgba(199,146,234,.06),var(--glass2));}.cc-lv3::after{background:var(--cc1);}
+  .cc-lv4{border-color:rgba(240,192,64,.25);background:linear-gradient(145deg,rgba(240,192,64,.06),var(--glass2));}.cc-lv4::after{background:var(--cc4);}
+  .cc-level-header{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1rem;}
+  .cc-level-icon{font-size:2rem;width:56px;height:56px;border-radius:14px;border:1px solid;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .cc-lv1 .cc-level-icon{border-color:rgba(62,207,178,.3);background:rgba(62,207,178,.1);}
+  .cc-lv2 .cc-level-icon{border-color:rgba(122,159,255,.3);background:rgba(122,159,255,.1);}
+  .cc-lv3 .cc-level-icon{border-color:rgba(199,146,234,.3);background:rgba(199,146,234,.1);}
+  .cc-lv4 .cc-level-icon{border-color:rgba(240,192,64,.3);background:rgba(240,192,64,.1);}
+  .cc-level-badge{font-family:var(--fm);font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:100px;border:1px solid;display:inline-block;margin-bottom:.4rem;}
+  .cc-lv1 .cc-level-badge{color:var(--cc3);border-color:rgba(62,207,178,.3);background:rgba(62,207,178,.08);}
+  .cc-lv2 .cc-level-badge{color:var(--cc2);border-color:rgba(122,159,255,.3);background:rgba(122,159,255,.08);}
+  .cc-lv3 .cc-level-badge{color:var(--cc1);border-color:rgba(199,146,234,.3);background:rgba(199,146,234,.08);}
+  .cc-lv4 .cc-level-badge{color:var(--cc4);border-color:rgba(240,192,64,.3);background:rgba(240,192,64,.08);}
+  .cc-level-name{font-family:var(--fd);font-size:1.45rem;font-weight:600;color:var(--cream);line-height:1.2;}
+  .cc-level-grade{font-family:var(--fb);font-size:.72rem;color:var(--fog2);margin-top:.15rem;}
+  .cc-level-desc{font-family:var(--fb);font-size:.82rem;font-weight:300;color:var(--fog);line-height:1.7;margin-bottom:1.1rem;}
+  .cc-topics{display:flex;flex-wrap:wrap;gap:.45rem;}
+  .cc-topic{font-family:var(--fm);font-size:.6rem;padding:3px 9px;border-radius:4px;border:1px solid;color:var(--fog);border-color:var(--border);}
+  .cc-level-cap{font-family:var(--fb);font-size:.72rem;font-weight:600;border-top:1px solid var(--border);padding-top:.75rem;margin-top:.85rem;}
+  .cc-lv1 .cc-level-cap{color:var(--cc3);}
+  .cc-lv2 .cc-level-cap{color:var(--cc2);}
+  .cc-lv3 .cc-level-cap{color:var(--cc1);}
+  .cc-lv4 .cc-level-cap{color:var(--cc4);}
+
+  /* Tech grid */
+  .cc-tech-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:2.5rem;}
+  .cc-tech-card{background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:1.1rem;text-align:center;transition:border-color .3s,transform .3s cubic-bezier(.23,1,.32,1);}
+  .cc-tech-card:hover{border-color:rgba(199,146,234,.35);transform:translateY(-3px);}
+  .cc-tech-icon{font-size:1.75rem;margin-bottom:.5rem;display:block;}
+  .cc-tech-name{font-family:var(--fb);font-size:.75rem;font-weight:600;color:var(--cream);}
+
+  /* Why section — 3-col feature cards */
+  .cc-why{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:2.5rem;}
+  .cc-why-card{background:var(--glass2);border:1px solid var(--border);border-radius:14px;padding:1.5rem 1.25rem;transition:border-color .3s,transform .35s cubic-bezier(.23,1,.32,1);}
+  .cc-why-card:hover{border-color:rgba(199,146,234,.3);transform:translateY(-3px);}
+  .cc-why-icon{font-size:1.6rem;margin-bottom:.85rem;display:block;width:50px;height:50px;border-radius:12px;background:rgba(199,146,234,.08);border:1px solid rgba(199,146,234,.18);display:flex;align-items:center;justify-content:center;}
+  .cc-why-title{font-family:var(--fb);font-size:.9rem;font-weight:600;color:var(--cream);margin-bottom:.4rem;}
+  .cc-why-desc{font-family:var(--fb);font-size:.78rem;font-weight:300;color:var(--fog);line-height:1.65;}
+
+  /* Schools & Parents 2-col */
+  .cc-2col{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2.5rem;}
+  .cc-2col-card{background:var(--glass2);border:1px solid var(--border);border-radius:16px;padding:2rem;}
+  .cc-2col-title{font-family:var(--fd);font-size:1.5rem;font-weight:600;color:var(--cream);margin-bottom:.35rem;}
+  .cc-2col-sub{font-family:var(--fb);font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--cc1);margin-bottom:1.1rem;}
+  .cc-check-list{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem;}
+  .cc-check-list li{font-family:var(--fb);font-size:.82rem;font-weight:300;color:var(--fog);display:flex;align-items:flex-start;gap:.6rem;line-height:1.55;}
+  .cc-check-list li::before{content:'✓';color:var(--cc1);font-weight:700;font-size:.75rem;flex-shrink:0;margin-top:2px;}
+
+  /* How it works steps */
+  .cc-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;margin-top:2.5rem;position:relative;}
+  .cc-steps::before{content:'';position:absolute;top:28px;left:calc(12.5% + 14px);right:calc(12.5% + 14px);height:1px;background:linear-gradient(to right,rgba(199,146,234,.4),rgba(122,159,255,.4));pointer-events:none;}
+  .cc-step{display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1;}
+  .cc-step-num{width:56px;height:56px;border-radius:50%;background:var(--glass2);border:1px solid rgba(199,146,234,.3);display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1rem;position:relative;z-index:1;}
+  .cc-step-title{font-family:var(--fb);font-size:.85rem;font-weight:600;color:var(--cream);margin-bottom:.3rem;}
+  .cc-step-desc{font-family:var(--fb);font-size:.72rem;font-weight:300;color:var(--fog);line-height:1.6;}
+
+  /* Testimonials */
+  .cc-testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:2.5rem;}
+  .cc-tcard{background:var(--glass2);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:border-color .3s;}
+  .cc-tcard:hover{border-color:rgba(199,146,234,.28);}
+  .cc-tcard-quote{font-family:var(--fd);font-size:1rem;font-weight:300;font-style:italic;color:var(--fog);line-height:1.75;margin-bottom:1.1rem;}
+  .cc-tcard-author{display:flex;align-items:center;gap:.75rem;}
+  .cc-tcard-avatar{width:36px;height:36px;border-radius:50%;background:var(--cc-grd);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+  .cc-tcard-name{font-family:var(--fb);font-size:.78rem;font-weight:600;color:var(--cream);}
+  .cc-tcard-grade{font-family:var(--fb);font-size:.65rem;color:var(--fog2);}
+
+  /* FAQ */
+  .cc-faq{display:flex;flex-direction:column;gap:.85rem;margin-top:2.5rem;}
+  .cc-faq-item{background:var(--glass2);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+  .cc-faq-q{padding:1.1rem 1.4rem;cursor:pointer;user-select:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;font-family:var(--fb);font-size:.88rem;font-weight:500;color:var(--cream);}
+  .cc-faq-icon{color:var(--cc1);font-size:.9rem;transition:transform .3s;flex-shrink:0;}
+  .cc-faq-item.open .cc-faq-icon{transform:rotate(45deg);}
+  .cc-faq-a{display:none;padding:0 1.4rem 1.1rem;font-family:var(--fb);font-size:.82rem;font-weight:300;color:var(--fog);line-height:1.75;border-top:1px solid var(--border);}
+  .cc-faq-item.open .cc-faq-a{display:block;}
+
+  /* CTA banner */
+  .cc-cta-banner{background:linear-gradient(135deg,rgba(199,146,234,.12),rgba(122,159,255,.08));border:1px solid rgba(199,146,234,.28);border-radius:20px;padding:4rem 3rem;text-align:center;}
+  .cc-cta-banner h2{font-family:var(--fd);font-size:clamp(2rem,3.5vw,2.8rem);font-weight:600;color:var(--cream);margin-bottom:.75rem;letter-spacing:-.02em;}
+  .cc-cta-banner p{font-family:var(--fb);font-size:.95rem;font-weight:300;color:var(--fog);max-width:520px;margin:0 auto 2rem;line-height:1.85;}
+
+  /* Responsive */
+  @media(max-width:960px){
+    .cc-stats{grid-template-columns:repeat(2,1fr);}
+    .cc-levels{grid-template-columns:1fr;}
+    .cc-tech-grid{grid-template-columns:repeat(3,1fr);}
+    .cc-why{grid-template-columns:repeat(2,1fr);}
+    .cc-2col{grid-template-columns:1fr;}
+    .cc-steps{grid-template-columns:repeat(2,1fr);}
+    .cc-steps::before{display:none;}
+    .cc-testimonials{grid-template-columns:1fr;}
+  }
+  @media(max-width:540px){
+    .cc-tech-grid{grid-template-columns:repeat(2,1fr);}
+    .cc-why{grid-template-columns:1fr;}
+    .cc-steps{grid-template-columns:1fr;}
+    .cc-stats{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<canvas id="fluid-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-name">Data Science Academia</div>
+    <div class="nav-sub">Private Limited &nbsp;&middot;&nbsp; Chennai</div>
+  </a>
+  <ul class="nav-menu" id="nmenu">
+    <li><a href="courses.html">Courses</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="programmes.html">Programmes</a></li>
+    <li><a href="codechamps.html" class="active">Code Champs</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta">Enroll Now &rarr;</a></li>
+  </ul>
+  <div class="nav-tog" onclick="document.getElementById('nmenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────────────── -->
+<section class="cc-hero">
+  <div class="cc-hero-glow"></div>
+  <div class="cc-hero-wrap">
+    <div class="cc-pill"><div class="cc-pill-dot"></div><span class="cc-pill-txt">DSA Code Champs &nbsp;·&nbsp; School Wing</span></div>
+    <h1 class="cc-h1">Nurturing Tomorrow's<br><em>AI Innovators</em> — Starting Today</h1>
+    <p class="cc-hero-sub">Marks open doors. But future-ready skills build empires. Data Science Academia's dedicated school wing introduces young minds to coding, AI, and technology — transforming students from consumers of technology into its creators.</p>
+    <div class="cc-hero-ctas">
+      <a href="contact.html?course=DSA+Code+Champs+(School+Outreach)" class="cc-btn">Book a Free Trial Session &nbsp;&rarr;</a>
+      <a href="#levels" class="btn-o">Explore Course Levels</a>
+    </div>
+    <div class="cc-nasa">
+      <span style="font-size:1.4rem;">🔬</span>
+      <span><strong>NASA Research Insight:</strong> Children's creativity peaks between ages 7 and 13. Introducing AI and coding during this golden window shapes innovators, not just students.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS STRIP ───────────────────────────────────────────── -->
+<div style="position:relative;z-index:1;padding:0 0 4rem;">
+  <div class="container">
+    <div class="cc-stats" data-r>
+      <div class="cc-stat"><div class="cc-stat-n">Gr 3–12</div><div class="cc-stat-l">Age Range</div></div>
+      <div class="cc-stat"><div class="cc-stat-n">4</div><div class="cc-stat-l">Learning Levels</div></div>
+      <div class="cc-stat"><div class="cc-stat-n">100%</div><div class="cc-stat-l">Project-Based</div></div>
+      <div class="cc-stat"><div class="cc-stat-n">NEP</div><div class="cc-stat-l">2020 Aligned</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── WHY CODE CHAMPS ───────────────────────────────────────── -->
+<section class="cc-section" style="padding-top:0;">
+  <div class="container">
+    <div class="cc-eyebrow" data-r>Why It Matters</div>
+    <h2 class="cc-sh" data-r="1">The World Doesn't Wait —<br><em>Neither Should Your Child</em></h2>
+    <p class="cc-body" data-r="2" style="max-width:700px;">Countries like China, Singapore, and the UAE are integrating AI into education from Grade 1. India's NEP 2020 calls for computational thinking from the very start. DSA Code Champs brings world-class AI and coding education to schools across Chennai — making every child a creator, not just a consumer.</p>
+    <div class="cc-why" data-r="3">
+      <div class="cc-why-card">
+        <div class="cc-why-icon">🚀</div>
+        <div class="cc-why-title">Future-Ready Skills</div>
+        <div class="cc-why-desc">AI, ML, Python, and robotics are not the future — they are the present. We give children the skills the 21st-century workforce demands, starting before their peers even begin.</div>
+      </div>
+      <div class="cc-why-card">
+        <div class="cc-why-icon">🧠</div>
+        <div class="cc-why-title">Sharper Problem Solvers</div>
+        <div class="cc-why-desc">Coding builds structured thinking, logical reasoning, and creative problem-solving — skills that improve performance across every subject, from mathematics to the sciences.</div>
+      </div>
+      <div class="cc-why-card">
+        <div class="cc-why-icon">🎯</div>
+        <div class="cc-why-title">100% Project-Based</div>
+        <div class="cc-why-desc">Children learn by building — games, apps, AI chatbots, and data projects. Every session ends with something real they can show their parents and friends.</div>
+      </div>
+      <div class="cc-why-card">
+        <div class="cc-why-icon">🏫</div>
+        <div class="cc-why-title">School-Ready Programme</div>
+        <div class="cc-why-desc">Fully managed — DSA brings the trainers, materials, and curriculum to your school. No preparation required from teachers. Fits into any school timetable.</div>
+      </div>
+      <div class="cc-why-card">
+        <div class="cc-why-icon">🌍</div>
+        <div class="cc-why-title">NEP 2020 Aligned</div>
+        <div class="cc-why-desc">Our curriculum is designed around NEP 2020 computational thinking competencies and India's National Curriculum Framework — giving institutions a compliant, future-forward offering.</div>
+      </div>
+      <div class="cc-why-card">
+        <div class="cc-why-icon">👩‍💻</div>
+        <div class="cc-why-title">Girls in STEM Focus</div>
+        <div class="cc-why-desc">We run sessions specifically designed to encourage and inspire girls to explore AI, coding, and technology — closing the gender gap in STEM from the school years onwards.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COURSE LEVELS ─────────────────────────────────────────── -->
+<section class="cc-section" id="levels" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="cc-eyebrow" data-r>Learning Tracks</div>
+    <h2 class="cc-sh" data-r="1">Four Levels. One <em>Complete Journey.</em></h2>
+    <p class="cc-body" data-r="2" style="max-width:640px;">Every child starts at the right level and progresses at their own pace — from visual block coding to real Python, machine learning, and AI project deployment.</p>
+    <div class="cc-levels" data-r="3">
+
+      <!-- Level 1 -->
+      <a href="cc-level.html?id=explorers" class="cc-level cc-lv1" style="display:block;text-decoration:none;color:inherit;">
+        <div class="cc-level-header">
+          <div class="cc-level-icon">🧱</div>
+          <div>
+            <span class="cc-level-badge">Level 1</span>
+            <div class="cc-level-name">Code Explorers</div>
+            <div class="cc-level-grade">Grade 3 – 5 &nbsp;·&nbsp; Ages 8–10</div>
+          </div>
+        </div>
+        <p class="cc-level-desc">Introduce your child to the amazing world of coding — creating their own animations, stories, apps and games. This level builds creativity, logic, and a love for technology through fun, visual block-based coding that requires zero prior experience.</p>
+        <div class="cc-topics">
+          <span class="cc-topic">Scratch Programming</span>
+          <span class="cc-topic">Block Coding</span>
+          <span class="cc-topic">Sequences & Loops</span>
+          <span class="cc-topic">Animations</span>
+          <span class="cc-topic">Simple Games</span>
+          <span class="cc-topic">Computational Thinking</span>
+        </div>
+        <div class="cc-level-cap">⚡ Project: Build and present your own Scratch game</div>
+        <div style="margin-top:1.1rem;font-family:var(--fb);font-size:.78rem;font-weight:600;color:var(--cc3);display:flex;align-items:center;gap:5px;">View Full Curriculum &nbsp;&rarr;</div>
+      </a>
+
+      <!-- Level 2 -->
+      <a href="cc-level.html?id=builders" class="cc-level cc-lv2" style="display:block;text-decoration:none;color:inherit;">
+        <div class="cc-level-header">
+          <div class="cc-level-icon">🐍</div>
+          <div>
+            <span class="cc-level-badge">Level 2</span>
+            <div class="cc-level-name">Code Builders</div>
+            <div class="cc-level-grade">Grade 6 – 7 &nbsp;·&nbsp; Ages 11–12</div>
+          </div>
+        </div>
+        <p class="cc-level-desc">Ignite your child's interest in real programming. Students transition from visual blocks to text-based Python — building working apps, chatbots, and data tools. Introduction to AI concepts through hands-on mini-projects that feel like play.</p>
+        <div class="cc-topics">
+          <span class="cc-topic">Python Basics</span>
+          <span class="cc-topic">Turtle Graphics</span>
+          <span class="cc-topic">Functions & Loops</span>
+          <span class="cc-topic">Simple Chatbots</span>
+          <span class="cc-topic">Intro to AI</span>
+          <span class="cc-topic">Mini-Games</span>
+        </div>
+        <div class="cc-level-cap">⚡ Project: Build a Python chatbot or calculator app</div>
+        <div style="margin-top:1.1rem;font-family:var(--fb);font-size:.78rem;font-weight:600;color:var(--cc2);display:flex;align-items:center;gap:5px;">View Full Curriculum &nbsp;&rarr;</div>
+      </a>
+
+      <!-- Level 3 -->
+      <a href="cc-level.html?id=innovators" class="cc-level cc-lv3" style="display:block;text-decoration:none;color:inherit;">
+        <div class="cc-level-header">
+          <div class="cc-level-icon">🤖</div>
+          <div>
+            <span class="cc-level-badge">Level 3</span>
+            <div class="cc-level-name">Code Innovators</div>
+            <div class="cc-level-grade">Grade 8 – 9 &nbsp;·&nbsp; Ages 13–14</div>
+          </div>
+        </div>
+        <p class="cc-level-desc">Students make the leap from coding to creating intelligent systems. Python intermediate, real data science, machine learning concepts, and introductory computer vision — all through projects that solve real-world problems.</p>
+        <div class="cc-topics">
+          <span class="cc-topic">Python Intermediate</span>
+          <span class="cc-topic">Data Science Basics</span>
+          <span class="cc-topic">ML Introduction</span>
+          <span class="cc-topic">Computer Vision</span>
+          <span class="cc-topic">IoT Projects</span>
+          <span class="cc-topic">OOP Concepts</span>
+        </div>
+        <div class="cc-level-cap">⚡ Project: Train a simple image classifier</div>
+        <div style="margin-top:1.1rem;font-family:var(--fb);font-size:.78rem;font-weight:600;color:var(--cc1);display:flex;align-items:center;gap:5px;">View Full Curriculum &nbsp;&rarr;</div>
+      </a>
+
+      <!-- Level 4 -->
+      <a href="cc-level.html?id=pioneers" class="cc-level cc-lv4" style="display:block;text-decoration:none;color:inherit;">
+        <div class="cc-level-header">
+          <div class="cc-level-icon">🚀</div>
+          <div>
+            <span class="cc-level-badge">Level 4</span>
+            <div class="cc-level-name">Code Pioneers</div>
+            <div class="cc-level-grade">Grade 10 – 12 &nbsp;·&nbsp; Ages 15–17</div>
+          </div>
+        </div>
+        <p class="cc-level-desc">The most advanced track — students master Python deeply, build machine learning models, explore deep learning and computer vision, and deploy real AI applications. A launchpad for engineering college and AI research careers.</p>
+        <div class="cc-topics">
+          <span class="cc-topic">Advanced Python</span>
+          <span class="cc-topic">Machine Learning</span>
+          <span class="cc-topic">Deep Learning</span>
+          <span class="cc-topic">Computer Vision (OpenCV)</span>
+          <span class="cc-topic">NLP Basics</span>
+          <span class="cc-topic">AI Project Deployment</span>
+        </div>
+        <div class="cc-level-cap">🏆 Project: Build and deploy a real-world AI application</div>
+        <div style="margin-top:1.1rem;font-family:var(--fb);font-size:.78rem;font-weight:600;color:var(--cc4);display:flex;align-items:center;gap:5px;">View Full Curriculum &nbsp;&rarr;</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── TECHNOLOGIES ──────────────────────────────────────────── -->
+<section class="cc-section" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="cc-eyebrow" data-r>What They'll Build With</div>
+    <h2 class="cc-sh" data-r="1">Endless <em>Possibilities</em></h2>
+    <p class="cc-body" data-r="2" style="max-width:560px;">From visual Scratch blocks to professional Python and cloud AI — every technology introduced is age-appropriate, project-driven, and genuinely used in the industry.</p>
+    <div class="cc-tech-grid" data-r="3">
+      <div class="cc-tech-card"><span class="cc-tech-icon">🐱</span><div class="cc-tech-name">Scratch</div></div>
+      <div class="cc-tech-card"><span class="cc-tech-icon">🐍</span><div class="cc-tech-name">Python</div></div>
+      <div class="cc-tech-card"><span class="cc-tech-icon">🤖</span><div class="cc-tech-name">Artificial Intelligence</div></div>
+      <div class="cc-tech-card"><span class="cc-tech-icon">🧠</span><div class="cc-tech-name">Machine Learning</div></div>
+      <div class="cc-tech-card"><span class="cc-tech-icon">👁️</span><div class="cc-tech-name">Computer Vision</div></div>
+      <div class="cc-tech-card"><span class="cc-tech-icon">💬</span><div class="cc-tech-name">Chatbots & NLP</div></div>
+      <div class="cc-tech-card"><span class="cc-tech-icon">⚡</span><div class="cc-tech-name">IoT & Robotics</div></div>
+      <div class="cc-tech-card"><span class="cc-tech-icon">🎮</span><div class="cc-tech-name">Game Programming</div></div>
+      <div class="cc-tech-card"><span class="cc-tech-icon">📊</span><div class="cc-tech-name">Data Science</div></div>
+      <div class="cc-tech-card"><span class="cc-tech-icon">🔐</span><div class="cc-tech-name">Cyber Security</div></div>
+      <div class="cc-tech-card"><span class="cc-tech-icon">☁️</span><div class="cc-tech-name">Cloud Computing</div></div>
+      <div class="cc-tech-card"><span class="cc-tech-icon">🌐</span><div class="cc-tech-name">Web Development</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOR SCHOOLS & FOR PARENTS ─────────────────────────────── -->
+<section class="cc-section" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="cc-eyebrow" data-r>Who We Work With</div>
+    <h2 class="cc-sh" data-r="1">For <em>Schools</em> & For <em>Parents</em></h2>
+    <div class="cc-2col" data-r="2">
+
+      <!-- Schools -->
+      <div class="cc-2col-card" style="border-color:rgba(199,146,234,.22);">
+        <div style="font-size:2rem;margin-bottom:.75rem;">🏫</div>
+        <div class="cc-2col-sub">School Partnerships</div>
+        <div class="cc-2col-title">The Schools That Teach AI Today Will Lead Tomorrow</div>
+        <p style="font-family:var(--fb);font-size:.82rem;font-weight:300;color:var(--fog);line-height:1.75;margin:1rem 0;">Artificial Intelligence is no longer optional — it is fundamental. Schools that adopt AI aren't just modern — they are prestigious. DSA Code Champs is a complete, plug-and-play solution.</p>
+        <ul class="cc-check-list">
+          <li>AI + Coding curriculum for Grade 3 to Grade 12</li>
+          <li>Fully managed — DSA trainers, materials, and kits provided</li>
+          <li>Custom scheduling to fit school timetable and academic calendar</li>
+          <li>Student performance reports issued to the school</li>
+          <li>Parents invited to a closing Demo Day and project showcase</li>
+          <li>Aligned with NEP 2020 computational thinking framework</li>
+          <li>Improve your institution's reputation as a future-ready school</li>
+        </ul>
+        <a href="contact.html" class="cc-btn" style="display:inline-flex;font-size:.82rem;padding:12px 24px;">Partner with DSA Code Champs &nbsp;&rarr;</a>
+      </div>
+
+      <!-- Parents -->
+      <div class="cc-2col-card" style="border-color:rgba(122,159,255,.22);">
+        <div style="font-size:2rem;margin-bottom:.75rem;">👨‍👩‍👧</div>
+        <div class="cc-2col-sub">For Parents</div>
+        <div class="cc-2col-title">Give Your Child the Skill That Defines the Future</div>
+        <p style="font-family:var(--fb);font-size:.82rem;font-weight:300;color:var(--fog);line-height:1.75;margin:1rem 0;">Today's smartest parents aren't just chasing grades — they're building creators, innovators, and leaders. AI and coding aren't optional — they're the new literacy.</p>
+        <ul class="cc-check-list">
+          <li>Live interactive sessions with DSA's expert faculty</li>
+          <li>Project portfolio showcasing your child's work each month</li>
+          <li>DSA Code Champs participation certificate on completion</li>
+          <li>Flexible weekend and after-school batch timings</li>
+          <li>Online and offline options available across Chennai</li>
+          <li>Regular progress updates shared with parents after each session</li>
+          <li>Free trial session — see the learning before you commit</li>
+        </ul>
+        <a href="contact.html?course=DSA+Code+Champs+(School+Outreach)" class="cc-btn" style="display:inline-flex;font-size:.82rem;padding:12px 24px;background:linear-gradient(135deg,#7a9fff,#3ecfb2);">Book a Free Trial Session &nbsp;&rarr;</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ──────────────────────────────────────────── -->
+<section class="cc-section" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="cc-eyebrow" data-r>Getting Started</div>
+    <h2 class="cc-sh" data-r="1">How to Get Started with Your <em>Free Trial</em></h2>
+    <div class="cc-steps" data-r="2">
+      <div class="cc-step">
+        <div class="cc-step-num">📝</div>
+        <div class="cc-step-title">Register</div>
+        <div class="cc-step-desc">Fill the enquiry form with your child's grade and preferred level or school's contact details</div>
+      </div>
+      <div class="cc-step">
+        <div class="cc-step-num">📅</div>
+        <div class="cc-step-title">Schedule</div>
+        <div class="cc-step-desc">A DSA coordinator reaches out to schedule your child's first free session at a convenient time</div>
+      </div>
+      <div class="cc-step">
+        <div class="cc-step-num">🚀</div>
+        <div class="cc-step-title">Free Trial</div>
+        <div class="cc-step-desc">Your child attends a live, interactive coding session — completely free, no commitment required</div>
+      </div>
+      <div class="cc-step">
+        <div class="cc-step-num">🏆</div>
+        <div class="cc-step-title">Enrol & Create</div>
+        <div class="cc-step-desc">Choose the right level and batch; your child starts building their first real project immediately</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ──────────────────────────────────────────── -->
+<section class="cc-section" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="cc-eyebrow" data-r>What Parents & Students Say</div>
+    <h2 class="cc-sh" data-r="1">Real Results. <em>Inspired Young Minds.</em></h2>
+    <div class="cc-testimonials" data-r="2">
+      <div class="cc-tcard">
+        <div class="cc-tcard-quote">"My son was so excited when he first coded a program that made a character call out his name. The classes were so practical — we didn't know how an hour melted away so soon. Incredibly practical and engaging."</div>
+        <div class="cc-tcard-author"><div class="cc-tcard-avatar">👦</div><div><div class="cc-tcard-name">Parent of a Grade 4 Student</div><div class="cc-tcard-grade">Chennai</div></div></div>
+      </div>
+      <div class="cc-tcard">
+        <div class="cc-tcard-quote">"I couldn't believe my Grade 8 child had already completed Python programming and moved to Artificial Intelligence. The trainer kept his coding fire alive and brighter. Strongly recommended for any child curious about technology."</div>
+        <div class="cc-tcard-author"><div class="cc-tcard-avatar">🧒</div><div><div class="cc-tcard-name">Parent of a Grade 8 Student</div><div class="cc-tcard-grade">Chennai</div></div></div>
+      </div>
+      <div class="cc-tcard">
+        <div class="cc-tcard-quote">"The teacher was patient, understood my child's mindset perfectly, and made sure he applied every concept in his own way. My son developed stories and games — and now wants to pursue the next level. Highly recommended."</div>
+        <div class="cc-tcard-author"><div class="cc-tcard-avatar">👧</div><div><div class="cc-tcard-name">Parent of a Grade 5 Student</div><div class="cc-tcard-grade">Chennai</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ──────────────────────────────────────────────────── -->
+<section class="cc-section" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;">
+      <div>
+        <div class="cc-eyebrow" data-r>For Parents</div>
+        <h2 class="cc-sh" data-r="1">Frequently Asked <em>Questions</em></h2>
+        <div class="cc-faq" data-r="2">
+          <div class="cc-faq-item open">
+            <div class="cc-faq-q">Why should my child learn AI and coding early? <span class="cc-faq-icon">+</span></div>
+            <div class="cc-faq-a" style="padding-top:.85rem;">Learning AI and coding during school years builds a strong foundation — sharpening problem-solving, creativity, and logical thinking. By the time other students start in college, Code Champs students are already building. This head start can unlock top engineering placements, research opportunities, and entrepreneurship paths.</div>
+          </div>
+          <div class="cc-faq-item">
+            <div class="cc-faq-q">Isn't AI too advanced for younger children? <span class="cc-faq-icon">+</span></div>
+            <div class="cc-faq-a" style="padding-top:.85rem;">Not when it's taught the right way. DSA Code Champs breaks down complex concepts using stories, games, and hands-on projects. Students as young as 8 can build AI chatbots and code their own games — because learning is genuinely fun when it is age-appropriate and engaging.</div>
+          </div>
+          <div class="cc-faq-item">
+            <div class="cc-faq-q">What if my child doesn't want to become a programmer? <span class="cc-faq-icon">+</span></div>
+            <div class="cc-faq-a" style="padding-top:.85rem;">AI and coding aren't just for tech careers. Today every industry uses AI — from healthcare to fashion to farming. Introducing your child to AI helps them understand the world better and become smarter problem-solvers in any career they choose.</div>
+          </div>
+          <div class="cc-faq-item">
+            <div class="cc-faq-q">How do I know my child is actually learning? <span class="cc-faq-icon">+</span></div>
+            <div class="cc-faq-a" style="padding-top:.85rem;">DSA Code Champs emphasises project-based learning where children build real things — games, apps, AI tools — and showcase them. Parents receive progress updates after each session, and students love demonstrating what they've created. It's play with a purpose.</div>
+          </div>
+          <div class="cc-faq-item">
+            <div class="cc-faq-q">Is school curriculum enough for the AI era? <span class="cc-faq-icon">+</span></div>
+            <div class="cc-faq-a" style="padding-top:.85rem;">Unfortunately, no. Most school curricula still treat coding as an elective if offered at all. In contrast, industries are moving extremely fast. What your child learns in Code Champs today shapes the future they lead tomorrow — and ensures they are not left behind.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="cc-eyebrow" data-r>For Schools</div>
+        <h2 class="cc-sh" data-r="1">School Partnership <em>Questions</em></h2>
+        <div class="cc-faq" data-r="2">
+          <div class="cc-faq-item open">
+            <div class="cc-faq-q">Why should schools introduce AI from Grade 3? <span class="cc-faq-icon">+</span></div>
+            <div class="cc-faq-a" style="padding-top:.85rem;">Because the world isn't waiting. Starting AI and coding during school years builds long-term capacity in logic, innovation, and digital literacy. Countries like China have embedded AI in education from age 6. India's NEP 2020 specifically calls for computational thinking from early grades.</div>
+          </div>
+          <div class="cc-faq-item">
+            <div class="cc-faq-q">Is this too demanding for our teachers or infrastructure? <span class="cc-faq-icon">+</span></div>
+            <div class="cc-faq-a" style="padding-top:.85rem;">Not at all. DSA Code Champs provides the complete solution — curriculum, certified trainers, materials, activity kits, and student performance reports. Our plug-and-play model means your school can offer world-class AI education without overloading your existing staff at all.</div>
+          </div>
+          <div class="cc-faq-item">
+            <div class="cc-faq-q">How does this benefit our school's reputation? <span class="cc-faq-icon">+</span></div>
+            <div class="cc-faq-a" style="padding-top:.85rem;">Schools that offer future-ready AI and coding programmes are viewed as progressive, innovative, and student-centric. Integrating Code Champs helps your institution stand out and attracts parents who want more than textbooks for their children's futures.</div>
+          </div>
+          <div class="cc-faq-item">
+            <div class="cc-faq-q">Can smaller or rural schools implement this too? <span class="cc-faq-icon">+</span></div>
+            <div class="cc-faq-a" style="padding-top:.85rem;">Absolutely. DSA Code Champs offers both offline (school visit) and online (live interactive) delivery models. Every school — urban or rural — can offer world-class AI and coding education. All it takes is the intent to prepare your students for a better future.</div>
+          </div>
+          <div class="cc-faq-item">
+            <div class="cc-faq-q">Do students actually retain what they learn? <span class="cc-faq-icon">+</span></div>
+            <div class="cc-faq-a" style="padding-top:.85rem;">Yes — especially when they build things. Children learn best when they create. Our approach focuses on hands-on, project-based tasks where students retain concepts by applying them. This isn't passive learning — it is active, visible, measurable skill-building.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BANNER ────────────────────────────────────────────── -->
+<section class="cc-section" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="cc-cta-banner" data-r>
+      <div style="font-size:3rem;margin-bottom:1.25rem;">🤖</div>
+      <h2>Ready to Spark Your Child's<br>AI Journey?</h2>
+      <p>Book a free trial session — no commitment, no pressure. Let your child experience DSA Code Champs and discover how exciting technology can be when it is taught the right way.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="contact.html?course=DSA+Code+Champs+(School+Outreach)" class="cc-btn" style="font-size:.95rem;padding:16px 40px;">Book a Free Trial &nbsp;&rarr;</a>
+        <a href="contact.html" class="btn-o">Partner With Us (Schools)</a>
+      </div>
+      <div style="margin-top:2rem;font-family:var(--fm);font-size:.62rem;color:var(--fog3);letter-spacing:.08em;text-transform:uppercase;">Chennai &nbsp;·&nbsp; Online &nbsp;·&nbsp; School Visits &nbsp;·&nbsp; Offline Bootcamps</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer><div class="fi2">
+  <div><div class="fbn">Data Science Academia</div><div class="fbs">Private Limited &nbsp;&middot;&nbsp; Chennai, Tamil Nadu</div></div>
+  <div class="fc">&copy; 2025 Data Science Academia Private Limited. All rights reserved.<br><span style="font-size:.62rem">Formerly Data Science Academia under Sai Chamundeeswari Academy (MSME Registered)</span></div>
+  <div class="fr">MSME Reg &nbsp;&middot;&nbsp; Pvt Ltd In Progress</div>
+</div></footer>
+
+<script src="script.js"></script>
+<script>
+/* FAQ accordion */
+document.querySelectorAll('.cc-faq-item').forEach(item => {
+  item.querySelector('.cc-faq-q').addEventListener('click', () => {
+    item.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Science Academia Pvt. Ltd. — Premier AI & Data Science Education, Chennai</title>
+<meta name="description" content="Data Science Academia — Ph.D.-led, industry-backed Data Science & AI education in Chennai.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<canvas id="fluid-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-name">Data Science Academia</div>
+    <div class="nav-sub">Private Limited &nbsp;&middot;&nbsp; Chennai</div>
+  </a>
+  <ul class="nav-menu" id="nmenu">
+    <li><a href="courses.html">Courses</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="programmes.html">Programmes</a></li>
+    <li><a href="codechamps.html">Code Champs</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta">Enroll Now &rarr;</a></li>
+  </ul>
+  <div class="nav-tog" onclick="document.getElementById('nmenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-wrap">
+    <div>
+      <div class="hero-pill"><div class="hero-pill-dot">✦</div><span class="hero-pill-txt">AICTE Affiliated &nbsp;&middot;&nbsp; MSME Registered &nbsp;&middot;&nbsp; Chennai, TN</span></div>
+      <h1 class="hero-title">Master the<br><span class="it">Art &amp; Science</span><br>of Intelligence</h1>
+      <p class="hero-body">Ph.D.-led, industry-grounded education in Data Science and Artificial Intelligence. Where academic rigour meets real-world AI engineering — taught by practitioners, not just professors.</p>
+      <div class="hero-ctas"><a href="courses.html" class="btn-g">Explore Courses &nbsp;&rarr;</a><a href="about.html" class="btn-o">Meet Our Faculty</a></div>
+      <div class="hero-metrics">
+        <div class="met"><div class="met-n">16+</div><div class="met-l">Specialised Courses</div></div>
+        <div class="met"><div class="met-n">500+</div><div class="met-l">Students Trained</div></div>
+        <div class="met"><div class="met-n">2019</div><div class="met-l">Year Founded</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="term">
+        <div class="t-bar"><div class="td tr"></div><div class="td ty"></div><div class="td tg"></div><div class="t-ttl">model_training.py &mdash; DSA Studio</div></div>
+        <div class="t-body">
+          <div class="tl"><span class="tln">1</span><span><span class="tkw">import</span> <span class="tfn">numpy</span> <span class="tkw">as</span> <span class="tfn">np</span></span></div>
+          <div class="tl"><span class="tln">2</span><span><span class="tkw">from</span> <span class="tfn">sklearn.ensemble</span> <span class="tkw">import</span> <span class="top">RandomForestClassifier</span></span></div>
+          <div class="tl"><span class="tln">3</span><span class="tcm">&nbsp;</span></div>
+          <div class="tl"><span class="tln">4</span><span><span class="tcm"># Initialise and train model</span></span></div>
+          <div class="tl"><span class="tln">5</span><span><span class="tfn">clf</span> <span class="top">=</span> <span class="top">RandomForestClassifier</span>(<span class="tfn">n_estimators</span><span class="top">=</span><span class="tnm">200</span>)</span></div>
+          <div class="tl"><span class="tln">6</span><span><span class="tfn">clf</span>.<span class="top">fit</span>(<span class="tstr">X_train</span>, <span class="tstr">y_train</span>)</span></div>
+          <div class="tl"><span class="tln">7</span><span><span class="tfn">score</span> <span class="top">=</span> <span class="tfn">clf</span>.<span class="top">score</span>(<span class="tstr">X_test</span>, <span class="tstr">y_test</span>)</span></div>
+          <div class="tl"><span class="tln">8</span><span><span class="top">print</span>(<span class="tstr">f"Accuracy: </span><span class="tfn">{score:.4f}</span><span class="tstr">"</span>)</span></div>
+          <div class="t-out">
+            <div class="t-ol">Output</div>
+            <div class="ar"><span class="an">Accuracy</span><div class="at"><div class="af" style="width:94%"></div></div><span class="av">94.2%</span></div>
+            <div class="ar"><span class="an">Precision</span><div class="at"><div class="af" style="width:91%"></div></div><span class="av">91.7%</span></div>
+            <div class="ar"><span class="an">Recall</span><div class="at"><div class="af" style="width:89%"></div></div><span class="av">89.3%</span></div>
+            <div class="ar"><span class="an">F1 Score</span><div class="at"><div class="af" style="width:90%"></div></div><span class="av">90.5%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="t-badge"><span style="font-size:1.25rem">🎓</span><div><div class="tb-v">Ph.D. Faculty</div><div class="tb-l">Anna University</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-t">
+    <div class="ti"><div class="td2"></div>Python Programming</div><div class="ti"><div class="td2"></div>Machine Learning</div><div class="ti"><div class="td2"></div>Deep Learning</div><div class="ti"><div class="td2"></div>Data Visualization</div><div class="ti"><div class="td2"></div>Power BI</div><div class="ti"><div class="td2"></div>Microsoft Azure</div><div class="ti"><div class="td2"></div>AICTE Internships</div><div class="ti"><div class="td2"></div>Faculty Development</div><div class="ti"><div class="td2"></div>Corporate Training</div><div class="ti"><div class="td2"></div>Research Collaboration</div>
+    <div class="ti"><div class="td2"></div>Python Programming</div><div class="ti"><div class="td2"></div>Machine Learning</div><div class="ti"><div class="td2"></div>Deep Learning</div><div class="ti"><div class="td2"></div>Data Visualization</div><div class="ti"><div class="td2"></div>Power BI</div><div class="ti"><div class="td2"></div>Microsoft Azure</div><div class="ti"><div class="td2"></div>AICTE Internships</div><div class="ti"><div class="td2"></div>Faculty Development</div><div class="ti"><div class="td2"></div>Corporate Training</div><div class="ti"><div class="td2"></div>Research Collaboration</div>
+  </div>
+</div>
+
+<!-- EXPLORE -->
+<section id="explore">
+  <div class="container">
+    <div class="eyebrow" data-r>Navigate DSA</div>
+    <h2 class="sh" data-r="1">Everything We <em>Offer</em></h2>
+    <div class="explore-grid">
+      <a href="courses.html" class="explore-card" data-r="1">
+        <div class="explore-icon">🧠</div>
+        <div class="explore-title">Our Courses</div>
+        <div class="explore-desc">Six specialised programmes in Python, ML, Deep Learning, Data Visualization, Power BI and Azure — from beginner to advanced.</div>
+        <div class="explore-link">View All Courses &rarr;</div>
+      </a>
+      <a href="about.html" class="explore-card" data-r="2">
+        <div class="explore-icon">🎓</div>
+        <div class="explore-title">About Us</div>
+        <div class="explore-desc">Meet the Ph.D.-level faculty behind DSA and learn how academic rigour meets real-world AI engineering in Chennai.</div>
+        <div class="explore-link">Our Story &rarr;</div>
+      </a>
+      <a href="programmes.html" class="explore-card" data-r="3">
+        <div class="explore-icon">📋</div>
+        <div class="explore-title">Programmes</div>
+        <div class="explore-desc">The 12-month AI Mastery Track, AICTE internships, Microsoft Certifications, Faculty Development, Corporate Training and research support.</div>
+        <div class="explore-link">See Programmes &rarr;</div>
+      </a>
+      <a href="contact.html" class="explore-card" data-r="4">
+        <div class="explore-icon">✉️</div>
+        <div class="explore-title">Enroll / Contact</div>
+        <div class="explore-desc">Ready to begin? Reach us for course enrolment, corporate training, internship applications, or institutional collaborations.</div>
+        <div class="explore-link">Get In Touch &rarr;</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CODE CHAMPS CALLOUT -->
+<section style="position:relative;z-index:1;padding:0 0 5rem;">
+  <div class="container">
+    <div style="background:linear-gradient(135deg,rgba(199,146,234,.08),rgba(122,159,255,.06));border:1px solid rgba(199,146,234,.25);border-radius:20px;padding:2.5rem 3rem;display:flex;align-items:center;gap:2.5rem;flex-wrap:wrap;">
+      <div style="font-size:3.5rem;flex-shrink:0;">🤖</div>
+      <div style="flex:1;min-width:240px;">
+        <div class="eyebrow" style="justify-content:flex-start;">School Wing</div>
+        <div style="font-family:var(--fd);font-size:1.85rem;font-weight:600;color:var(--cream);margin-bottom:.5rem;">DSA Code Champs</div>
+        <div style="font-family:var(--fb);font-size:.92rem;font-weight:300;color:var(--fog);line-height:1.75;">Our dedicated school outreach wing — nurturing the next generation of AI innovators from Grade 3 to Grade 12. Scratch, Python, AI, robotics, and more. Delivered in schools across Chennai and online.</div>
+      </div>
+      <a href="codechamps.html" class="btn-g" style="flex-shrink:0;background:linear-gradient(135deg,#c792ea,#7a9fff);">Explore Code Champs &nbsp;&rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer><div class="fi2">
+  <div><div class="fbn">Data Science Academia</div><div class="fbs">Private Limited &nbsp;&middot;&nbsp; Chennai, Tamil Nadu</div></div>
+  <div class="fc">&copy; 2025 Data Science Academia Private Limited. All rights reserved.<br><span style="font-size:.62rem">Formerly Data Science Academia under Sai Chamundeeswari Academy (MSME Registered)</span></div>
+  <div class="fr">MSME Reg &nbsp;&middot;&nbsp; Pvt Ltd In Progress</div>
+</div></footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programmes — Data Science Academia Pvt. Ltd.</title>
+<meta name="description" content="AICTE-aligned internships, Microsoft Certification prep, competitive exam coaching, school outreach, research assistance, corporate FDP, and communication training — Data Science Academia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<canvas id="fluid-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-name">Data Science Academia</div>
+    <div class="nav-sub">Private Limited &nbsp;&middot;&nbsp; Chennai</div>
+  </a>
+  <ul class="nav-menu" id="nmenu">
+    <li><a href="courses.html">Courses</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="programmes.html" class="active">Programmes</a></li>
+    <li><a href="codechamps.html">Code Champs</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta">Enroll Now &rarr;</a></li>
+  </ul>
+  <div class="nav-tog" onclick="document.getElementById('nmenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <div class="eyebrow" data-r>Academic &amp; Training Division</div>
+    <h1 class="sh" data-r="1">Special <em>Programmes</em></h1>
+    <p class="page-hero-sub" data-r="2">Seven structured programmes spanning students, researchers, faculty, and enterprises — delivered live, recorded, and in-person across Chennai and online.</p>
+  </div>
+</div>
+
+<!-- AUDIENCE & DELIVERY STRIP -->
+<div style="position:relative;z-index:1;padding:0 0 2.5rem;">
+  <div class="container">
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;" data-r>
+      <span class="ptag pta" style="margin-bottom:0">Students</span>
+      <span class="ptag ptb" style="margin-bottom:0">Researchers</span>
+      <span class="ptag ptc" style="margin-bottom:0">Faculty</span>
+      <span class="ptag ptd" style="margin-bottom:0">Industry Professionals</span>
+      <span class="ptag pte" style="margin-bottom:0">School Children (Gr. 6–9)</span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:2rem;justify-content:center;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);" data-r="1">
+      <span style="font-family:var(--fb);font-size:.78rem;color:var(--fog);display:flex;align-items:center;gap:.45rem;">📡 &nbsp;Online — Live &amp; Recorded</span>
+      <span style="font-family:var(--fb);font-size:.78rem;color:var(--fog);display:flex;align-items:center;gap:.45rem;">🏛️ &nbsp;Offline — Workshops &amp; Bootcamps</span>
+      <span style="font-family:var(--fb);font-size:.78rem;color:var(--fog);display:flex;align-items:center;gap:.45rem;">🔀 &nbsp;Hybrid Delivery Available</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRAMMES GRID -->
+<section id="programs">
+  <div class="container">
+    <div class="pg">
+
+      <!-- 0. AI Mastery Track — HERO FEATURED (spans full width) -->
+      <div class="pc feat" data-r style="border-color:rgba(240,192,64,.3);background:linear-gradient(145deg,rgba(240,192,64,.05),var(--glass2));position:relative;overflow:hidden;">
+        <div class="pi-glow" style="background:#f0c040;"></div>
+        <!-- Quarter roadmap strip -->
+        <div style="display:flex;gap:0;margin-bottom:1.75rem;border-radius:10px;overflow:hidden;border:1px solid rgba(240,192,64,.2);">
+          <div style="flex:1;padding:.65rem .9rem;background:rgba(240,192,64,.12);border-right:1px solid rgba(240,192,64,.15);">
+            <div style="font-family:var(--fm);font-size:.6rem;color:rgba(240,192,64,.7);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem;">Q1 · Months 1–3</div>
+            <div style="font-family:var(--fb);font-size:.72rem;font-weight:500;color:var(--cream);line-height:1.5;">Python &middot; SQL &middot; R &middot; Excel</div>
+          </div>
+          <div style="flex:1;padding:.65rem .9rem;background:rgba(240,192,64,.07);border-right:1px solid rgba(240,192,64,.12);">
+            <div style="font-family:var(--fm);font-size:.6rem;color:rgba(240,192,64,.6);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem;">Q2 · Months 4–6</div>
+            <div style="font-family:var(--fb);font-size:.72rem;font-weight:500;color:var(--cream);line-height:1.5;">Tableau &middot; EDA &middot; Ethics &middot; Engineering</div>
+          </div>
+          <div style="flex:1;padding:.65rem .9rem;background:rgba(240,192,64,.05);border-right:1px solid rgba(240,192,64,.1);">
+            <div style="font-family:var(--fm);font-size:.6rem;color:rgba(240,192,64,.55);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem;">Q3 · Months 7–9</div>
+            <div style="font-family:var(--fb);font-size:.72rem;font-weight:500;color:var(--cream);line-height:1.5;">Power BI &middot; ML &middot; Time Series</div>
+          </div>
+          <div style="flex:1;padding:.65rem .9rem;background:rgba(240,192,64,.03);">
+            <div style="font-family:var(--fm);font-size:.6rem;color:rgba(240,192,64,.5);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem;">Q4 · Months 10–12</div>
+            <div style="font-family:var(--fb);font-size:.72rem;font-weight:500;color:var(--cream);line-height:1.5;">Deep Learning &middot; NLP &middot; Big Data &middot; Cloud</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:1.5rem;flex-wrap:wrap;">
+          <div class="pi pi-mastery">🚀</div>
+          <div style="flex:1;min-width:180px;">
+            <span class="ptag pth">AI Mastery &middot; 12 Months</span>
+            <div class="pttl">The Complete AI &amp; Data Science Mastery Track</div>
+          </div>
+        </div>
+        <div class="pdes">Our most comprehensive offering — a structured, mentor-guided 12-month programme that takes you from zero to job-ready across 16 courses, 4 quarterly capstone projects, and a certified internship. From Python foundations through deep learning and cloud deployment, every quarter builds systematically on the last.</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 2.5rem;">
+          <ul class="plist">
+            <li>16 courses across 4 structured quarters</li>
+            <li>4 capstone projects — one per quarter</li>
+            <li>DSA AI Mastery Certificate on completion</li>
+          </ul>
+          <ul class="plist">
+            <li>Internship certificate + project portfolio</li>
+            <li>Placement assistance — resume, mock interviews</li>
+            <li>Live + recorded sessions with quarterly bootcamps</li>
+          </ul>
+        </div>
+        <a href="programme.html?id=ai-mastery" class="plink" style="color:#f0c040;border-bottom-color:rgba(240,192,64,.35);">Explore the Mastery Track &nbsp;&rarr;</a>
+      </div>
+
+      <!-- 1. Internship -->
+      <div class="pc" data-r>
+        <div class="pi-glow" style="background:var(--teal);"></div>
+        <div class="pi pi-intern">🎓</div>
+        <span class="ptag pta">NEP &amp; AICTE Aligned</span>
+        <div class="pttl">Internships</div>
+        <div class="pdes">1–2 month structured internships — available online and hybrid — with real project work, impactful outcomes and AICTE-recognised certification. Aligned with NEP 2020 and AICTE guidelines.</div>
+        <ul class="plist">
+          <li>DSA Internship Certificate + Offer Letter</li>
+          <li>AICTE Approved (where applicable)</li>
+          <li>Work-integrated, hands-on modules</li>
+          <li>Domains: ML, Research, Data Analytics, Software Tools</li>
+          <li>Mentored by Ph.D.-qualified faculty</li>
+          <li>Online / Hybrid delivery options</li>
+        </ul>
+        <a href="programme.html?id=internship" class="plink">Learn More &nbsp;&rarr;</a>
+      </div>
+
+      <!-- 2. Microsoft Certification -->
+      <div class="pc" data-r>
+        <div class="pi-glow" style="background:#7a9fff;"></div>
+        <div class="pi pi-ms">🏅</div>
+        <span class="ptag ptc">Microsoft Certified</span>
+        <div class="pttl">Microsoft Certification Program</div>
+        <div class="pdes">Bridge the gap between theoretical learning and industry-recognised credentials. Structured preparation for Microsoft Azure and Power BI certifications, delivered in collaboration with Microsoft Certified Trainers (MCTs).</div>
+        <ul class="plist">
+          <li>Azure AI Fundamentals (AI-900)</li>
+          <li>Azure Data Fundamentals (DP-900)</li>
+          <li>Power BI Certification Prep</li>
+          <li>Collaboration with Microsoft Certified Trainers (MCTs)</li>
+        </ul>
+        <a href="programme.html?id=microsoft-certification" class="plink">Learn More &nbsp;&rarr;</a>
+      </div>
+
+      <!-- 3. Corporate & FDP -->
+      <div class="pc" data-r="1">
+        <div class="pi-glow" style="background:var(--champ);"></div>
+        <div class="pi pi-fdp">🏛️</div>
+        <span class="ptag ptb">FDP / MDP</span>
+        <div class="pttl">Corporate &amp; Faculty Development Program</div>
+        <div class="pdes">AICTE-aligned upskilling for faculty, research guides, and corporate teams. Expert-led FDPs, Train-the-Trainer workshops, and Industry 4.0 sessions — tailored to your institution or organisation's needs.</div>
+        <ul class="plist">
+          <li>FDPs on AI, ML, Data Science &amp; Research Tools</li>
+          <li>Corporate training in Power BI &amp; Generative AI</li>
+          <li>Train-the-Trainer &amp; Industry 4.0 workshops</li>
+          <li>Flexible batch scheduling for institutions</li>
+        </ul>
+        <a href="programme.html?id=fdp" class="plink">Learn More &nbsp;&rarr;</a>
+      </div>
+
+      <!-- 4. Competitive Exam -->
+      <div class="pc" data-r="2">
+        <div class="pi-glow" style="background:#5af078;"></div>
+        <div class="pi pi-exam">🏆</div>
+        <span class="ptag ptf">Exam Coaching</span>
+        <div class="pttl">Competitive Examination Training</div>
+        <div class="pdes">Expert-led preparation for UGC NET, GATE, TNSET and other state-level examinations — taught by domain experts with a personal track record of clearing multiple competitive exams.</div>
+        <ul class="plist">
+          <li>UGC NET / NET JRF — Computer Science &amp; Applications</li>
+          <li>GATE — CS, IT, Data Science &amp; AI</li>
+          <li>TNSET, PG-TRB and Other State-Level Exams</li>
+          <li>Crash Courses, Regular Batches, Mock Series &amp; Practice Tests</li>
+        </ul>
+        <a href="programme.html?id=exam-coaching" class="plink">Learn More &nbsp;&rarr;</a>
+      </div>
+
+      <!-- 5. Research Assistance -->
+      <div class="pc" data-r="3">
+        <div class="pi-glow" style="background:#e8956e;"></div>
+        <div class="pi pi-res">🔬</div>
+        <span class="ptag ptd">Research Support</span>
+        <div class="pttl">Research Assistance &amp; Interdisciplinary Guidance</div>
+        <div class="pdes">End-to-end research support — from domain mapping and proposal writing to statistical analysis and journal submission. Powered by AID VIRTUAL's proofreading arm, with special support for Humanities, Education and Social Sciences scholars needing technical aid.</div>
+        <ul class="plist">
+          <li>Domain Mapping and Topic Finalization</li>
+          <li>Proposal Writing and Research Paper Drafting</li>
+          <li>Statistical Analysis (SPSS, R, Python)</li>
+          <li>Journal Targeting, Submission &amp; Proofreading</li>
+        </ul>
+        <a href="programme.html?id=research-assistance" class="plink">Learn More &nbsp;&rarr;</a>
+      </div>
+
+      <!-- 6. Language & Communication -->
+      <div class="pc" data-r="4">
+        <div class="pi-glow" style="background:#ff79c6;"></div>
+        <div class="pi pi-lang">💬</div>
+        <span class="ptag ptg">Communication Skills</span>
+        <div class="pttl">Language &amp; Communication for Tech Professionals</div>
+        <div class="pdes">Tech-focused, practical communication training designed for students, researchers, developers, and job seekers. Build clarity, confidence, and impact in every professional interaction — from interviews to international publications.</div>
+        <ul class="plist">
+          <li>Academic Writing, Paper Drafting &amp; Research Communication</li>
+          <li>Spoken English &amp; Technical Interview Preparation</li>
+          <li>Email, Proposal &amp; Presentation Skills</li>
+          <li>Practical, feedback-driven sessions</li>
+        </ul>
+        <a href="programme.html?id=language-communication" class="plink">Learn More &nbsp;&rarr;</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CODE CHAMPS CALLOUT -->
+<section style="position:relative;z-index:1;padding:3rem 0 5rem;">
+  <div class="container">
+    <div style="background:linear-gradient(135deg,rgba(199,146,234,.08),rgba(62,207,178,.06));border:1px solid rgba(199,146,234,.25);border-radius:20px;padding:2.5rem 3rem;display:flex;align-items:center;gap:2.5rem;flex-wrap:wrap;">
+      <div style="font-size:3.5rem;flex-shrink:0;">🤖</div>
+      <div style="flex:1;min-width:240px;">
+        <div class="eyebrow" style="justify-content:flex-start;">Separate Wing</div>
+        <div style="font-family:var(--fd);font-size:1.85rem;font-weight:600;color:var(--cream);margin-bottom:.5rem;">DSA Code Champs</div>
+        <div style="font-family:var(--fb);font-size:.92rem;font-weight:300;color:var(--fog);line-height:1.75;">Our dedicated school outreach wing — nurturing the next generation of AI innovators from Grade 3 to Grade 12. Scratch, Python, AI, robotics, and more. Designed for curious young minds, delivered in schools across Chennai.</div>
+      </div>
+      <a href="codechamps.html" class="btn-g" style="flex-shrink:0;background:linear-gradient(135deg,#c792ea,#7a9fff);">Explore Code Champs &nbsp;&rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer><div class="fi2">
+  <div><div class="fbn">Data Science Academia</div><div class="fbs">Private Limited &nbsp;&middot;&nbsp; Chennai, Tamil Nadu</div></div>
+  <div class="fc">&copy; 2025 Data Science Academia Private Limited. All rights reserved.<br><span style="font-size:.62rem">Formerly Data Science Academia under Sai Chamundeeswari Academy (MSME Registered)</span></div>
+  <div class="fr">MSME Reg &nbsp;&middot;&nbsp; Pvt Ltd In Progress</div>
+</div></footer>
+
+<script src="script.js"></script>
+</body>
+</html>
