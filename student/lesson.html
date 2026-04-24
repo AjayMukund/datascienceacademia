@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson — Data Science Academia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Student Portal</div></a></div>
+  <nav class="portal-nav">
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> My Courses</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <a href="profile.html"><span class="nav-icon">👤</span> Profile</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Student</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main" style="padding-bottom:0;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem;">
+    <a id="back-link" href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Course</a>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div class="lesson-layout">
+    <!-- Player -->
+    <div class="lesson-player">
+      <div class="lesson-player-embed" id="player-embed">
+        <div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--fog2);font-family:var(--fb);">Loading…</div>
+      </div>
+      <div class="lesson-player-footer">
+        <div>
+          <div class="lesson-player-title" id="lesson-title">Loading…</div>
+          <div style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);margin-top:.2rem;" id="lesson-meta"></div>
+        </div>
+        <div style="display:flex;gap:.75rem;align-items:center;">
+          <button class="portal-btn-ghost" id="prev-btn" style="font-size:.75rem;padding:8px 16px;" disabled>← Prev</button>
+          <button class="portal-btn" id="done-btn" style="font-size:.75rem;padding:8px 20px;" onclick="markDone()">✓ Mark Complete</button>
+          <button class="portal-btn-ghost" id="next-btn" style="font-size:.75rem;padding:8px 16px;" disabled>Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lesson sidebar -->
+    <div class="lesson-sidebar" id="lesson-sidebar">
+      <div class="lesson-sidebar-hd">Course Content</div>
+      <div id="lesson-list"><div style="padding:1.5rem;color:var(--fog2);font-family:var(--fb);font-size:.82rem;">Loading…</div></div>
+    </div>
+  </div>
+</main>
+</div>
+
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+const params   = new URLSearchParams(location.search);
+const lessonId = params.get('id');
+const courseId = params.get('course');
+const LT = {video:{icon:'🎬',cls:'lt-video'},pdf:{icon:'📄',cls:'lt-pdf'},quiz:{icon:'📝',cls:'lt-quiz'},live:{icon:'🔴',cls:'lt-live'}};
+let allLessons=[], currentIdx=0;
+
+function toast(m,t='success'){const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);}
+
+function ytEmbed(url){
+  const m=url.match(/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_-]{11})/);
+  return m?`https://www.youtube.com/embed/${m[1]}?rel=0&modestbranding=1`:null;
+}
+function vimeoEmbed(url){
+  const m=url.match(/vimeo\.com\/(\d+)/);
+  return m?`https://player.vimeo.com/video/${m[1]}`:null;
+}
+function buildEmbed(lesson){
+  const url=lesson.content_url||'';
+  if(!url)return `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:1rem;color:var(--fog2);font-family:var(--fb);"><div style="font-size:2.5rem;">${LT[lesson.type]?.icon||'📄'}</div><div>No content URL provided for this lesson.</div></div>`;
+  const yt=ytEmbed(url);
+  if(yt)return `<iframe src="${yt}" allowfullscreen allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" style="width:100%;height:100%;border:none;"></iframe>`;
+  const vm=vimeoEmbed(url);
+  if(vm)return `<iframe src="${vm}" allowfullscreen style="width:100%;height:100%;border:none;"></iframe>`;
+  if(lesson.type==='pdf')return `<iframe src="${url}" style="width:100%;height:100%;border:none;"></iframe>`;
+  if(lesson.type==='video')return `<video controls style="width:100%;height:100%;background:#000;"><source src="${url}">Your browser does not support video.</video>`;
+  return `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:1rem;color:var(--fog2);font-family:var(--fb);"><div style="font-size:2.5rem;">${LT[lesson.type]?.icon||'🔗'}</div><a href="${url}" target="_blank" class="portal-btn">Open Content →</a></div>`;
+}
+
+document.addEventListener('portal:ready', async()=>{
+  const [{data:course},{data:progress}] = await Promise.all([
+    supa.from('courses').select('*,modules(*,lessons(*))').eq('id',courseId).single(),
+    supa.from('progress').select('lesson_id').eq('user_id',window._user.id)
+  ]);
+
+  document.getElementById('back-link').href=`course.html?id=${courseId}`;
+  const done = new Set((progress||[]).map(p=>p.lesson_id));
+  const mods = (course?.modules||[]).sort((a,b)=>a.order_index-b.order_index);
+  allLessons = mods.flatMap(m=>(m.lessons||[]).sort((a,b)=>a.order_index-b.order_index).map(l=>({...l,_module:m.title})));
+  currentIdx = Math.max(0, allLessons.findIndex(l=>l.id===lessonId));
+
+  // Build sidebar
+  document.getElementById('lesson-list').innerHTML = mods.map(m=>`
+    <div class="lsb-module-title">${m.title}</div>
+    ${(m.lessons||[]).sort((a,b)=>a.order_index-b.order_index).map(l=>`
+      <a href="lesson.html?id=${l.id}&course=${courseId}" class="lsb-lesson ${l.id===lessonId?'active':''} ${done.has(l.id)?'done':''}">
+        <div class="lt-icon ${LT[l.type]?.cls||'lt-video'}" style="width:22px;height:22px;font-size:.65rem;">${done.has(l.id)?'✅':LT[l.type]?.icon||'🎬'}</div>
+        <span class="lsb-lesson-title">${l.title}</span>
+      </a>`).join('')}
+  `).join('');
+
+  loadLesson(currentIdx, done);
+});
+
+function loadLesson(idx, done){
+  const l = allLessons[idx];
+  if(!l)return;
+  document.getElementById('player-embed').innerHTML = buildEmbed(l);
+  document.getElementById('lesson-title').textContent = l.title;
+  document.getElementById('lesson-meta').textContent = `${l._module}${l.duration_mins?' · '+l.duration_mins+' min':''}`;
+  const doneBtn = document.getElementById('done-btn');
+  if(done?.has(l.id)){doneBtn.textContent='✅ Completed';doneBtn.style.opacity='.6';doneBtn.disabled=true;}
+  else{doneBtn.textContent='✓ Mark Complete';doneBtn.style.opacity='1';doneBtn.disabled=false;}
+  document.getElementById('prev-btn').disabled = idx===0;
+  document.getElementById('next-btn').disabled = idx===allLessons.length-1;
+  document.getElementById('next-btn').onclick = ()=>{ currentIdx=idx+1; location.href=`lesson.html?id=${allLessons[currentIdx].id}&course=${courseId}`; };
+  document.getElementById('prev-btn').onclick = ()=>{ currentIdx=idx-1; location.href=`lesson.html?id=${allLessons[currentIdx].id}&course=${courseId}`; };
+}
+
+async function markDone(){
+  const l = allLessons[currentIdx];
+  const {error}=await supa.from('progress').upsert({user_id:window._user.id,lesson_id:l.id},{onConflict:'user_id,lesson_id'});
+  if(error){toast(error.message,'error');return;}
+  toast('Lesson marked as complete ✅');
+  const btn=document.getElementById('done-btn');
+  btn.textContent='✅ Completed';btn.style.opacity='.6';btn.disabled=true;
+  // Update sidebar icon
+  const sideLink=document.querySelector(`.lsb-lesson[href="lesson.html?id=${l.id}&course=${courseId}"] .lt-icon`);
+  if(sideLink)sideLink.textContent='✅';
+  if(currentIdx<allLessons.length-1){
+    setTimeout(()=>{ location.href=`lesson.html?id=${allLessons[currentIdx+1].id}&course=${courseId}`; },1200);
+  }
+}
+</script>
+</body></html>

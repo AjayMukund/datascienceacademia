@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course Editor — Admin — Data Science Academia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
+      <div class="portal-page-title" id="page-title">New Course</div>
+    </div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <!-- Course Details -->
+  <div class="editor-card">
+    <div class="editor-card-title">Course Details</div>
+    <div class="field-group"><label class="flbl">Course Title</label><input type="text" class="fi" id="f-title" placeholder="e.g. Python for Data Science"></div>
+    <div class="field-group"><label class="flbl">Description</label><textarea class="fi" id="f-desc" rows="3" placeholder="What will students learn?" style="resize:vertical;"></textarea></div>
+    <div class="field-row">
+      <div class="field-group"><label class="flbl">Thumbnail URL</label><input type="url" class="fi" id="f-thumb" placeholder="https://..."></div>
+      <div class="field-group"><label class="flbl">Status</label>
+        <select class="fi" id="f-status">
+          <option value="draft">Draft</option>
+          <option value="published">Published</option>
+          <option value="archived">Archived</option>
+        </select>
+      </div>
+    </div>
+    <button class="portal-btn" id="save-btn" onclick="saveCourse()">Save Course</button>
+  </div>
+
+  <!-- Modules (only shown after course is saved) -->
+  <div id="modules-section" style="display:none;">
+    <div class="editor-card">
+      <div class="editor-card-title" style="justify-content:space-between;display:flex;align-items:center;">
+        <span>Modules &amp; Lessons</span>
+        <button class="portal-btn-ghost" style="font-size:.72rem;padding:6px 14px;" onclick="addModule()">+ Add Module</button>
+      </div>
+      <div id="modules-list"></div>
+      <div id="no-modules" style="text-align:center;padding:1.5rem;color:var(--fog2);font-family:var(--fb);font-size:.85rem;">No modules yet. Click "+ Add Module" to begin structuring your course.</div>
+    </div>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+const params = new URLSearchParams(location.search);
+let courseId = params.get('id');
+const isNew  = courseId === 'new';
+const LT     = {video:{icon:'🎬',cls:'lt-video'},pdf:{icon:'📄',cls:'lt-pdf'},quiz:{icon:'📝',cls:'lt-quiz'},live:{icon:'🔴',cls:'lt-live'}};
+
+function toast(m,t='success'){const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);}
+
+document.addEventListener('portal:ready', async()=>{
+  if(!isNew){
+    document.getElementById('page-title').textContent='Edit Course';
+    const {data:c}=await supa.from('courses').select('*').eq('id',courseId).single();
+    if(c){
+      document.getElementById('f-title').value  = c.title;
+      document.getElementById('f-desc').value   = c.description;
+      document.getElementById('f-thumb').value  = c.thumbnail_url;
+      document.getElementById('f-status').value = c.status;
+    }
+    document.getElementById('modules-section').style.display='block';
+    await loadModules();
+  }
+});
+
+async function saveCourse(){
+  const title=document.getElementById('f-title').value.trim();
+  if(!title){toast('Title is required','error');return;}
+  const btn=document.getElementById('save-btn');
+  btn.disabled=true;btn.textContent='Saving…';
+
+  const payload={title,description:document.getElementById('f-desc').value,thumbnail_url:document.getElementById('f-thumb').value,status:document.getElementById('f-status').value};
+
+  if(isNew){
+    const {data,error}=await supa.from('courses').insert({...payload,created_by:window._user.id}).select().single();
+    if(error){toast(error.message,'error');btn.disabled=false;btn.textContent='Save Course';return;}
+    courseId=data.id;
+    history.replaceState({},'',`course-editor.html?id=${courseId}`);
+    document.getElementById('page-title').textContent='Edit Course';
+    document.getElementById('modules-section').style.display='block';
+    await loadModules();
+  } else {
+    const {error}=await supa.from('courses').update(payload).eq('id',courseId);
+    if(error){toast(error.message,'error');btn.disabled=false;btn.textContent='Save Course';return;}
+  }
+  toast('Course saved');
+  btn.disabled=false;btn.textContent='Save Course';
+}
+
+async function loadModules(){
+  const {data:mods}=await supa.from('modules').select('*,lessons(*)').eq('course_id',courseId).order('order_index');
+  const list=document.getElementById('modules-list');
+  const none=document.getElementById('no-modules');
+  if(!mods||!mods.length){list.innerHTML='';none.style.display='block';return;}
+  none.style.display='none';
+  list.innerHTML=mods.map(m=>renderModule(m)).join('');
+}
+
+function renderModule(m){
+  const lessons=(m.lessons||[]).sort((a,b)=>a.order_index-b.order_index);
+  return `<div class="module-block" id="mod-${m.id}">
+    <div class="module-hd">
+      <span style="font-family:var(--fm);font-size:.6rem;color:var(--fog3);">MODULE</span>
+      <span class="module-hd-title">${m.title}</span>
+      <span class="module-hd-meta">${lessons.length} lesson${lessons.length!==1?'s':''}</span>
+      <button class="icon-btn danger" onclick="delModule('${m.id}')" style="margin-left:.5rem;">🗑</button>
+    </div>
+    <div class="module-body">
+      ${lessons.map(l=>`
+        <div class="lesson-row" id="les-${l.id}">
+          <div class="lt-icon ${LT[l.type]?.cls||'lt-video'}">${LT[l.type]?.icon||'🎬'}</div>
+          <span class="lesson-row-title">${l.title}</span>
+          <span class="lesson-row-dur">${l.duration_mins?l.duration_mins+'min':''}</span>
+          <button class="icon-btn danger" onclick="delLesson('${l.id}','${m.id}')">🗑</button>
+        </div>`).join('')}
+      <div class="add-inline-form" id="lform-${m.id}">
+        <div class="field-row" style="margin-bottom:.75rem;">
+          <div class="field-group" style="margin-bottom:0;"><label class="flbl">Lesson Title</label><input type="text" class="fi" id="lt-${m.id}" placeholder="e.g. Introduction to Python"></div>
+          <div class="field-group" style="margin-bottom:0;"><label class="flbl">Type</label>
+            <select class="fi" id="ltype-${m.id}">
+              <option value="video">🎬 Video</option><option value="pdf">📄 PDF</option>
+              <option value="quiz">📝 Quiz</option><option value="live">🔴 Live</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row" style="margin-bottom:.75rem;">
+          <div class="field-group" style="margin-bottom:0;"><label class="flbl">Content URL</label><input type="url" class="fi" id="lurl-${m.id}" placeholder="https://youtube.com/..."></div>
+          <div class="field-group" style="margin-bottom:0;"><label class="flbl">Duration (mins)</label><input type="number" class="fi" id="ldur-${m.id}" placeholder="30" min="0"></div>
+        </div>
+        <div style="display:flex;gap:.5rem;">
+          <button class="portal-btn" style="font-size:.75rem;padding:8px 18px;" onclick="saveLesson('${m.id}')">Add Lesson</button>
+          <button class="portal-btn-ghost" style="font-size:.75rem;padding:8px 18px;" onclick="toggleLessonForm('${m.id}')">Cancel</button>
+        </div>
+      </div>
+      <button class="portal-btn-ghost" style="font-size:.72rem;padding:6px 14px;margin-top:.75rem;" onclick="toggleLessonForm('${m.id}')">+ Add Lesson</button>
+    </div>
+  </div>`;
+}
+
+async function addModule(){
+  const title=prompt('Module title:');
+  if(!title?.trim())return;
+  const {data:mods}=await supa.from('modules').select('order_index').eq('course_id',courseId).order('order_index',{ascending:false}).limit(1);
+  const next=(mods?.[0]?.order_index??-1)+1;
+  const {error}=await supa.from('modules').insert({course_id:courseId,title:title.trim(),order_index:next});
+  if(error){toast(error.message,'error');return;}
+  toast('Module added');
+  await loadModules();
+}
+
+async function delModule(id){
+  if(!confirm('Delete this module and all its lessons?'))return;
+  const {error}=await supa.from('modules').delete().eq('id',id);
+  error?toast(error.message,'error'):(toast('Module deleted'),await loadModules());
+}
+
+function toggleLessonForm(mid){
+  const f=document.getElementById(`lform-${mid}`);
+  f.classList.toggle('open');
+}
+
+async function saveLesson(mid){
+  const title=document.getElementById(`lt-${mid}`).value.trim();
+  if(!title){toast('Lesson title required','error');return;}
+  const {data:les}=await supa.from('lessons').select('order_index').eq('module_id',mid).order('order_index',{ascending:false}).limit(1);
+  const next=(les?.[0]?.order_index??-1)+1;
+  const {error}=await supa.from('lessons').insert({
+    module_id:mid,title,
+    type:document.getElementById(`ltype-${mid}`).value,
+    content_url:document.getElementById(`lurl-${mid}`).value,
+    duration_mins:parseInt(document.getElementById(`ldur-${mid}`).value)||0,
+    order_index:next
+  });
+  if(error){toast(error.message,'error');return;}
+  toast('Lesson added');
+  await loadModules();
+}
+
+async function delLesson(id){
+  if(!confirm('Delete this lesson?'))return;
+  const {error}=await supa.from('lessons').delete().eq('id',id);
+  error?toast(error.message,'error'):(toast('Lesson deleted'),await loadModules());
+}
+</script>
+</body></html>

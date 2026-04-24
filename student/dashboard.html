@@ -108,9 +108,32 @@
 <script src="../script.js"></script>
 <script>
 document.addEventListener('portal:ready', async function () {
-  document.getElementById('stat-courses').textContent = '0';
-  document.getElementById('stat-lessons').textContent = '0';
+  const uid = window._user.id;
+  const [{data:enrollments},{data:progress}] = await Promise.all([
+    supa.from('enrollments').select('courses(*,modules(*,lessons(id)))').eq('user_id',uid),
+    supa.from('progress').select('lesson_id').eq('user_id',uid)
+  ]);
+  const done = new Set((progress||[]).map(p=>p.lesson_id));
+  const courses = (enrollments||[]).map(e=>e.courses).filter(Boolean);
+  document.getElementById('stat-courses').textContent = courses.length;
+  document.getElementById('stat-lessons').textContent = done.size;
   document.getElementById('stat-certs').textContent   = '0';
+
+  if(!courses.length) return;
+  const sec = document.getElementById('courses-section');
+  sec.innerHTML = `<div class="courses-grid">${courses.map(c=>{
+    const all = (c.modules||[]).flatMap(m=>m.lessons||[]);
+    const pct = all.length ? Math.round(all.filter(l=>done.has(l.id)).length/all.length*100) : 0;
+    return `<div class="course-card">
+      <div class="course-thumb">${c.thumbnail_url?`<img src="${c.thumbnail_url}" alt="">`:'📚'}</div>
+      <div class="course-body">
+        <div class="course-title">${c.title}</div>
+        <div style="font-family:var(--fb);font-size:.72rem;color:var(--fog2);margin-top:.5rem;">${pct}% complete</div>
+        <div style="height:4px;background:rgba(200,169,110,.1);border-radius:2px;margin-top:.4rem;overflow:hidden;"><div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--champ),var(--champ2));border-radius:2px;"></div></div>
+      </div>
+      <div class="course-footer"><a href="course.html?id=${c.id}" class="portal-btn" style="flex:1;justify-content:center;font-size:.78rem;">Continue →</a></div>
+    </div>`;
+  }).join('')}</div>`;
 });
 </script>
 </body>

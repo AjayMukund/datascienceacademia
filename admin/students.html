@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Students — Admin — Data Science Academia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html" class="active"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html"><span class="nav-icon">📚</span> Courses</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div><div class="portal-page-title">Students</div><div class="portal-page-sub" id="sub-count">Loading…</div></div>
+    <div style="display:flex;gap:.75rem;align-items:center;">
+      <button class="portal-btn" onclick="openEnrollModal()">+ Enroll Student</button>
+      <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div style="margin-bottom:1.25rem;">
+    <input type="text" class="fi" id="search" placeholder="Search by name…" oninput="filterTable()" style="max-width:320px;">
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th>Student</th><th>Joined</th><th>Enrolled Courses</th><th>Actions</th></tr></thead>
+      <tbody id="tbody"><tr><td colspan="4" style="text-align:center;padding:2rem;color:var(--fog2);">Loading…</td></tr></tbody>
+    </table>
+  </div>
+</main>
+</div>
+
+<!-- Enroll Modal -->
+<div class="modal-bg" id="enroll-modal" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-title">Enroll Student</div>
+    <div class="modal-sub">Grant a student access to a course.</div>
+    <div class="field-group"><label class="flbl">Student</label>
+      <select class="fi" id="m-student"></select>
+    </div>
+    <div class="field-group"><label class="flbl">Course</label>
+      <select class="fi" id="m-course"></select>
+    </div>
+    <div class="field-group"><label class="flbl">Access Expires (optional)</label>
+      <input type="date" class="fi" id="m-expires">
+    </div>
+    <div id="m-error" class="auth-error"></div>
+    <div class="modal-actions">
+      <button class="portal-btn-ghost" onclick="closeEnrollModal()">Cancel</button>
+      <button class="portal-btn" onclick="enroll()">Enroll →</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+let allStudents=[], allCourses=[];
+function toast(m,t='success'){const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);}
+
+document.addEventListener('portal:ready', async()=>{
+  const [{data:profiles},{data:courses},{data:enrollments}] = await Promise.all([
+    supa.from('profiles').select('*').eq('role','student').order('created_at',{ascending:false}),
+    supa.from('courses').select('id,title').order('title'),
+    supa.from('enrollments').select('user_id,course_id,courses(title)')
+  ]);
+
+  allStudents = profiles||[];
+  allCourses  = courses||[];
+
+  document.getElementById('sub-count').textContent=`${allStudents.length} registered student${allStudents.length!==1?'s':''}`;
+
+  const enrMap={};
+  (enrollments||[]).forEach(e=>{
+    if(!enrMap[e.user_id])enrMap[e.user_id]=[];
+    enrMap[e.user_id].push(e.courses?.title||'');
+  });
+
+  renderTable(allStudents, enrMap);
+
+  document.getElementById('m-student').innerHTML=allStudents.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+  document.getElementById('m-course').innerHTML=allCourses.map(c=>`<option value="${c.id}">${c.title}</option>`).join('');
+});
+
+function renderTable(students, enrMap){
+  const tbody=document.getElementById('tbody');
+  if(!students.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;padding:2rem;color:var(--fog2);">No students found.</td></tr>';return;}
+  tbody.innerHTML=students.map(s=>{
+    const courses=(enrMap||{})[s.id]||[];
+    return `<tr>
+      <td><div style="display:flex;align-items:center;gap:.75rem;">
+        <div class="sidebar-avatar" style="width:32px;height:32px;font-size:.85rem;">${s.name.charAt(0).toUpperCase()}</div>
+        <span>${s.name}</span>
+      </div></td>
+      <td>${new Date(s.created_at).toLocaleDateString('en-IN')}</td>
+      <td>${courses.length?courses.map(c=>`<span class="badge badge-student" style="margin-right:3px;">${c}</span>`).join(''):'<span style="color:var(--fog3);font-size:.78rem;">None</span>'}</td>
+      <td><button class="portal-btn-ghost" style="font-size:.72rem;padding:5px 12px;" onclick="quickEnroll('${s.id}','${s.name.replace(/'/g,"\\'")}')">+ Enroll</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function filterTable(){
+  const q=document.getElementById('search').value.toLowerCase();
+  const filtered=allStudents.filter(s=>s.name.toLowerCase().includes(q));
+  renderTable(filtered,{});
+}
+
+function openEnrollModal(){document.getElementById('enroll-modal').style.display='flex';}
+function closeEnrollModal(){document.getElementById('enroll-modal').style.display='none';}
+function quickEnroll(id,name){
+  document.getElementById('m-student').value=id;
+  openEnrollModal();
+}
+
+async function enroll(){
+  const userId=document.getElementById('m-student').value;
+  const courseId=document.getElementById('m-course').value;
+  const expires=document.getElementById('m-expires').value;
+  const errEl=document.getElementById('m-error');
+  errEl.style.display='none';
+
+  const payload={user_id:userId,course_id:courseId,granted_by:window._user.id};
+  if(expires)payload.expires_at=new Date(expires).toISOString();
+
+  const {error}=await supa.from('enrollments').upsert(payload,{onConflict:'user_id,course_id'});
+  if(error){errEl.textContent=error.message;errEl.style.display='block';return;}
+  toast('Student enrolled successfully');
+  closeEnrollModal();
+  location.reload();
+}
+</script>
+</body></html>

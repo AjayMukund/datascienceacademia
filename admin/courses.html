@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Courses — Admin — Data Science Academia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div><div class="portal-page-title">Courses</div><div class="portal-page-sub" id="sub-count">Loading…</div></div>
+    <div style="display:flex;gap:.75rem;align-items:center;">
+      <a href="course-editor.html?id=new" class="portal-btn">+ New Course</a>
+      <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+    </div>
+  </div>
+  <div class="courses-grid" id="grid"></div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+function toast(m,t='success'){const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);}
+
+document.addEventListener('portal:ready',async()=>{
+  const {data:courses,error}=await supa.from('courses').select('*,modules(id)').order('created_at',{ascending:false});
+  if(error){toast(error.message,'error');return;}
+  const grid=document.getElementById('grid');
+  document.getElementById('sub-count').textContent=`${courses.length} course${courses.length!==1?'s':''} in catalogue`;
+  if(!courses.length){
+    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">📚</div><div class="empty-title">No courses yet</div><div class="empty-sub">Create your first course to get started.</div><a href="course-editor.html?id=new" class="portal-btn">+ Create Course</a></div>`;
+    return;
+  }
+  grid.innerHTML=courses.map(c=>`
+    <div class="course-card">
+      <div class="course-thumb">${c.thumbnail_url?`<img src="${c.thumbnail_url}" alt="">`:'📚'}</div>
+      <div class="course-body">
+        <div class="course-title">${c.title}</div>
+        <div class="course-desc">${c.description||'No description provided.'}</div>
+        <div class="course-meta">
+          <span class="badge badge-${c.status}">${c.status}</span>
+          <span class="course-meta-item">📦 ${c.modules?.length||0} modules</span>
+        </div>
+      </div>
+      <div class="course-footer">
+        <a href="course-editor.html?id=${c.id}" class="portal-btn-ghost" style="font-size:.72rem;padding:7px 14px;">✏️ Edit</a>
+        <button class="icon-btn danger" onclick="del('${c.id}','${c.title.replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">🗑</button>
+      </div>
+    </div>`).join('');
+});
+
+async function del(id,title){
+  if(!confirm(`Delete "${title}"? This cannot be undone.`))return;
+  const {error}=await supa.from('courses').delete().eq('id',id);
+  error?toast(error.message,'error'):(toast('Course deleted'),location.reload());
+}
+</script>
+</body></html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course — Data Science Academia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Student Portal</div></a></div>
+  <nav class="portal-nav">
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> My Courses</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <a href="profile.html"><span class="nav-icon">👤</span> Profile</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Student</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:1rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← My Courses</a>
+
+  <div id="course-header" style="margin-bottom:2rem;">
+    <div class="skeleton" style="height:32px;width:60%;margin-bottom:.75rem;"></div>
+    <div class="skeleton" style="height:16px;width:80%;"></div>
+  </div>
+
+  <div id="modules-container"></div>
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+const courseId = new URLSearchParams(location.search).get('id');
+const LT = {video:{icon:'🎬',cls:'lt-video'},pdf:{icon:'📄',cls:'lt-pdf'},quiz:{icon:'📝',cls:'lt-quiz'},live:{icon:'🔴',cls:'lt-live'}};
+
+document.addEventListener('portal:ready', async()=>{
+  const [{data:enr},{data:course},{data:progress}] = await Promise.all([
+    supa.from('enrollments').select('id').eq('user_id',window._user.id).eq('course_id',courseId).single(),
+    supa.from('courses').select('*,modules(*,lessons(*))').eq('id',courseId).single(),
+    supa.from('progress').select('lesson_id').eq('user_id',window._user.id)
+  ]);
+
+  if(!enr){document.getElementById('course-header').innerHTML='<div class="empty-state"><div class="empty-icon">🔒</div><div class="empty-title">Access Restricted</div><div class="empty-sub">You are not enrolled in this course.</div></div>';return;}
+
+  const done = new Set((progress||[]).map(p=>p.lesson_id));
+  document.title = `${course.title} — Data Science Academia`;
+
+  const allLessons = (course.modules||[]).flatMap(m=>m.lessons||[]);
+  const pct = allLessons.length ? Math.round(allLessons.filter(l=>done.has(l.id)).length/allLessons.length*100) : 0;
+
+  document.getElementById('course-header').innerHTML=`
+    <div class="portal-page-title">${course.title}</div>
+    <div class="portal-page-sub" style="margin-top:.25rem;">${course.description||''}</div>
+    <div style="margin-top:1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+      <div style="flex:1;max-width:300px;height:6px;background:rgba(200,169,110,.1);border-radius:3px;overflow:hidden;">
+        <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--champ),var(--champ2));border-radius:3px;transition:width .6s;"></div>
+      </div>
+      <span style="font-family:var(--fb);font-size:.78rem;color:var(--fog2);">${pct}% complete</span>
+    </div>`;
+
+  const mods = (course.modules||[]).sort((a,b)=>a.order_index-b.order_index);
+  document.getElementById('modules-container').innerHTML = mods.map((m,mi)=>{
+    const lessons = (m.lessons||[]).sort((a,b)=>a.order_index-b.order_index);
+    return `<div class="editor-card" style="margin-bottom:1rem;">
+      <div style="font-family:var(--fb);font-size:.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--fog2);margin-bottom:.5rem;">Module ${mi+1}</div>
+      <div style="font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--cream);margin-bottom:1rem;">${m.title}</div>
+      ${lessons.map(l=>{
+        const isDone=done.has(l.id);
+        return `<a href="lesson.html?id=${l.id}&course=${courseId}" class="lesson-row" style="text-decoration:none;">
+          <div class="lt-icon ${LT[l.type]?.cls||'lt-video'}">${isDone?'✅':LT[l.type]?.icon||'🎬'}</div>
+          <span class="lesson-row-title" style="${isDone?'color:var(--fog2);text-decoration:line-through;':''}">${l.title}</span>
+          ${l.duration_mins?`<span class="lesson-row-dur">${l.duration_mins}min</span>`:''}
+          <span style="font-family:var(--fb);font-size:.72rem;color:var(--champ2);">▶</span>
+        </a>`;
+      }).join('')}
+    </div>`;
+  }).join('');
+});
+</script>
+</body></html>

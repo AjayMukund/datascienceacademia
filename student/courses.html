@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Courses — Data Science Academia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Student Portal</div></a></div>
+  <nav class="portal-nav">
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> My Courses</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <a href="profile.html"><span class="nav-icon">👤</span> Profile</a>
+    <div class="portal-nav-section">Resources</div>
+    <a href="../courses.html" target="_blank"><span class="nav-icon">🔍</span> Browse Courses</a>
+    <a href="../contact.html" target="_blank"><span class="nav-icon">💬</span> Contact Support</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Student</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div><div class="portal-page-title">My Courses</div><div class="portal-page-sub" id="sub-count">Loading…</div></div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+  <div class="courses-grid" id="grid"></div>
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+document.addEventListener('portal:ready', async()=>{
+  const uid = window._user.id;
+
+  const {data:enrollments} = await supa
+    .from('enrollments')
+    .select('enrolled_at,courses(*,modules(id,lessons(id)))')
+    .eq('user_id', uid);
+
+  const {data:progress} = await supa
+    .from('progress')
+    .select('lesson_id')
+    .eq('user_id', uid);
+
+  const done = new Set((progress||[]).map(p=>p.lesson_id));
+  const grid = document.getElementById('grid');
+
+  document.getElementById('sub-count').textContent =
+    `${(enrollments||[]).length} enrolled course${(enrollments||[]).length!==1?'s':''}`;
+
+  if(!enrollments||!enrollments.length){
+    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">📖</div><div class="empty-title">No courses yet</div><div class="empty-sub">Your courses will appear here once your instructor grants you access.</div><a href="../contact.html" class="portal-btn">Contact Support →</a></div>`;
+    return;
+  }
+
+  grid.innerHTML = enrollments.map(e=>{
+    const c = e.courses;
+    const allLessons = (c.modules||[]).flatMap(m=>m.lessons||[]);
+    const total = allLessons.length;
+    const completed = allLessons.filter(l=>done.has(l.id)).length;
+    const pct = total ? Math.round(completed/total*100) : 0;
+    const circumference = 2*Math.PI*18;
+    const dash = circumference * pct/100;
+
+    return `<div class="course-card">
+      <div class="course-thumb">${c.thumbnail_url?`<img src="${c.thumbnail_url}" alt="">`:'📚'}</div>
+      <div class="course-body">
+        <div class="course-title">${c.title}</div>
+        <div class="course-desc">${c.description||''}</div>
+        <div class="course-meta" style="align-items:center;gap:1rem;">
+          <div class="progress-ring">
+            <svg width="46" height="46" viewBox="0 0 46 46">
+              <circle cx="23" cy="23" r="18" fill="none" stroke="rgba(200,169,110,.15)" stroke-width="3"/>
+              <circle cx="23" cy="23" r="18" fill="none" stroke="var(--champ2)" stroke-width="3"
+                stroke-dasharray="${dash} ${circumference}" stroke-linecap="round"/>
+            </svg>
+            <div class="progress-ring-pct">${pct}%</div>
+          </div>
+          <div>
+            <div style="font-family:var(--fb);font-size:.78rem;color:var(--cream);">${completed}/${total} lessons</div>
+            <div style="font-family:var(--fb);font-size:.68rem;color:var(--fog2);">${pct===100?'✅ Completed':pct>0?'In progress':'Not started'}</div>
+          </div>
+        </div>
+      </div>
+      <div class="course-footer">
+        <a href="course.html?id=${c.id}" class="portal-btn" style="flex:1;justify-content:center;">${pct>0&&pct<100?'Continue':'Start'} Course →</a>
+      </div>
+    </div>`;
+  }).join('');
+});
+</script>
+</body></html>
