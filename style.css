@@ -369,6 +369,56 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:3r
 .am-inc-title{font-family:var(--fb);font-size:.82rem;font-weight:600;color:var(--cream);margin-bottom:.25rem;}
 .am-inc-desc{font-family:var(--fb);font-size:.72rem;font-weight:300;color:var(--fog);line-height:1.55;}
 
+/* ════════════════════════════════════════
+   ANIMATION ENHANCEMENTS
+════════════════════════════════════════ */
+
+/* Shimmer sweep on primary CTA buttons */
+.btn-g{position:relative;overflow:hidden;}
+.btn-g::before{content:'';position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);transform:skewX(-18deg);transition:left .55s cubic-bezier(.23,1,.32,1);pointer-events:none;}
+.btn-g:hover::before{left:160%;}
+
+/* Scroll-reveal: add subtle scale for depth */
+[data-r]{opacity:0;transform:translateY(28px) scale(.97);transition:opacity .75s cubic-bezier(.23,1,.32,1),transform .75s cubic-bezier(.23,1,.32,1);}
+[data-r].vis{opacity:1;transform:translateY(0) scale(1);}
+
+/* Eyebrow accent line grows in */
+@keyframes line-grow{from{width:0;}to{width:28px;}}
+.eyebrow::before{animation:line-grow .9s cubic-bezier(.23,1,.32,1) both;}
+
+/* Pi-glow ambient pulse on programme/course cards */
+@keyframes glow-pulse{0%,100%{opacity:.18;transform:scale(1);}50%{opacity:.38;transform:scale(1.18);}}
+.pi-glow{animation:glow-pulse 4s ease-in-out infinite;}
+
+/* Enhanced card hover glows */
+.cc:hover{box-shadow:var(--sd),0 0 42px rgba(200,169,110,.13);}
+.pc:hover{box-shadow:var(--sd),0 0 36px rgba(200,169,110,.11);}
+.dc:hover{border-color:var(--border2);box-shadow:var(--sd),0 0 28px rgba(200,169,110,.08);}
+.am-q1:hover{box-shadow:0 10px 36px rgba(62,207,178,.18);}
+.am-q2:hover{box-shadow:0 10px 36px rgba(122,159,255,.18);}
+.am-q3:hover{box-shadow:0 10px 36px rgba(199,146,234,.18);}
+.am-q4:hover{box-shadow:0 10px 36px rgba(240,192,64,.18);}
+.explore-card:hover .explore-icon{transform:scale(1.18) rotate(-6deg);transition:transform .4s cubic-bezier(.23,1,.32,1);}
+
+/* Hamburger → X morph when drawer is open */
+body.nav-open .nav-tog span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+body.nav-open .nav-tog span:nth-child(2){opacity:0;transform:scaleX(0);}
+body.nav-open .nav-tog span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* Plink arrow nudge on hover */
+.plink:hover{gap:10px;}
+
+/* Staggered grid card reveals */
+.c-grid [data-r]:nth-child(2),.pg [data-r]:nth-child(2),.explore-grid [data-r]:nth-child(2){transition-delay:.1s;}
+.c-grid [data-r]:nth-child(3),.pg [data-r]:nth-child(3),.explore-grid [data-r]:nth-child(3){transition-delay:.2s;}
+.c-grid [data-r]:nth-child(4),.pg [data-r]:nth-child(4),.explore-grid [data-r]:nth-child(4){transition-delay:.3s;}
+.c-grid [data-r]:nth-child(5),.pg [data-r]:nth-child(5){transition-delay:.4s;}
+.c-grid [data-r]:nth-child(6),.pg [data-r]:nth-child(6){transition-delay:.5s;}
+
+/* Page load fade-in */
+@keyframes page-in{from{opacity:0;}to{opacity:1;}}
+body{animation:page-in .5s ease both;}
+
 @media(max-width:960px){
   .course-layout{grid-template-columns:1fr;}
   .course-sidebar{position:static;}

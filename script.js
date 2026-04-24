@@ -144,11 +144,38 @@ window.addEventListener('scroll',()=>document.getElementById('nav').classList.to
 (function(){
   const nm=document.getElementById('nmenu'),tog=document.querySelector('.nav-tog');
   const ov=document.createElement('div');ov.className='nav-overlay';document.body.appendChild(ov);
-  const close=()=>{nm.classList.remove('open');ov.classList.remove('show');};
-  const open=()=>{nm.classList.add('open');ov.classList.add('show');};
+  const close=()=>{nm.classList.remove('open');ov.classList.remove('show');document.body.classList.remove('nav-open');};
+  const open=()=>{nm.classList.add('open');ov.classList.add('show');document.body.classList.add('nav-open');};
   tog.onclick=()=>nm.classList.contains('open')?close():open();
   ov.addEventListener('click',close);
   document.querySelectorAll('#nmenu a').forEach(a=>a.addEventListener('click',close));
+})();
+
+/* ════════════════════════════════════════
+   METRIC COUNTER ANIMATION
+════════════════════════════════════════ */
+(function(){
+  const counters=document.querySelectorAll('.met-n');
+  if(!counters.length)return;
+  const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+  function animateCounter(el){
+    const raw=el.textContent.trim();
+    const num=parseInt(raw.replace(/\D/g,''));
+    const suffix=raw.replace(/[\d]/g,'');
+    const start=raw.includes('201')?num-5:0;
+    const dur=1800;
+    const t0=performance.now();
+    (function frame(now){
+      const p=Math.min((now-t0)/dur,1);
+      el.textContent=Math.round(start+(num-start)*ease(p))+suffix;
+      if(p<1)requestAnimationFrame(frame);
+      else el.textContent=raw;
+    })(t0);
+  }
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){animateCounter(e.target);obs.unobserve(e.target);}});
+  },{threshold:.6});
+  counters.forEach(el=>obs.observe(el));
 })();
 
 /* ════════════════════════════════════════
