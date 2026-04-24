@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — Data Science Academia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="portal.css">
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<canvas id="fluid-canvas"></canvas>
+
+<div class="auth-wrap">
+  <div class="auth-card">
+
+    <div class="auth-brand">
+      <a href="index.html">
+        <div class="auth-brand-name">Data Science Academia</div>
+        <div class="auth-brand-sub">Private Limited &nbsp;&middot;&nbsp; Chennai</div>
+      </a>
+    </div>
+
+    <h1 class="auth-title">Welcome back</h1>
+    <p class="auth-sub">Sign in to continue your learning journey</p>
+
+    <div class="auth-error" id="auth-error"></div>
+
+    <form id="login-form" autocomplete="on">
+      <div class="field-group">
+        <label class="flbl" for="email">Email Address</label>
+        <input type="email" class="fi" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+      </div>
+      <div class="field-group">
+        <label class="flbl" for="password">Password</label>
+        <input type="password" class="fi" id="password" name="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required autocomplete="current-password">
+        <a href="forgot-password.html" class="auth-forgot">Forgot password?</a>
+      </div>
+      <button type="submit" class="auth-btn" id="login-btn">Sign In &nbsp;&rarr;</button>
+    </form>
+
+    <p class="auth-switch">New here? <a href="register.html" class="auth-link">Create an account</a></p>
+
+    <div class="auth-divider">or</div>
+    <a href="index.html" class="auth-switch" style="display:block;text-align:center;">&#8592; &nbsp;Back to website</a>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="script.js"></script>
+<script>
+(async function () {
+  const { data: { session } } = await supa.auth.getSession();
+  if (session) {
+    const { data: p } = await supa.from('profiles').select('role').eq('id', session.user.id).single();
+    window.location.href = p?.role === 'admin' ? 'admin/dashboard.html' : 'student/dashboard.html';
+  }
+
+  const form  = document.getElementById('login-form');
+  const btn   = document.getElementById('login-btn');
+  const errEl = document.getElementById('auth-error');
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Signing in…';
+    errEl.style.display = 'none';
+
+    const { error } = await supa.auth.signInWithPassword({
+      email:    document.getElementById('email').value.trim(),
+      password: document.getElementById('password').value,
+    });
+
+    if (error) {
+      errEl.textContent = error.message;
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Sign In →';
+      return;
+    }
+
+    const { data: p } = await supa.from('profiles').select('role').eq('id', (await supa.auth.getUser()).data.user.id).single();
+    window.location.href = p?.role === 'admin' ? 'admin/dashboard.html' : 'student/dashboard.html';
+  });
+})();
+</script>
+</body>
+</html>

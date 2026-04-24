@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account — Data Science Academia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="portal.css">
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<canvas id="fluid-canvas"></canvas>
+
+<div class="auth-wrap">
+  <div class="auth-card">
+
+    <div class="auth-brand">
+      <a href="index.html">
+        <div class="auth-brand-name">Data Science Academia</div>
+        <div class="auth-brand-sub">Private Limited &nbsp;&middot;&nbsp; Chennai</div>
+      </a>
+    </div>
+
+    <h1 class="auth-title">Create Account</h1>
+    <p class="auth-sub">Join thousands of learners in AI &amp; Data Science</p>
+
+    <div class="auth-error"   id="auth-error"></div>
+    <div class="auth-success" id="auth-success"></div>
+
+    <form id="register-form" autocomplete="on">
+      <div class="field-row">
+        <div class="field-group">
+          <label class="flbl" for="fname">First Name</label>
+          <input type="text" class="fi" id="fname" placeholder="Arjun" required autocomplete="given-name">
+        </div>
+        <div class="field-group">
+          <label class="flbl" for="lname">Last Name</label>
+          <input type="text" class="fi" id="lname" placeholder="Kumar" required autocomplete="family-name">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="flbl" for="email">Email Address</label>
+        <input type="email" class="fi" id="email" placeholder="you@example.com" required autocomplete="email">
+      </div>
+      <div class="field-group">
+        <label class="flbl" for="password">Password</label>
+        <input type="password" class="fi" id="password" placeholder="Min. 8 characters" required autocomplete="new-password" minlength="8">
+      </div>
+      <div class="field-group">
+        <label class="flbl" for="confirm">Confirm Password</label>
+        <input type="password" class="fi" id="confirm" placeholder="Re-enter password" required autocomplete="new-password">
+      </div>
+      <button type="submit" class="auth-btn" id="reg-btn">Create Account &nbsp;&rarr;</button>
+    </form>
+
+    <p class="auth-switch">Already have an account? <a href="login.html" class="auth-link">Sign in</a></p>
+    <div class="auth-divider">or</div>
+    <a href="index.html" class="auth-switch" style="display:block;text-align:center;">&#8592; &nbsp;Back to website</a>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="script.js"></script>
+<script>
+(async function () {
+  const { data: { session } } = await supa.auth.getSession();
+  if (session) window.location.href = 'student/dashboard.html';
+
+  const form    = document.getElementById('register-form');
+  const btn     = document.getElementById('reg-btn');
+  const errEl   = document.getElementById('auth-error');
+  const succEl  = document.getElementById('auth-success');
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    errEl.style.display  = 'none';
+    succEl.style.display = 'none';
+
+    const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const pass  = document.getElementById('password').value;
+    const conf  = document.getElementById('confirm').value;
+
+    if (pass !== conf) {
+      errEl.textContent    = 'Passwords do not match.';
+      errEl.style.display  = 'block';
+      return;
+    }
+
+    btn.disabled    = true;
+    btn.textContent = 'Creating account…';
+
+    const { error } = await supa.auth.signUp({
+      email,
+      password: pass,
+      options: { data: { name: `${fname} ${lname}` } },
+    });
+
+    if (error) {
+      errEl.textContent   = error.message;
+      errEl.style.display = 'block';
+      btn.disabled    = false;
+      btn.textContent = 'Create Account →';
+      return;
+    }
+
+    succEl.textContent   = 'Account created! Redirecting to your dashboard…';
+    succEl.style.display = 'block';
+    setTimeout(() => window.location.href = 'student/dashboard.html', 1800);
+  });
+})();
+</script>
+</body>
+</html>

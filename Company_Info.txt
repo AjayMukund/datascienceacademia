@@ -1,0 +1,588 @@
+================================================================================
+DATA SCIENCE ACADEMIA PRIVATE LIMITED — COMPLETE COMPANY & COURSE INFORMATION
+================================================================================
+Last Updated: April 2026
+Website: https://ajaymukund.github.io/datascienceacademia/
+
+--------------------------------------------------------------------------------
+1. ABOUT THE COMPANY
+--------------------------------------------------------------------------------
+
+Full Name       : Data Science Academia Private Limited
+Short Name      : DSA
+Founded         : 2019
+Type            : Private Limited Company (Pvt Ltd In Progress)
+Location        : Chennai, Tamil Nadu, India
+Previous Entity : Formerly operated under Sai Chamundeeswari Academy (MSME Registered)
+Registrations   : MSME Registered · AICTE Affiliated
+Tagline         : "Where Academic Rigour Meets Real-World AI Engineering"
+
+Mission:
+Data Science Academia was founded with one conviction — that the best data science
+education cannot be detached from real engineering practice. Faculty brings together
+PhD-level academic depth from Anna University with active AI engineering experience
+from industry — so every concept learned has been tested in production, not just
+in textbooks.
+
+Key Strengths:
+- Doctoral Academic Depth: Curriculum anchored in Anna University research standards
+- Live Industry Experience: Every module taught by a practising AI Engineer
+- AICTE Institutional Alignment: Internships and certifications aligned with AICTE
+  guidelines, recognised across Tamil Nadu
+
+Metrics:
+- 16+ Specialised Courses
+- 500+ Students Trained
+- Founded in 2019
+
+--------------------------------------------------------------------------------
+2. LEADERSHIP & FACULTY
+--------------------------------------------------------------------------------
+
+Managing Director: Advocate Chamundeeswari
+  - Legal professional and institutional administrator
+  - Oversees all operations, compliance, and strategic partnerships
+  - Brings deep understanding of legal frameworks critical to an academic Pvt Ltd
+  - Tags: Advocate, Managing Director, Legal & Compliance, Institutional Operations
+
+Director (Academic & Technology): (Initials: DS)
+  - Active AI Engineer at Hotfoot Technology Solutions
+  - PhD candidate at Anna University
+  - TN-TRB 2026 Computer Science applicant
+  - Bridges the frontier of AI research with structured, accessible curriculum design
+  - Tags: PhD — Anna University, AI Engineer, TN-TRB 2026, MSME Founder
+
+--------------------------------------------------------------------------------
+3. CONTACT INFORMATION
+--------------------------------------------------------------------------------
+
+Address   : 2nd Floor, Arasan Complex, No. 69, Grand Southern Trunk Rd,
+            West Tambaram, Chennai, Tamil Nadu 600045
+Phone     : +91 91764 98814
+Email     : info@datascienceacademia.in
+WhatsApp  : https://wa.me/919176498814
+
+Social Media:
+- LinkedIn  : https://www.linkedin.com/company/data-science-academia/
+- YouTube   : https://youtube.com/@datascienceacademia3805
+- Instagram : https://www.instagram.com/data_science_academia
+- WhatsApp  : https://wa.me/919176498814
+
+Response Time: We typically respond within 1 business day.
+
+--------------------------------------------------------------------------------
+4. COURSES OFFERED (16 Courses across 4 Categories)
+--------------------------------------------------------------------------------
+
+CATEGORY A — FOUNDATION (Beginner Level)
+=========================================
+
+A1. Python Programming
+  Duration  : 8 weeks | 40 contact hours
+  Level     : Beginner (no prior experience required)
+  Tools     : Python 3.x, Jupyter Notebook, NumPy, Pandas, Matplotlib, VS Code
+  Overview  : Comprehensive introduction to Python for absolute beginners. Covers
+              syntax, data structures, OOP, file handling, NumPy, Pandas, and
+              Matplotlib. Ends with a real-world EDA capstone project.
+  Topics    : Python fundamentals, control flow, functions & modules, data
+              structures, OOP, file & exception handling, NumPy & Pandas, Matplotlib
+
+A2. SQL for Data Science
+  Duration  : 5 weeks | 25 contact hours
+  Level     : Beginner
+  Tools     : PostgreSQL, MySQL, SQLite, DBeaver, Python (psycopg2), Google BigQuery
+  Overview  : From basic SELECT to advanced window functions and query optimisation.
+              Used by data engineers and analysts at top companies.
+  Topics    : Database fundamentals, aggregations, joins, subqueries, CTEs,
+              window functions, query optimisation, SQL from Python
+
+A3. R Programming
+  Duration  : 6 weeks | 30 contact hours
+  Level     : Beginner
+  Tools     : R 4.x, RStudio, tidyverse, ggplot2, dplyr, tidyr, R Markdown
+  Overview  : Covers the R ecosystem from data wrangling with tidyverse to
+              publication-ready visualisations with ggplot2 and reproducible
+              research reports with R Markdown.
+  Topics    : R basics, data structures, dplyr & tidyr, ggplot2, statistical
+              analysis, R Markdown & Shiny intro
+
+A4. Excel for Data Analysis
+  Duration  : 4 weeks | 20 contact hours
+  Level     : Beginner
+  Tools     : Microsoft Excel 2019/365, Power Query, Power Pivot, VBA (intro)
+  Overview  : Transforms a basic Excel user into a power analyst who can build
+              dynamic reports, automate workflows, and design dashboards.
+  Topics    : Power formulas (XLOOKUP, INDEX-MATCH, dynamic arrays), PivotTables,
+              Power Query, dashboards, VBA macros
+
+
+CATEGORY B — CORE ML (Intermediate Level)
+==========================================
+
+B1. Machine Learning
+  Duration  : 10 weeks | 50 contact hours
+  Level     : Intermediate
+  Tools     : Python, Scikit-learn, XGBoost, LightGBM, Pandas, NumPy
+  Prereqs   : Python Programming (or equivalent)
+  Overview  : Full spectrum of ML — classical algorithms to ensemble methods on
+              real-world datasets. Covers when and why to use each algorithm.
+  Topics    : ML foundations, linear models, decision trees & random forests,
+              boosting (XGBoost, LightGBM), SVMs, clustering, dimensionality
+              reduction, model evaluation, Scikit-learn pipelines
+
+B2. Natural Language Processing (NLP)
+  Duration  : 8 weeks | 40 contact hours
+  Level     : Intermediate
+  Tools     : Python, NLTK, spaCy, HuggingFace Transformers, Gensim, Scikit-learn
+  Prereqs   : Machine Learning course; Python is essential
+  Overview  : Complete NLP pipeline from raw text cleaning to fine-tuned Transformer
+              models. Build chatbots, sentiment analysers, search engines.
+  Topics    : Text preprocessing, BoW & TF-IDF, word embeddings (Word2Vec, GloVe),
+              text classification, RNNs & LSTMs, BERT & Transformers, NER
+
+B3. Feature Engineering & Model Selection
+  Duration  : 6 weeks | 30 contact hours
+  Level     : Intermediate
+  Tools     : Python, Scikit-learn, Pandas, Optuna, SHAP, Feature-engine
+  Prereqs   : Machine Learning course; Python and Pandas proficiency
+  Overview  : The craft of data preparation, feature creation, selection, and model
+              optimisation. Skills that separate competition winners from beginners.
+  Topics    : Missing values, categorical encoding, numerical transformations,
+              feature creation, feature selection, hyperparameter optimisation (Optuna)
+
+
+CATEGORY C — ADVANCED AI (Advanced Level)
+==========================================
+
+C1. Deep Learning
+  Duration  : 12 weeks | 60 contact hours
+  Level     : Advanced
+  Tools     : Python, TensorFlow 2.x, Keras, PyTorch, CUDA, HuggingFace, W&B
+  Prereqs   : Machine Learning; linear algebra and calculus fundamentals
+  Overview  : From single neuron mathematics to production-grade deep learning
+              systems using TensorFlow and PyTorch.
+  Topics    : Neural network fundamentals, backpropagation, TensorFlow/Keras,
+              PyTorch, CNNs, transfer learning, RNNs & LSTMs, Transformers,
+              regularisation, object detection, generative models, deployment
+
+C2. Computer Vision
+  Duration  : 10 weeks | 50 contact hours
+  Level     : Advanced
+  Tools     : Python, OpenCV, PyTorch, Ultralytics YOLOv8, Detectron2, MediaPipe
+  Prereqs   : Deep Learning course; Python and PyTorch basics
+  Overview  : Classical image processing through state-of-the-art detection,
+              segmentation, face recognition, and video analytics.
+  Topics    : Image processing, classical CV, image classification, advanced CNN
+              architectures, transfer learning, object detection with YOLO,
+              segmentation, face recognition, video analytics
+
+C3. Large Language Models (LLM)
+  Duration  : 10 weeks | 50 contact hours
+  Level     : Advanced
+  Tools     : Python, HuggingFace Transformers, LangChain, LlamaIndex, Pinecone,
+              ChromaDB, FastAPI, Ollama
+  Prereqs   : Deep Learning; familiarity with Transformer architecture
+  Overview  : Engineering-level understanding of LLMs — from Transformer internals
+              to fine-tuning, RAG pipelines, and production LLM apps.
+  Topics    : Transformer architecture, GPT family, BERT, open-source LLMs,
+              prompt engineering, fine-tuning with LoRA/QLoRA, RAG, LangChain,
+              LlamaIndex, LLM evaluation & safety, production deployment
+
+C4. Generative AI
+  Duration  : 10 weeks | 50 contact hours
+  Level     : Advanced
+  Tools     : Python, PyTorch, Diffusers, Stable Diffusion, DALL-E API, Gradio,
+              ComfyUI, OpenAI API
+  Prereqs   : Deep Learning; PyTorch and CNN/Transformer fundamentals
+  Overview  : Full spectrum of generative AI — VAEs, GANs, Diffusion Models,
+              and Multimodal AI for creative and production applications.
+  Topics    : GenAI foundations, VAEs, GANs, advanced GANs, diffusion models,
+              Stable Diffusion & ControlNet, text-to-image APIs, multimodal AI,
+              audio generation, capstone app deployment
+
+C5. Reinforcement Learning
+  Duration  : 8 weeks | 40 contact hours
+  Level     : Advanced
+  Tools     : Python, OpenAI Gymnasium, Stable-Baselines3, PyTorch, TensorBoard,
+              MuJoCo (intro), RLlib
+  Prereqs   : Deep Learning; probability, linear algebra, Python
+  Overview  : From MDP mathematical foundations through DQN to state-of-the-art
+              policy gradient methods (PPO, SAC). The paradigm behind AlphaGo and
+              ChatGPT's RLHF training.
+  Topics    : RL fundamentals, MDPs, dynamic programming, Q-learning, DQN,
+              policy gradient methods, PPO, SAC, RLHF
+
+C6. MLOps & Model Deployment
+  Duration  : 8 weeks | 40 contact hours
+  Level     : Advanced
+  Tools     : Python, Docker, FastAPI, MLflow, DVC, GitHub Actions, W&B,
+              Evidently AI, Prometheus
+  Prereqs   : Machine Learning; Git and command line basics
+  Overview  : The other 80% of ML work — versioning data, containerising models,
+              CI/CD pipelines, serving predictions at scale, monitoring for drift.
+  Topics    : Data versioning (DVC), experiment tracking (MLflow, W&B), Docker,
+              FastAPI for ML, CI/CD with GitHub Actions, cloud deployment
+              (AWS SageMaker / Azure ML), model monitoring
+
+
+CATEGORY D — ANALYTICS (Beginner–Intermediate)
+===============================================
+
+D1. Data Visualization
+  Duration  : 6 weeks | 30 contact hours
+  Level     : Beginner
+  Tools     : Python, Matplotlib, Seaborn, Plotly, Plotly Dash, Pandas
+  Prereqs   : Python Programming; basic Pandas knowledge
+  Overview  : Translate complex datasets into clear, compelling, and interactive
+              visual narratives — from statistical plots to animated dashboards.
+  Topics    : Visualisation principles, Matplotlib, Seaborn, Plotly interactive
+              charts, Plotly Dash dashboards, data storytelling
+
+D2. Tableau
+  Duration  : 5 weeks | 25 contact hours
+  Level     : Intermediate
+  Tools     : Tableau Desktop (Public), Tableau Prep (intro), Tableau Public
+  Prereqs   : No programming required; basic data analysis concepts helpful
+  Overview  : Zero to polished, publication-ready interactive dashboards using
+              industry-leading BI platform. Covers LOD expressions and Tableau Public.
+  Topics    : Tableau interface, chart types & marks, LOD expressions,
+              dashboards & stories, advanced features, publishing
+
+
+CATEGORY E — CLOUD & BI (Intermediate)
+=======================================
+
+E1. Power BI
+  Duration  : 6 weeks | 30 contact hours
+  Level     : Intermediate
+  Tools     : Power BI Desktop, Power Query, DAX Studio, Power BI Service, Excel
+  Prereqs   : Excel familiarity recommended; no programming required
+  Overview  : From raw data import to enterprise-grade interactive dashboards.
+              Covers Power Query, DAX, data modelling, and PL-300 certification prep.
+  Topics    : Power BI Desktop, Power Query transformation, data modelling (star
+              schema), DAX fundamentals, advanced DAX & time intelligence,
+              Power BI Service, RLS, PL-300 exam prep
+
+E2. Microsoft Azure
+  Duration  : 8 weeks | 40 contact hours
+  Level     : Intermediate
+  Tools     : Azure Portal, Azure CLI, Azure ML Studio, Azure Databricks,
+              Azure Data Factory, Python SDK
+  Prereqs   : Basic Python and SQL; no prior cloud experience required
+  Overview  : From cloud fundamentals to building and deploying ML models on Azure.
+              Covers AZ-900 and DP-900 certification preparation.
+  Topics    : Cloud fundamentals, Azure storage & databases, Azure ML, Azure AI
+              Services (Cognitive Services), Azure Databricks, Azure Data Factory,
+              MLOps on Azure, AZ-900 & DP-900 certification prep
+
+E3. AWS for Data Science
+  Duration  : 8 weeks | 40 contact hours
+  Level     : Intermediate
+  Tools     : AWS Console, AWS CLI, SageMaker, S3, Lambda, Glue, Athena,
+              Redshift, Python (boto3)
+  Prereqs   : Basic Python and SQL; no prior cloud experience needed
+  Overview  : Build and deploy data science solutions on AWS — storage, compute,
+              data engineering, SageMaker for ML. CLF-C02 certification prep.
+  Topics    : AWS fundamentals & IAM, S3 & data lake, EC2 & networking, AWS data
+              services (RDS, DynamoDB, Redshift, Glue, Athena, Kinesis),
+              SageMaker fundamentals & advanced, data pipelines, CLF-C02 prep
+
+--------------------------------------------------------------------------------
+5. SPECIAL PROGRAMMES (7 Programmes)
+--------------------------------------------------------------------------------
+
+P1. The Complete AI & Data Science Mastery Track (FLAGSHIP)
+  Duration  : 12 Months (4 Quarters)
+  Audience  : Fresh graduates, career changers, professionals pivoting to AI/DS
+  Delivery  : Online (Live + Recorded) + Quarterly Offline Bootcamps in Chennai
+  Overview  : Structured, mentor-guided 12-month programme from absolute beginner
+              to job-ready AI and Data Science professional. Covers 16 courses
+              across 4 quarters with 4 capstone projects.
+
+  Quarter Roadmap:
+    Q1 (Months 1–3)  : Python · SQL · R · Excel
+    Q2 (Months 4–6)  : Tableau · EDA · Ethics · Engineering
+    Q3 (Months 7–9)  : Power BI · ML · Time Series
+    Q4 (Months 10–12): Deep Learning · NLP · Big Data · Cloud
+
+  What's Included:
+    - 16 courses across 4 structured quarters
+    - 4 capstone projects (one per quarter)
+    - Q1 Capstone: EDA on a real business dataset
+    - Q2 Capstone: Full analytics dashboard from raw data
+    - Q3 Capstone: Train, evaluate, and deploy an ML model
+    - Q4 Capstone: Full-stack AI system — data to deployed cloud API
+    - DSA AI Mastery Certificate on completion
+    - Internship certificate bundled (no separate application needed)
+    - Placement assistance — resume writing, LinkedIn optimisation
+    - Mock interview sessions (technical + HR)
+    - Alumni network access — job alerts, peer mentoring
+    - Guidance for Microsoft Azure AI-900 / DP-900 as add-on
+    - 3 live sessions per week (recorded for replay)
+    - Dedicated mentor — weekly 1-on-1 check-ins
+    - Quarterly offline bootcamps in Chennai
+  Prereqs   : No prior programming or data science experience. Basic computer
+              literacy and 10–12 hours/week commitment is sufficient.
+
+P2. Internships (NEP & AICTE Aligned)
+  Duration  : 1–2 Months
+  Audience  : Undergraduate & PG students, fresh graduates, research scholars
+  Delivery  : Online or Hybrid (online + offline workshops)
+  Certificate: DSA Internship Certificate + Offer Letter
+  Overview  : Structured internships aligned with NEP 2020 and AICTE guidelines.
+              Real projects under PhD-qualified mentors, with formal offer letter
+              and project portfolio.
+  Domains   : Machine Learning, Research Assistance, Data Analytics,
+              Software Tools (Python/SQL), Computer Vision, NLP & Generative AI
+  Process   : Apply online → Screening call → Domain allocation → Onboarding →
+              Internship begins (rolling monthly cohorts)
+  Prereqs   : Basic Python knowledge preferred; any engineering or science discipline.
+
+P3. Microsoft Certification Program
+  Duration  : 4–8 Weeks per certification
+  Audience  : Students (IT/CS/Data Science), working professionals, career changers
+  Delivery  : Online Live + Recorded; Offline Bootcamps in Chennai
+  Certificate: Microsoft Certification (AI-900 / DP-900) + DSA Completion Certificate
+  Overview  : Focused preparation for Microsoft Azure and Power BI certifications
+              in collaboration with Microsoft Certified Trainers (MCTs).
+  Certifications Covered:
+    - AI-900 — Microsoft Azure AI Fundamentals
+    - DP-900 — Microsoft Azure Data Fundamentals
+    - PL-300 — Power BI Data Analyst Associate (prep)
+    - AZ-900 — Azure Fundamentals (optional add-on)
+  Features  : MCT-led sessions, Azure portal labs, practice question banks,
+              timed mock exams, exam strategy sessions, post-certification guidance
+
+P4. Corporate & Faculty Development Program (FDP / MDP)
+  Duration  : 2 Days to 4 Weeks (customisable)
+  Audience  : College faculty, research guides, corporate teams, HR professionals
+  Delivery  : Online, Offline (campus/corporate visits), Hybrid
+  Certificate: DSA FDP Certificate + AICTE-aligned credential
+  Tracks    :
+    - Faculty Development (FDP): AI, ML, Data Science tools, UGC/AICTE curriculum
+    - Corporate Training (MDP): Power BI, Generative AI, Python, Azure/AWS essentials
+    - Train-the-Trainer: Methodology for internal L&D champions
+    - Industry 4.0 Workshops: IoT, smart automation, digital transformation
+  Features  : Fully customisable, MOU-based long-term partnerships available,
+              institution visit and needs-assessment before programme design
+
+P5. Competitive Examination Training
+  Duration  : Crash Course: 4–6 Weeks · Regular Batch: 3–6 Months
+  Audience  : PG students (CS/IT/Data Science), aspiring lecturers, GATE aspirants
+  Delivery  : Online Live Batches & Recorded + Crash Courses (offline)
+  Exams Covered:
+    - UGC NET — Computer Science & Applications (Paper I + II)
+    - NET JRF — Junior Research Fellowship
+    - GATE — CS, IT, Data Science & AI streams
+    - TNSET — Tamil Nadu State Eligibility Test
+    - PG-TRB — Tamil Nadu Postgraduate Teacher Recruitment Board
+    - Other state-level CS eligibility examinations
+  Features  : Taught by faculty who have personally cleared UGC NET, GATE, TNSET;
+              5+ years of previous papers; weekly mock tests; personalised
+              performance reports
+
+P6. Research Assistance & Interdisciplinary Guidance
+  Duration  : Project-based (1 week to 6 months)
+  Audience  : PhD scholars, faculty, Humanities/Social Science researchers,
+              independent researchers
+  Delivery  : Online (Zoom/Teams); Asynchronous submission & feedback cycles
+  Powered by: AID VIRTUAL's proofreading arm
+  Services  : Domain mapping, topic finalisation, literature review, proposal
+              writing, paper drafting, statistical analysis (SPSS, R, Python),
+              journal targeting (Scopus, WoS, UGC Care), plagiarism check,
+              proofreading, submission support
+  Special   : Technical support for Humanities, Education, and Social Sciences
+              researchers who need data science methodology
+
+P7. Language & Communication for Tech Professionals
+  Duration  : 4–8 Weeks
+  Audience  : Engineering/science students, PhD scholars, developers, job seekers
+  Delivery  : Online Live + Recorded; feedback-driven asynchronous sessions
+  Certificate: DSA Communication Programme Certificate
+  Skill Areas:
+    - Academic Writing: research papers, abstracts, proposals
+    - Technical Interview Preparation: spoken English, STAR method, mock interviews
+    - Professional Writing: emails, reports, proposals, LinkedIn optimisation
+    - Presentation Skills: slide design, delivery confidence, storytelling
+  Features  : 100% practical, every session includes real writing or speaking
+              exercises, 1-on-1 recorded mock sessions with structured feedback
+
+--------------------------------------------------------------------------------
+6. DSA CODE CHAMPS — SCHOOL OUTREACH WING
+--------------------------------------------------------------------------------
+
+Overview:
+DSA Code Champs is a dedicated school outreach programme nurturing the next
+generation of AI innovators. Activity-based, project-driven learning using
+age-appropriate tools — aligned with NEP 2020 computational thinking competencies.
+Special focus on encouraging girls in STEM and AI.
+
+Delivery: Offline (school visits across Chennai) + Online Interactive Live Sessions
+
+LEVEL 1 — CODE EXPLORERS
+  Grade/Age  : Grade 3–5 | Ages 8–10
+  Duration   : 3 Months | 24 Sessions
+  Tools      : Scratch (visual coding)
+  Certificate: Code Explorers Certificate
+  Topics     : Sequences, loops, events, conditionals, animations, debugging,
+               computational thinking, creative storytelling
+  Projects   : Catch the Stars (game), Animated Story, Code Art Gallery
+  Next Level : Code Builders (Grade 6–7)
+
+LEVEL 2 — CODE BUILDERS
+  Grade/Age  : Grade 6–7 | Ages 11–12
+  Duration   : 3 Months | 24 Sessions
+  Tools      : Python (text-based), Turtle Graphics
+  Certificate: Code Builders Certificate
+  Topics     : Python syntax, variables, loops, functions, conditionals,
+               turtle graphics, chatbot logic, intro to AI
+  Projects   : Smart Chatbot, Python Quiz Game, Turtle Art Machine
+  Next Level : Code Innovators (Grade 8–9)
+
+LEVEL 3 — CODE INNOVATORS
+  Grade/Age  : Grade 8–9 | Ages 13–14
+  Duration   : 4 Months | 32 Sessions
+  Tools      : Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, OpenCV
+  Certificate: Code Innovators Certificate
+  Topics     : OOP, NumPy, Pandas, data science, data visualisation, machine
+               learning, computer vision, IoT basics
+  Projects   : Image Classifier (ML), Face Detection App (CV), Data Story Dashboard
+  Next Level : Code Pioneers (Grade 10–12)
+
+LEVEL 4 — CODE PIONEERS (Flagship School Track)
+  Grade/Age  : Grade 10–12 | Ages 15–17
+  Duration   : 6 Months | 48 Sessions
+  Tools      : Python, TensorFlow, Keras, OpenCV, YOLO, Flask, cloud platforms,
+               XGBoost, NLTK
+  Certificate: Code Pioneers Certificate (highest DSA school-level credential)
+  Topics     : Advanced Python, full ML pipeline, deep learning, NLP, advanced
+               computer vision, cloud deployment, GitHub portfolio
+  Projects   : AI Sentiment Analyser (NLP), Object Detection System (YOLO),
+               Stock Price Predictor (LSTM)
+  Description: Most advanced school-level AI programme in Chennai. Direct launchpad
+               for IIT/NIT admissions, AI research, and tech entrepreneurship.
+
+Session Format (all levels):
+  - Weekly 90-minute interactive sessions (or weekend bootcamp format)
+  - Activity-first approach — students do before being taught theory
+  - Team challenges and mini-hackathons
+  - Show-and-tell: students present mini-projects each session
+  - Fun quizzes and leaderboard — gamified learning
+  - Parents invited to closing showcase
+
+School Partnership:
+  - DSA visits your school campus (Chennai and nearby areas)
+  - Fully managed programme — no teacher preparation required
+  - Custom scheduling to fit the school calendar
+  - All materials, activity sheets, and kits provided by DSA
+  - Post-programme student performance report for the school
+
+--------------------------------------------------------------------------------
+7. DELIVERY MODES
+--------------------------------------------------------------------------------
+
+- Online: Live interactive sessions + recorded for replay
+- Offline: Workshops, bootcamps, and school visits in Chennai
+- Hybrid: Combination of online and offline
+- Self-paced: Recorded sessions with assignments (Mastery Track)
+
+Audiences served:
+- Students (UG, PG, Research Scholars)
+- School Children (Grade 3 to Grade 12)
+- Working Professionals / Career Changers
+- Corporate Teams & HR / L&D Managers
+- College Faculty & Research Guides
+- Industry Professionals
+
+--------------------------------------------------------------------------------
+8. FREQUENTLY ASKED QUESTIONS
+--------------------------------------------------------------------------------
+
+Q: Where is DSA located?
+A: We are located at 2nd Floor, Arasan Complex, No. 69, Grand Southern Trunk Rd,
+   West Tambaram, Chennai, Tamil Nadu 600045.
+
+Q: How do I enrol in a course?
+A: Visit our contact page at the website and fill in the enquiry form, or call/
+   WhatsApp us at +91 91764 98814. We'll get back to you within 1 business day.
+
+Q: What is the difference between a Course and a Programme?
+A: Courses are individual skill-focused modules (e.g., Python, ML, Power BI).
+   Programmes are structured multi-module offerings such as the 12-Month AI Mastery
+   Track, Internships, FDPs, or Competitive Exam Coaching.
+
+Q: Do I need prior programming experience for the Python course?
+A: No. The Python Programming course is designed for absolute beginners. Basic
+   computer literacy is sufficient.
+
+Q: Is the internship AICTE recognised?
+A: Yes, where the student's institution is AICTE accredited, the internship is
+   AICTE aligned. All interns receive a DSA Internship Certificate and Offer Letter.
+
+Q: Do you offer corporate training?
+A: Yes. We offer fully customisable corporate training (MDP) in Power BI,
+   Generative AI, Python, Azure, AWS, and more. Contact us for a needs-assessment.
+
+Q: What certifications can I prepare for with DSA?
+A: Microsoft Azure AI Fundamentals (AI-900), Azure Data Fundamentals (DP-900),
+   Azure Fundamentals (AZ-900), Power BI (PL-300), UGC NET, GATE CS/IT,
+   TNSET, PG-TRB.
+
+Q: What is the AI Mastery Track?
+A: It is DSA's flagship 12-month programme covering 16 courses across 4 quarters.
+   It takes you from complete beginner to job-ready AI professional with 4 capstone
+   projects, an internship certificate, and placement assistance. No prior experience
+   required.
+
+Q: What is DSA Code Champs?
+A: Code Champs is DSA's school outreach wing for students from Grade 3 to Grade 12.
+   It offers 4 progressive levels (Explorers, Builders, Innovators, Pioneers) covering
+   Scratch, Python, AI, ML, and Computer Vision through fun, project-based sessions.
+
+Q: Can DSA come to our school?
+A: Yes! We visit schools across Chennai and nearby areas for the Code Champs
+   programme. Contact us at +91 91764 98814 to schedule a planning meeting.
+
+Q: Do you offer placement assistance?
+A: Yes, as part of the AI Mastery Track. This includes resume writing, LinkedIn
+   optimisation, mock interview sessions (technical + HR), and access to the DSA
+   alumni network for job alerts and peer mentoring.
+
+Q: How quickly do you respond to enquiries?
+A: We typically respond within 1 business day. For urgent queries, WhatsApp us
+   at +91 91764 98814.
+
+Q: What is the fee for courses?
+A: Fees vary by course and programme. Please contact us at +91 91764 98814 or
+   info@datascienceacademia.in for current pricing and batch details.
+
+Q: Are sessions recorded?
+A: Yes. All live sessions are recorded and made available for enrolled students
+   to replay at their convenience.
+
+Q: Is DSA affiliated with Anna University?
+A: Our faculty includes a PhD candidate from Anna University. The academic depth
+   and curriculum rigour are aligned with Anna University research standards.
+
+Q: What is AID VIRTUAL?
+A: AID VIRTUAL is the proofreading and research support arm that powers DSA's
+   Research Assistance programme, providing journal-ready manuscript support and
+   interdisciplinary research guidance.
+
+--------------------------------------------------------------------------------
+9. WEBSITE PAGES
+--------------------------------------------------------------------------------
+
+Home          : index.html
+Courses       : courses.html (browse all 16 courses)
+Course Detail : course.html (individual course syllabus and modules)
+About Us      : about.html (company story and leadership)
+Programmes    : programmes.html (all 7 special programmes)
+Programme     : programme.html (individual programme detail)
+Code Champs   : codechamps.html (school outreach wing overview)
+Level Detail  : cc-level.html (individual Code Champs level detail)
+Contact/Enrol : contact.html (enquiry form, location, social links)
+
+================================================================================
+END OF DOCUMENT
+================================================================================

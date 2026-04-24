@@ -2,12 +2,14 @@
    CUSTOM CURSOR
 ════════════════════════════════════════ */
 const CUR=document.getElementById('cur');
-let mx=0,my=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;CUR.style.left=mx+'px';CUR.style.top=my+'px';});
-document.querySelectorAll('a,button,.cc,.dc,.pill,.pc,.explore-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{CUR.style.transform='translate(-50%,-50%) scale(2.8)';CUR.style.opacity='.45';});
-  el.addEventListener('mouseleave',()=>{CUR.style.transform='translate(-50%,-50%) scale(1)';CUR.style.opacity='1';});
-});
+if(CUR){
+  let mx=0,my=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;CUR.style.left=mx+'px';CUR.style.top=my+'px';});
+  document.querySelectorAll('a,button,.cc,.dc,.pill,.pc,.explore-card').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{CUR.style.transform='translate(-50%,-50%) scale(2.8)';CUR.style.opacity='.45';});
+    el.addEventListener('mouseleave',()=>{CUR.style.transform='translate(-50%,-50%) scale(1)';CUR.style.opacity='1';});
+  });
+}
 
 /* ════════════════════════════════════════
    NEURAL NETWORK + PROTON TRAIL
@@ -140,16 +142,20 @@ const obs=new IntersectionObserver(entries=>{
 document.querySelectorAll('[data-r]').forEach(el=>obs.observe(el));
 
 /* NAV */
-window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
-(function(){
-  const nm=document.getElementById('nmenu'),tog=document.querySelector('.nav-tog');
-  const ov=document.createElement('div');ov.className='nav-overlay';document.body.appendChild(ov);
-  const close=()=>{nm.classList.remove('open');ov.classList.remove('show');document.body.classList.remove('nav-open');};
-  const open=()=>{nm.classList.add('open');ov.classList.add('show');document.body.classList.add('nav-open');};
-  tog.onclick=()=>nm.classList.contains('open')?close():open();
-  ov.addEventListener('click',close);
-  document.querySelectorAll('#nmenu a').forEach(a=>a.addEventListener('click',close));
-})();
+const _nav=document.getElementById('nav');
+if(_nav){
+  window.addEventListener('scroll',()=>_nav.classList.toggle('scrolled',scrollY>60));
+  (function(){
+    const nm=document.getElementById('nmenu'),tog=document.querySelector('.nav-tog');
+    if(!nm||!tog)return;
+    const ov=document.createElement('div');ov.className='nav-overlay';document.body.appendChild(ov);
+    const close=()=>{nm.classList.remove('open');ov.classList.remove('show');document.body.classList.remove('nav-open');};
+    const open=()=>{nm.classList.add('open');ov.classList.add('show');document.body.classList.add('nav-open');};
+    tog.onclick=()=>nm.classList.contains('open')?close():open();
+    ov.addEventListener('click',close);
+    document.querySelectorAll('#nmenu a').forEach(a=>a.addEventListener('click',close));
+  })();
+}
 
 /* ════════════════════════════════════════
    METRIC COUNTER ANIMATION

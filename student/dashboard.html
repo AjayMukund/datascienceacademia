@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Dashboard — Data Science Academia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<canvas id="fluid-canvas"></canvas>
+
+<div class="portal-body">
+
+  <!-- Sidebar -->
+  <aside class="portal-sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <a href="../index.html">
+        <div class="sidebar-brand-name">Data Science Academia</div>
+        <div class="sidebar-brand-sub">Student Portal</div>
+      </a>
+    </div>
+
+    <nav class="portal-nav">
+      <a href="dashboard.html" class="active"><span class="nav-icon">⊞</span> Dashboard</a>
+      <a href="courses.html"><span class="nav-icon">📚</span> My Courses</a>
+      <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+      <a href="profile.html"><span class="nav-icon">👤</span> Profile</a>
+      <div class="portal-nav-section">Resources</div>
+      <a href="../courses.html" target="_blank"><span class="nav-icon">🔍</span> Browse Courses</a>
+      <a href="../programmes.html" target="_blank"><span class="nav-icon">🗂️</span> Programmes</a>
+      <a href="../contact.html" target="_blank"><span class="nav-icon">💬</span> Contact Support</a>
+    </nav>
+
+    <div class="sidebar-user">
+      <div class="sidebar-user-info">
+        <div class="sidebar-avatar portal-avatar">A</div>
+        <div>
+          <div class="sidebar-user-name portal-username">Loading…</div>
+          <div class="sidebar-user-role portal-role">Student</div>
+        </div>
+      </div>
+      <button class="portal-logout">&#8594;&nbsp; Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="portal-main">
+
+    <div class="portal-topbar">
+      <div>
+        <div class="portal-page-title">My Dashboard</div>
+        <div class="portal-page-sub">Welcome back, <span class="portal-username">…</span></div>
+      </div>
+      <button class="portal-mob-tog" id="mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-icon">📚</div>
+        <div class="stat-num" id="stat-courses">—</div>
+        <div class="stat-lbl">Enrolled Courses</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">✅</div>
+        <div class="stat-num" id="stat-lessons">—</div>
+        <div class="stat-lbl">Lessons Completed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🏅</div>
+        <div class="stat-num" id="stat-certs">—</div>
+        <div class="stat-lbl">Certificates Earned</div>
+      </div>
+    </div>
+
+    <!-- My Courses -->
+    <div class="portal-section-title">My Courses</div>
+    <div id="courses-section">
+      <div class="empty-state">
+        <div class="empty-icon">📖</div>
+        <div class="empty-title">No courses yet</div>
+        <div class="empty-sub">Your enrolled courses will appear here once an administrator grants you access.</div>
+        <a href="../courses.html" class="portal-btn">Browse Courses &nbsp;&rarr;</a>
+      </div>
+    </div>
+
+    <!-- Announcements -->
+    <div class="portal-section-title" style="margin-top:2rem;">Announcements</div>
+    <div id="announcements-section">
+      <div class="empty-state">
+        <div class="empty-icon">📢</div>
+        <div class="empty-title">Nothing new</div>
+        <div class="empty-sub">Announcements from your instructors will appear here.</div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+document.addEventListener('portal:ready', async function () {
+  document.getElementById('stat-courses').textContent = '0';
+  document.getElementById('stat-lessons').textContent = '0';
+  document.getElementById('stat-certs').textContent   = '0';
+});
+</script>
+</body>
+</html>
