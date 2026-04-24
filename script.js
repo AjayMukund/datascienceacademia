@@ -141,7 +141,15 @@ document.querySelectorAll('[data-r]').forEach(el=>obs.observe(el));
 
 /* NAV */
 window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
-document.querySelectorAll('#nmenu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nmenu').classList.remove('open')));
+(function(){
+  const nm=document.getElementById('nmenu'),tog=document.querySelector('.nav-tog');
+  const ov=document.createElement('div');ov.className='nav-overlay';document.body.appendChild(ov);
+  const close=()=>{nm.classList.remove('open');ov.classList.remove('show');};
+  const open=()=>{nm.classList.add('open');ov.classList.add('show');};
+  tog.onclick=()=>nm.classList.contains('open')?close():open();
+  ov.addEventListener('click',close);
+  document.querySelectorAll('#nmenu a').forEach(a=>a.addEventListener('click',close));
+})();
 
 /* ════════════════════════════════════════
    CHATBASE — DSA AI ASSISTANT
