@@ -142,3 +142,8 @@ document.querySelectorAll('[data-r]').forEach(el=>obs.observe(el));
 /* NAV */
 window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
 document.querySelectorAll('#nmenu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nmenu').classList.remove('open')));
+
+/* ════════════════════════════════════════
+   CHATBASE — DSA AI ASSISTANT
+════════════════════════════════════════ */
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...args)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(args)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="c0CBw_ktD4FG0ExvrlhUW";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
