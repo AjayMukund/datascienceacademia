@@ -90,13 +90,7 @@
 
     <!-- Announcements -->
     <div class="portal-section-title" style="margin-top:2rem;">Announcements</div>
-    <div id="announcements-section">
-      <div class="empty-state">
-        <div class="empty-icon">📢</div>
-        <div class="empty-title">Nothing new</div>
-        <div class="empty-sub">Announcements from your instructors will appear here.</div>
-      </div>
-    </div>
+    <div id="announcements-section"></div>
 
   </main>
 </div>
@@ -117,7 +111,13 @@ document.addEventListener('portal:ready', async function () {
   const courses = (enrollments||[]).map(e=>e.courses).filter(Boolean);
   document.getElementById('stat-courses').textContent = courses.length;
   document.getElementById('stat-lessons').textContent = done.size;
-  document.getElementById('stat-certs').textContent   = '0';
+  const {data:certs}=await supa.from('certificates').select('id').eq('user_id',uid);
+  document.getElementById('stat-certs').textContent = (certs||[]).length;
+
+  const {data:anns}=await supa.from('announcements').select('*').order('created_at',{ascending:false}).limit(5);
+  const annSec=document.getElementById('announcements-section');
+  if(!anns?.length){annSec.innerHTML=`<div class="empty-state"><div class="empty-icon">📢</div><div class="empty-title">Nothing new</div><div class="empty-sub">Announcements from your instructors will appear here.</div></div>`;return;}
+  annSec.innerHTML=anns.map(a=>`<div class="editor-card" style="margin-bottom:.85rem;"><div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem;"><div style="font-family:var(--fd);font-size:1.1rem;font-weight:600;color:var(--cream);">${a.title}</div><div style="font-family:var(--fb);font-size:.7rem;color:var(--fog2);">${new Date(a.created_at).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div></div><div style="font-family:var(--fb);font-size:.85rem;color:var(--fog);line-height:1.7;">${a.body.replace(/\n/g,'<br>')}</div></div>`).join('');
 
   if(!courses.length) return;
   const sec = document.getElementById('courses-section');

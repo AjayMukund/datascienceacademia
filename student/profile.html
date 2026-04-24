@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile — Data Science Academia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Student Portal</div></a></div>
+  <nav class="portal-nav">
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="courses.html"><span class="nav-icon">📚</span> My Courses</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <a href="profile.html" class="active"><span class="nav-icon">👤</span> Profile</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Student</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div><div class="portal-page-title">My Profile</div><div class="portal-page-sub">Manage your account details</div></div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;max-width:780px;">
+
+    <!-- Update Name -->
+    <div class="editor-card">
+      <div class="editor-card-title">Personal Details</div>
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+        <div class="sidebar-avatar portal-avatar" style="width:56px;height:56px;font-size:1.5rem;">A</div>
+        <div><div class="sidebar-user-name portal-username" style="font-size:1rem;">…</div><div style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);margin-top:2px;" id="profile-email">…</div></div>
+      </div>
+      <div class="field-group"><label class="flbl">Full Name</label><input type="text" class="fi" id="p-name" placeholder="Your name"></div>
+      <div id="name-msg" class="auth-success"></div>
+      <button class="portal-btn" style="font-size:.78rem;padding:10px 20px;" onclick="saveName()">Update Name</button>
+    </div>
+
+    <!-- Change Password -->
+    <div class="editor-card">
+      <div class="editor-card-title">Change Password</div>
+      <div class="field-group"><label class="flbl">New Password</label><input type="password" class="fi" id="p-pass" placeholder="Min. 8 characters" minlength="8"></div>
+      <div class="field-group"><label class="flbl">Confirm Password</label><input type="password" class="fi" id="p-conf" placeholder="Re-enter password"></div>
+      <div id="pass-msg" class="auth-error"></div>
+      <div id="pass-ok" class="auth-success"></div>
+      <button class="portal-btn" style="font-size:.78rem;padding:10px 20px;" onclick="savePassword()">Update Password</button>
+    </div>
+
+  </div>
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+document.addEventListener('portal:ready',()=>{
+  document.getElementById('p-name').value = window._profile.name;
+  document.getElementById('profile-email').textContent = window._user.email;
+});
+
+async function saveName(){
+  const name=document.getElementById('p-name').value.trim();
+  const msg=document.getElementById('name-msg');
+  msg.style.display='none';
+  if(!name)return;
+  const {error}=await supa.from('profiles').update({name}).eq('id',window._user.id);
+  if(error){msg.className='auth-error';msg.textContent=error.message;}
+  else{msg.className='auth-success';msg.textContent='Name updated successfully.';}
+  msg.style.display='block';
+  document.querySelectorAll('.portal-username').forEach(el=>el.textContent=name);
+}
+
+async function savePassword(){
+  const pass=document.getElementById('p-pass').value;
+  const conf=document.getElementById('p-conf').value;
+  const err=document.getElementById('pass-msg');
+  const ok=document.getElementById('pass-ok');
+  err.style.display='none';ok.style.display='none';
+  if(pass!==conf){err.textContent='Passwords do not match.';err.style.display='block';return;}
+  if(pass.length<8){err.textContent='Password must be at least 8 characters.';err.style.display='block';return;}
+  const {error}=await supa.auth.updateUser({password:pass});
+  if(error){err.textContent=error.message;err.style.display='block';}
+  else{ok.textContent='Password updated successfully.';ok.style.display='block';document.getElementById('p-pass').value='';document.getElementById('p-conf').value='';}
+}
+</script>
+</body></html>

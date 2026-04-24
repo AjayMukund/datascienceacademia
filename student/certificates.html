@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificates — Data Science Academia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Student Portal</div></a></div>
+  <nav class="portal-nav">
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="courses.html"><span class="nav-icon">📚</span> My Courses</a>
+    <a href="certificates.html" class="active"><span class="nav-icon">🏅</span> Certificates</a>
+    <a href="profile.html"><span class="nav-icon">👤</span> Profile</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Student</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div><div class="portal-page-title">My Certificates</div><div class="portal-page-sub">Certificates earned on course completion</div></div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+  <div id="certs-grid" class="courses-grid"></div>
+</main>
+</div>
+
+<!-- Certificate Print View -->
+<div id="cert-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;align-items:center;justify-content:center;padding:1.5rem;">
+  <div style="max-width:800px;width:100%;">
+    <div style="display:flex;justify-content:flex-end;gap:.75rem;margin-bottom:1rem;">
+      <button class="portal-btn" onclick="window.print()">🖨 Print / Save PDF</button>
+      <button class="portal-btn-ghost" onclick="document.getElementById('cert-overlay').style.display='none'">Close</button>
+    </div>
+    <div id="cert-card" style="background:linear-gradient(160deg,#0f1118,#181c24);border:2px solid rgba(200,169,110,.45);border-radius:20px;padding:3.5rem;text-align:center;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:400px;height:300px;background:radial-gradient(ellipse,rgba(200,169,110,.08),transparent 70%);pointer-events:none;"></div>
+      <div style="font-family:'Fira Code',monospace;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(200,169,110,.6);margin-bottom:1.5rem;">Certificate of Completion</div>
+      <div style="width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--champ2),transparent);margin:0 auto 1.5rem;"></div>
+      <div style="font-family:'Outfit',sans-serif;font-size:.85rem;color:rgba(245,240,232,.6);margin-bottom:.75rem;">This is to certify that</div>
+      <div id="cert-name" style="font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:600;color:#dfc08a;margin-bottom:.75rem;letter-spacing:-.02em;"></div>
+      <div style="font-family:'Outfit',sans-serif;font-size:.85rem;color:rgba(245,240,232,.6);margin-bottom:.75rem;">has successfully completed</div>
+      <div id="cert-course" style="font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:600;color:#f5f0e8;margin-bottom:.75rem;font-style:italic;"></div>
+      <div style="width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--champ2),transparent);margin:1.5rem auto;"></div>
+      <div style="display:flex;justify-content:center;gap:4rem;flex-wrap:wrap;">
+        <div><div id="cert-date" style="font-family:'Fira Code',monospace;font-size:.72rem;color:#dfc08a;"></div><div style="font-family:'Outfit',sans-serif;font-size:.62rem;color:rgba(245,240,232,.4);letter-spacing:.1em;text-transform:uppercase;margin-top:4px;">Date Issued</div></div>
+        <div><div style="font-family:'Fira Code',monospace;font-size:.72rem;color:#dfc08a;">Data Science Academia</div><div style="font-family:'Outfit',sans-serif;font-size:.62rem;color:rgba(245,240,232,.4);letter-spacing:.1em;text-transform:uppercase;margin-top:4px;">Issued By</div></div>
+        <div><div id="cert-id" style="font-family:'Fira Code',monospace;font-size:.72rem;color:#dfc08a;"></div><div style="font-family:'Outfit',sans-serif;font-size:.62rem;color:rgba(245,240,232,.4);letter-spacing:.1em;text-transform:uppercase;margin-top:4px;">Certificate ID</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+@media print{
+  body>*:not(#cert-overlay){display:none!important;}
+  #cert-overlay{display:flex!important;position:fixed;inset:0;background:#000;padding:0;}
+  #cert-overlay>div>div:first-child{display:none;}
+  #cert-card{border-radius:0;margin:0;min-height:100vh;display:flex;flex-direction:column;justify-content:center;}
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+document.addEventListener('portal:ready', async()=>{
+  const {data:certs}=await supa.from('certificates').select('*,courses(title)').eq('user_id',window._user.id).order('issued_at',{ascending:false});
+  const grid=document.getElementById('certs-grid');
+  if(!certs?.length){
+    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🏅</div><div class="empty-title">No certificates yet</div><div class="empty-sub">Complete all lessons in a course to earn your certificate.</div><a href="courses.html" class="portal-btn">Go to My Courses →</a></div>`;
+    return;
+  }
+  grid.innerHTML=certs.map(c=>`
+    <div class="course-card">
+      <div class="course-thumb" style="background:linear-gradient(135deg,rgba(200,169,110,.12),rgba(17,19,24,.8));font-size:3rem;">🏅</div>
+      <div class="course-body">
+        <div class="course-title">${c.courses?.title||'Course'}</div>
+        <div style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);margin-top:.4rem;">Issued ${new Date(c.issued_at).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})}</div>
+        <div style="font-family:var(--fm);font-size:.6rem;color:var(--fog3);margin-top:.25rem;">ID: ${c.id.slice(0,8).toUpperCase()}</div>
+      </div>
+      <div class="course-footer">
+        <button class="portal-btn" style="flex:1;justify-content:center;font-size:.78rem;" onclick="viewCert('${c.id}','${(c.courses?.title||'').replace(/'/g,"\\'")}','${c.issued_at}')">View Certificate →</button>
+      </div>
+    </div>`).join('');
+});
+
+function viewCert(id, courseTitle, issuedAt){
+  document.getElementById('cert-name').textContent   = window._profile.name;
+  document.getElementById('cert-course').textContent = courseTitle;
+  document.getElementById('cert-date').textContent   = new Date(issuedAt).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('cert-id').textContent     = id.slice(0,8).toUpperCase();
+  document.getElementById('cert-overlay').style.display='flex';
+}
+</script>
+</body></html>

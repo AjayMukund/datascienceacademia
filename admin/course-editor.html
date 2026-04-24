@@ -148,6 +148,7 @@ function renderModule(m){
           <div class="lt-icon ${LT[l.type]?.cls||'lt-video'}">${LT[l.type]?.icon||'🎬'}</div>
           <span class="lesson-row-title">${l.title}</span>
           <span class="lesson-row-dur">${l.duration_mins?l.duration_mins+'min':''}</span>
+          ${l.type==='quiz'?`<button class="icon-btn" onclick="manageQuiz('${l.id}','${l.title.replace(/'/g,"\\'")}')">📝</button>`:''}
           <button class="icon-btn danger" onclick="delLesson('${l.id}','${m.id}')">🗑</button>
         </div>`).join('')}
       <div class="add-inline-form" id="lform-${m.id}">
@@ -217,6 +218,70 @@ async function delLesson(id){
   if(!confirm('Delete this lesson?'))return;
   const {error}=await supa.from('lessons').delete().eq('id',id);
   error?toast(error.message,'error'):(toast('Lesson deleted'),await loadModules());
+}
+
+async function manageQuiz(lessonId, lessonTitle){
+  const {data:qs}=await supa.from('quiz_questions').select('*').eq('lesson_id',lessonId).order('order_index');
+  const existing=(qs||[]).map((q,i)=>`
+    <div style="background:rgba(11,12,14,.5);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:.75rem;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;">
+        <div style="font-family:var(--fb);font-size:.85rem;color:var(--cream);flex:1;">${i+1}. ${q.question}</div>
+        <button class="icon-btn danger" onclick="delQuestion('${q.id}','${lessonId}','${lessonTitle.replace(/'/g,"\\'")}')">🗑</button>
+      </div>
+      <div style="margin-top:.5rem;display:flex;flex-wrap:wrap;gap:.4rem;">
+        ${(q.options||[]).map((o,oi)=>`<span style="font-family:var(--fb);font-size:.72rem;padding:3px 8px;border-radius:5px;border:1px solid;${oi===q.correct_index?'color:var(--teal);border-color:rgba(62,207,178,.3);background:rgba(62,207,178,.08);':'color:var(--fog2);border-color:var(--border);'}">${o}${oi===q.correct_index?' ✓':''}</span>`).join('')}
+      </div>
+    </div>`).join('');
+
+  const el=document.createElement('div');
+  el.className='modal-bg';
+  el.id='quiz-modal';
+  el.innerHTML=`
+    <div class="modal-box" style="max-width:580px;">
+      <div class="modal-title">Quiz — ${lessonTitle}</div>
+      <div class="modal-sub">Add MCQ questions for this lesson.</div>
+      <div id="existing-qs">${existing||'<div style="color:var(--fog2);font-family:var(--fb);font-size:.82rem;margin-bottom:1rem;">No questions yet.</div>'}</div>
+      <div class="editor-card" style="margin-bottom:0;padding:1rem;">
+        <div class="editor-card-title">Add Question</div>
+        <div class="field-group"><label class="flbl">Question</label><input type="text" class="fi" id="qq-q" placeholder="e.g. What is a DataFrame?"></div>
+        <div class="field-group"><label class="flbl">Option A</label><input type="text" class="fi" id="qq-0" placeholder="Option A"></div>
+        <div class="field-group"><label class="flbl">Option B</label><input type="text" class="fi" id="qq-1" placeholder="Option B"></div>
+        <div class="field-group"><label class="flbl">Option C (optional)</label><input type="text" class="fi" id="qq-2" placeholder="Option C"></div>
+        <div class="field-group"><label class="flbl">Option D (optional)</label><input type="text" class="fi" id="qq-3" placeholder="Option D"></div>
+        <div class="field-group"><label class="flbl">Correct Answer</label>
+          <select class="fi" id="qq-correct"><option value="0">Option A</option><option value="1">Option B</option><option value="2">Option C</option><option value="3">Option D</option></select>
+        </div>
+      </div>
+      <div id="qq-error" class="auth-error"></div>
+      <div class="modal-actions">
+        <button class="portal-btn-ghost" onclick="document.getElementById('quiz-modal').remove()">Close</button>
+        <button class="portal-btn" onclick="addQuestion('${lessonId}','${lessonTitle.replace(/'/g,"\\'")}')">Add Question →</button>
+      </div>
+    </div>`;
+  document.body.appendChild(el);
+}
+
+async function addQuestion(lessonId, lessonTitle){
+  const q=document.getElementById('qq-q').value.trim();
+  const opts=[document.getElementById('qq-0').value.trim(),document.getElementById('qq-1').value.trim(),document.getElementById('qq-2').value.trim(),document.getElementById('qq-3').value.trim()].filter(Boolean);
+  const correct=parseInt(document.getElementById('qq-correct').value);
+  const err=document.getElementById('qq-error');
+  err.style.display='none';
+  if(!q||opts.length<2){err.textContent='Question and at least 2 options are required.';err.style.display='block';return;}
+  const {data:existing}=await supa.from('quiz_questions').select('order_index').eq('lesson_id',lessonId).order('order_index',{ascending:false}).limit(1);
+  const next=(existing?.[0]?.order_index??-1)+1;
+  const {error}=await supa.from('quiz_questions').insert({lesson_id:lessonId,question:q,options:opts,correct_index:Math.min(correct,opts.length-1),order_index:next});
+  if(error){err.textContent=error.message;err.style.display='block';return;}
+  toast('Question added');
+  document.getElementById('quiz-modal').remove();
+  await manageQuiz(lessonId,lessonTitle);
+}
+
+async function delQuestion(id,lessonId,lessonTitle){
+  if(!confirm('Delete this question?'))return;
+  await supa.from('quiz_questions').delete().eq('id',id);
+  document.getElementById('quiz-modal').remove();
+  await manageQuiz(lessonId,lessonTitle);
 }
 </script>
 </body></html>

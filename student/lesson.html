@@ -117,6 +117,9 @@ document.addEventListener('portal:ready', async()=>{
   `).join('');
 
   loadLesson(currentIdx, done);
+  // Load quiz if applicable
+  const cur = allLessons[currentIdx];
+  if(cur?.type==='quiz') setTimeout(()=>loadQuiz(cur),50);
 });
 
 function loadLesson(idx, done){
@@ -141,11 +144,70 @@ async function markDone(){
   toast('Lesson marked as complete ✅');
   const btn=document.getElementById('done-btn');
   btn.textContent='✅ Completed';btn.style.opacity='.6';btn.disabled=true;
-  // Update sidebar icon
   const sideLink=document.querySelector(`.lsb-lesson[href="lesson.html?id=${l.id}&course=${courseId}"] .lt-icon`);
   if(sideLink)sideLink.textContent='✅';
+
+  // Check if ALL lessons now complete → issue certificate
+  const {data:prog}=await supa.from('progress').select('lesson_id').eq('user_id',window._user.id);
+  const doneNow=new Set(prog.map(p=>p.lesson_id));
+  if(allLessons.every(ls=>doneNow.has(ls.id))){
+    await supa.from('certificates').upsert({user_id:window._user.id,course_id:courseId},{onConflict:'user_id,course_id'});
+    toast('🏅 Course complete! Certificate issued — check your Certificates page.');
+    setTimeout(()=>{ location.href='certificates.html'; },2500);
+    return;
+  }
+
   if(currentIdx<allLessons.length-1){
     setTimeout(()=>{ location.href=`lesson.html?id=${allLessons[currentIdx+1].id}&course=${courseId}`; },1200);
+  }
+}
+
+// Quiz loader — called when lesson type is 'quiz'
+async function loadQuiz(lesson){
+  const {data:questions}=await supa.from('quiz_questions').select('*').eq('lesson_id',lesson.id).order('order_index');
+  if(!questions?.length){
+    document.getElementById('player-embed').innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:1rem;color:var(--fog2);font-family:var(--fb);"><div style="font-size:2.5rem;">📝</div><div>No questions added yet for this quiz.</div></div>`;
+    return;
+  }
+  let score=0,answered=0;
+  document.getElementById('player-embed').innerHTML=`
+    <div style="padding:2rem;overflow-y:auto;height:100%;font-family:var(--fb);">
+      <div style="font-family:var(--fd);font-size:1.3rem;font-weight:600;color:var(--cream);margin-bottom:1.5rem;">${lesson.title}</div>
+      ${questions.map((q,qi)=>`
+        <div style="background:rgba(11,12,14,.5);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:1rem;" id="q-block-${qi}">
+          <div style="font-size:.9rem;color:var(--cream);margin-bottom:1rem;line-height:1.6;">${qi+1}. ${q.question}</div>
+          ${(q.options||[]).map((opt,oi)=>`
+            <label style="display:flex;align-items:center;gap:.75rem;padding:.65rem .85rem;border-radius:7px;border:1px solid var(--border);margin-bottom:.5rem;cursor:pointer;transition:border-color .2s;" id="opt-${qi}-${oi}">
+              <input type="radio" name="q${qi}" value="${oi}" onchange="checkAns(${qi},${oi},${q.correct_index},${JSON.stringify(q.options).replace(/"/g,'&quot;')})">
+              <span style="font-size:.85rem;color:var(--fog);">${opt}</span>
+            </label>`).join('')}
+        </div>`).join('')}
+      <div id="quiz-result" style="display:none;background:rgba(62,207,178,.08);border:1px solid rgba(62,207,178,.25);border-radius:10px;padding:1.25rem;text-align:center;margin-top:1rem;">
+        <div style="font-size:1.5rem;margin-bottom:.5rem;">🎉</div>
+        <div id="quiz-score" style="font-family:var(--fd);font-size:1.4rem;color:var(--teal);"></div>
+      </div>
+    </div>`;
+  window._quizTotal=questions.length;
+  window._quizScore=0;
+  window._quizAnswered=new Set();
+}
+
+function checkAns(qi,selected,correct,opts){
+  const block=document.getElementById(`q-block-${qi}`);
+  block.querySelectorAll('label').forEach((lbl,oi)=>{
+    lbl.style.borderColor = oi===correct?'rgba(62,207,178,.5)':oi===selected&&selected!==correct?'rgba(255,80,80,.4)':'var(--border)';
+    lbl.style.background  = oi===correct?'rgba(62,207,178,.07)':oi===selected&&selected!==correct?'rgba(255,80,80,.06)':'';
+    lbl.querySelector('input').disabled=true;
+  });
+  if(!window._quizAnswered.has(qi)){
+    window._quizAnswered.add(qi);
+    if(selected===correct)window._quizScore++;
+    if(window._quizAnswered.size===window._quizTotal){
+      const res=document.getElementById('quiz-result');
+      document.getElementById('quiz-score').textContent=`You scored ${window._quizScore} / ${window._quizTotal}`;
+      res.style.display='block';
+      res.scrollIntoView({behavior:'smooth'});
+    }
   }
 }
 </script>
