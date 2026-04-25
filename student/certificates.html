@@ -45,72 +45,112 @@
       <button class="portal-btn-ghost" onclick="document.getElementById('cert-overlay').style.display='none'">Close</button>
     </div>
     <div id="cert-card" class="cert-card-enhanced">
-      <!-- Watermark -->
+      <div class="cert-bg-glow-t"></div><div class="cert-bg-glow-c"></div><div class="cert-bg-grid"></div>
       <div class="cert-watermark">DSA</div>
-      <!-- Corner ornaments -->
-      <div class="cert-corner cert-corner-tl"></div>
-      <div class="cert-corner cert-corner-tr"></div>
-      <div class="cert-corner cert-corner-bl"></div>
-      <div class="cert-corner cert-corner-br"></div>
-      <!-- Institution header -->
-      <div style="margin-bottom:1.5rem;">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:500;letter-spacing:.35em;text-transform:uppercase;color:#c8a96e;">Data Science Academia</div>
-        <div style="font-family:'Outfit',sans-serif;font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,169,110,.45);margin-top:.35rem;">Private Limited &nbsp;·&nbsp; Chennai, Tamil Nadu &nbsp;·&nbsp; AICTE Affiliated &nbsp;·&nbsp; MSME Registered</div>
-      </div>
-      <!-- Top rule -->
-      <div class="cert-rule"><div class="cert-rule-line"></div><div class="cert-rule-gem">✦</div><div class="cert-rule-line cert-rule-line-r"></div></div>
-      <!-- Label -->
-      <div style="font-family:'Fira Code',monospace;font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(200,169,110,.55);margin:1.1rem 0 1rem;">Certificate of Completion</div>
-      <!-- Certify text -->
-      <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:rgba(245,240,232,.5);margin-bottom:.6rem;">This is to proudly certify that</div>
-      <!-- Name -->
-      <div id="cert-name" style="font-family:'Cormorant Garamond',serif;font-size:3.2rem;font-weight:600;color:#dfc08a;letter-spacing:-.02em;line-height:1.1;margin-bottom:.5rem;"></div>
-      <div style="width:220px;height:1px;background:linear-gradient(90deg,transparent,rgba(200,169,110,.55),transparent);margin:0 auto .9rem;"></div>
-      <!-- Body -->
-      <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:rgba(245,240,232,.5);margin-bottom:.6rem;">has successfully completed the course</div>
-      <div id="cert-course" style="font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;color:#f5f0e8;font-style:italic;line-height:1.2;margin-bottom:.4rem;"></div>
-      <div style="font-family:'Outfit',sans-serif;font-size:.62rem;color:rgba(245,240,232,.3);letter-spacing:.08em;margin-bottom:1.4rem;">offered by Data Science Academia Pvt. Ltd.</div>
-      <!-- Bottom rule -->
-      <div class="cert-rule" style="margin-bottom:1.5rem;"><div class="cert-rule-line"></div><div class="cert-rule-gem" style="font-size:.7rem;">◆</div><div class="cert-rule-line cert-rule-line-r"></div></div>
-      <!-- Footer: date | seal | signature -->
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap;">
-        <div style="flex:1;text-align:center;">
-          <div id="cert-date" style="font-family:'Fira Code',monospace;font-size:.68rem;color:#dfc08a;margin-bottom:.6rem;"></div>
-          <div style="width:110px;height:1px;background:rgba(200,169,110,.35);margin:0 auto .35rem;"></div>
-          <div style="font-family:'Outfit',sans-serif;font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,240,232,.3);">Date of Issue</div>
+      <div class="cert-corner cert-corner-tl"></div><div class="cert-corner cert-corner-tr"></div>
+      <div class="cert-corner cert-corner-bl"></div><div class="cert-corner cert-corner-br"></div>
+      <div class="cert-c2 cert-c2-tl"></div><div class="cert-c2 cert-c2-tr"></div>
+      <div class="cert-c2 cert-c2-bl"></div><div class="cert-c2 cert-c2-br"></div>
+      <div class="cert-side cert-side-l"><div class="cert-side-dot"></div><div class="cert-side-bar"></div><div class="cert-side-gem">◆</div><div class="cert-side-bar"></div><div class="cert-side-dot"></div></div>
+      <div class="cert-side cert-side-r"><div class="cert-side-dot"></div><div class="cert-side-bar"></div><div class="cert-side-gem">◆</div><div class="cert-side-bar"></div><div class="cert-side-dot"></div></div>
+      <div class="cert-content">
+        <div class="cert-hd">
+          <div class="cert-hd-name">Data Science Academia</div>
+          <div class="cert-hd-sub">Private Limited &nbsp;·&nbsp; Chennai, Tamil Nadu &nbsp;·&nbsp; AICTE Affiliated &nbsp;·&nbsp; MSME Registered</div>
         </div>
-        <div style="flex:1;text-align:center;">
-          <div style="width:72px;height:72px;border-radius:50%;border:1.5px solid rgba(200,169,110,.45);margin:0 auto .4rem;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(200,169,110,.07),transparent);box-shadow:0 0 18px rgba(200,169,110,.08);">
-            <div><div style="font-size:1.5rem;line-height:1;">🏅</div><div style="font-family:'Fira Code',monospace;font-size:.32rem;letter-spacing:.12em;color:rgba(200,169,110,.65);text-transform:uppercase;margin-top:2px;">OFFICIAL</div></div>
+        <div class="cert-rule"><div class="cert-rl"></div><div class="cert-ro">✦&thinsp;◆&thinsp;✦</div><div class="cert-rl cert-rl-r"></div></div>
+        <div class="cert-type">Certificate of Completion</div>
+        <div class="cert-presented">This is to proudly certify that</div>
+        <div id="cert-name" class="cert-name"></div>
+        <div class="cert-name-rule"><div class="cert-rl"></div><div class="cert-ro" style="font-size:.65rem;">✦</div><div class="cert-rl cert-rl-r"></div></div>
+        <div class="cert-completed">has successfully completed the course</div>
+        <div id="cert-course" class="cert-course"></div>
+        <div class="cert-offered">offered by Data Science Academia Pvt. Ltd., Chennai</div>
+        <div class="cert-rule" style="margin:.45rem 0 .75rem;"><div class="cert-rl"></div><div class="cert-ro" style="font-size:.62rem;">◆</div><div class="cert-rl cert-rl-r"></div></div>
+        <div class="cert-footer">
+          <div class="cert-fc">
+            <div id="cert-date" class="cert-fv"></div>
+            <div class="cert-fb"></div>
+            <div class="cert-fl">Date of Issue</div>
           </div>
-          <div style="font-family:'Outfit',sans-serif;font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,240,232,.3);">Official Seal</div>
+          <div class="cert-fc">
+            <div class="cert-seal"><div class="cert-seal-r1"><div class="cert-seal-r2"><div class="cert-seal-r3">
+              <span class="cert-seal-ico">🎓</span>
+              <span class="cert-seal-lbl">DSA · OFFICIAL</span>
+            </div></div></div></div>
+            <div class="cert-fl">Official Seal</div>
+          </div>
+          <div class="cert-fc">
+            <div class="cert-sig">The Director</div>
+            <div class="cert-fb"></div>
+            <div class="cert-fl">Director, DSA Pvt. Ltd.</div>
+          </div>
         </div>
-        <div style="flex:1;text-align:center;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:rgba(200,169,110,.65);margin-bottom:.6rem;">The Director</div>
-          <div style="width:110px;height:1px;background:rgba(200,169,110,.35);margin:0 auto .35rem;"></div>
-          <div style="font-family:'Outfit',sans-serif;font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,240,232,.3);">Director, DSA Pvt. Ltd.</div>
+        <div class="cert-verify-strip">
+          <span class="cert-vi">Certificate ID</span>
+          <span id="cert-id" class="cert-vid"></span>
+          <span class="cert-vsep">·</span>
+          <a id="cert-verify-link" class="cert-vlink" href="#" target="_blank">Verify this certificate →</a>
         </div>
-      </div>
-      <!-- Certificate ID strip -->
-      <div style="margin-top:1.25rem;padding-top:.85rem;border-top:1px solid rgba(200,169,110,.1);text-align:center;">
-        <span style="font-family:'Fira Code',monospace;font-size:.55rem;color:rgba(200,169,110,.35);">CERTIFICATE ID &nbsp;·&nbsp; </span><span id="cert-id" style="font-family:'Fira Code',monospace;font-size:.55rem;color:rgba(200,169,110,.55);"></span><span style="font-family:'Fira Code',monospace;font-size:.55rem;color:rgba(200,169,110,.35);"> &nbsp;·&nbsp; datascienceacademia.com</span>
       </div>
     </div>
   </div>
 </div>
 
 <style>
-.cert-card-enhanced{background:#0b0d14;border:2.5px solid #c8a96e;box-shadow:inset 0 0 0 7px rgba(200,169,110,.06),inset 0 0 0 8px rgba(200,169,110,.25);border-radius:6px;padding:2.75rem 3.25rem;text-align:center;position:relative;overflow:hidden;aspect-ratio:297/210;display:flex;flex-direction:column;justify-content:center;}
-.cert-watermark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:.028;font-family:'Cormorant Garamond',serif;font-size:11rem;font-weight:700;color:#c8a96e;transform:rotate(-25deg);user-select:none;letter-spacing:.1em;}
-.cert-corner{position:absolute;width:36px;height:36px;}
-.cert-corner-tl{top:14px;left:14px;border-top:2px solid rgba(200,169,110,.7);border-left:2px solid rgba(200,169,110,.7);}
-.cert-corner-tr{top:14px;right:14px;border-top:2px solid rgba(200,169,110,.7);border-right:2px solid rgba(200,169,110,.7);}
-.cert-corner-bl{bottom:14px;left:14px;border-bottom:2px solid rgba(200,169,110,.7);border-left:2px solid rgba(200,169,110,.7);}
-.cert-corner-br{bottom:14px;right:14px;border-bottom:2px solid rgba(200,169,110,.7);border-right:2px solid rgba(200,169,110,.7);}
-.cert-rule{display:flex;align-items:center;gap:.75rem;}
-.cert-rule-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(200,169,110,.4));}
-.cert-rule-line-r{background:linear-gradient(90deg,rgba(200,169,110,.4),transparent);}
-.cert-rule-gem{color:#c8a96e;font-size:1rem;flex-shrink:0;}
+.cert-card-enhanced{background:#070910;border:2.5px solid #c8a96e;box-shadow:inset 0 0 0 9px rgba(200,169,110,.04),inset 0 0 0 10px rgba(200,169,110,.2),0 0 60px rgba(200,169,110,.06);border-radius:4px;text-align:center;position:relative;overflow:hidden;aspect-ratio:297/210;display:flex;flex-direction:column;justify-content:center;}
+.cert-bg-glow-t{position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:70%;height:65%;background:radial-gradient(ellipse,rgba(200,169,110,.09),transparent 70%);pointer-events:none;}
+.cert-bg-glow-c{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:90%;height:70%;background:radial-gradient(ellipse,rgba(200,169,110,.04),transparent 65%);pointer-events:none;}
+.cert-bg-grid{position:absolute;inset:0;pointer-events:none;opacity:.014;background-image:linear-gradient(rgba(200,169,110,1) 1px,transparent 1px),linear-gradient(90deg,rgba(200,169,110,1) 1px,transparent 1px);background-size:28px 28px;}
+.cert-watermark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:.022;font-family:'Cormorant Garamond',serif;font-size:13rem;font-weight:700;color:#c8a96e;transform:rotate(-22deg);user-select:none;letter-spacing:.2em;}
+.cert-corner{position:absolute;width:44px;height:44px;}
+.cert-corner-tl{top:11px;left:11px;border-top:2px solid rgba(200,169,110,.7);border-left:2px solid rgba(200,169,110,.7);}
+.cert-corner-tr{top:11px;right:11px;border-top:2px solid rgba(200,169,110,.7);border-right:2px solid rgba(200,169,110,.7);}
+.cert-corner-bl{bottom:11px;left:11px;border-bottom:2px solid rgba(200,169,110,.7);border-left:2px solid rgba(200,169,110,.7);}
+.cert-corner-br{bottom:11px;right:11px;border-bottom:2px solid rgba(200,169,110,.7);border-right:2px solid rgba(200,169,110,.7);}
+.cert-c2{position:absolute;width:20px;height:20px;}
+.cert-c2-tl{top:21px;left:21px;border-top:1px solid rgba(200,169,110,.3);border-left:1px solid rgba(200,169,110,.3);}
+.cert-c2-tr{top:21px;right:21px;border-top:1px solid rgba(200,169,110,.3);border-right:1px solid rgba(200,169,110,.3);}
+.cert-c2-bl{bottom:21px;left:21px;border-bottom:1px solid rgba(200,169,110,.3);border-left:1px solid rgba(200,169,110,.3);}
+.cert-c2-br{bottom:21px;right:21px;border-bottom:1px solid rgba(200,169,110,.3);border-right:1px solid rgba(200,169,110,.3);}
+.cert-side{position:absolute;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:3px;height:44%;}
+.cert-side-l{left:19px;}.cert-side-r{right:19px;}
+.cert-side-dot{width:3px;height:3px;border-radius:50%;background:rgba(200,169,110,.4);flex-shrink:0;}
+.cert-side-bar{flex:1;width:1px;background:linear-gradient(180deg,transparent,rgba(200,169,110,.26),transparent);}
+.cert-side-gem{color:rgba(200,169,110,.4);font-size:.38rem;flex-shrink:0;line-height:1;}
+.cert-content{position:relative;z-index:1;padding:1rem 3.8rem;}
+.cert-hd{margin-bottom:.45rem;}
+.cert-hd-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:500;letter-spacing:.38em;text-transform:uppercase;color:#c8a96e;}
+.cert-hd-sub{font-family:'Outfit',sans-serif;font-size:.49rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(200,169,110,.36);margin-top:.28rem;}
+.cert-rule{display:flex;align-items:center;gap:.55rem;margin:.5rem 0;}
+.cert-name-rule{display:flex;align-items:center;gap:.55rem;margin:.3rem auto .45rem;width:55%;}
+.cert-rl{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(200,169,110,.35));}
+.cert-rl-r{background:linear-gradient(90deg,rgba(200,169,110,.35),transparent);}
+.cert-ro{color:#c8a96e;font-size:.88rem;flex-shrink:0;letter-spacing:.08em;}
+.cert-type{font-family:'Fira Code',monospace;font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(200,169,110,.46);margin:.35rem 0 .42rem;}
+.cert-presented{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-style:italic;color:rgba(245,240,232,.42);margin-bottom:.3rem;}
+.cert-name{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:600;background:linear-gradient(135deg,#b8954a 0%,#f0d07a 42%,#dfc08a 68%,#b8954a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.02em;line-height:1.1;margin-bottom:.2rem;}
+.cert-completed{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-style:italic;color:rgba(245,240,232,.42);margin-bottom:.28rem;}
+.cert-course{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:#f5f0e8;font-style:italic;line-height:1.2;margin-bottom:.15rem;}
+.cert-offered{font-family:'Outfit',sans-serif;font-size:.5rem;color:rgba(245,240,232,.25);letter-spacing:.06em;margin-bottom:.3rem;}
+.cert-footer{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;}
+.cert-fc{flex:1;text-align:center;min-width:0;}
+.cert-fv{font-family:'Fira Code',monospace;font-size:.6rem;color:#dfc08a;margin-bottom:.48rem;}
+.cert-fb{width:100px;height:1px;background:rgba(200,169,110,.26);margin:0 auto .28rem;}
+.cert-fl{font-family:'Outfit',sans-serif;font-size:.44rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.24);}
+.cert-seal{margin:0 auto .32rem;display:inline-block;}
+.cert-seal-r1{width:70px;height:70px;border-radius:50%;border:1.5px solid rgba(200,169,110,.4);display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(200,169,110,.07),transparent);box-shadow:0 0 16px rgba(200,169,110,.07);}
+.cert-seal-r2{width:55px;height:55px;border-radius:50%;border:1px dashed rgba(200,169,110,.2);display:flex;align-items:center;justify-content:center;}
+.cert-seal-r3{text-align:center;}
+.cert-seal-ico{font-size:1.3rem;line-height:1;display:block;}
+.cert-seal-lbl{font-family:'Fira Code',monospace;font-size:.27rem;letter-spacing:.12em;color:rgba(200,169,110,.55);text-transform:uppercase;display:block;margin-top:1px;}
+.cert-sig{font-family:'Cormorant Garamond',serif;font-size:.98rem;font-style:italic;color:rgba(200,169,110,.56);margin-bottom:.48rem;}
+.cert-verify-strip{margin-top:.8rem;padding-top:.55rem;border-top:1px solid rgba(200,169,110,.1);text-align:center;}
+.cert-vi{font-family:'Fira Code',monospace;font-size:.46rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(200,169,110,.28);}
+.cert-vid{font-family:'Fira Code',monospace;font-size:.46rem;color:rgba(200,169,110,.46);margin:0 .45rem;}
+.cert-vsep{color:rgba(200,169,110,.28);font-size:.46rem;margin-right:.35rem;}
+.cert-vlink{font-family:'Outfit',sans-serif;font-size:.46rem;color:rgba(200,169,110,.46);text-decoration:none;letter-spacing:.03em;}
+.cert-vlink:hover{color:#c8a96e;}
 @page{size:A4 landscape;margin:0;}
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
@@ -119,6 +159,8 @@
   #cert-overlay>div{width:100%!important;max-width:100%!important;padding:0!important;}
   #cert-overlay>div>div:first-child{display:none!important;}
   .cert-card-enhanced{width:297mm!important;height:210mm!important;border-radius:0!important;margin:0!important;aspect-ratio:unset!important;box-sizing:border-box!important;}
+  .cert-name{-webkit-text-fill-color:#dfc08a!important;background:none!important;color:#dfc08a!important;}
+  .cert-vlink{color:rgba(200,169,110,.46)!important;}
 }
 </style>
 
@@ -150,10 +192,11 @@ document.addEventListener('portal:ready', async()=>{
 });
 
 function viewCert(id, courseTitle, issuedAt){
-  document.getElementById('cert-name').textContent   = window._profile.name;
-  document.getElementById('cert-course').textContent = courseTitle;
-  document.getElementById('cert-date').textContent   = new Date(issuedAt).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
-  document.getElementById('cert-id').textContent     = id.slice(0,8).toUpperCase();
+  document.getElementById('cert-name').textContent    = window._profile.name;
+  document.getElementById('cert-course').textContent  = courseTitle;
+  document.getElementById('cert-date').textContent    = new Date(issuedAt).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('cert-id').textContent      = id.slice(0,8).toUpperCase();
+  document.getElementById('cert-verify-link').href    = '../verify.html?id=' + id;
   document.getElementById('cert-overlay').style.display='flex';
 }
 </script>

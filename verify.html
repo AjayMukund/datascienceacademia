@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify Certificate — Data Science Academia</title>
+<meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+
+<div class="auth-wrap">
+  <div class="auth-card" style="max-width:500px;width:100%;text-align:center;">
+
+    <div class="auth-brand">
+      <a href="index.html">
+        <div class="auth-brand-name">Data Science Academia</div>
+        <div class="auth-brand-sub">Certificate Verification</div>
+      </a>
+    </div>
+
+    <!-- Loading -->
+    <div id="state-loading">
+      <div style="font-size:2.5rem;margin-bottom:1rem;opacity:.6;">⏳</div>
+      <div class="auth-title" style="font-size:1.35rem;">Verifying Certificate</div>
+      <p class="auth-sub">Checking our records…</p>
+    </div>
+
+    <!-- Valid -->
+    <div id="state-valid" style="display:none;">
+      <div style="width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,rgba(200,169,110,.14),rgba(200,169,110,.04));border:2px solid rgba(200,169,110,.55);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;font-size:1.75rem;color:#c8a96e;">✓</div>
+      <div class="auth-title" style="font-size:1.4rem;color:#c8a96e;margin-bottom:.4rem;">Certificate Verified</div>
+      <p class="auth-sub" style="margin-bottom:1.4rem;">This is a genuine certificate issued by Data Science Academia.</p>
+      <div style="background:rgba(200,169,110,.05);border:1px solid rgba(200,169,110,.18);border-radius:12px;padding:1.2rem 1.4rem;text-align:left;margin-bottom:1.25rem;">
+        <div style="display:flex;flex-direction:column;gap:.8rem;">
+          <div>
+            <div style="font-family:var(--fm);font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(200,169,110,.42);margin-bottom:.22rem;">Recipient</div>
+            <div id="v-name" style="font-family:var(--fd);font-size:1.2rem;color:var(--cream);font-weight:600;letter-spacing:-.01em;"></div>
+          </div>
+          <div>
+            <div style="font-family:var(--fm);font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(200,169,110,.42);margin-bottom:.22rem;">Course Completed</div>
+            <div id="v-course" style="font-family:var(--fb);font-size:.92rem;color:var(--fog);font-style:italic;"></div>
+          </div>
+          <div style="display:flex;gap:2rem;flex-wrap:wrap;">
+            <div>
+              <div style="font-family:var(--fm);font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(200,169,110,.42);margin-bottom:.22rem;">Date Issued</div>
+              <div id="v-date" style="font-family:var(--fm);font-size:.78rem;color:var(--fog2);"></div>
+            </div>
+            <div>
+              <div style="font-family:var(--fm);font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(200,169,110,.42);margin-bottom:.22rem;">Certificate ID</div>
+              <div id="v-id" style="font-family:var(--fm);font-size:.78rem;color:var(--fog2);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="font-family:var(--fb);font-size:.68rem;color:rgba(245,240,232,.28);line-height:1.7;">
+        Issued by <strong style="color:rgba(200,169,110,.55);">Data Science Academia Pvt. Ltd.</strong><br>
+        AICTE Affiliated &nbsp;·&nbsp; MSME Registered &nbsp;·&nbsp; Chennai, Tamil Nadu
+      </div>
+    </div>
+
+    <!-- Invalid -->
+    <div id="state-invalid" style="display:none;">
+      <div style="width:68px;height:68px;border-radius:50%;background:rgba(239,68,68,.07);border:2px solid rgba(239,68,68,.28);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;font-size:1.75rem;color:rgba(239,68,68,.7);">✕</div>
+      <div class="auth-title" style="font-size:1.4rem;">Not Found</div>
+      <p class="auth-sub" id="v-err">This certificate ID is invalid or does not exist in our records.</p>
+      <p style="font-family:var(--fb);font-size:.72rem;color:rgba(245,240,232,.3);line-height:1.7;margin-top:1rem;">
+        If you believe this is an error, please contact<br>
+        <strong style="color:rgba(200,169,110,.5);">Data Science Academia Pvt. Ltd., Chennai</strong>
+      </p>
+    </div>
+
+    <div style="margin-top:1.75rem;padding-top:1.1rem;border-top:1px solid var(--border);">
+      <a href="index.html" class="auth-link" style="font-size:.72rem;">&larr; &nbsp;datascienceacademia.com</a>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="script.js"></script>
+<script>
+(async () => {
+  const params = new URLSearchParams(location.search);
+  const certId = params.get('id');
+
+  function show(state) {
+    ['loading','valid','invalid'].forEach(s =>
+      document.getElementById('state-' + s).style.display = s === state ? 'block' : 'none'
+    );
+  }
+
+  if (!certId) {
+    document.getElementById('v-err').textContent = 'No certificate ID was provided in the URL.';
+    show('invalid');
+    return;
+  }
+
+  const uuidRx = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!uuidRx.test(certId)) {
+    document.getElementById('v-err').textContent = 'The certificate ID format is invalid.';
+    show('invalid');
+    return;
+  }
+
+  const { data, error } = await supa.rpc('verify_certificate', { cert_id: certId });
+
+  if (error || !data) {
+    show('invalid');
+    return;
+  }
+
+  document.getElementById('v-name').textContent   = data.student_name;
+  document.getElementById('v-course').textContent = data.course_title;
+  document.getElementById('v-date').textContent   = new Date(data.issued_at).toLocaleDateString('en-IN', {day:'numeric', month:'long', year:'numeric'});
+  document.getElementById('v-id').textContent     = data.cert_id.slice(0, 8).toUpperCase();
+  show('valid');
+})();
+</script>
+</body>
+</html>
