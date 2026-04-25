@@ -38,9 +38,9 @@
 </div>
 
 <!-- Certificate Print View -->
-<div id="cert-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;align-items:flex-start;justify-content:center;padding:1.5rem;overflow-y:auto;">
-  <div style="max-width:800px;width:100%;">
-    <div style="display:flex;justify-content:flex-end;gap:.75rem;margin-bottom:1rem;">
+<div id="cert-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;justify-content:center;overflow-y:auto;">
+  <div style="max-width:1060px;width:100%;padding:0 1.5rem 2rem;">
+    <div style="position:sticky;top:0;z-index:10;display:flex;justify-content:flex-end;gap:.75rem;padding:.85rem 0;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);margin-bottom:1rem;">
       <button class="portal-btn" onclick="window.print()">🖨 Print / Save PDF</button>
       <button class="portal-btn-ghost" onclick="document.getElementById('cert-overlay').style.display='none'">Close</button>
     </div>
@@ -100,7 +100,7 @@
 </div>
 
 <style>
-.cert-card-enhanced{background:#0b0d14;border:2.5px solid #c8a96e;box-shadow:inset 0 0 0 7px rgba(200,169,110,.06),inset 0 0 0 8px rgba(200,169,110,.25);border-radius:6px;padding:2.75rem 3.25rem;text-align:center;position:relative;overflow:hidden;}
+.cert-card-enhanced{background:#0b0d14;border:2.5px solid #c8a96e;box-shadow:inset 0 0 0 7px rgba(200,169,110,.06),inset 0 0 0 8px rgba(200,169,110,.25);border-radius:6px;padding:2.75rem 3.25rem;text-align:center;position:relative;overflow:hidden;aspect-ratio:297/210;display:flex;flex-direction:column;justify-content:center;}
 .cert-watermark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:.028;font-family:'Cormorant Garamond',serif;font-size:11rem;font-weight:700;color:#c8a96e;transform:rotate(-25deg);user-select:none;letter-spacing:.1em;}
 .cert-corner{position:absolute;width:36px;height:36px;}
 .cert-corner-tl{top:14px;left:14px;border-top:2px solid rgba(200,169,110,.7);border-left:2px solid rgba(200,169,110,.7);}
@@ -111,13 +111,14 @@
 .cert-rule-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(200,169,110,.4));}
 .cert-rule-line-r{background:linear-gradient(90deg,rgba(200,169,110,.4),transparent);}
 .cert-rule-gem{color:#c8a96e;font-size:1rem;flex-shrink:0;}
+@page{size:A4 landscape;margin:0;}
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
   body>*:not(#cert-overlay){display:none!important;}
-  #cert-overlay{display:flex!important;position:fixed;inset:0;background:#000!important;padding:0;}
-  #cert-overlay>div{width:100%!important;max-width:100%!important;padding:0;}
+  #cert-overlay{display:block!important;position:fixed;inset:0;background:#000!important;padding:0;overflow:visible;}
+  #cert-overlay>div{width:100%!important;max-width:100%!important;padding:0!important;}
   #cert-overlay>div>div:first-child{display:none!important;}
-  .cert-card-enhanced{border-radius:0!important;margin:0!important;min-height:100vh!important;display:flex!important;flex-direction:column!important;justify-content:center!important;}
+  .cert-card-enhanced{width:297mm!important;height:210mm!important;border-radius:0!important;margin:0!important;aspect-ratio:unset!important;box-sizing:border-box!important;}
 }
 </style>
 
