@@ -169,7 +169,7 @@ async function issueCert() {
   if (!userId || !courseId) { errEl.textContent = 'Select a student and course.'; errEl.style.display = 'block'; return; }
 
   btn.disabled = true; btn.textContent = 'Issuing…';
-  const { error } = await supa.from('certificates').insert({ user_id: userId, course_id: courseId, issued_by: window._user.id });
+  const { error } = await supa.from('certificates').insert({ user_id: userId, course_id: courseId });
   btn.disabled = false; btn.textContent = 'Issue →';
 
   if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; return; }
