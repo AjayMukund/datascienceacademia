@@ -120,7 +120,7 @@ document.addEventListener('portal:ready', async () => {
   const [{data:students},{data:courses},{data:certs}] = await Promise.all([
     supa.from('profiles').select('id,name').eq('role','student').order('name'),
     supa.from('courses').select('id,title').order('title'),
-    supa.from('certificates').select('*,profiles(name),courses(title)').order('issued_at',{ascending:false})
+    supa.from('certificates').select('*,courses(title)').order('issued_at',{ascending:false})
   ]);
 
   allStudents = students || [];
@@ -141,20 +141,24 @@ function renderTable() {
     tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--fog2);">No certificates issued yet.</td></tr>';
     return;
   }
-  tbody.innerHTML = allCerts.map(c => `
+  const studentMap = Object.fromEntries(allStudents.map(s => [s.id, s.name]));
+  tbody.innerHTML = allCerts.map(c => {
+    const name = studentMap[c.user_id] || '—';
+    return `
     <tr>
       <td><div style="display:flex;align-items:center;gap:.6rem;">
-        <div class="sidebar-avatar" style="width:28px;height:28px;font-size:.75rem;">${(c.profiles?.name||'?').charAt(0).toUpperCase()}</div>
-        ${c.profiles?.name || '—'}
+        <div class="sidebar-avatar" style="width:28px;height:28px;font-size:.75rem;">${name.charAt(0).toUpperCase()}</div>
+        ${name}
       </div></td>
       <td>${c.courses?.title || '—'}</td>
       <td style="color:var(--fog2);">${new Date(c.issued_at).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</td>
       <td><span style="font-family:var(--fm);font-size:.7rem;color:var(--fog3);">${c.id.slice(0,8).toUpperCase()}</span></td>
       <td style="display:flex;gap:.4rem;">
-        <button class="portal-btn-ghost" style="font-size:.72rem;padding:5px 12px;" onclick="viewCert('${c.id}','${(c.profiles?.name||'').replace(/'/g,"\\'")}','${(c.courses?.title||'').replace(/'/g,"\\'")}','${c.issued_at}')">View</button>
+        <button class="portal-btn-ghost" style="font-size:.72rem;padding:5px 12px;" onclick="viewCert('${c.id}','${name.replace(/'/g,"\\'")}','${(c.courses?.title||'').replace(/'/g,"\\'")}','${c.issued_at}')">View</button>
         <button class="icon-btn danger" onclick="revoke('${c.id}')">🗑</button>
       </td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
 }
 
 function openIssueModal()  { document.getElementById('issue-modal').style.display = 'flex'; }
