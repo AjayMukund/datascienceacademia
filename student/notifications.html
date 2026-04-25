@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notifications — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Student Portal</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">My Learning</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="courses.html"><span class="nav-icon">📚</span> My Courses</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Account</div>
+    <a href="notifications.html" class="active"><span class="nav-icon">🔔</span> Notifications <span class="notif-badge" style="margin-left:auto;"></span></a>
+    <a href="profile.html"><span class="nav-icon">👤</span> Profile</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">S</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Student</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div><div class="portal-page-title">Notifications</div><div class="portal-page-sub" id="notif-count"></div></div>
+    <div style="display:flex;gap:.75rem;align-items:center;">
+      <button class="portal-btn-ghost" id="btn-mark-all">Mark All Read</button>
+      <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+    </div>
+  </div>
+
+  <div id="notif-list" style="display:flex;flex-direction:column;gap:.6rem;max-width:720px;">
+    <div style="color:var(--fog2);padding:2rem;text-align:center;">Loading notifications…</div>
+  </div>
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+let _notifs = [];
+
+document.addEventListener('portal:ready', async()=>{
+  await loadNotifs();
+});
+
+async function loadNotifs(){
+  const { data } = await supa
+    .from('notifications')
+    .select('*')
+    .eq('user_id', window._user.id)
+    .order('created_at', { ascending: false })
+    .limit(60);
+
+  _notifs = data||[];
+  const unread = _notifs.filter(n=>!n.read).length;
+  document.getElementById('notif-count').textContent =
+    unread ? unread+' unread notification'+(unread>1?'s':'') : 'All caught up';
+  render();
+}
+
+function notifIcon(type){
+  const icons = { announcement:'📢', certificate:'🏅', enrollment:'📚', progress:'✅', system:'ℹ️' };
+  return icons[type] || '🔔';
+}
+
+function render(){
+  const el = document.getElementById('notif-list');
+  if(!_notifs.length){
+    el.innerHTML='<div style="color:var(--fog2);padding:3rem;text-align:center;">No notifications yet.</div>';
+    return;
+  }
+  el.innerHTML = _notifs.map(n=>`
+    <div class="notif-item${n.read?'':' notif-unread'}" data-id="${n.id}" onclick="markRead('${n.id}',this)">
+      <div class="notif-icon">${notifIcon(n.type)}</div>
+      <div class="notif-body">
+        <div class="notif-msg">${n.message}</div>
+        <div class="notif-time">${timeAgo(n.created_at)}</div>
+      </div>
+      ${!n.read?'<div class="notif-dot"></div>':''}
+    </div>`).join('');
+}
+
+async function markRead(id, el){
+  if(el.classList.contains('notif-unread')){
+    await supa.from('notifications').update({read:true}).eq('id',id);
+    el.classList.remove('notif-unread');
+    const dot = el.querySelector('.notif-dot');
+    if(dot) dot.remove();
+    const n = _notifs.find(x=>x.id===id);
+    if(n) n.read=true;
+    const unread = _notifs.filter(x=>!x.read).length;
+    document.getElementById('notif-count').textContent =
+      unread ? unread+' unread notification'+(unread>1?'s':'') : 'All caught up';
+    // update badge in sidebar
+    document.querySelectorAll('.notif-badge').forEach(b=>{
+      if(unread>0){ b.textContent=unread>9?'9+':unread; b.classList.add('show'); }
+      else { b.textContent=''; b.classList.remove('show'); }
+    });
+  }
+}
+
+document.getElementById('btn-mark-all').onclick = async()=>{
+  await supa.from('notifications').update({read:true}).eq('user_id',window._user.id).eq('read',false);
+  document.querySelectorAll('.notif-badge').forEach(b=>{ b.textContent=''; b.classList.remove('show'); });
+  await loadNotifs();
+};
+
+function timeAgo(iso){
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diff/60000);
+  if(mins<1) return 'just now';
+  if(mins<60) return mins+'m ago';
+  const hrs = Math.floor(mins/60);
+  if(hrs<24) return hrs+'h ago';
+  const days = Math.floor(hrs/24);
+  if(days<7) return days+'d ago';
+  return new Date(iso).toLocaleDateString('en-IN');
+}
+</script>
+</body></html>

@@ -201,6 +201,75 @@ select.fi{cursor:pointer;}
 .lsb-lesson.active .lsb-lesson-title{color:var(--cream);}
 .lsb-lesson.done .lsb-lesson-title{color:var(--fog2);}
 
+/* ── Notification badge ─────────────────────────────────────────────────── */
+.notif-badge{display:none;min-width:18px;height:18px;background:#e05c5c;color:#fff;border-radius:100px;font-family:var(--fm);font-size:.58rem;font-weight:700;align-items:center;justify-content:center;padding:0 4px;margin-left:auto;flex-shrink:0;}
+.notif-badge.show{display:flex;}
+.notif-item{display:flex;align-items:flex-start;gap:.85rem;padding:1rem 1.25rem;border-bottom:1px solid var(--border);transition:background .2s;cursor:pointer;}
+.notif-item:hover{background:rgba(200,169,110,.03);}
+.notif-item.unread{background:rgba(200,169,110,.04);border-left:2px solid var(--champ);}
+.notif-icon{font-size:1.2rem;flex-shrink:0;margin-top:.1rem;}
+.notif-msg{font-family:var(--fb);font-size:.85rem;color:var(--cream);line-height:1.5;flex:1;}
+.notif-time{font-family:var(--fb);font-size:.68rem;color:var(--fog2);margin-top:.2rem;}
+
+/* ── Chart containers ───────────────────────────────────────────────────── */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem;}
+.chart-wrap{background:var(--glass2);border:1px solid var(--border);border-radius:14px;padding:1.25rem;}
+.chart-title{font-family:var(--fb);font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--champ);margin-bottom:1rem;}
+.chart-canvas{max-height:260px;}
+
+/* ── Comments ───────────────────────────────────────────────────────────── */
+.comments-section{padding:1.5rem;border-top:1px solid var(--border);}
+.comments-title{font-family:var(--fb);font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--champ);margin-bottom:1.25rem;}
+.comment-item{display:flex;gap:.75rem;margin-bottom:1.25rem;}
+.comment-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--champ),var(--champ2));display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.85rem;font-weight:600;color:var(--ink);flex-shrink:0;}
+.comment-body-wrap{flex:1;}
+.comment-meta{display:flex;align-items:baseline;gap:.5rem;margin-bottom:.25rem;}
+.comment-name{font-family:var(--fb);font-size:.78rem;font-weight:600;color:var(--cream);}
+.comment-date{font-family:var(--fb);font-size:.65rem;color:var(--fog2);}
+.comment-text{font-family:var(--fb);font-size:.85rem;color:var(--fog);line-height:1.65;}
+.comment-input-wrap{display:flex;gap:.75rem;align-items:flex-start;margin-top:1rem;}
+.comment-input-wrap textarea{flex:1;min-height:70px;resize:vertical;}
+
+/* ── File upload ────────────────────────────────────────────────────────── */
+.upload-zone{border:2px dashed var(--border2);border-radius:12px;padding:3rem 2rem;text-align:center;cursor:pointer;transition:border-color .25s,background .25s;}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--border3);background:rgba(200,169,110,.04);}
+.upload-icon{font-size:2.5rem;margin-bottom:.75rem;}
+.upload-name{font-family:var(--fm);font-size:.75rem;color:var(--teal);margin-top:.5rem;}
+.upload-bar-wrap{height:6px;background:rgba(200,169,110,.1);border-radius:3px;overflow:hidden;margin-top:1rem;}
+.upload-bar{height:100%;width:0;background:linear-gradient(90deg,var(--champ),var(--champ2));border-radius:3px;transition:width .3s;}
+
+/* ── Batch cards ────────────────────────────────────────────────────────── */
+.batches-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-bottom:2rem;}
+.batch-card{background:var(--glass2);border:1px solid var(--border);border-radius:14px;padding:1.25rem;transition:border-color .3s,transform .3s cubic-bezier(.23,1,.32,1);}
+.batch-card:hover{border-color:var(--border2);transform:translateY(-3px);}
+.batch-name{font-family:var(--fd);font-size:1.15rem;font-weight:600;color:var(--cream);margin-bottom:.35rem;}
+.batch-meta{font-family:var(--fb);font-size:.75rem;color:var(--fog2);margin-bottom:.35rem;}
+.batch-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.3rem;}
+.batch-count{font-family:var(--fm);font-size:.72rem;color:var(--champ);background:rgba(200,169,110,.12);border-radius:100px;padding:.1rem .55rem;flex-shrink:0;}
+.batch-dates{font-family:var(--fb);font-size:.72rem;color:var(--fog2);}
+
+/* ── Notifications page ─────────────────────────────────────────────────── */
+.notif-unread{background:rgba(200,169,110,.05);}
+.notif-dot{width:8px;height:8px;border-radius:50%;background:#e05c5c;flex-shrink:0;margin-top:4px;}
+.notif-icon{font-size:1.3rem;flex-shrink:0;margin-top:.1rem;}
+.notif-body{flex:1;}
+.notif-msg{font-family:var(--fb);font-size:.88rem;color:var(--cream);line-height:1.5;}
+.notif-time{font-family:var(--fb);font-size:.72rem;color:var(--fog2);margin-top:.2rem;}
+
+/* ── Comments ─────────────────────────────────────────────────────────────── */
+.comments-section{background:var(--glass2);border:1px solid var(--border);border-radius:14px;padding:1.5rem;}
+.comment-meta{display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem;}
+.comment-name{font-family:var(--fb);font-size:.82rem;font-weight:600;color:var(--champ);}
+.comment-time{font-family:var(--fb);font-size:.72rem;color:var(--fog2);}
+.comment-text{font-family:var(--fb);font-size:.85rem;color:var(--fog);line-height:1.65;}
+
+/* ── Upload zone detail ─────────────────────────────────────────────────── */
+.upload-zone-icon{font-size:2.2rem;margin-bottom:.65rem;}
+.upload-zone-text{font-family:var(--fb);font-size:.92rem;color:var(--cream);margin-bottom:.3rem;}
+.upload-zone-sub{font-family:var(--fb);font-size:.75rem;color:var(--fog2);}
+.upload-bar-wrap{display:flex;align-items:center;gap:.75rem;}
+.upload-bar-label{font-family:var(--fb);font-size:.75rem;color:var(--fog2);min-width:30px;}
+
 /* Mobile responsive */
 @media(max-width:768px){
   .portal-sidebar{transform:translateX(-100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);}
@@ -212,6 +281,8 @@ select.fi{cursor:pointer;}
   .courses-grid{grid-template-columns:1fr;}
   .lesson-layout{grid-template-columns:1fr;height:auto;}
   .lesson-sidebar{max-height:320px;}
+  .charts-grid{grid-template-columns:1fr;}
+  .batches-grid{grid-template-columns:1fr;}
   .portal-mob-tog{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:6px;border:1px solid var(--border);background:var(--glass2);cursor:pointer;font-size:1rem;}
 }
 @media(min-width:769px){.portal-mob-tog{display:none;}}

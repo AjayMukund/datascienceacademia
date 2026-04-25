@@ -1,6 +1,21 @@
 /* ─── Portal shared logic ─────────────────────────────────────────────────── */
-document.addEventListener('portal:ready', function () {
+document.addEventListener('portal:ready', async function () {
   const p = window._profile;
+
+  // Notification badge (students only)
+  if (p.role === 'student') {
+    const { count } = await supa
+      .from('notifications')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', window._user.id)
+      .eq('read', false);
+    if (count > 0) {
+      document.querySelectorAll('.notif-badge').forEach(el => {
+        el.textContent = count > 9 ? '9+' : count;
+        el.classList.add('show');
+      });
+    }
+  }
 
   document.querySelectorAll('.portal-username').forEach(el => el.textContent = p.name);
   document.querySelectorAll('.portal-role').forEach(el => el.textContent =

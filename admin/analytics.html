@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html" class="active"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div><div class="portal-page-title">Analytics</div><div class="portal-page-sub" id="updated-at"></div></div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div class="stat-grid" id="stat-grid"></div>
+
+  <div class="charts-grid">
+    <div class="chart-wrap"><div class="chart-title">Enrollments per Course</div><canvas id="chart-enroll" class="chart-canvas"></canvas></div>
+    <div class="chart-wrap"><div class="chart-title">Overall Lesson Progress</div><canvas id="chart-progress" class="chart-canvas"></canvas></div>
+  </div>
+
+  <div class="portal-section-title">Top Students by Progress</div>
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th>Student</th><th>Lessons Completed</th><th>Certificates</th><th>Joined</th></tr></thead>
+      <tbody id="top-students"></tbody>
+    </table>
+  </div>
+</main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+document.getElementById('updated-at').textContent = 'Last updated ' + new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+
+const chartDefaults = {
+  color:'rgba(245,240,232,.7)',
+  plugins:{legend:{labels:{color:'rgba(245,240,232,.6)',font:{family:'Outfit',size:11}}}},
+  scales:{x:{ticks:{color:'rgba(245,240,232,.5)',font:{family:'Outfit',size:10}},grid:{color:'rgba(200,169,110,.07)'}},y:{ticks:{color:'rgba(245,240,232,.5)',font:{family:'Outfit',size:10}},grid:{color:'rgba(200,169,110,.07)'}}}
+};
+
+document.addEventListener('portal:ready', async()=>{
+  const [
+    {data:profiles},{data:courses},{data:enrollments},
+    {data:progress},{data:certs},{data:lessons}
+  ] = await Promise.all([
+    supa.from('profiles').select('id,name,role,created_at'),
+    supa.from('courses').select('id,title,status'),
+    supa.from('enrollments').select('user_id,course_id'),
+    supa.from('progress').select('user_id,lesson_id,completed_at'),
+    supa.from('certificates').select('user_id,course_id'),
+    supa.from('lessons').select('id')
+  ]);
+
+  const students = (profiles||[]).filter(p=>p.role==='student');
+  const published = (courses||[]).filter(c=>c.status==='published');
+  const weekAgo = new Date(Date.now()-7*24*60*60*1000).toISOString();
+  const activeThisWeek = new Set((progress||[]).filter(p=>p.completed_at>weekAgo).map(p=>p.user_id)).size;
+
+  // Stats
+  document.getElementById('stat-grid').innerHTML = [
+    {icon:'👥',num:students.length,lbl:'Total Students'},
+    {icon:'📚',num:published.length,lbl:'Published Courses'},
+    {icon:'🏅',num:(certs||[]).length,lbl:'Certificates Issued'},
+    {icon:'⚡',num:activeThisWeek,lbl:'Active This Week'},
+  ].map(s=>`<div class="stat-card"><div class="stat-icon">${s.icon}</div><div class="stat-num">${s.num}</div><div class="stat-lbl">${s.lbl}</div></div>`).join('');
+
+  // Enrollments per course chart
+  const enrByCourse = {};
+  (enrollments||[]).forEach(e=>{ enrByCourse[e.course_id]=(enrByCourse[e.course_id]||0)+1; });
+  const courseLabels = published.map(c=>c.title.length>20?c.title.slice(0,18)+'…':c.title);
+  const courseData   = published.map(c=>enrByCourse[c.id]||0);
+  new Chart(document.getElementById('chart-enroll'), {
+    type:'bar',
+    data:{ labels:courseLabels, datasets:[{label:'Students Enrolled',data:courseData,backgroundColor:'rgba(200,169,110,.55)',borderColor:'rgba(200,169,110,.9)',borderWidth:1,borderRadius:5}]},
+    options:{...chartDefaults,plugins:{...chartDefaults.plugins,legend:{display:false}}}
+  });
+
+  // Progress doughnut
+  const totalSlots = (lessons||[]).length * students.length;
+  const completions = (progress||[]).length;
+  const remaining = Math.max(0, totalSlots - completions);
+  new Chart(document.getElementById('chart-progress'), {
+    type:'doughnut',
+    data:{ labels:['Completed','Remaining'], datasets:[{data:[completions,remaining||1],backgroundColor:['rgba(62,207,178,.7)','rgba(200,169,110,.15)'],borderWidth:0}]},
+    options:{...chartDefaults,cutout:'65%',scales:{x:{display:false},y:{display:false}}}
+  });
+
+  // Top students table
+  const progressByUser = {};
+  (progress||[]).forEach(p=>{ progressByUser[p.user_id]=(progressByUser[p.user_id]||0)+1; });
+  const certsByUser = {};
+  (certs||[]).forEach(c=>{ certsByUser[c.user_id]=(certsByUser[c.user_id]||0)+1; });
+  const sorted = students.sort((a,b)=>(progressByUser[b.id]||0)-(progressByUser[a.id]||0)).slice(0,10);
+  document.getElementById('top-students').innerHTML = sorted.length ? sorted.map(s=>`
+    <tr>
+      <td><div style="display:flex;align-items:center;gap:.7rem;"><div class="sidebar-avatar" style="width:30px;height:30px;font-size:.8rem;">${s.name.charAt(0).toUpperCase()}</div>${s.name}</div></td>
+      <td>${progressByUser[s.id]||0}</td>
+      <td>${certsByUser[s.id]||0}</td>
+      <td>${new Date(s.created_at).toLocaleDateString('en-IN')}</td>
+    </tr>`).join('')
+  : '<tr><td colspan="4" style="text-align:center;padding:2rem;color:var(--fog2);">No student data yet.</td></tr>';
+});
+</script>
+</body></html>

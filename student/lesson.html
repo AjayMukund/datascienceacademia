@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lesson — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="../portal.css">
 </head>
@@ -13,9 +14,12 @@
 <aside class="portal-sidebar" id="sidebar">
   <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Student Portal</div></a></div>
   <nav class="portal-nav">
+    <div class="portal-nav-section">My Learning</div>
     <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
     <a href="courses.html" class="active"><span class="nav-icon">📚</span> My Courses</a>
     <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Account</div>
+    <a href="notifications.html"><span class="nav-icon">🔔</span> Notifications <span class="notif-badge" style="margin-left:auto;"></span></a>
     <a href="profile.html"><span class="nav-icon">👤</span> Profile</a>
   </nav>
   <div class="sidebar-user">
@@ -24,7 +28,7 @@
   </div>
 </aside>
 
-<main class="portal-main" style="padding-bottom:0;">
+<main class="portal-main" style="padding-bottom:2rem;">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem;">
     <a id="back-link" href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Course</a>
     <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
@@ -54,6 +58,19 @@
       <div class="lesson-sidebar-hd">Course Content</div>
       <div id="lesson-list"><div style="padding:1.5rem;color:var(--fog2);font-family:var(--fb);font-size:.82rem;">Loading…</div></div>
     </div>
+  </div>
+
+  <!-- Comments Section -->
+  <div class="comments-section" id="comments-section" style="max-width:860px;margin-top:2rem;">
+    <div class="comments-title">Discussion</div>
+    <form id="comment-form" style="display:flex;gap:.75rem;margin-bottom:1.5rem;align-items:flex-start;">
+      <div class="sidebar-avatar portal-avatar" id="comment-avatar" style="flex-shrink:0;width:36px;height:36px;font-size:.9rem;">?</div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:.5rem;">
+        <textarea class="fi" id="comment-input" placeholder="Ask a question or share your thoughts…" rows="2" style="resize:vertical;min-height:60px;font-family:var(--fb);font-size:.88rem;"></textarea>
+        <button type="submit" class="portal-btn" style="align-self:flex-end;font-size:.8rem;padding:7px 18px;">Post Comment</button>
+      </div>
+    </form>
+    <div id="comment-list"></div>
   </div>
 </main>
 </div>
@@ -210,5 +227,67 @@ function checkAns(qi,selected,correct,opts){
     }
   }
 }
+
+// ── Comments ────────────────────────────────────────────────────────────────
+async function loadComments(){
+  const {data:comments}=await supa
+    .from('comments')
+    .select('*,profiles(name)')
+    .eq('lesson_id',lessonId)
+    .order('created_at',{ascending:true});
+  const list=document.getElementById('comment-list');
+  if(!comments||!comments.length){
+    list.innerHTML='<div style="color:var(--fog2);font-family:var(--fb);font-size:.85rem;text-align:center;padding:1.5rem 0;">No comments yet. Be the first!</div>';
+    return;
+  }
+  list.innerHTML=comments.map(c=>`
+    <div class="comment-item">
+      <div class="comment-avatar">${(c.profiles?.name||'?').charAt(0).toUpperCase()}</div>
+      <div class="comment-body">
+        <div class="comment-meta">
+          <span class="comment-name">${c.profiles?.name||'Unknown'}</span>
+          <span class="comment-time">${timeAgoC(c.created_at)}</span>
+          ${c.user_id===window._user.id?`<button onclick="deleteComment('${c.id}',this)" style="background:none;border:none;color:var(--fog2);cursor:pointer;font-size:.75rem;margin-left:.25rem;padding:0;" title="Delete">✕</button>`:''}
+        </div>
+        <div class="comment-text">${c.body.replace(/\n/g,'<br>')}</div>
+      </div>
+    </div>`).join('');
+}
+
+document.getElementById('comment-form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const body=document.getElementById('comment-input').value.trim();
+  if(!body) return;
+  const btn=e.target.querySelector('button[type=submit]');
+  btn.disabled=true; btn.textContent='Posting…';
+  const {error}=await supa.from('comments').insert({lesson_id:lessonId,user_id:window._user.id,body});
+  btn.disabled=false; btn.textContent='Post Comment';
+  if(error){toast(error.message,'error');return;}
+  document.getElementById('comment-input').value='';
+  await loadComments();
+});
+
+async function deleteComment(id,btn){
+  btn.disabled=true;
+  await supa.from('comments').delete().eq('id',id);
+  await loadComments();
+}
+
+function timeAgoC(iso){
+  const diff=Date.now()-new Date(iso).getTime();
+  const m=Math.floor(diff/60000);
+  if(m<1) return 'just now';
+  if(m<60) return m+'m ago';
+  const h=Math.floor(m/60);
+  if(h<24) return h+'h ago';
+  return new Date(iso).toLocaleDateString('en-IN');
+}
+
+document.addEventListener('portal:ready',()=>{
+  const p=window._profile;
+  const av=document.getElementById('comment-avatar');
+  if(av) av.textContent=p.name.charAt(0).toUpperCase();
+  if(lessonId) loadComments();
+});
 </script>
 </body></html>

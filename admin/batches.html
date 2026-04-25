@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Batches — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html" class="active"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div><div class="portal-page-title">Batches</div><div class="portal-page-sub">Organise students into cohorts for bulk enrollment</div></div>
+    <div style="display:flex;gap:.75rem;align-items:center;">
+      <button class="portal-btn" id="btn-new-batch">+ New Batch</button>
+      <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+    </div>
+  </div>
+
+  <div class="batches-grid" id="batches-grid">
+    <div style="color:var(--fog2);padding:2rem;">Loading batches…</div>
+  </div>
+</main>
+</div>
+
+<!-- New Batch Modal -->
+<div class="modal-overlay" id="modal-new" style="display:none;">
+  <div class="modal-card" style="max-width:480px;">
+    <div class="modal-header"><div class="modal-title">Create Batch</div><button class="modal-close" id="close-new">✕</button></div>
+    <div class="modal-body">
+      <div class="field-group"><label class="flbl">Batch Name</label><input class="fi" id="b-name" placeholder="e.g. Jan 2025 Cohort" required></div>
+      <div class="field-group"><label class="flbl">Course</label>
+        <select class="fi" id="b-course"><option value="">— select course —</option></select>
+      </div>
+      <div class="field-group"><label class="flbl">Start Date</label><input type="date" class="fi" id="b-start"></div>
+      <div class="field-group"><label class="flbl">End Date</label><input type="date" class="fi" id="b-end"></div>
+      <div class="auth-error" id="b-err" style="display:none;"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="portal-btn-ghost" id="cancel-new">Cancel</button>
+      <button class="portal-btn" id="save-new">Create Batch</button>
+    </div>
+  </div>
+</div>
+
+<!-- Batch Detail Modal -->
+<div class="modal-overlay" id="modal-detail" style="display:none;">
+  <div class="modal-card" style="max-width:600px;width:95%;">
+    <div class="modal-header"><div class="modal-title" id="detail-title">Batch Members</div><button class="modal-close" id="close-detail">✕</button></div>
+    <div class="modal-body">
+      <div style="display:flex;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap;">
+        <select class="fi" id="add-student-sel" style="flex:1;min-width:180px;"><option value="">— add student —</option></select>
+        <button class="portal-btn" id="btn-add-member">+ Add</button>
+      </div>
+      <div class="auth-error" id="d-err" style="display:none;margin-bottom:.75rem;"></div>
+      <div class="table-wrap" style="max-height:320px;overflow-y:auto;">
+        <table class="data-table">
+          <thead><tr><th>Student</th><th>Enrolled</th><th></th></tr></thead>
+          <tbody id="members-tbody"></tbody>
+        </table>
+      </div>
+      <div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--glass2);">
+        <button class="portal-btn" id="btn-enroll-all" style="background:rgba(62,207,178,.15);border-color:rgba(62,207,178,.4);color:var(--teal);">
+          Enroll All Members in Course
+        </button>
+        <button class="portal-btn-ghost" id="btn-delete-batch" style="margin-left:.5rem;color:#f87171;border-color:#f8717155;">
+          Delete Batch
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+let _batches=[], _courses=[], _students=[], _currentBatch=null;
+
+document.addEventListener('portal:ready', async()=>{
+  const [{data:batches},{data:courses},{data:profiles}] = await Promise.all([
+    supa.from('batches').select('*,batch_members(count)').order('created_at',{ascending:false}),
+    supa.from('courses').select('id,title').eq('status','published'),
+    supa.from('profiles').select('id,name').eq('role','student').order('name')
+  ]);
+  _batches = batches||[]; _courses = courses||[]; _students = profiles||[];
+  renderBatches();
+  populateCourseSelect(document.getElementById('b-course'));
+  populateStudentSelect(document.getElementById('add-student-sel'));
+});
+
+function populateCourseSelect(sel){
+  _courses.forEach(c=>{
+    const o=document.createElement('option'); o.value=c.id; o.textContent=c.title; sel.appendChild(o);
+  });
+}
+function populateStudentSelect(sel){
+  _students.forEach(s=>{
+    const o=document.createElement('option'); o.value=s.id; o.textContent=s.name; sel.appendChild(o);
+  });
+}
+
+function renderBatches(){
+  const grid=document.getElementById('batches-grid');
+  if(!_batches.length){ grid.innerHTML='<div style="color:var(--fog2);padding:2rem;">No batches yet. Create one to get started.</div>'; return; }
+  grid.innerHTML=_batches.map(b=>{
+    const count = b.batch_members?.[0]?.count??0;
+    const course = _courses.find(c=>c.id===b.course_id);
+    return `<div class="batch-card" data-id="${b.id}">
+      <div class="batch-card-top">
+        <div class="batch-name">${b.name}</div>
+        <div class="batch-count">${count} members</div>
+      </div>
+      <div class="batch-meta">${course?course.title:'No course linked'}</div>
+      ${b.start_date?`<div class="batch-dates">${fmtDate(b.start_date)} — ${b.end_date?fmtDate(b.end_date):'ongoing'}</div>`:''}
+      <button class="portal-btn-ghost" style="margin-top:.75rem;width:100%;font-size:.8rem;" onclick="openDetail('${b.id}')">Manage Members</button>
+    </div>`;
+  }).join('');
+}
+
+function fmtDate(d){ return new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}); }
+
+// New batch modal
+document.getElementById('btn-new-batch').onclick=()=>{ document.getElementById('b-err').style.display='none'; document.getElementById('modal-new').style.display='flex'; };
+document.getElementById('close-new').onclick=()=>document.getElementById('modal-new').style.display='none';
+document.getElementById('cancel-new').onclick=()=>document.getElementById('modal-new').style.display='none';
+
+document.getElementById('save-new').onclick=async()=>{
+  const name=document.getElementById('b-name').value.trim();
+  const course_id=document.getElementById('b-course').value;
+  const start_date=document.getElementById('b-start').value||null;
+  const end_date=document.getElementById('b-end').value||null;
+  const errEl=document.getElementById('b-err');
+  if(!name){ errEl.textContent='Batch name is required.'; errEl.style.display='block'; return; }
+  const btn=document.getElementById('save-new'); btn.disabled=true; btn.textContent='Creating…';
+  const {data,error}=await supa.from('batches').insert({name,course_id:course_id||null,start_date,end_date}).select().single();
+  btn.disabled=false; btn.textContent='Create Batch';
+  if(error){ errEl.textContent=error.message; errEl.style.display='block'; return; }
+  _batches.unshift({...data,batch_members:[{count:0}]});
+  renderBatches();
+  document.getElementById('modal-new').style.display='none';
+  document.getElementById('b-name').value='';
+  document.getElementById('b-course').value='';
+  document.getElementById('b-start').value='';
+  document.getElementById('b-end').value='';
+};
+
+// Detail modal
+async function openDetail(batchId){
+  _currentBatch = _batches.find(b=>b.id===batchId);
+  if(!_currentBatch) return;
+  const course = _courses.find(c=>c.id===_currentBatch.course_id);
+  document.getElementById('detail-title').textContent = _currentBatch.name;
+  document.getElementById('d-err').style.display='none';
+  document.getElementById('modal-detail').style.display='flex';
+  await refreshMembers();
+}
+document.getElementById('close-detail').onclick=()=>document.getElementById('modal-detail').style.display='none';
+
+async function refreshMembers(){
+  const tbody=document.getElementById('members-tbody');
+  tbody.innerHTML='<tr><td colspan="3" style="color:var(--fog2);text-align:center;">Loading…</td></tr>';
+  const {data:members}=await supa.from('batch_members').select('user_id,joined_at').eq('batch_id',_currentBatch.id);
+  if(!members||!members.length){ tbody.innerHTML='<tr><td colspan="3" style="color:var(--fog2);text-align:center;padding:1.5rem;">No members yet.</td></tr>'; return; }
+  tbody.innerHTML=members.map(m=>{
+    const s=_students.find(st=>st.id===m.user_id);
+    return `<tr>
+      <td>${s?s.name:m.user_id}</td>
+      <td style="color:var(--fog2);font-size:.82rem;">${new Date(m.joined_at).toLocaleDateString('en-IN')}</td>
+      <td><button class="portal-btn-ghost" style="padding:.2rem .6rem;font-size:.75rem;color:#f87171;border-color:#f8717155;" onclick="removeMember('${m.user_id}')">Remove</button></td>
+    </tr>`;
+  }).join('');
+  // update count in batch card
+  const card=document.querySelector(`.batch-card[data-id="${_currentBatch.id}"] .batch-count`);
+  if(card) card.textContent=members.length+' members';
+}
+
+document.getElementById('btn-add-member').onclick=async()=>{
+  const uid=document.getElementById('add-student-sel').value;
+  const errEl=document.getElementById('d-err');
+  if(!uid){ errEl.textContent='Select a student first.'; errEl.style.display='block'; return; }
+  const {error}=await supa.from('batch_members').insert({batch_id:_currentBatch.id,user_id:uid});
+  if(error){ errEl.textContent=error.message; errEl.style.display='block'; return; }
+  errEl.style.display='none';
+  await refreshMembers();
+};
+
+async function removeMember(uid){
+  if(!confirm('Remove this student from the batch?')) return;
+  await supa.from('batch_members').delete().eq('batch_id',_currentBatch.id).eq('user_id',uid);
+  await refreshMembers();
+}
+
+document.getElementById('btn-enroll-all').onclick=async()=>{
+  if(!_currentBatch.course_id){ alert('This batch has no course linked. Edit the batch to link a course.'); return; }
+  const {data:members}=await supa.from('batch_members').select('user_id').eq('batch_id',_currentBatch.id);
+  if(!members||!members.length){ alert('No members in this batch.'); return; }
+  const rows=members.map(m=>({user_id:m.user_id,course_id:_currentBatch.course_id}));
+  const {error}=await supa.from('enrollments').upsert(rows,{onConflict:'user_id,course_id'});
+  if(error){ alert('Error: '+error.message); return; }
+  alert(`Enrolled ${members.length} student(s) in the course.`);
+};
+
+document.getElementById('btn-delete-batch').onclick=async()=>{
+  if(!confirm(`Delete batch "${_currentBatch.name}"? This cannot be undone.`)) return;
+  await supa.from('batch_members').delete().eq('batch_id',_currentBatch.id);
+  await supa.from('batches').delete().eq('id',_currentBatch.id);
+  _batches=_batches.filter(b=>b.id!==_currentBatch.id);
+  renderBatches();
+  document.getElementById('modal-detail').style.display='none';
+};
+</script>
+</body></html>
