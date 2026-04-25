@@ -107,7 +107,7 @@
 
   const [{ data, error }] = await Promise.all([
     supa.rpc('verify_certificate', { cert_id: certId }),
-    new Promise(r => setTimeout(r, 1800))
+    new Promise(r => setTimeout(r, 3000))
   ]);
 
   if (error || !data) {
