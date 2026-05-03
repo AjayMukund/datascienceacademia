@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intern Testimonials — Data Science Academia Pvt. Ltd.</title>
+<meta name="description" content="Hear from 15 interns who trained under Ajay Mukund S at Data Science Academia — real feedback from students across India on their ML internship experience.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── STATS ── */
+.tstat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--glass2);}
+.tstat{padding:2rem 1.5rem;border-right:1px solid var(--border);text-align:center;}
+.tstat:last-child{border-right:none;}
+.tstat-n{font-family:var(--fd);font-size:2.8rem;font-weight:700;color:var(--champ2);line-height:1;}
+.tstat-l{font-family:var(--fb);font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--fog2);margin-top:.4rem;}
+
+/* ── MASONRY GRID ── */
+.masonry{columns:3 300px;column-gap:1.25rem;}
+.mcard{break-inside:avoid;margin-bottom:1.25rem;position:relative;border-radius:14px;overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:border-color .35s,box-shadow .35s;}
+.mcard:hover{border-color:var(--border2);box-shadow:0 16px 48px rgba(0,0,0,.45),0 0 28px rgba(200,169,110,.07);}
+.mcard img{width:100%;display:block;transition:transform .5s cubic-bezier(.23,1,.32,1);}
+.mcard:hover img{transform:scale(1.03);}
+.mcard-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(11,12,14,.92) 60%);padding:2.5rem 1.25rem 1.25rem;transform:translateY(100%);transition:transform .38s cubic-bezier(.23,1,.32,1);}
+.mcard:hover .mcard-overlay{transform:translateY(0);}
+.mcard-name{font-family:var(--fd);font-size:1.05rem;font-weight:600;color:var(--cream);line-height:1.2;}
+.mcard-info{font-family:var(--fb);font-size:.68rem;color:var(--fog);margin-top:.25rem;}
+.mcard-expand{position:absolute;top:1rem;right:1rem;width:32px;height:32px;border-radius:50%;background:rgba(11,12,14,.72);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--champ2);opacity:0;transition:opacity .3s;backdrop-filter:blur(4px);}
+.mcard:hover .mcard-expand{opacity:1;}
+
+/* ── LIGHTBOX ── */
+.lbox{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.93);backdrop-filter:blur(10px);display:none;flex-direction:column;align-items:center;justify-content:center;padding:1rem;}
+.lbox.open{display:flex;}
+.lbox-img{max-height:82vh;max-width:min(88vw,680px);object-fit:contain;border-radius:12px;box-shadow:0 32px 80px rgba(0,0,0,.6);animation:lbIn .3s cubic-bezier(.23,1,.32,1);}
+@keyframes lbIn{from{opacity:0;transform:scale(.94);}to{opacity:1;transform:scale(1);}}
+.lbox-info{margin-top:1.25rem;text-align:center;}
+.lbox-name{font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--cream);}
+.lbox-college{font-family:var(--fb);font-size:.75rem;color:var(--fog);margin-top:.25rem;}
+.lbox-stars{color:var(--champ2);font-size:.85rem;letter-spacing:.1em;margin-top:.4rem;}
+.lbox-close{position:fixed;top:1.25rem;right:1.25rem;width:40px;height:40px;border-radius:50%;border:1px solid var(--border2);background:rgba(11,12,14,.8);color:var(--fog);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:10;}
+.lbox-close:hover{background:rgba(200,169,110,.12);color:var(--cream);border-color:var(--border3);}
+.lbox-prev,.lbox-next{position:fixed;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:1px solid var(--border2);background:rgba(11,12,14,.75);color:var(--champ2);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;backdrop-filter:blur(6px);}
+.lbox-prev{left:1.25rem;}.lbox-next{right:1.25rem;}
+.lbox-prev:hover,.lbox-next:hover{background:rgba(200,169,110,.12);border-color:var(--border3);}
+.lbox-counter{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);font-family:var(--fm);font-size:.65rem;color:var(--fog2);letter-spacing:.1em;}
+
+/* ── INTRO TEXT ── */
+.t-intro{display:flex;align-items:flex-start;justify-content:space-between;gap:3rem;margin-bottom:3rem;}
+.t-intro-text{max-width:520px;}
+.t-intro p{font-family:var(--fb);font-size:.95rem;font-weight:300;color:var(--fog);line-height:1.85;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){.tstat-strip{grid-template-columns:repeat(2,1fr);}.tstat:nth-child(2){border-right:none;}.tstat:nth-child(1),.tstat:nth-child(2){border-bottom:1px solid var(--border);}.masonry{columns:2 260px;}.t-intro{flex-direction:column;gap:1.5rem;}}
+@media(max-width:520px){.masonry{columns:1;}.lbox-prev{left:.5rem;}.lbox-next{right:.5rem;}.lbox-img{max-height:70vh;max-width:95vw;}}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<canvas id="fluid-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-name">Data Science Academia</div>
+    <div class="nav-sub">Private Limited &nbsp;&middot;&nbsp; Chennai</div>
+  </a>
+  <ul class="nav-menu" id="nmenu">
+    <li><a href="courses.html">Courses</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="programmes.html">Programmes</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="testimonials.html" class="active">Testimonials</a></li>
+    <li><a href="codechamps.html">Code Champs</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="login.html" class="nav-cta">Sign In &rarr;</a></li>
+  </ul>
+  <div class="nav-tog" onclick="document.getElementById('nmenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <div class="eyebrow" data-r>Intern Reviews</div>
+    <h1 class="sh" data-r="1">What Our<br><em>Interns Say</em></h1>
+    <p class="page-hero-sub" data-r="2">15 unprompted testimonials from students across India who trained under Ajay Mukund S — one clear signal across all of them.</p>
+  </div>
+</div>
+
+<!-- STATS -->
+<section style="position:relative;z-index:1;padding:0 0 5rem;">
+  <div class="container">
+    <div class="tstat-strip" data-r>
+      <div class="tstat">
+        <div class="tstat-n">15</div>
+        <div class="tstat-l">Testimonials</div>
+      </div>
+      <div class="tstat">
+        <div class="tstat-n">★ 5.0</div>
+        <div class="tstat-l">Average Rating</div>
+      </div>
+      <div class="tstat">
+        <div class="tstat-n">10+</div>
+        <div class="tstat-l">Colleges Represented</div>
+      </div>
+      <div class="tstat">
+        <div class="tstat-n">100%</div>
+        <div class="tstat-l">Would Recommend</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section style="position:relative;z-index:1;padding:0 0 6rem;">
+  <div class="container">
+
+    <div class="t-intro" data-r>
+      <div class="t-intro-text">
+        <p>Every card below is a real, unedited testimonial from an intern who completed the Data Science Academia ML internship programme. Click any card to read it in full.</p>
+      </div>
+      <div style="flex-shrink:0;font-family:var(--fm);font-size:.65rem;color:var(--fog2);letter-spacing:.08em;text-align:right;padding-top:.3rem">
+        CLICK ANY CARD TO EXPAND &nbsp;↗
+      </div>
+    </div>
+
+    <div class="masonry" id="masonryGrid"></div>
+
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lbox" id="lbox">
+  <button class="lbox-close" onclick="closeLbox()" title="Close">&#10005;</button>
+  <button class="lbox-prev" id="lbPrev" onclick="navLbox(-1)" title="Previous">&#8592;</button>
+  <button class="lbox-next" id="lbNext" onclick="navLbox(1)" title="Next">&#8594;</button>
+  <img class="lbox-img" id="lbImg" src="" alt="">
+  <div class="lbox-info">
+    <div class="lbox-name" id="lbName"></div>
+    <div class="lbox-college" id="lbCollege"></div>
+    <div class="lbox-stars">★★★★★</div>
+  </div>
+  <div class="lbox-counter" id="lbCounter"></div>
+</div>
+
+<!-- FOOTER -->
+<footer><div class="fi2">
+  <div><div class="fbn">Data Science Academia</div><div class="fbs">Private Limited &nbsp;&middot;&nbsp; Chennai, Tamil Nadu</div></div>
+  <div class="fc">&copy; 2025 Data Science Academia Private Limited. All rights reserved.<br><span style="font-size:.62rem">Formerly Data Science Academia under Sai Chamundeeswari Academy (MSME Registered)</span></div>
+  <div class="fr">MSME Reg &nbsp;&middot;&nbsp; Pvt Ltd In Progress</div>
+</div></footer>
+
+<script src="script.js"></script>
+<script>
+const TESTIMONIALS = [
+  { file: 'Intern Testimonials/Intern Testimonial - Praiselin P.png',               name: 'Praiselin P',                       info: 'BE Computer Science, St. Joseph\'s College of Engineering, Chennai' },
+  { file: 'Intern Testimonials/Intern Testimonial - Kartik Gupta.png',              name: 'Kartik Gupta',                      info: 'B.Tech, AI & ML, Jaypee Institute of Information Technology' },
+  { file: 'Intern Testimonials/Intern Testominal - Priya R.png',                   name: 'Priya R',                           info: 'B.Tech, Artificial Intelligence & ML, GITAM, Bangalore' },
+  { file: 'Intern Testimonials/Intern Testimonial - Divya Chougule.png',            name: 'Divya Chougule',                    info: 'B.Tech, DKTE, Maharashtra' },
+  { file: 'Intern Testimonials/Intern Testimonial - Gubiligari Sireesha.png',      name: 'Gubiligari Sireesha',               info: 'Student Intern, Data Science Academia' },
+  { file: 'Intern Testimonials/Intern Testimonial - Sai Kiran Pulla.png',           name: 'Sai Kiran Pulla',                   info: 'B.Tech, CSE, JNTUA' },
+  { file: 'Intern Testimonials/Intern Testimonial - Jalakuru Ruthik.png',           name: 'Jalakuru Ruthik',                   info: 'Student Intern, Data Science Academia' },
+  { file: 'Intern Testimonials/Intern Testimonial - Saravana Pandian K.png',       name: 'Saravana Pandian K',                info: 'M.Sc., Statistics' },
+  { file: 'Intern Testimonials/Intern Testimonial - Kanakala Bhoomika.png',        name: 'Kanakala Bhoomika',                 info: 'B.Tech, ECE, JNTUK, Rajahmundry' },
+  { file: 'Intern Testimonials/Intern Testimonial - Shaik Shahid.png',             name: 'Shaik Shahid',                      info: 'Student Intern, Data Science Academia' },
+  { file: 'Intern Testimonials/Intern Testimonial - K Geethanjali.png',            name: 'K Geethanjali',                     info: 'B.Tech, CSE, Madanapalle Institute of Technology and Science' },
+  { file: 'Intern Testimonials/Intern Testimonial - Sai Soumya Reddy.png',         name: 'Munireddygari Sai Soumya Reddy',    info: 'B.Tech, Computer Science & Technology, JNTUA' },
+  { file: 'Intern Testimonials/Intern Testimonial - Vuttaradhi Vyshnavi.png',      name: 'Vuttaradhi Vyshnavi',               info: 'B.Tech, Madanapalle' },
+  { file: 'Intern Testimonials/Intern Testimonial - Shaik Shahul.png',             name: 'Shaik Shahul',                      info: 'B.Tech, Computer Science & Technology, MITS' },
+  { file: 'Intern Testimonials/Intern Testominal - Botikhyala Krishna Mohan Yadav.png',  name: 'Botikhyala Krishna Mohan Yadav',    info: 'B.Tech, Jawaharlal Nehru Technological University (JNTUA)' },
+];
+
+let currentIdx = 0;
+
+/* ── Build masonry grid ── */
+const grid = document.getElementById('masonryGrid');
+TESTIMONIALS.forEach((t, i) => {
+  const card = document.createElement('div');
+  card.className = 'mcard';
+  card.innerHTML = `
+    <img src="${t.file}" alt="Testimonial — ${t.name}" loading="lazy">
+    <div class="mcard-expand">↗</div>
+    <div class="mcard-overlay">
+      <div class="mcard-name">${t.name}</div>
+      <div class="mcard-info">${t.info}</div>
+    </div>`;
+  card.addEventListener('click', () => openLbox(i));
+  grid.appendChild(card);
+});
+
+/* ── Lightbox ── */
+function openLbox(idx) {
+  currentIdx = idx;
+  renderLbox();
+  document.getElementById('lbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLbox() {
+  document.getElementById('lbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function navLbox(dir) {
+  currentIdx = (currentIdx + dir + TESTIMONIALS.length) % TESTIMONIALS.length;
+  renderLbox();
+}
+
+function renderLbox() {
+  const t = TESTIMONIALS[currentIdx];
+  const img = document.getElementById('lbImg');
+  img.style.animation = 'none';
+  img.offsetHeight; // reflow to restart animation
+  img.style.animation = '';
+  img.src = t.file;
+  img.alt = `Testimonial — ${t.name}`;
+  document.getElementById('lbName').textContent = t.name;
+  document.getElementById('lbCollege').textContent = t.info;
+  document.getElementById('lbCounter').textContent = `${currentIdx + 1} / ${TESTIMONIALS.length}`;
+}
+
+/* ── Keyboard nav ── */
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lbox').classList.contains('open')) return;
+  if (e.key === 'Escape')      closeLbox();
+  if (e.key === 'ArrowLeft')   navLbox(-1);
+  if (e.key === 'ArrowRight')  navLbox(1);
+});
+
+/* ── Click backdrop to close ── */
+document.getElementById('lbox').addEventListener('click', e => {
+  if (e.target === document.getElementById('lbox')) closeLbox();
+});
+</script>
+</body>
+</html>
