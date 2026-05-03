@@ -96,7 +96,7 @@
     btn.disabled    = true;
     btn.textContent = 'Creating account…';
 
-    const { error } = await supa.auth.signUp({
+    const { data: signUpData, error } = await supa.auth.signUp({
       email,
       password: pass,
       options: { data: { name: `${fname} ${lname}` } },
@@ -110,9 +110,27 @@
       return;
     }
 
-    succEl.textContent   = 'Account created! Redirecting to your dashboard…';
-    succEl.style.display = 'block';
-    setTimeout(() => window.location.href = 'student/dashboard.html', 1800);
+    // Ensure profile row exists (fallback if trigger not fired yet)
+    if (signUpData?.user) {
+      await supa.from('profiles').upsert({
+        id:   signUpData.user.id,
+        name: `${fname} ${lname}`,
+        role: 'student',
+      });
+    }
+
+    // Session present = email confirmation OFF → go straight to dashboard
+    // Session absent  = email confirmation ON  → ask user to check inbox
+    if (signUpData?.session) {
+      succEl.textContent   = 'Account created! Redirecting to your dashboard…';
+      succEl.style.display = 'block';
+      setTimeout(() => window.location.href = 'student/dashboard.html', 1800);
+    } else {
+      succEl.textContent   = 'Account created! Please check your email to confirm your account, then sign in.';
+      succEl.style.display = 'block';
+      btn.disabled    = false;
+      btn.textContent = 'Create Account →';
+    }
   });
 })();
 </script>
