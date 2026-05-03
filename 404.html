@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — Data Science Academia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+#e404{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:130px clamp(1.5rem,5vw,4rem) 6rem;position:relative;z-index:1;}
+.e-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(200,169,110,.06) 0%,transparent 68%);pointer-events:none;}
+.e-code{font-family:var(--fd);font-size:clamp(7rem,18vw,13rem);font-weight:700;line-height:1;letter-spacing:-.05em;background:linear-gradient(135deg,rgba(200,169,110,.18),rgba(200,169,110,.45) 40%,rgba(200,169,110,.18));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:e4pulse 4s ease-in-out infinite;user-select:none;}
+@keyframes e4pulse{0%,100%{opacity:.7;transform:scale(1);}50%{opacity:1;transform:scale(1.015);}}
+.e-label{font-family:var(--fm);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--champ);margin-bottom:1.1rem;display:flex;align-items:center;justify-content:center;gap:10px;}
+.e-label::before,.e-label::after{content:'';width:28px;height:1px;background:var(--champ);}
+.e-title{font-family:var(--fd);font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:600;line-height:1.2;letter-spacing:-.03em;color:var(--cream);margin-bottom:.9rem;}
+.e-title em{font-style:italic;font-weight:300;color:var(--champ2);}
+.e-sub{font-family:var(--fb);font-size:.95rem;font-weight:300;color:var(--fog);max-width:440px;line-height:1.85;margin-bottom:2.5rem;}
+.e-links{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin-bottom:3.5rem;}
+.e-link{display:inline-flex;align-items:center;gap:7px;font-family:var(--fb);font-size:.78rem;font-weight:500;letter-spacing:.02em;color:var(--fog);border:1px solid var(--border);padding:9px 20px;border-radius:8px;background:var(--glass2);transition:all .28s;}
+.e-link:hover{color:var(--champ2);border-color:var(--border2);background:rgba(200,169,110,.06);transform:translateY(-2px);}
+.e-link .arr{font-size:.65rem;opacity:.6;}
+.e-term{width:100%;max-width:380px;background:rgba(11,12,14,.88);border:1px solid var(--border2);border-radius:12px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.45);}
+.e-tbar{display:flex;align-items:center;gap:7px;padding:11px 14px;background:rgba(255,255,255,.02);border-bottom:1px solid var(--border);}
+.e-td{width:10px;height:10px;border-radius:50%;}
+.e-tr{background:#ff5f57;}.e-ty{background:#febc2e;}.e-tg{background:#28c840;}
+.e-ttl{margin:0 auto;font-family:var(--fm);font-size:.62rem;color:var(--fog2);}
+.e-tbody{padding:1.25rem 1.5rem;}
+.e-tl{display:flex;gap:12px;font-family:var(--fm);font-size:.72rem;line-height:1.95;}
+.e-tln{color:var(--fog3);min-width:14px;user-select:none;}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<canvas id="fluid-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-name">Data Science Academia</div>
+    <div class="nav-sub">Private Limited &nbsp;&middot;&nbsp; Chennai</div>
+  </a>
+  <ul class="nav-menu" id="nmenu">
+    <li><a href="courses.html">Courses</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="programmes.html">Programmes</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="codechamps.html">Code Champs</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="login.html" class="nav-cta">Sign In &rarr;</a></li>
+  </ul>
+  <div class="nav-tog" onclick="document.getElementById('nmenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- 404 CONTENT -->
+<div id="e404">
+  <div class="e-glow"></div>
+
+  <div class="e-code">404</div>
+  <div class="e-label">Page Not Found</div>
+  <h1 class="e-title">Lost in the <em>Feature Space</em></h1>
+  <p class="e-sub">The page you're looking for doesn't exist — it may have been moved, renamed, or it never trained on this data.</p>
+
+  <div class="e-links">
+    <a href="index.html" class="btn-g">Back to Home &nbsp;&rarr;</a>
+    <a href="courses.html" class="btn-o">View Courses</a>
+  </div>
+
+  <div class="e-links" style="margin-bottom:3rem">
+    <a href="about.html" class="e-link">About <span class="arr">↗</span></a>
+    <a href="programmes.html" class="e-link">Programmes <span class="arr">↗</span></a>
+    <a href="projects.html" class="e-link">Projects <span class="arr">↗</span></a>
+    <a href="contact.html" class="e-link">Contact <span class="arr">↗</span></a>
+    <a href="verify.html" class="e-link">Verify Certificate <span class="arr">↗</span></a>
+  </div>
+
+  <div class="e-term">
+    <div class="e-tbar">
+      <div class="e-td e-tr"></div><div class="e-td e-ty"></div><div class="e-td e-tg"></div>
+      <div class="e-ttl">debug.py &mdash; DSA Studio</div>
+    </div>
+    <div class="e-tbody">
+      <div class="e-tl"><span class="e-tln">1</span><span style="color:#7a9fff">raise</span></div>
+      <div class="e-tl"><span class="e-tln">2</span><span>&nbsp;&nbsp;<span style="color:#e8a080">PageNotFoundError</span><span style="color:var(--fog2)">(</span></span></div>
+      <div class="e-tl"><span class="e-tln">3</span><span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--teal)">"HTTP 404: this URL is not in</span></span></div>
+      <div class="e-tl"><span class="e-tln">4</span><span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--teal)">&nbsp;the training distribution"</span></span></div>
+      <div class="e-tl"><span class="e-tln">5</span><span><span style="color:var(--fog2)">)</span></span></div>
+      <div class="e-tl"><span class="e-tln">6</span><span>&nbsp;</span></div>
+      <div class="e-tl"><span class="e-tln">7</span><span style="color:var(--fog3);font-style:italic"># suggestion: go back to index.html</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer><div class="fi2">
+  <div><div class="fbn">Data Science Academia</div><div class="fbs">Private Limited &nbsp;&middot;&nbsp; Chennai, Tamil Nadu</div></div>
+  <div class="fc">&copy; 2025 Data Science Academia Private Limited. All rights reserved.<br><span style="font-size:.62rem">Formerly Data Science Academia under Sai Chamundeeswari Academy (MSME Registered)</span></div>
+  <div class="fr">MSME Reg &nbsp;&middot;&nbsp; Pvt Ltd In Progress</div>
+</div></footer>
+
+<script src="script.js"></script>
+</body>
+</html>
