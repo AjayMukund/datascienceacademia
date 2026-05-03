@@ -56,6 +56,12 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://ajaymukund.github.io/datascienceacademia/blog.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Certificate verification (public utility) -->
   <url>
     <loc>https://ajaymukund.github.io/datascienceacademia/verify.html</loc>

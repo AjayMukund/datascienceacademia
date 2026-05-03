@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Data Science Academia Pvt. Ltd.</title>
+<meta name="description" content="Insights on machine learning, data science careers, industry trends, and research — written by Ajay Mukund S, AI Engineer and PhD Scholar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── FEATURED POST ── */
+.featured{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--glass2);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:5rem;transition:border-color .4s,box-shadow .4s;cursor:pointer;}
+.featured:hover{border-color:var(--border3);box-shadow:0 24px 64px rgba(0,0,0,.5),0 0 40px rgba(200,169,110,.07);}
+.feat-accent{background:linear-gradient(135deg,var(--ink2) 0%,rgba(200,169,110,.06) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3.5rem;position:relative;overflow:hidden;min-height:320px;}
+.feat-accent::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(200,169,110,.02) 30px,rgba(200,169,110,.02) 31px);pointer-events:none;}
+.feat-num{font-family:var(--fd);font-size:7rem;font-weight:700;line-height:1;color:rgba(200,169,110,.08);letter-spacing:-.05em;user-select:none;}
+.feat-label{font-family:var(--fm);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--champ);margin-top:.5rem;}
+.feat-body{padding:3rem;}
+.feat-badge{display:inline-flex;align-items:center;font-family:var(--fb);font-size:.63rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:100px;border:1px solid;margin-bottom:1rem;}
+.feat-title{font-family:var(--fd);font-size:clamp(1.5rem,2.5vw,2rem);font-weight:600;line-height:1.2;letter-spacing:-.02em;color:var(--cream);margin-bottom:1rem;}
+.feat-excerpt{font-family:var(--fb);font-size:.9rem;font-weight:300;line-height:1.85;color:var(--fog);margin-bottom:1.75rem;}
+.feat-meta{display:flex;align-items:center;gap:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);}
+.feat-author{display:flex;align-items:center;gap:.6rem;}
+.feat-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--champ),var(--champ2));display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.75rem;font-weight:700;color:var(--ink);}
+.feat-name{font-family:var(--fb);font-size:.75rem;font-weight:500;color:var(--cream);}
+.feat-date{font-family:var(--fm);font-size:.65rem;color:var(--fog2);}
+.feat-rt{font-family:var(--fm);font-size:.65rem;color:var(--fog2);margin-left:auto;}
+.feat-cta{display:inline-flex;align-items:center;gap:7px;font-family:var(--fb);font-size:.78rem;font-weight:600;color:var(--champ2);margin-top:1.25rem;transition:gap .25s;}
+.featured:hover .feat-cta{gap:12px;}
+
+/* ── POST CARDS ── */
+.blog-card{display:flex;flex-direction:column;background:var(--glass2);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color .4s,transform .4s cubic-bezier(.23,1,.32,1),box-shadow .4s;cursor:pointer;}
+.blog-card:hover{border-color:var(--border3);transform:translateY(-6px) scale(1.01);box-shadow:0 24px 60px rgba(0,0,0,.45),0 0 32px rgba(200,169,110,.08);}
+.bc-accent{height:4px;}
+.bc-body{padding:1.6rem;flex:1;display:flex;flex-direction:column;}
+.bc-badge{display:inline-flex;align-items:center;font-family:var(--fb);font-size:.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:100px;border:1px solid;margin-bottom:.75rem;}
+.bc-title{font-family:var(--fd);font-size:1.25rem;font-weight:600;line-height:1.25;letter-spacing:-.02em;color:var(--cream);margin-bottom:.65rem;}
+.bc-excerpt{font-family:var(--fb);font-size:.82rem;font-weight:300;line-height:1.85;color:var(--fog);flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:1.1rem;}
+.bc-foot{display:flex;align-items:center;justify-content:space-between;padding-top:1rem;border-top:1px solid var(--border);}
+.bc-meta{font-family:var(--fm);font-size:.63rem;color:var(--fog2);}
+.bc-arr{width:28px;height:28px;border-radius:50%;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:.65rem;color:var(--champ2);transition:all .3s;}
+.blog-card:hover .bc-arr{background:var(--champ2);color:var(--ink);border-color:var(--champ2);transform:rotate(45deg);}
+
+/* ── AUTHOR STRIP ── */
+.author-strip{display:flex;align-items:center;gap:1.5rem;background:var(--glass2);border:1px solid var(--border);border-radius:16px;padding:1.75rem 2rem;margin-bottom:4rem;}
+.as-av{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--champ),var(--champ2));display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.2rem;font-weight:700;color:var(--ink);flex-shrink:0;}
+.as-name{font-family:var(--fd);font-size:1.05rem;font-weight:600;color:var(--cream);}
+.as-title{font-family:var(--fb);font-size:.72rem;color:var(--fog);margin-top:.2rem;}
+.as-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem;}
+.as-tag{font-family:var(--fb);font-size:.6rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--champ);border:1px solid var(--border2);padding:2px 9px;border-radius:100px;}
+
+/* ── EMPTY STATE ── */
+.blog-empty{grid-column:1/-1;text-align:center;padding:4rem 0;font-family:var(--fb);font-size:.9rem;color:var(--fog);}
+
+@media(max-width:900px){.featured{grid-template-columns:1fr;}.feat-accent{min-height:160px;padding:2rem;}.feat-num{font-size:4rem;}}
+@media(max-width:600px){.feat-body{padding:1.75rem;}.author-strip{flex-direction:column;text-align:center;}.as-tags{justify-content:center;}}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<canvas id="fluid-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-name">Data Science Academia</div>
+    <div class="nav-sub">Private Limited &nbsp;&middot;&nbsp; Chennai</div>
+  </a>
+  <ul class="nav-menu" id="nmenu">
+    <li><a href="courses.html">Courses</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="programmes.html">Programmes</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="testimonials.html">Testimonials</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="codechamps.html">Code Champs</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="login.html" class="nav-cta">Sign In &rarr;</a></li>
+  </ul>
+  <div class="nav-tog" onclick="document.getElementById('nmenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <div class="eyebrow" data-r>Insights &amp; Ideas</div>
+    <h1 class="sh" data-r="1">The DSA <em>Blog</em></h1>
+    <p class="page-hero-sub" data-r="2">Machine learning tutorials, career guidance, industry analysis, and research insights — written by a practising AI Engineer and PhD Scholar.</p>
+  </div>
+</div>
+
+<section style="position:relative;z-index:1;padding:0 0 6rem;">
+  <div class="container">
+
+    <!-- AUTHOR -->
+    <div class="author-strip" data-r>
+      <div class="as-av">AM</div>
+      <div>
+        <div class="as-name">Ajay Mukund S</div>
+        <div class="as-title">AI Engineer · PhD Scholar, Anna University · Founder, Data Science Academia</div>
+        <div class="as-tags">
+          <span class="as-tag">Machine Learning</span>
+          <span class="as-tag">Deep Learning</span>
+          <span class="as-tag">Career</span>
+          <span class="as-tag">Research</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURED POST -->
+    <div id="featuredPost" data-r="1"></div>
+
+    <!-- FILTER TABS -->
+    <div class="filter-tabs" id="catTabs">
+      <button class="ftab on" data-cat="all">All Posts</button>
+      <button class="ftab" data-cat="tutorial">Tutorials</button>
+      <button class="ftab" data-cat="career">Career</button>
+      <button class="ftab" data-cat="industry">Industry</button>
+      <button class="ftab" data-cat="research">Research</button>
+    </div>
+
+    <!-- POST GRID -->
+    <div class="c-grid" id="postGrid"></div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer><div class="fi2">
+  <div><div class="fbn">Data Science Academia</div><div class="fbs">Private Limited &nbsp;&middot;&nbsp; Chennai, Tamil Nadu</div></div>
+  <div class="fc">&copy; 2025 Data Science Academia Private Limited. All rights reserved.<br><span style="font-size:.62rem">Formerly Data Science Academia under Sai Chamundeeswari Academy (MSME Registered)</span></div>
+  <div class="fr">MSME Reg &nbsp;&middot;&nbsp; Pvt Ltd In Progress</div>
+</div></footer>
+
+<script src="script.js"></script>
+<script src="blog-data.js"></script>
+<script>
+let activeCat = 'all';
+
+function postUrl(slug) {
+  return `blog-post.html?slug=${slug}`;
+}
+
+function renderFeatured() {
+  const p = POSTS[0];
+  const c = CAT_STYLE[p.category];
+  document.getElementById('featuredPost').innerHTML = `
+    <div class="featured" onclick="location.href='${postUrl(p.slug)}'">
+      <div class="feat-accent">
+        <div class="feat-num">01</div>
+        <div class="feat-label">Latest Post</div>
+      </div>
+      <div class="feat-body">
+        <div class="feat-badge" style="color:${c.color};border-color:${c.border};background:${c.bg}">${p.catLabel}</div>
+        <div class="feat-title">${p.title}</div>
+        <div class="feat-excerpt">${p.excerpt}</div>
+        <div class="feat-meta">
+          <div class="feat-author">
+            <div class="feat-av">AM</div>
+            <div>
+              <div class="feat-name">Ajay Mukund S</div>
+              <div class="feat-date">${p.dateDisplay}</div>
+            </div>
+          </div>
+          <div class="feat-rt">${p.readTime}</div>
+        </div>
+        <div class="feat-cta">Read Article &nbsp;&rarr;</div>
+      </div>
+    </div>`;
+}
+
+function renderGrid() {
+  const grid = document.getElementById('postGrid');
+  const rest = POSTS.slice(1).filter(p => activeCat === 'all' || p.category === activeCat);
+  // Also filter the featured if category is active
+  const featured = document.getElementById('featuredPost');
+  const featHidden = activeCat !== 'all' && POSTS[0].category !== activeCat;
+  featured.style.display = featHidden ? 'none' : '';
+
+  grid.innerHTML = '';
+  const list = activeCat === 'all' ? POSTS.slice(1) : POSTS.filter(p => p.category === activeCat);
+  if (!list.length) {
+    grid.innerHTML = '<div class="blog-empty">No posts in this category yet.</div>';
+    return;
+  }
+  list.forEach((p, i) => {
+    const c = CAT_STYLE[p.category];
+    const card = document.createElement('div');
+    card.className = 'blog-card';
+    card.setAttribute('data-r', i % 3 || '');
+    card.innerHTML = `
+      <div class="bc-accent" style="background:linear-gradient(90deg,${c.color},transparent)"></div>
+      <div class="bc-body">
+        <div class="bc-badge" style="color:${c.color};border-color:${c.border};background:${c.bg}">${p.catLabel}</div>
+        <div class="bc-title">${p.title}</div>
+        <div class="bc-excerpt">${p.excerpt}</div>
+        <div class="bc-foot">
+          <div class="bc-meta">${p.dateDisplay} &nbsp;·&nbsp; ${p.readTime}</div>
+          <div class="bc-arr">&#8594;</div>
+        </div>
+      </div>`;
+    card.addEventListener('click', () => location.href = postUrl(p.slug));
+    grid.appendChild(card);
+  });
+  // Animate cards in
+  requestAnimationFrame(() => {
+    grid.querySelectorAll('.blog-card').forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = `opacity .55s cubic-bezier(.23,1,.32,1) ${(i % 3) * 0.08}s, transform .55s cubic-bezier(.23,1,.32,1) ${(i % 3) * 0.08}s`;
+      requestAnimationFrame(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; });
+    });
+  });
+}
+
+document.getElementById('catTabs').addEventListener('click', e => {
+  const btn = e.target.closest('[data-cat]');
+  if (!btn) return;
+  document.querySelectorAll('#catTabs .ftab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  activeCat = btn.dataset.cat;
+  renderGrid();
+});
+
+renderFeatured();
+renderGrid();
+</script>
+</body>
+</html>

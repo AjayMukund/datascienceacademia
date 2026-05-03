@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Blog — Data Science Academia</title>
+<meta name="description" id="pageMeta" content="Blog post — Data Science Academia">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── POST HEADER ── */
+.post-hero{padding:140px 0 60px;position:relative;z-index:1;}
+.post-hero .container{max-width:780px;}
+.post-badge{display:inline-flex;align-items:center;font-family:var(--fb);font-size:.63rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:100px;border:1px solid;margin-bottom:1.25rem;}
+.post-title{font-family:var(--fd);font-size:clamp(2rem,4.5vw,3.2rem);font-weight:600;line-height:1.1;letter-spacing:-.03em;color:var(--cream);margin-bottom:1.25rem;}
+.post-excerpt{font-family:var(--fb);font-size:1.05rem;font-weight:300;line-height:1.85;color:var(--fog);margin-bottom:2rem;max-width:640px;}
+.post-byline{display:flex;align-items:center;gap:1.25rem;padding:1.25rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.post-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--champ),var(--champ2));display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.9rem;font-weight:700;color:var(--ink);flex-shrink:0;}
+.post-author-name{font-family:var(--fb);font-size:.82rem;font-weight:500;color:var(--cream);}
+.post-author-role{font-family:var(--fb);font-size:.68rem;color:var(--fog2);margin-top:.1rem;}
+.post-meta-right{margin-left:auto;text-align:right;font-family:var(--fm);font-size:.63rem;color:var(--fog2);line-height:1.7;}
+
+/* ── PROGRESS BAR ── */
+.read-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--champ),var(--champ2));width:0%;z-index:600;transition:width .1s linear;}
+
+/* ── ARTICLE BODY ── */
+.article-wrap{position:relative;z-index:1;padding:3.5rem 0 6rem;}
+.article{max-width:720px;margin:0 auto;padding:0 clamp(1.5rem,5vw,4rem);}
+.article h2{font-family:var(--fd);font-size:1.75rem;font-weight:600;color:var(--cream);margin:2.75rem 0 .9rem;letter-spacing:-.02em;line-height:1.2;}
+.article h3{font-family:var(--fd);font-size:1.25rem;font-weight:500;color:var(--cream);margin:2.1rem 0 .65rem;letter-spacing:-.01em;}
+.article p{font-family:var(--fb);font-size:1rem;font-weight:300;line-height:1.95;color:var(--fog);margin-bottom:1.4rem;}
+.article strong{color:var(--cream);font-weight:500;}
+.article em{color:var(--champ2);font-style:italic;}
+.article ul,.article ol{margin:0 0 1.5rem 1.4rem;}
+.article li{font-family:var(--fb);font-size:.97rem;font-weight:300;line-height:1.85;color:var(--fog);margin-bottom:.45rem;}
+.article li strong{color:var(--cream);font-weight:500;}
+.article blockquote{border-left:3px solid var(--champ);padding:.5rem 0 .5rem 1.5rem;margin:2rem 0;}
+.article blockquote p{font-family:var(--fd);font-size:1.15rem;font-style:italic;color:var(--champ2);font-weight:300;margin-bottom:0;line-height:1.65;}
+.article pre{background:var(--ink2);border:1px solid var(--border2);border-radius:10px;padding:1.25rem 1.5rem;overflow-x:auto;margin:1.75rem 0;}
+.article pre code{font-family:var(--fm);font-size:.78rem;line-height:1.75;color:var(--teal);background:none;border:none;padding:0;}
+.article p code,.article li code{font-family:var(--fm);font-size:.78rem;color:var(--teal);background:rgba(62,207,178,.07);border:1px solid rgba(62,207,178,.18);border-radius:4px;padding:2px 7px;}
+.article ol{list-style:decimal;}
+.article ul{list-style:disc;}
+
+/* ── BACK & RELATED ── */
+.back-link{display:inline-flex;align-items:center;gap:8px;font-family:var(--fb);font-size:.78rem;font-weight:500;color:var(--fog);border:1px solid var(--border);padding:8px 18px;border-radius:100px;transition:all .25s;margin-bottom:3rem;}
+.back-link:hover{color:var(--champ2);border-color:var(--border2);}
+.related-section{border-top:1px solid var(--border);padding-top:3.5rem;margin-top:3.5rem;}
+.related-title{font-family:var(--fb);font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--champ);margin-bottom:1.5rem;}
+.related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
+.related-card{background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:1.25rem;cursor:pointer;transition:border-color .3s,transform .3s;}
+.related-card:hover{border-color:var(--border2);transform:translateY(-3px);}
+.rc-cat{font-family:var(--fb);font-size:.58rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem;}
+.rc-title{font-family:var(--fd);font-size:1rem;font-weight:600;line-height:1.25;color:var(--cream);}
+.rc-meta{font-family:var(--fm);font-size:.6rem;color:var(--fog2);margin-top:.5rem;}
+
+/* ── 404 ── */
+.post-404{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem;position:relative;z-index:1;}
+
+@media(max-width:700px){.related-grid{grid-template-columns:1fr;}.post-meta-right{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="read-progress" id="readProgress"></div>
+<div class="cur" id="cur"></div>
+<canvas id="fluid-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-name">Data Science Academia</div>
+    <div class="nav-sub">Private Limited &nbsp;&middot;&nbsp; Chennai</div>
+  </a>
+  <ul class="nav-menu" id="nmenu">
+    <li><a href="courses.html">Courses</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="programmes.html">Programmes</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="testimonials.html">Testimonials</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="codechamps.html">Code Champs</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="login.html" class="nav-cta">Sign In &rarr;</a></li>
+  </ul>
+  <div class="nav-tog" onclick="document.getElementById('nmenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- CONTENT (rendered by JS) -->
+<div id="postContent"></div>
+
+<!-- FOOTER -->
+<footer><div class="fi2">
+  <div><div class="fbn">Data Science Academia</div><div class="fbs">Private Limited &nbsp;&middot;&nbsp; Chennai, Tamil Nadu</div></div>
+  <div class="fc">&copy; 2025 Data Science Academia Private Limited. All rights reserved.<br><span style="font-size:.62rem">Formerly Data Science Academia under Sai Chamundeeswari Academy (MSME Registered)</span></div>
+  <div class="fr">MSME Reg &nbsp;&middot;&nbsp; Pvt Ltd In Progress</div>
+</div></footer>
+
+<script src="script.js"></script>
+<script src="blog-data.js"></script>
+<script>
+const slug = new URLSearchParams(location.search).get('slug');
+const post = POSTS.find(p => p.slug === slug);
+const root = document.getElementById('postContent');
+
+if (!post) {
+  root.innerHTML = `
+    <div class="post-404">
+      <div style="font-family:var(--fd);font-size:5rem;font-weight:700;color:rgba(200,169,110,.2);line-height:1">404</div>
+      <h1 style="font-family:var(--fd);font-size:1.8rem;font-weight:600;color:var(--cream);margin:.5rem 0 .75rem">Post not found</h1>
+      <p style="font-family:var(--fb);font-size:.9rem;color:var(--fog);margin-bottom:2rem">This post may have been moved or doesn't exist.</p>
+      <a href="blog.html" class="btn-g">Back to Blog &nbsp;&rarr;</a>
+    </div>`;
+} else {
+  const c = CAT_STYLE[post.category];
+
+  // Update page metadata
+  document.getElementById('pageTitle').textContent = `${post.title} — Data Science Academia`;
+  document.getElementById('pageMeta').setAttribute('content', post.excerpt);
+
+  // Related posts (up to 2, same category first, then any)
+  const related = [
+    ...POSTS.filter(p => p.slug !== slug && p.category === post.category),
+    ...POSTS.filter(p => p.slug !== slug && p.category !== post.category),
+  ].slice(0, 2);
+
+  const relatedHtml = related.length ? `
+    <div class="related-section">
+      <div class="related-title">Continue Reading</div>
+      <div class="related-grid">
+        ${related.map(r => {
+          const rc = CAT_STYLE[r.category];
+          return `<div class="related-card" onclick="location.href='blog-post.html?slug=${r.slug}'">
+            <div class="rc-cat" style="color:${rc.color}">${r.catLabel}</div>
+            <div class="rc-title">${r.title}</div>
+            <div class="rc-meta">${r.dateDisplay} &nbsp;·&nbsp; ${r.readTime}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>` : '';
+
+  root.innerHTML = `
+    <!-- POST HEADER -->
+    <div class="post-hero">
+      <div class="container" style="max-width:780px;padding:0 clamp(1.5rem,5vw,4rem)">
+        <a href="blog.html" class="back-link">&#8592; &nbsp;Back to Blog</a>
+        <div class="post-badge" style="color:${c.color};border-color:${c.border};background:${c.bg}">${post.catLabel}</div>
+        <h1 class="post-title">${post.title}</h1>
+        <p class="post-excerpt">${post.excerpt}</p>
+        <div class="post-byline">
+          <div class="post-av">AM</div>
+          <div>
+            <div class="post-author-name">Ajay Mukund S</div>
+            <div class="post-author-role">AI Engineer &nbsp;·&nbsp; PhD Scholar, Anna University</div>
+          </div>
+          <div class="post-meta-right">
+            ${post.dateDisplay}<br>${post.readTime}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARTICLE -->
+    <div class="article-wrap">
+      <div class="article">
+        ${post.body}
+        ${relatedHtml}
+      </div>
+    </div>`;
+}
+
+/* ── Reading progress bar ── */
+window.addEventListener('scroll', () => {
+  const docH = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docH > 0 ? (window.scrollY / docH) * 100 : 0;
+  document.getElementById('readProgress').style.width = pct + '%';
+});
+</script>
+</body>
+</html>
