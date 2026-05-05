@@ -6,6 +6,7 @@ const DSA_PROGRAMMES = {
   /* ── 1. Internship ─────────────────────────────────────── */
   'internship': {
     id: 'internship',
+    image: 'Website Images/Internship Programme.jpeg',
     title: 'Internships',
     subtitle: 'NEP & AICTE Aligned',
     tag: 'NEP & AICTE Aligned',
@@ -108,6 +109,7 @@ const DSA_PROGRAMMES = {
   /* ── 2. Microsoft Certification ────────────────────────── */
   'microsoft-certification': {
     id: 'microsoft-certification',
+    image: 'Website Images/Microsoft Certification Programme.jpeg',
     title: 'Microsoft Certification Program',
     subtitle: 'Azure · Power BI · MCT Collaboration',
     tag: 'Microsoft Certified',
@@ -208,6 +210,7 @@ const DSA_PROGRAMMES = {
   /* ── 3. Corporate & FDP ────────────────────────────────── */
   'fdp': {
     id: 'fdp',
+    image: 'Website Images/Corporate & Faculty Development Programme.jpeg',
     title: 'Corporate & Faculty Development Program',
     subtitle: 'FDP / MDP — AICTE Aligned',
     tag: 'FDP / MDP',
@@ -308,6 +311,7 @@ const DSA_PROGRAMMES = {
   /* ── 4. Competitive Exam Training ──────────────────────── */
   'exam-coaching': {
     id: 'exam-coaching',
+    image: 'Website Images/Competitive Examination Training.jpeg',
     title: 'Competitive Examination Training',
     subtitle: 'UGC NET · GATE · TNSET · PG-TRB',
     tag: 'Exam Coaching',
@@ -410,6 +414,7 @@ const DSA_PROGRAMMES = {
   /* ── 5. Research Assistance ────────────────────────────── */
   'research-assistance': {
     id: 'research-assistance',
+    image: 'Website Images/Research Assistance Programme.jpeg',
     title: 'Research Assistance & Interdisciplinary Guidance',
     subtitle: 'Powered by AID VIRTUAL',
     tag: 'Research Support',
@@ -512,6 +517,7 @@ const DSA_PROGRAMMES = {
   /* ── 6. DSA Code Champs ────────────────────────────────── */
   'code-champs': {
     id: 'code-champs',
+    image: 'Website Images/Code Champs Hero Illustration.jpeg',
     title: 'DSA Code Champs',
     subtitle: 'School Outreach Programme — Grade 6 to 9',
     tag: 'School Outreach',
@@ -614,6 +620,7 @@ const DSA_PROGRAMMES = {
   /* ── 7. Language & Communication ───────────────────────── */
   'language-communication': {
     id: 'language-communication',
+    image: 'Website Images/Language & Communication Programme.jpeg',
     title: 'Language & Communication for Tech Professionals',
     subtitle: 'Academic · Interview · Research Communication',
     tag: 'Communication Skills',
@@ -714,6 +721,7 @@ const DSA_PROGRAMMES = {
   /* ── 8. AI Mastery Track ────────────────────────────────── */
   'ai-mastery': {
     id: 'ai-mastery',
+    image: 'Website Images/AI Mastery Track Visual.jpeg',
     title: 'The Complete AI & Data Science Mastery Track',
     subtitle: '12-Month Structured Learning Roadmap · Q1 → Q4',
     tag: 'AI Mastery · 12 Months',
