@@ -480,12 +480,11 @@
   /* ── Programme image ── */
   if(prog.image){
     if(id === 'ai-mastery'){
-      /* 16:9 full-width banner after the stats strip */
+      /* 16:9 full-width banner — inserted after the am-infostrip, before main content */
       const imgWrap = document.createElement('div');
-      imgWrap.setAttribute('data-r','');
-      imgWrap.style.cssText = 'margin-bottom:2.5rem;border-radius:16px;overflow:hidden;border:1px solid rgba(240,192,64,.2);box-shadow:var(--sd);';
-      imgWrap.innerHTML = `<img src="${prog.image}" alt="${prog.title}" style="width:100%;height:auto;max-height:380px;object-fit:cover;object-position:center;display:block;" loading="eager">`;
-      document.getElementById('stats-block').after(imgWrap);
+      imgWrap.style.cssText = 'position:relative;z-index:1;padding:0 0 2rem;';
+      imgWrap.innerHTML = `<div class="container"><div style="border-radius:16px;overflow:hidden;border:1px solid rgba(240,192,64,.2);box-shadow:var(--sd);"><img src="${prog.image}" alt="${prog.title}" style="width:100%;height:auto;max-height:380px;object-fit:cover;object-position:center;display:block;" loading="eager"></div></div>`;
+      document.getElementById('am-infostrip').after(imgWrap);
     } else {
       /* 1:1 square image at top of sidebar info-card */
       const infoCard = document.querySelector('.info-card');
