@@ -17,7 +17,10 @@
   }
   .cc-hero{min-height:100vh;display:grid;place-items:center;padding:130px clamp(1.5rem,5vw,4rem) 80px;position:relative;overflow:hidden;}
   .cc-hero-glow{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);width:1000px;height:700px;background:radial-gradient(ellipse,rgba(199,146,234,.09) 0%,rgba(122,159,255,.05) 50%,transparent 70%);pointer-events:none;}
-  .cc-hero-wrap{max-width:1100px;width:100%;margin:0 auto;text-align:center;}
+  .cc-hero-wrap{max-width:1200px;width:100%;margin:0 auto;display:flex;align-items:center;gap:4rem;text-align:left;}
+  .cc-hero-text{flex:1;min-width:0;}
+  .cc-hero-ctas{justify-content:flex-start;}
+  @media(max-width:900px){.cc-hero-wrap{flex-direction:column;text-align:center;}.cc-hero-ctas{justify-content:center;}.cc-hero-img{width:100%;max-width:480px;margin:0 auto;}}
   .cc-pill{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(199,146,234,.3);background:rgba(199,146,234,.07);padding:7px 20px 7px 12px;border-radius:100px;margin-bottom:2rem;}
   .cc-pill-dot{width:8px;height:8px;border-radius:50%;background:var(--cc1);animation:ccpulse 2s ease-in-out infinite;}
   @keyframes ccpulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.4);}}
@@ -181,16 +184,21 @@
 <section class="cc-hero">
   <div class="cc-hero-glow"></div>
   <div class="cc-hero-wrap">
-    <div class="cc-pill"><div class="cc-pill-dot"></div><span class="cc-pill-txt">DSA Code Champs &nbsp;·&nbsp; School Wing</span></div>
-    <h1 class="cc-h1">Nurturing Tomorrow's<br><em>AI Innovators</em> — Starting Today</h1>
-    <p class="cc-hero-sub">Marks open doors. But future-ready skills build empires. Data Science Academia's dedicated school wing introduces young minds to coding, AI, and technology — transforming students from consumers of technology into its creators.</p>
-    <div class="cc-hero-ctas">
-      <a href="contact.html?course=DSA+Code+Champs+(School+Outreach)" class="cc-btn">Book a Free Trial Session &nbsp;&rarr;</a>
-      <a href="#levels" class="btn-o">Explore Course Levels</a>
+    <div class="cc-hero-text">
+      <div class="cc-pill"><div class="cc-pill-dot"></div><span class="cc-pill-txt">DSA Code Champs &nbsp;·&nbsp; School Wing</span></div>
+      <h1 class="cc-h1">Nurturing Tomorrow's<br><em>AI Innovators</em> — Starting Today</h1>
+      <p class="cc-hero-sub">Marks open doors. But future-ready skills build empires. Data Science Academia's dedicated school wing introduces young minds to coding, AI, and technology — transforming students from consumers of technology into its creators.</p>
+      <div class="cc-hero-ctas">
+        <a href="contact.html?course=DSA+Code+Champs+(School+Outreach)" class="cc-btn">Book a Free Trial Session &nbsp;&rarr;</a>
+        <a href="#levels" class="btn-o">Explore Course Levels</a>
+      </div>
+      <div class="cc-nasa">
+        <span style="font-size:1.4rem;">🔬</span>
+        <span><strong>NASA Research Insight:</strong> Children's creativity peaks between ages 7 and 13. Introducing AI and coding during this golden window shapes innovators, not just students.</span>
+      </div>
     </div>
-    <div class="cc-nasa">
-      <span style="font-size:1.4rem;">🔬</span>
-      <span><strong>NASA Research Insight:</strong> Children's creativity peaks between ages 7 and 13. Introducing AI and coding during this golden window shapes innovators, not just students.</span>
+    <div class="cc-hero-img">
+      <img src="Website Images/Code Champs Hero Illustration.jpeg" alt="DSA Code Champs — Young AI Innovators" loading="eager">
     </div>
   </div>
 </section>
@@ -418,6 +426,18 @@
         <a href="contact.html?course=DSA+Code+Champs+(School+Outreach)" class="cc-btn" style="display:inline-flex;font-size:.82rem;padding:12px 24px;background:linear-gradient(135deg,#7a9fff,#3ecfb2);">Book a Free Trial Session &nbsp;&rarr;</a>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ── SESSIONS COLLAGE ──────────────────────────────────────── -->
+<section class="cc-section" style="border-top:1px solid var(--border);padding-bottom:0;">
+  <div class="container">
+    <div class="cc-eyebrow" data-r>In the Classroom</div>
+    <h2 class="cc-sh" data-r="1">Coding That <em>Comes Alive</em></h2>
+    <p class="cc-body" data-r="2" style="max-width:600px;margin-bottom:2rem;">Every session is hands-on, project-driven, and filled with the energy of young minds discovering what technology can do.</p>
+    <div data-r="3" style="border-radius:20px;overflow:hidden;border:1px solid rgba(199,146,234,.22);box-shadow:0 24px 80px rgba(0,0,0,.45);">
+      <img src="Website Images/Code Champs Sessions Collage.jpeg" alt="DSA Code Champs — Students in a coding session" style="width:100%;height:auto;display:block;max-height:420px;object-fit:cover;" loading="lazy">
     </div>
   </div>
 </section>

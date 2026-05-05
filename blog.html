@@ -151,9 +151,8 @@ function renderFeatured() {
   const c = CAT_STYLE[p.category];
   document.getElementById('featuredPost').innerHTML = `
     <div class="featured" onclick="location.href='${postUrl(p.slug)}'">
-      <div class="feat-accent">
-        <div class="feat-num">01</div>
-        <div class="feat-label">Latest Post</div>
+      <div class="feat-accent" style="${p.cover ? `background-image:url('${p.cover}');background-size:cover;background-position:center;` : ''}">
+        ${!p.cover ? '<div class="feat-num">01</div><div class="feat-label">Latest Post</div>' : '<div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(11,12,14,.55),rgba(11,12,14,.2));"></div><div class="feat-num" style="position:relative;z-index:1;">01</div><div class="feat-label" style="position:relative;z-index:1;">Latest Post</div>'}
       </div>
       <div class="feat-body">
         <div class="feat-badge" style="color:${c.color};border-color:${c.border};background:${c.bg}">${p.catLabel}</div>
@@ -194,7 +193,7 @@ function renderGrid() {
     card.className = 'blog-card';
     card.setAttribute('data-r', i % 3 || '');
     card.innerHTML = `
-      <div class="bc-accent" style="background:linear-gradient(90deg,${c.color},transparent)"></div>
+      ${p.cover ? `<div class="bc-img"><img src="${p.cover}" alt="${p.title}" loading="lazy"></div>` : `<div class="bc-accent" style="background:linear-gradient(90deg,${c.color},transparent)"></div>`}
       <div class="bc-body">
         <div class="bc-badge" style="color:${c.color};border-color:${c.border};background:${c.bg}">${p.catLabel}</div>
         <div class="bc-title">${p.title}</div>

@@ -162,6 +162,31 @@ section{position:relative;z-index:1;}
 .cdur{font-family:var(--fb);font-size:.72rem;color:var(--fog2);}
 .carr{width:30px;height:30px;border-radius:50%;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--champ2);transition:all .3s;}
 .cc:hover .carr{background:var(--champ2);color:var(--ink);border-color:var(--champ2);transform:rotate(45deg);}
+.cc-img{margin:-1.75rem -1.75rem 1.5rem;height:130px;overflow:hidden;border-radius:15px 15px 0 0;}
+.cc-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.23,1,.32,1);}
+.cc:hover .cc-img img{transform:scale(1.05);}
+
+/* BLOG CARD IMAGE */
+.bc-img{height:160px;overflow:hidden;}
+.bc-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.23,1,.32,1);}
+.blog-card:hover .bc-img img{transform:scale(1.05);}
+
+/* PROGRAMME CARD IMAGE */
+.pc-img{margin:-2rem -2rem 1.5rem;height:150px;overflow:hidden;border-radius:15px 15px 0 0;}
+.pc-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.23,1,.32,1);}
+.pc:hover .pc-img img{transform:scale(1.05);}
+
+/* ABOUT PAGE VISUAL */
+.about-visual{border-radius:16px;overflow:hidden;margin-bottom:2rem;border:1px solid var(--border);}
+.about-visual img{width:100%;height:auto;display:block;}
+
+/* BLOG POST COVER */
+.post-cover{border-radius:16px;overflow:hidden;margin:2rem 0 2.5rem;border:1px solid var(--border);}
+.post-cover img{width:100%;height:auto;display:block;max-height:420px;object-fit:cover;}
+
+/* CODE CHAMPS HERO IMAGE */
+.cc-hero-img{flex:0 0 auto;width:clamp(280px,35vw,480px);border-radius:20px;overflow:hidden;border:1px solid rgba(199,146,234,.22);box-shadow:0 24px 80px rgba(0,0,0,.55);}
+.cc-hero-img img{width:100%;height:100%;object-fit:cover;display:block;}
 
 /* ABOUT */
 #about{padding:0 0 110px;}

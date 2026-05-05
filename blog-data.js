@@ -16,6 +16,7 @@ const POSTS = [
   /* ── 1 ──────────────────────────────────────────────── */
   {
     slug: 'statistics-still-matters-deep-learning',
+    cover: 'Website Images/Blog - Statistics Meets Deep Learning.jpeg',
     title: 'Why Statistics Still Matters in the Age of Deep Learning',
     category: 'research',
     catLabel: 'Research',
@@ -69,6 +70,7 @@ print(f"p-value: {result.pvalue:.4f}")  # < 0.05 = significant</code></pre>
   /* ── 2 ──────────────────────────────────────────────── */
   {
     slug: 'feature-engineering-craft',
+    cover: 'Website Images/Blog - Feature Engineering Mastery.jpeg',
     title: 'Feature Engineering: The Craft Behind Great ML Models',
     category: 'tutorial',
     catLabel: 'Tutorial',
@@ -152,6 +154,7 @@ pipe.score(X_test, y_test)</code></pre>
   /* ── 3 ──────────────────────────────────────────────── */
   {
     slug: 'llms-every-data-scientist-needs-to-know',
+    cover: 'Website Images/Blog - LLMs in Production 2025.jpeg',
     title: 'Large Language Models: What Every Data Scientist Needs to Know',
     category: 'industry',
     catLabel: 'Industry',
@@ -241,6 +244,7 @@ result = qa_chain.run("What is our refund policy?")</code></pre>
   /* ── 4 ──────────────────────────────────────────────── */
   {
     slug: 'data-science-career-india-2025',
+    cover: 'Website Images/Blog - Data Science Career in India 2025.jpeg',
     title: 'Building a Data Science Career in India: A 2025 Roadmap',
     category: 'career',
     catLabel: 'Career',
@@ -318,6 +322,7 @@ result = qa_chain.run("What is our refund policy?")</code></pre>
   /* ── 5 ──────────────────────────────────────────────── */
   {
     slug: 'bias-variance-tradeoff',
+    cover: 'Website Images/Blog - Bias-Variance Tradeoff.jpeg',
     title: 'Understanding the Bias-Variance Tradeoff',
     category: 'tutorial',
     catLabel: 'Tutorial',
@@ -393,6 +398,7 @@ plt.show()</code></pre>
   /* ── 6 ──────────────────────────────────────────────── */
   {
     slug: 'python-data-science-roadmap',
+    cover: 'Website Images/Blog - Python Learning Roadmap 2025.jpeg',
     title: 'Python for Data Science: The Beginner\'s Roadmap',
     category: 'tutorial',
     catLabel: 'Tutorial',
