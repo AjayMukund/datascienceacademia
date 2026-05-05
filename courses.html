@@ -235,16 +235,30 @@
 
 <script src="script.js"></script>
 <script>
-/* Category banner images */
-const CAT_BANNERS = {
-  'foundation': 'Website Images/Foundation Category Banner (Python · SQL · R).jpeg',
-  'core-ml':    'Website Images/Core ML Category Banner (Machine Learning · NLP · Feature Engineering).jpeg',
-  'advanced-ai':'Website Images/Advanced AI Category Banner (Deep Learning · CV · LLMs · GenAI · RL · MLOps).jpeg',
-  'analytics':  'Website Images/Analytics Category Banner (Data Visualization · Excel · Tableau).jpeg',
-  'cloud-bi':   'Website Images/Cloud and BI Category Banner (Power BI, Azure, AWS).jpeg',
+/* Individual course images */
+const COURSE_IMAGES = {
+  'python':                 'Website Images/Courses/Python Programming.jpeg',
+  'sql':                    'Website Images/Courses/SQL for Data Science.jpeg',
+  'r-programming':          'Website Images/Courses/R Programming.jpeg',
+  'machine-learning':       'Website Images/Courses/Machine Learning.jpeg',
+  'nlp':                    'Website Images/Courses/Natural Language Processing.jpeg',
+  'feature-engineering':    'Website Images/Courses/Feature Engineering & Model Selection.jpeg',
+  'deep-learning':          'Website Images/Courses/Deep Learning.jpeg',
+  'computer-vision':        'Website Images/Courses/Computer Vision.jpeg',
+  'llm':                    'Website Images/Courses/Large Language Models.jpeg',
+  'generative-ai':          'Website Images/Courses/Generative AI.jpeg',
+  'reinforcement-learning': 'Website Images/Courses/Reinforcement Learning.jpeg',
+  'mlops':                  'Website Images/Courses/MLOps & Model Deployment.jpeg',
+  'data-visualization':     'Website Images/Courses/Data Visualization.jpeg',
+  'excel':                  'Website Images/Courses/Excel for Data Analysis.jpeg',
+  'tableau':                'Website Images/Courses/Tableau.jpeg',
+  'power-bi':               'Website Images/Courses/Power BI.jpeg',
+  'azure':                  'Website Images/Courses/Microsoft Azure.jpeg',
+  'aws':                    'Website Images/Courses/AWS for Data Science.jpeg',
 };
-document.querySelectorAll('.cc[data-cat]').forEach(card => {
-  const src = CAT_BANNERS[card.dataset.cat];
+document.querySelectorAll('a.cc[href*="course.html"]').forEach(card => {
+  const id = new URL(card.href, location.href).searchParams.get('id');
+  const src = COURSE_IMAGES[id];
   if (!src) return;
   const div = document.createElement('div');
   div.className = 'cc-img';

@@ -162,8 +162,8 @@ section{position:relative;z-index:1;}
 .cdur{font-family:var(--fb);font-size:.72rem;color:var(--fog2);}
 .carr{width:30px;height:30px;border-radius:50%;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--champ2);transition:all .3s;}
 .cc:hover .carr{background:var(--champ2);color:var(--ink);border-color:var(--champ2);transform:rotate(45deg);}
-.cc-img{margin:-1.75rem -1.75rem 1.5rem;height:110px;overflow:hidden;border-radius:15px 15px 0 0;}
-.cc-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .5s cubic-bezier(.23,1,.32,1);}
+.cc-img{margin:-1.75rem -1.75rem 1.5rem;overflow:hidden;border-radius:15px 15px 0 0;}
+.cc-img img{width:100%;height:auto;display:block;transition:transform .5s cubic-bezier(.23,1,.32,1);}
 .cc:hover .cc-img img{transform:scale(1.05);}
 
 /* BLOG CARD IMAGE */

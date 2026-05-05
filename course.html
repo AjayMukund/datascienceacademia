@@ -163,6 +163,14 @@
   levelBadge.textContent = course.level;
   badgesEl.appendChild(levelBadge);
 
+  /* ── Course image — 16:9 banner above main layout ── */
+  if(course.image){
+    const imgSection = document.createElement('div');
+    imgSection.style.cssText = 'position:relative;z-index:1;padding:0 0 2rem;';
+    imgSection.innerHTML = `<div class="container"><div style="border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--sd);"><img src="${course.image}" alt="${course.title}" style="width:100%;height:auto;display:block;" loading="eager"></div></div>`;
+    document.querySelector('.course-layout').closest('.container').before(imgSection);
+  }
+
   /* ── Overview ── */
   document.getElementById('course-overview').textContent = course.overview;
 

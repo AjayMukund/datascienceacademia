@@ -4,6 +4,7 @@ const DSA_COURSES = {
 
   'python': {
     id: 'python',
+    image: 'Website Images/Courses/Python Programming.jpeg',
     title: 'Python Programming',
     category: 'Foundation',
     level: 'Beginner',
@@ -37,6 +38,7 @@ const DSA_COURSES = {
 
   'sql': {
     id: 'sql',
+    image: 'Website Images/Courses/SQL for Data Science.jpeg',
     title: 'SQL for Data Science',
     category: 'Foundation',
     level: 'Beginner',
@@ -67,6 +69,7 @@ const DSA_COURSES = {
 
   'r-programming': {
     id: 'r-programming',
+    image: 'Website Images/Courses/R Programming.jpeg',
     title: 'R Programming',
     category: 'Foundation',
     level: 'Beginner',
@@ -100,6 +103,7 @@ const DSA_COURSES = {
 
   'machine-learning': {
     id: 'machine-learning',
+    image: 'Website Images/Courses/Machine Learning.jpeg',
     title: 'Machine Learning',
     category: 'Core ML',
     level: 'Intermediate',
@@ -135,6 +139,7 @@ const DSA_COURSES = {
 
   'nlp': {
     id: 'nlp',
+    image: 'Website Images/Courses/Natural Language Processing.jpeg',
     title: 'Natural Language Processing',
     category: 'Core ML',
     level: 'Intermediate',
@@ -168,6 +173,7 @@ const DSA_COURSES = {
 
   'feature-engineering': {
     id: 'feature-engineering',
+    image: 'Website Images/Courses/Feature Engineering & Model Selection.jpeg',
     title: 'Feature Engineering & Model Selection',
     category: 'Core ML',
     level: 'Intermediate',
@@ -201,6 +207,7 @@ const DSA_COURSES = {
 
   'deep-learning': {
     id: 'deep-learning',
+    image: 'Website Images/Courses/Deep Learning.jpeg',
     title: 'Deep Learning',
     category: 'Advanced AI',
     level: 'Advanced',
@@ -238,6 +245,7 @@ const DSA_COURSES = {
 
   'computer-vision': {
     id: 'computer-vision',
+    image: 'Website Images/Courses/Computer Vision.jpeg',
     title: 'Computer Vision',
     category: 'Advanced AI',
     level: 'Advanced',
@@ -273,6 +281,7 @@ const DSA_COURSES = {
 
   'llm': {
     id: 'llm',
+    image: 'Website Images/Courses/Large Language Models.jpeg',
     title: 'Large Language Models',
     category: 'Advanced AI',
     level: 'Advanced',
@@ -308,6 +317,7 @@ const DSA_COURSES = {
 
   'generative-ai': {
     id: 'generative-ai',
+    image: 'Website Images/Courses/Generative AI.jpeg',
     title: 'Generative AI',
     category: 'Advanced AI',
     level: 'Advanced',
@@ -343,6 +353,7 @@ const DSA_COURSES = {
 
   'reinforcement-learning': {
     id: 'reinforcement-learning',
+    image: 'Website Images/Courses/Reinforcement Learning.jpeg',
     title: 'Reinforcement Learning',
     category: 'Advanced AI',
     level: 'Advanced',
@@ -376,6 +387,7 @@ const DSA_COURSES = {
 
   'mlops': {
     id: 'mlops',
+    image: 'Website Images/Courses/MLOps & Model Deployment.jpeg',
     title: 'MLOps & Model Deployment',
     category: 'Advanced AI',
     level: 'Advanced',
@@ -411,6 +423,7 @@ const DSA_COURSES = {
 
   'data-visualization': {
     id: 'data-visualization',
+    image: 'Website Images/Courses/Data Visualization.jpeg',
     title: 'Data Visualization',
     category: 'Analytics',
     level: 'Beginner',
@@ -442,6 +455,7 @@ const DSA_COURSES = {
 
   'excel': {
     id: 'excel',
+    image: 'Website Images/Courses/Excel for Data Analysis.jpeg',
     title: 'Excel for Data Analysis',
     category: 'Analytics',
     level: 'Beginner',
@@ -471,6 +485,7 @@ const DSA_COURSES = {
 
   'tableau': {
     id: 'tableau',
+    image: 'Website Images/Courses/Tableau.jpeg',
     title: 'Tableau',
     category: 'Analytics',
     level: 'Intermediate',
@@ -503,6 +518,7 @@ const DSA_COURSES = {
 
   'power-bi': {
     id: 'power-bi',
+    image: 'Website Images/Courses/Power BI.jpeg',
     title: 'Power BI',
     category: 'Cloud & BI',
     level: 'Intermediate',
@@ -534,6 +550,7 @@ const DSA_COURSES = {
 
   'azure': {
     id: 'azure',
+    image: 'Website Images/Courses/Microsoft Azure.jpeg',
     title: 'Microsoft Azure',
     category: 'Cloud & BI',
     level: 'Intermediate',
@@ -567,6 +584,7 @@ const DSA_COURSES = {
 
   'aws': {
     id: 'aws',
+    image: 'Website Images/Courses/AWS for Data Science.jpeg',
     title: 'AWS for Data Science',
     category: 'Cloud & BI',
     level: 'Intermediate',
