@@ -2,6 +2,7 @@ const CC_LEVELS = {
   explorers: {
     id:'explorers', level:1, levelPad:'01', badge:'Level 1',
     name:'Code Explorers',
+    image:'Website Images/Code Champs/Code Champs Level 1 - Code Explorers.jpeg',
     tagline:'Where Every Young Mind Becomes a Creator',
     grade:'Grade 3 – 5', age:'Ages 8 – 10',
     color:'#3ecfb2', rgb:'62,207,178', icon:'🧱',
@@ -20,10 +21,13 @@ const CC_LEVELS = {
     ],
     projects:[
       { icon:'🎮', title:'Catch the Stars', tag:'Scratch Game',
+        img:'Website Images/Code Champs/Code Explorers Project - Catch the Stars.jpeg',
         desc:'A fully working catching game with score counter, increasing difficulty, and a game-over screen — built end-to-end in Scratch.' },
       { icon:'📖', title:'My Animated Story', tag:'Storytelling',
+        img:'Website Images/Code Champs/Code Explorers Project - Animated Story.jpeg',
         desc:'An interactive animated story with original characters, dialogue, scene transitions, and a surprise twist the student invents themselves.' },
       { icon:'🎨', title:'Code Art Gallery', tag:'Creative Coding',
+        img:'Website Images/Code Champs/Code Explorers Project - Code Art Gallery.jpeg',
         desc:'A Scratch project showcasing original digital art pieces with animations — each triggered by user clicks or keyboard events.' }
     ],
     skills:['Scratch','Block Coding','Sequences','Loops','Events','Conditionals','Animations','Debugging','Computational Thinking','Creative Storytelling'],
@@ -35,6 +39,7 @@ const CC_LEVELS = {
   builders: {
     id:'builders', level:2, levelPad:'02', badge:'Level 2',
     name:'Code Builders',
+    image:'Website Images/Code Champs/Code Champs Level 2 - Code Builders.jpeg',
     tagline:'From Block Coding to Real Python — The Big Leap',
     grade:'Grade 6 – 7', age:'Ages 11 – 12',
     color:'#7a9fff', rgb:'122,159,255', icon:'🐍',
@@ -53,10 +58,13 @@ const CC_LEVELS = {
     ],
     projects:[
       { icon:'💬', title:'Smart Chatbot', tag:'AI Intro',
+        img:'Website Images/Code Champs/Code Builders Project - Smart Chatbot.jpeg',
         desc:'A Python chatbot that converses on a chosen topic — detecting keywords and responding intelligently using conditional logic.' },
       { icon:'🎮', title:'Python Quiz Game', tag:'Game Dev',
+        img:'Website Images/Code Champs/Code Builders Project - Quiz Game.jpeg',
         desc:'A multi-round quiz game with score tracking, hints, a countdown timer, and a high-score leaderboard — entirely in Python.' },
       { icon:'🐢', title:'Turtle Art Machine', tag:'Creative Coding',
+        img:'Website Images/Code Champs/Code Builders Project - Turtle Art Machine.jpeg',
         desc:'A generative art program using Python\'s Turtle module — creating colourful geometric patterns and spirals through code.' }
     ],
     skills:['Python','Variables & Data Types','Loops','Functions','Conditionals','Turtle Graphics','Chatbot Logic','Random Module','Debugging','Intro to AI'],
@@ -68,6 +76,7 @@ const CC_LEVELS = {
   innovators: {
     id:'innovators', level:3, levelPad:'03', badge:'Level 3',
     name:'Code Innovators',
+    image:'Website Images/Code Champs/Code Champs Level 3 - Code Innovators.jpeg',
     tagline:'From Programming to Engineering Intelligent Solutions',
     grade:'Grade 8 – 9', age:'Ages 13 – 14',
     color:'#c792ea', rgb:'199,146,234', icon:'🤖',
@@ -88,10 +97,13 @@ const CC_LEVELS = {
     ],
     projects:[
       { icon:'🧠', title:'Image Classifier', tag:'Machine Learning',
+        img:'Website Images/Code Champs/Code Innovators Project - Image Classifier.jpeg',
         desc:'Train a machine learning model to classify images into categories using a real-world dataset and a Scikit-learn pipeline — from raw data to predictions.' },
       { icon:'👁️', title:'Face Detection App', tag:'Computer Vision',
+        img:'Website Images/Code Champs/Code Innovators Project - Computer Vision.jpeg',
         desc:'A real-time face detection program using OpenCV that identifies and highlights faces live through a webcam feed.' },
       { icon:'📊', title:'Data Story Dashboard', tag:'Data Science',
+        img:'Website Images/Code Champs/Code Innovators Project - Data Dashboard.jpeg',
         desc:'A Python data analysis project that takes a real-world dataset and tells a visual story with charts, trends, and key insights.' }
     ],
     skills:['Python Intermediate','OOP','NumPy','Pandas','Matplotlib','Seaborn','Scikit-learn','Machine Learning','OpenCV','Computer Vision','IoT Basics','Data Analysis'],
@@ -103,6 +115,7 @@ const CC_LEVELS = {
   pioneers: {
     id:'pioneers', level:4, levelPad:'04', badge:'Level 4',
     name:'Code Pioneers',
+    image:'Website Images/Code Champs/Code Champs Level 4 - Code Pioneers.jpeg',
     tagline:'Build, Train & Deploy Real-World AI Applications',
     grade:'Grade 10 – 12', age:'Ages 15 – 17',
     color:'#f0c040', rgb:'240,192,64', icon:'🚀',
@@ -125,10 +138,13 @@ const CC_LEVELS = {
     ],
     projects:[
       { icon:'🗣️', title:'AI Sentiment Analyser', tag:'NLP',
+        img:'Website Images/Code Champs/Code Pioneers Project - Deployed AI App.jpeg',
         desc:'A full NLP pipeline classifying social media posts or product reviews as positive, negative, or neutral — deployed as a live web app with a clean dashboard.' },
       { icon:'🖼️', title:'Object Detection System', tag:'Computer Vision',
+        img:'Website Images/Code Champs/Code Pioneers Project - Deep Learning Architecture.jpeg',
         desc:'A YOLO-powered real-time object detection system that identifies and labels objects in a live webcam or uploaded video stream.' },
       { icon:'📈', title:'Stock Price Predictor', tag:'Deep Learning',
+        img:'Website Images/Code Champs/Code Pioneers Project - ML Model Evaluation.jpeg',
         desc:'An LSTM-based deep learning model predicting stock price trends from historical financial data — with an interactive chart dashboard.' }
     ],
     skills:['Advanced Python','TensorFlow','Keras','Deep Learning','CNNs','RNNs & LSTMs','NLP','NLTK','OpenCV','YOLO','Flask','Cloud Deployment','GitHub','XGBoost','Feature Engineering','REST APIs'],

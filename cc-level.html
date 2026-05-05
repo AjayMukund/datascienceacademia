@@ -116,6 +116,10 @@
 .lv-bar-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--fb);font-size:.85rem;font-weight:700;letter-spacing:.04em;color:var(--ink);padding:12px 28px;border-radius:9px;transition:all .3s cubic-bezier(.23,1,.32,1);flex-shrink:0;white-space:nowrap;}
 .lv-bar-btn:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(var(--lvc-rgb),.42);}
 
+/* ── PROJECT IMAGE OVERRIDE ────────────────────────────────── */
+.lv-proj-vis.has-img{height:auto;display:block;}
+.lv-proj-vis.has-img img{width:100%;height:auto;display:block;}
+
 /* ── RESPONSIVE ────────────────────────────────────────────── */
 @media(max-width:960px){
   .lv-projects{grid-template-columns:repeat(2,1fr);}
@@ -285,6 +289,14 @@
     <div class="lv-strip-item"><div class="lv-strip-label">Certificate</div><div class="lv-strip-val">${d.cert}</div></div>
     <div class="lv-strip-item"><div class="lv-strip-label">Get Started</div><a href="contact.html?course=${ctaParam}" class="lv-strip-cta">Free Trial &nbsp;&rarr;</a></div>`;
 
+  /* ── Level hero image ── */
+  if(d.image){
+    const imgSection = document.createElement('div');
+    imgSection.style.cssText = 'position:relative;z-index:1;padding:0 0 2rem;';
+    imgSection.innerHTML = `<div class="container"><div style="border-radius:16px;overflow:hidden;border:1px solid rgba(${d.rgb},.22);box-shadow:var(--sd);"><img src="${d.image}" alt="${d.name}" style="width:100%;height:auto;display:block;" loading="eager"></div></div>`;
+    document.querySelector('.lv-sec').before(imgSection);
+  }
+
   /* ── Journey ── */
   document.getElementById('lv-journey').innerHTML = d.journey.map((ph, i) => `
     <div class="lv-phase" data-r="${i}">
@@ -299,7 +311,7 @@
   /* ── Projects ── */
   document.getElementById('lv-projects').innerHTML = d.projects.map(p => `
     <div class="lv-proj" data-r>
-      <div class="lv-proj-vis">${p.icon}</div>
+      <div class="lv-proj-vis${p.img ? ' has-img' : ''}">${p.img ? `<img src="${p.img}" alt="${p.title}" loading="lazy">` : p.icon}</div>
       <div class="lv-proj-body">
         <span class="lv-proj-tag">${p.tag}</span>
         <div class="lv-proj-title">${p.title}</div>
