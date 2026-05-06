@@ -11,6 +11,16 @@ if(CUR){
   });
 }
 
+/* SCROLL PROGRESS BAR */
+(function(){
+  const bar=document.createElement('div');
+  bar.id='scroll-progress';
+  document.body.prepend(bar);
+  window.addEventListener('scroll',()=>{
+    bar.style.transform='scaleX('+(scrollY/(document.body.scrollHeight-innerHeight)).toFixed(4)+')';
+  },{passive:true});
+})();
+
 /* ════════════════════════════════════════
    NEURAL NETWORK + PROTON TRAIL
    Canvas 2D — works on every browser
@@ -140,6 +150,50 @@ const obs=new IntersectionObserver(entries=>{
   entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('vis'),i*65);});
 },{threshold:.1});
 document.querySelectorAll('[data-r]').forEach(el=>obs.observe(el));
+
+/* STAGGER DELAYS for cc-level.html journey + project grids */
+document.querySelectorAll('.lv-projects>*,.lv-journey>*').forEach((el,i)=>{
+  el.style.transitionDelay=(i*.08)+'s';
+});
+
+/* IMAGE REVEAL — fade in on load */
+(function(){
+  document.querySelectorAll('.cc-img img,.lv-proj-vis img,.pc-img img,.bc-img img').forEach(img=>{
+    img.classList.add('img-reveal');
+    const show=()=>requestAnimationFrame(()=>img.classList.add('vis'));
+    if(img.complete&&img.naturalWidth)show();
+    else{img.addEventListener('load',show,{once:true});img.addEventListener('error',show,{once:true});}
+  });
+})();
+
+/* DATA-STAGGER — cascade grid children into view */
+(function(){
+  const sObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        [...e.target.children].forEach((c,i)=>{
+          c.setAttribute('data-stagger-item','');
+          setTimeout(()=>c.classList.add('in'),i*80);
+        });
+        sObs.unobserve(e.target);
+      }
+    });
+  },{threshold:.08});
+  document.querySelectorAll('[data-stagger]').forEach(el=>sObs.observe(el));
+})();
+
+/* MAGNETIC BUTTONS */
+(function(){
+  document.querySelectorAll('.btn-g,.cc-btn,.lv-cta-btn,.lv-next-btn').forEach(btn=>{
+    btn.addEventListener('mousemove',e=>{
+      const r=btn.getBoundingClientRect();
+      const x=(e.clientX-r.left-r.width/2)*.13;
+      const y=(e.clientY-r.top-r.height/2)*.18;
+      btn.style.transform=`translate(${x}px,${y}px) translateY(-2px)`;
+    });
+    btn.addEventListener('mouseleave',()=>{btn.style.transform='';});
+  });
+})();
 
 /* NAV */
 const _nav=document.getElementById('nav');
