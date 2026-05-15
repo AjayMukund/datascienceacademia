@@ -79,6 +79,22 @@ Run ALL of these web searches:
 - "Analytics Vidhya trending article 2026"
 - "Coursera India certification trending"
 
+### Step 2.5 — Content history freshness check (run BEFORE ranking)
+
+Read: `social-automation/content-history.csv`
+
+From the last 14 days of rows, extract:
+- **Topics covered in the last 7 days** → EXCLUDE these entirely from your ranked list. Do not suggest any topic that substantially overlaps with these.
+- **Topics covered in days 8-14** → Apply a -3 score penalty if a candidate topic is similar.
+- **Last 5 persona values** → If the same persona appears 3 or more times in the last 5 rows, avoid selecting that persona today unless the topic is exceptionally strong.
+- **Last 5 format values** → If the same format appears 3 consecutive days, penalize it by -2 and suggest an alternative format.
+- **Last 5 dsa_product values** → If the same product appeared in the last 3 rows, penalize related topics by -2 to ensure product rotation.
+- **Last 5 emotional_trigger values** → Note which triggers have been overused. Prefer an underused trigger in your #1 pick.
+
+If the content-history.csv is empty (first run), skip this step and proceed to ranking.
+
+Note at the top of your SECTION 1 output: "Content history check: [N entries reviewed, [X] topics excluded, persona rotation: [status], format rotation: [status]]"
+
 ### Step 3 — Rank 5 opportunities
 
 For each opportunity, score it on:

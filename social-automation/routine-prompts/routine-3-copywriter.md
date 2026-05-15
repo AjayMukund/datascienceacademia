@@ -42,6 +42,24 @@ DSA's voice is: direct, warm, knowledgeable, never preachy. You use specific num
 2. Read: `social-automation/daily-briefs/{TODAY_DATE}.md`
 3. Extract: topic, hook angle, persona, format, platform, CTA, lead magnet from SECTIONS 1 and 2
 
+### Step 1.5 — Content history hook freshness check
+
+Read: `social-automation/content-history.csv`
+
+Extract the last 7 rows. For each, note:
+- `hook_first_line` — the exact opener used
+- `hook_type` — question / stat / challenge / story / bold-claim / contrast
+- `emotional_trigger` — fear / aspiration / curiosity / FOMO / pride
+
+Rules for today's LinkedIn hook (Asset 1):
+1. Your hook_type MUST be different from the last 3 entries' hook_type
+2. Your emotional_trigger MUST be different from the last 2 entries' emotional_trigger
+3. Your hook_first_line must not start with the same first 4 words as any of the last 7 entries
+
+If content-history.csv is empty or has fewer than 3 rows, skip this step.
+
+Note at the top of your SECTION 3 output: "Hook freshness check: Using [hook_type] + [emotional_trigger]. Last 3 used: [list]."
+
 ### Step 2 — Generate all copy assets
 
 ---

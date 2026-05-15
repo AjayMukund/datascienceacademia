@@ -121,6 +121,37 @@ Using what you learned from benchmark searches and competitor scans.
 **E. Competitor gap opportunity**
 One specific topic that competitors haven't covered well that DSA could own this week.
 
+### Step 8.5 — Append to content history
+
+This step is critical. It feeds tomorrow's Routine 1 and Routine 3.
+
+Read `social-automation/content-history.csv` and append ONE new row for today.
+
+Gather the values from today's brief:
+- **date**: TODAY_DATE
+- **day_of_week**: DAY_NAME
+- **topic**: The specific topic from SECTION 1 (5-10 words, specific)
+- **topic_category**: career / tutorial / research / testimonial / AI-news / promotion / community
+- **hook_first_line**: The exact first line of Asset 1 (LinkedIn Post Copy) from SECTION 3
+- **hook_type**: Classify it: question / stat / challenge / story / bold-claim / contrast
+- **emotional_trigger**: fear / aspiration / curiosity / FOMO / pride
+- **platform**: From SECTION 2
+- **format**: From SECTION 2
+- **persona**: A / B / C / D — from SECTION 2
+- **dsa_product**: From SECTION 1 deep-dive — which offering was connected
+- **lead_magnet**: AI-Roadmap / Interview-Prep-Kit / Azure-Guide / Research-Template / Webinar / None
+- **cta_keyword**: The DM trigger word from SECTION 3 (e.g., ROADMAP). "None" if absent.
+- **quality_score**: Your audit score from Step 7 (e.g., 38)
+- **notes**: One sentence — the single most actionable insight from today's analysis
+
+Append the row using Bash:
+```bash
+echo '{TODAY_DATE},{DAY_NAME},"{topic}",{topic_category},"{hook_first_line}",{hook_type},{emotional_trigger},{platform},{format},{persona},{dsa_product},{lead_magnet},{cta_keyword},{quality_score},"{notes}"' >> social-automation/content-history.csv
+```
+
+If the hook_first_line or notes contain commas, wrap the entire field in double quotes.
+Include this file in the git commit in Step 9 (commit message: "Routine 5: Intelligence report + content history for {TODAY_DATE}").
+
 ---
 
 ## OUTPUT INSTRUCTIONS
