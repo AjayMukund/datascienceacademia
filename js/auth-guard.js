@@ -14,13 +14,22 @@
     return;
   }
 
-  const { data: profile } = await supa
-    .from('profiles')
-    .select('role, name')
-    .eq('id', session.user.id)
-    .single();
+  // Retry once after 400 ms in case of a transient DB hiccup
+  let profile = null;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const { data } = await supa
+      .from('profiles')
+      .select('role, name')
+      .eq('id', session.user.id)
+      .single();
+    if (data) { profile = data; break; }
+    if (attempt === 0) await new Promise(r => setTimeout(r, 400));
+  }
 
   if (!profile) {
+    // Sign out first so login.html doesn't see a valid session and
+    // bounce the user straight back here — that's what causes the flicker loop.
+    await supa.auth.signOut();
     window.location.href = root + 'login.html';
     return;
   }
