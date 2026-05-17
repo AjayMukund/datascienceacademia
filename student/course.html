@@ -47,7 +47,7 @@
 <script src="../script.js"></script>
 <script>
 const courseId = new URLSearchParams(location.search).get('id');
-const LT = {video:{icon:'🎬',cls:'lt-video'},pdf:{icon:'📄',cls:'lt-pdf'},quiz:{icon:'📝',cls:'lt-quiz'},live:{icon:'🔴',cls:'lt-live'}};
+const LT = {video:{icon:'🎬',cls:'lt-video'},pdf:{icon:'📄',cls:'lt-pdf'},quiz:{icon:'📝',cls:'lt-quiz'},live:{icon:'🔴',cls:'lt-live'},text:{icon:'📖',cls:'lt-text'}};
 
 document.addEventListener('portal:ready', async()=>{
   const [{data:enr},{data:course},{data:progress}] = await Promise.all([
