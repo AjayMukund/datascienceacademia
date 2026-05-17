@@ -36,37 +36,47 @@
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;max-width:780px;">
 
-    <!-- Update Name + Avatar -->
+    <!-- Personal Details -->
     <div class="editor-card">
       <div class="editor-card-title">Personal Details</div>
-      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
 
-        <!-- Clickable avatar -->
-        <div style="position:relative;flex-shrink:0;" title="Click to upload photo">
+      <!-- Avatar -->
+      <div style="display:flex;align-items:center;gap:1.25rem;margin-bottom:1.5rem;">
+        <div style="position:relative;flex-shrink:0;">
           <div id="profile-avatar" class="sidebar-avatar portal-avatar"
-               style="width:64px;height:64px;font-size:1.6rem;cursor:pointer;background-size:cover;background-position:center;overflow:hidden;"
-               onclick="document.getElementById('avatar-input').click()">A</div>
+               style="width:72px;height:72px;font-size:1.8rem;cursor:pointer;background-size:cover;background-position:center;"
+               onclick="document.getElementById('avatar-input').click()"
+               title="Click to change photo">A</div>
+          <!-- camera overlay -->
           <div id="avatar-overlay"
-               style="position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none;font-size:.95rem;">
-            📷
+               style="position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;opacity:0;transition:opacity .2s;pointer-events:none;">
+            <span style="font-size:.9rem;">📷</span>
+            <span style="font-family:var(--fb);font-size:.5rem;color:#fff;letter-spacing:.03em;">CHANGE</span>
           </div>
-          <div id="avatar-spinner"
-               style="display:none;position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.6);align-items:center;justify-content:center;font-family:var(--fb);font-size:.55rem;color:var(--fog2);">
-            uploading…
-          </div>
+          <!-- pending dot -->
+          <div id="avatar-pending"
+               style="display:none;position:absolute;bottom:2px;right:2px;width:12px;height:12px;border-radius:50%;background:var(--champ);border:2px solid var(--ink);"
+               title="Unsaved photo — click Save Changes"></div>
         </div>
-        <input type="file" id="avatar-input" accept="image/png,image/jpeg,image/webp,image/gif" style="display:none;" onchange="handleAvatarUpload(this)">
+        <input type="file" id="avatar-input" accept="image/png,image/jpeg,image/webp,image/gif" style="display:none;" onchange="pickAvatar(this)">
 
         <div>
-          <div class="sidebar-user-name portal-username" style="font-size:1rem;">…</div>
-          <div style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);margin-top:2px;" id="profile-email">…</div>
-          <div style="font-family:var(--fb);font-size:.7rem;color:var(--fog2);margin-top:4px;">Click photo to change</div>
+          <div class="portal-username" style="font-family:var(--fb);font-size:.95rem;font-weight:600;color:var(--cream);">…</div>
+          <div style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);margin-top:3px;" id="profile-email">…</div>
+          <div style="font-family:var(--fb);font-size:.68rem;color:var(--fog2);margin-top:6px;">Click photo to choose a new one</div>
         </div>
       </div>
 
-      <div class="field-group"><label class="flbl">Full Name</label><input type="text" class="fi" id="p-name" placeholder="Your name"></div>
-      <div id="name-msg" class="auth-success"></div>
-      <button class="portal-btn" style="font-size:.78rem;padding:10px 20px;" onclick="saveName()">Update Name</button>
+      <div class="field-group">
+        <label class="flbl">Full Name</label>
+        <input type="text" class="fi" id="p-name" placeholder="Your name">
+      </div>
+
+      <div id="profile-msg" style="display:none;font-family:var(--fb);font-size:.8rem;margin-bottom:.75rem;"></div>
+
+      <button class="portal-btn" id="save-btn" style="font-size:.78rem;padding:10px 22px;" onclick="saveProfile()">
+        Save Changes
+      </button>
     </div>
 
     <!-- Change Password -->
@@ -74,15 +84,16 @@
       <div class="editor-card-title">Change Password</div>
       <div class="field-group"><label class="flbl">New Password</label><input type="password" class="fi" id="p-pass" placeholder="Min. 8 characters" minlength="8"></div>
       <div class="field-group"><label class="flbl">Confirm Password</label><input type="password" class="fi" id="p-conf" placeholder="Re-enter password"></div>
-      <div id="pass-msg" class="auth-error"></div>
-      <div id="pass-ok" class="auth-success"></div>
-      <button class="portal-btn" style="font-size:.78rem;padding:10px 20px;" onclick="savePassword()">Update Password</button>
+      <div id="pass-msg" class="auth-error" style="display:none;"></div>
+      <div id="pass-ok"  class="auth-success" style="display:none;"></div>
+      <button class="portal-btn" id="pass-btn" style="font-size:.78rem;padding:10px 22px;" onclick="savePassword()">Update Password</button>
     </div>
 
   </div>
 </main>
 </div>
 
+<div id="toast"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabase-client.js"></script>
 <script src="../js/auth-guard.js"></script>
@@ -91,16 +102,22 @@
 <script>
 function toast(m,t='success'){const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;document.body.appendChild(el);setTimeout(()=>el.remove(),3500);}
 
-document.addEventListener('portal:ready',()=>{
-  document.getElementById('p-name').value = window._profile.name;
+let pendingFile = null; // file staged for upload but not yet saved
+
+/* ── Init ──────────────────────────────────────────────────────────────── */
+document.addEventListener('portal:ready', () => {
+  document.getElementById('p-name').value           = window._profile.name;
   document.getElementById('profile-email').textContent = window._user.email;
-  setAvatar(window._profile.avatar_url, window._profile.name);
+  applyAvatar(window._profile.avatar_url, window._profile.name);
 });
 
-function setAvatar(url, name){
+/* ── Avatar helpers ────────────────────────────────────────────────────── */
+function applyAvatar(url, name){
   const el = document.getElementById('profile-avatar');
   if(url){
-    el.style.backgroundImage = `url(${url})`;
+    el.style.backgroundImage    = `url('${url}')`;
+    el.style.backgroundSize     = 'cover';
+    el.style.backgroundPosition = 'center';
     el.textContent = '';
   } else {
     el.style.backgroundImage = '';
@@ -108,84 +125,125 @@ function setAvatar(url, name){
   }
 }
 
+function applyAvatarEverywhere(url, name){
+  document.querySelectorAll('.portal-avatar').forEach(el => {
+    if(url){
+      el.style.backgroundImage    = `url('${url}')`;
+      el.style.backgroundSize     = 'cover';
+      el.style.backgroundPosition = 'center';
+      el.textContent = '';
+    } else {
+      el.style.backgroundImage = '';
+      el.textContent = (name||'?').charAt(0).toUpperCase();
+    }
+  });
+}
+
 // Hover overlay
 (function(){
-  const wrap = document.getElementById('profile-avatar').parentElement;
+  const av      = document.getElementById('profile-avatar');
   const overlay = document.getElementById('avatar-overlay');
-  wrap.addEventListener('mouseenter', ()=> overlay.style.opacity = '1');
-  wrap.addEventListener('mouseleave', ()=> overlay.style.opacity = '0');
+  av.addEventListener('mouseenter', () => overlay.style.opacity = '1');
+  av.addEventListener('mouseleave', () => overlay.style.opacity = '0');
 })();
 
-async function handleAvatarUpload(input){
+/* ── Pick avatar (local preview only — not uploaded yet) ───────────────── */
+function pickAvatar(input){
   const file = input.files[0];
   if(!file) return;
   if(file.size > 3 * 1024 * 1024){
-    toast('Image must be under 3 MB', 'error'); input.value=''; return;
+    toast('Image must be under 3 MB','error');
+    input.value = '';
+    return;
   }
+  pendingFile = file;
+  // Show local preview immediately
+  const localUrl = URL.createObjectURL(file);
+  applyAvatar(localUrl, window._profile.name);
+  // Show pending dot to signal unsaved state
+  document.getElementById('avatar-pending').style.display = 'block';
+  input.value = '';
+}
 
-  const spinner  = document.getElementById('avatar-spinner');
-  const overlay  = document.getElementById('avatar-overlay');
-  spinner.style.display  = 'flex';
-  overlay.style.opacity  = '0';
+/* ── Save Changes (name + optional avatar upload) ──────────────────────── */
+async function saveProfile(){
+  const btn  = document.getElementById('save-btn');
+  const msg  = document.getElementById('profile-msg');
+  const name = document.getElementById('p-name').value.trim();
+
+  msg.style.display = 'none';
+  if(!name){ showMsg(msg,'Name cannot be empty','error'); return; }
+
+  btn.disabled = true; btn.textContent = 'Saving…';
 
   try {
-    const ext  = file.name.split('.').pop().toLowerCase() || 'jpg';
-    const path = `${window._user.id}/avatar.${ext}`;
+    let avatarUrl = window._profile.avatar_url;
 
-    const { error: upErr } = await supa.storage.from('avatars').upload(path, file, {
-      upsert: true, contentType: file.type
-    });
-    if(upErr) throw upErr;
+    // Upload avatar if a new file was staged
+    if(pendingFile){
+      const ext  = pendingFile.name.split('.').pop().toLowerCase() || 'jpg';
+      const path = `${window._user.id}/avatar.${ext}`;
 
-    const { data: { publicUrl } } = supa.storage.from('avatars').getPublicUrl(path);
+      const { error: upErr } = await supa.storage.from('avatars').upload(path, pendingFile, {
+        upsert: true, contentType: pendingFile.type
+      });
+      if(upErr) throw upErr;
 
-    const { error: dbErr } = await supa.from('profiles')
-      .update({ avatar_url: publicUrl })
-      .eq('id', window._user.id);
+      ({ data: { publicUrl: avatarUrl } } = supa.storage.from('avatars').getPublicUrl(path));
+      pendingFile = null;
+      document.getElementById('avatar-pending').style.display = 'none';
+    }
+
+    // Update profiles row
+    const updates = { name, avatar_url: avatarUrl };
+    const { error: dbErr } = await supa.from('profiles').update(updates).eq('id', window._user.id);
     if(dbErr) throw dbErr;
 
-    // Update every avatar on the page
-    setAvatar(publicUrl, window._profile.name);
-    document.querySelectorAll('.portal-avatar').forEach(el => {
-      el.style.backgroundImage = `url(${publicUrl})`;
-      el.style.backgroundSize  = 'cover';
-      el.style.backgroundPosition = 'center';
-      el.textContent = '';
-    });
+    // Commit to local state and refresh every avatar + username on the page
+    window._profile.name       = name;
+    window._profile.avatar_url = avatarUrl;
 
-    window._profile.avatar_url = publicUrl;
-    toast('Profile photo updated ✅');
+    applyAvatarEverywhere(avatarUrl, name);
+    document.querySelectorAll('.portal-username').forEach(el => el.textContent = name);
+
+    showMsg(msg, 'Changes saved successfully.', 'ok');
+    toast('Profile updated ✅');
+
   } catch(err){
-    toast(err.message || 'Upload failed', 'error');
-  } finally {
-    spinner.style.display = 'none';
-    input.value = '';
+    showMsg(msg, err.message || 'Save failed', 'error');
+    toast(err.message || 'Save failed', 'error');
   }
+
+  btn.disabled = false; btn.textContent = 'Save Changes';
 }
 
-async function saveName(){
-  const name=document.getElementById('p-name').value.trim();
-  const msg=document.getElementById('name-msg');
-  msg.style.display='none';
-  if(!name)return;
-  const {error}=await supa.from('profiles').update({name}).eq('id',window._user.id);
-  if(error){msg.className='auth-error';msg.textContent=error.message;}
-  else{msg.className='auth-success';msg.textContent='Name updated successfully.';}
-  msg.style.display='block';
-  document.querySelectorAll('.portal-username').forEach(el=>el.textContent=name);
-}
-
+/* ── Update password ───────────────────────────────────────────────────── */
 async function savePassword(){
-  const pass=document.getElementById('p-pass').value;
-  const conf=document.getElementById('p-conf').value;
-  const err=document.getElementById('pass-msg');
-  const ok=document.getElementById('pass-ok');
-  err.style.display='none';ok.style.display='none';
-  if(pass!==conf){err.textContent='Passwords do not match.';err.style.display='block';return;}
-  if(pass.length<8){err.textContent='Password must be at least 8 characters.';err.style.display='block';return;}
-  const {error}=await supa.auth.updateUser({password:pass});
-  if(error){err.textContent=error.message;err.style.display='block';}
-  else{ok.textContent='Password updated successfully.';ok.style.display='block';document.getElementById('p-pass').value='';document.getElementById('p-conf').value='';}
+  const pass = document.getElementById('p-pass').value;
+  const conf = document.getElementById('p-conf').value;
+  const err  = document.getElementById('pass-msg');
+  const ok   = document.getElementById('pass-ok');
+  const btn  = document.getElementById('pass-btn');
+  err.style.display = 'none'; ok.style.display = 'none';
+
+  if(pass !== conf){ showMsg(err,'Passwords do not match.','error'); return; }
+  if(pass.length < 8){ showMsg(err,'Password must be at least 8 characters.','error'); return; }
+
+  btn.disabled = true; btn.textContent = 'Updating…';
+  const { error } = await supa.auth.updateUser({ password: pass });
+  if(error){ showMsg(err, error.message, 'error'); }
+  else {
+    showMsg(ok,'Password updated successfully.','ok');
+    document.getElementById('p-pass').value = '';
+    document.getElementById('p-conf').value = '';
+  }
+  btn.disabled = false; btn.textContent = 'Update Password';
+}
+
+function showMsg(el, text, type){
+  el.textContent   = text;
+  el.style.color   = type === 'ok' ? 'var(--teal)' : '#f66';
+  el.style.display = 'block';
 }
 </script>
 </body></html>

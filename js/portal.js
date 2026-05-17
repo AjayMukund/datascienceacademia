@@ -21,8 +21,15 @@ document.addEventListener('portal:ready', async function () {
   document.querySelectorAll('.portal-role').forEach(el => el.textContent =
     p.role === 'admin' ? 'Administrator' : 'Student');
   document.querySelectorAll('.portal-avatar').forEach(el => {
-    if (p.avatar_url) el.src = p.avatar_url;
-    else el.textContent = p.name.charAt(0).toUpperCase();
+    if (p.avatar_url) {
+      el.style.backgroundImage    = `url('${p.avatar_url}')`;
+      el.style.backgroundSize     = 'cover';
+      el.style.backgroundPosition = 'center';
+      el.textContent = '';
+    } else {
+      el.style.backgroundImage = '';
+      el.textContent = p.name.charAt(0).toUpperCase();
+    }
   });
 
   document.querySelectorAll('.portal-logout').forEach(btn => {
