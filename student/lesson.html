@@ -6,74 +6,263 @@
 <link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="../portal.css">
+<style>
+/* ── Full-screen lesson layout (overrides portal-body grid) ── */
+html, body { height: 100%; overflow: hidden; }
+.lesson-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--ink);
+  overflow: hidden;
+}
+
+/* ── Topbar ── */
+.lesson-topbar {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: 0 1.1rem;
+  height: 52px;
+  flex-shrink: 0;
+  background: var(--glass2);
+  border-bottom: 1px solid var(--border);
+  z-index: 50;
+}
+.lesson-back {
+  font-family: var(--fb); font-size: .72rem; color: var(--fog2);
+  text-decoration: none; white-space: nowrap; flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: .3rem;
+  transition: color .2s;
+}
+.lesson-back:hover { color: var(--champ2); }
+.lesson-topbar-divider { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; }
+.lesson-topbar-center {
+  flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center;
+}
+.lesson-topbar-title {
+  font-family: var(--fb); font-size: .82rem; font-weight: 600; color: var(--cream);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.lesson-topbar-meta { font-family: var(--fb); font-size: .68rem; color: var(--fog2); }
+.lesson-topbar-actions { display: flex; gap: .4rem; align-items: center; flex-shrink: 0; }
+.lesson-topbar-actions .portal-btn,
+.lesson-topbar-actions .portal-btn-ghost { font-size: .72rem; padding: 5px 12px; }
+.lesson-topbar-user {
+  display: flex; align-items: center; gap: .5rem; flex-shrink: 0;
+  padding-left: .5rem; border-left: 1px solid var(--border);
+}
+.lesson-topbar-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--champ); color: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--fb); font-size: .75rem; font-weight: 700;
+}
+.lesson-signout {
+  font-family: var(--fb); font-size: .7rem; color: var(--fog2);
+  background: none; border: none; cursor: pointer; padding: 0;
+  transition: color .2s;
+}
+.lesson-signout:hover { color: #f66; }
+
+/* ── Main area ── */
+.lesson-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Course nav panel (left) ── */
+.lesson-nav {
+  width: 288px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  background: rgba(11,12,14,.6);
+  transition: width .25s ease, opacity .2s ease;
+  overflow: hidden;
+}
+.lesson-nav.collapsed { width: 0; opacity: 0; pointer-events: none; }
+
+.lesson-nav-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .7rem 1rem;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.lesson-nav-header span {
+  font-family: var(--fb); font-size: .72rem; font-weight: 600;
+  color: var(--fog2); text-transform: uppercase; letter-spacing: .05em;
+}
+.lesson-nav-toggle {
+  background: none; border: 1px solid var(--border); border-radius: 5px;
+  color: var(--fog2); font-size: .65rem; padding: 3px 7px; cursor: pointer;
+  transition: all .2s; line-height: 1;
+}
+.lesson-nav-toggle:hover { border-color: var(--fog2); color: var(--cream); }
+
+.lesson-nav-list { flex: 1; overflow-y: auto; }
+.lesson-nav-list::-webkit-scrollbar { width: 4px; }
+.lesson-nav-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* Accordion modules */
+.lsb-module { border-bottom: 1px solid var(--border); }
+.lsb-module-hd {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .72rem 1rem; cursor: pointer;
+  font-family: var(--fb); font-size: .75rem; font-weight: 600; color: var(--fog2);
+  background: rgba(255,255,255,.015);
+  user-select: none; transition: background .15s, color .15s;
+}
+.lsb-module-hd:hover { background: rgba(255,255,255,.04); color: var(--cream); }
+.lsb-module.open .lsb-module-hd { color: var(--cream); }
+.lsb-chevron {
+  margin-left: auto; font-size: .65rem; color: var(--fog2);
+  transition: transform .2s; display: inline-block;
+}
+.lsb-module.open .lsb-chevron { transform: rotate(90deg); }
+.lsb-module-body { display: none; }
+.lsb-module.open .lsb-module-body { display: block; }
+
+.lsb-lesson {
+  display: flex; align-items: center; gap: .65rem;
+  padding: .52rem 1rem .52rem 1.4rem;
+  text-decoration: none;
+  font-family: var(--fb); font-size: .77rem; color: var(--fog2);
+  border-left: 2px solid transparent;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.lsb-lesson:hover { background: rgba(255,255,255,.03); color: var(--cream); }
+.lsb-lesson.active {
+  background: rgba(62,207,178,.07);
+  border-left-color: var(--teal);
+  color: var(--cream);
+}
+.lsb-lesson.done { color: var(--fog2); }
+.lsb-lesson-title { flex: 1; line-height: 1.35; }
+.lt-icon { font-size: .7rem; flex-shrink: 0; width: 20px; text-align: center; }
+
+/* ── Show-panel tab (appears when nav is collapsed) ── */
+.lesson-nav-show {
+  position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  z-index: 40;
+  background: var(--glass2); border: 1px solid var(--border);
+  border-left: none; border-radius: 0 6px 6px 0;
+  padding: .75rem .35rem; cursor: pointer;
+  color: var(--fog2); font-size: .65rem;
+  display: none; flex-direction: column; align-items: center; gap: .3rem;
+  transition: color .2s;
+  writing-mode: initial;
+}
+.lesson-nav-show:hover { color: var(--cream); }
+.lesson-main.nav-open .lesson-nav-show { display: none; }
+.lesson-main.nav-closed .lesson-nav-show { display: flex; }
+
+/* ── Content area ── */
+.lesson-content-area {
+  flex: 1; overflow-y: auto; display: flex; flex-direction: column;
+}
+.lesson-content-area::-webkit-scrollbar { width: 5px; }
+.lesson-content-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.lesson-player-embed {
+  flex: 1;
+  min-height: 480px;
+  background: #000;
+  position: relative;
+}
+.lesson-player-embed.text-mode {
+  background: transparent;
+  min-height: auto;
+  flex: none;
+}
+
+/* ── Comments ── */
+.lesson-comments {
+  max-width: 820px; margin: 2rem auto; padding: 0 1.5rem 3rem; width: 100%;
+}
+.lesson-comments-title {
+  font-family: var(--fd); font-size: 1rem; font-weight: 600;
+  color: var(--cream); margin-bottom: 1.25rem;
+  padding-bottom: .75rem; border-bottom: 1px solid var(--border);
+}
+
+/* ── Responsive ── */
+@media (max-width: 680px) {
+  .lesson-nav { width: 100%; position: absolute; z-index: 30; height: 100%; }
+  .lesson-nav.collapsed { width: 0; }
+  .lesson-topbar-title { font-size: .75rem; }
+  .lesson-topbar-meta { display: none; }
+}
+</style>
 </head>
 <body>
 <div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
-<div class="portal-body">
 
-<aside class="portal-sidebar" id="sidebar">
-  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Student Portal</div></a></div>
-  <nav class="portal-nav">
-    <div class="portal-nav-section">My Learning</div>
-    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
-    <a href="courses.html" class="active"><span class="nav-icon">📚</span> My Courses</a>
-    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
-    <div class="portal-nav-section">Account</div>
-    <a href="notifications.html"><span class="nav-icon">🔔</span> Notifications <span class="notif-badge" style="margin-left:auto;"></span></a>
-    <a href="profile.html"><span class="nav-icon">👤</span> Profile</a>
-  </nav>
-  <div class="sidebar-user">
-    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Student</div></div></div>
-    <button class="portal-logout">→ Sign Out</button>
-  </div>
-</aside>
+<div class="lesson-page">
 
-<main class="portal-main" style="padding-bottom:2rem;">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem;">
-    <a id="back-link" href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Course</a>
-    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
-  </div>
+  <!-- Topbar -->
+  <header class="lesson-topbar">
+    <a id="back-link" href="courses.html" class="lesson-back">← Back to Course</a>
+    <div class="lesson-topbar-divider"></div>
+    <div class="lesson-topbar-center">
+      <div class="lesson-topbar-title" id="lesson-title">Loading…</div>
+      <div class="lesson-topbar-meta" id="lesson-meta"></div>
+    </div>
+    <div class="lesson-topbar-actions">
+      <button class="portal-btn-ghost" id="prev-btn" disabled>← Prev</button>
+      <button class="portal-btn" id="done-btn" onclick="markDone()">✓ Mark Complete</button>
+      <button class="portal-btn-ghost" id="next-btn" disabled>Next →</button>
+    </div>
+    <div class="lesson-topbar-user">
+      <div class="lesson-topbar-avatar portal-avatar">A</div>
+      <button class="lesson-signout portal-logout">Sign out</button>
+    </div>
+  </header>
 
-  <div class="lesson-layout">
-    <!-- Player -->
-    <div class="lesson-player">
+  <!-- Main: nav panel + content -->
+  <div class="lesson-main nav-open" id="lesson-main">
+
+    <!-- Course content accordion panel -->
+    <div class="lesson-nav" id="lesson-nav">
+      <div class="lesson-nav-header">
+        <span>Course Content</span>
+        <button class="lesson-nav-toggle" onclick="toggleNav()" title="Hide panel">◀ Hide</button>
+      </div>
+      <div class="lesson-nav-list" id="lesson-list">
+        <div style="padding:1.5rem 1rem;color:var(--fog2);font-family:var(--fb);font-size:.82rem;">Loading…</div>
+      </div>
+    </div>
+
+    <!-- Show-panel tab (visible when collapsed) -->
+    <button class="lesson-nav-show" id="nav-show-btn" onclick="toggleNav()" title="Show course content">
+      ▶ <span style="writing-mode:vertical-rl;font-family:var(--fb);font-size:.65rem;letter-spacing:.06em;">Contents</span>
+    </button>
+
+    <!-- Lesson content -->
+    <div class="lesson-content-area" id="lesson-content-area">
       <div class="lesson-player-embed" id="player-embed">
         <div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--fog2);font-family:var(--fb);">Loading…</div>
       </div>
-      <div class="lesson-player-footer">
-        <div>
-          <div class="lesson-player-title" id="lesson-title">Loading…</div>
-          <div style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);margin-top:.2rem;" id="lesson-meta"></div>
-        </div>
-        <div style="display:flex;gap:.75rem;align-items:center;">
-          <button class="portal-btn-ghost" id="prev-btn" style="font-size:.75rem;padding:8px 16px;" disabled>← Prev</button>
-          <button class="portal-btn" id="done-btn" style="font-size:.75rem;padding:8px 20px;" onclick="markDone()">✓ Mark Complete</button>
-          <button class="portal-btn-ghost" id="next-btn" style="font-size:.75rem;padding:8px 16px;" disabled>Next →</button>
-        </div>
+
+      <!-- Discussion -->
+      <div class="lesson-comments" id="comments-section">
+        <div class="lesson-comments-title">Discussion</div>
+        <form id="comment-form" style="display:flex;gap:.75rem;margin-bottom:1.5rem;align-items:flex-start;">
+          <div class="lesson-topbar-avatar portal-avatar" id="comment-avatar" style="width:36px;height:36px;font-size:.9rem;flex-shrink:0;">?</div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:.5rem;">
+            <textarea class="fi" id="comment-input" placeholder="Ask a question or share your thoughts…" rows="2" style="resize:vertical;min-height:60px;font-family:var(--fb);font-size:.88rem;"></textarea>
+            <button type="submit" class="portal-btn" style="align-self:flex-end;font-size:.8rem;padding:7px 18px;">Post Comment</button>
+          </div>
+        </form>
+        <div id="comment-list"></div>
       </div>
     </div>
 
-    <!-- Lesson sidebar -->
-    <div class="lesson-sidebar" id="lesson-sidebar">
-      <div class="lesson-sidebar-hd">Course Content</div>
-      <div id="lesson-list"><div style="padding:1.5rem;color:var(--fog2);font-family:var(--fb);font-size:.82rem;">Loading…</div></div>
-    </div>
-  </div>
-
-  <!-- Comments Section -->
-  <div class="comments-section" id="comments-section" style="max-width:860px;margin-top:2rem;">
-    <div class="comments-title">Discussion</div>
-    <form id="comment-form" style="display:flex;gap:.75rem;margin-bottom:1.5rem;align-items:flex-start;">
-      <div class="sidebar-avatar portal-avatar" id="comment-avatar" style="flex-shrink:0;width:36px;height:36px;font-size:.9rem;">?</div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:.5rem;">
-        <textarea class="fi" id="comment-input" placeholder="Ask a question or share your thoughts…" rows="2" style="resize:vertical;min-height:60px;font-family:var(--fb);font-size:.88rem;"></textarea>
-        <button type="submit" class="portal-btn" style="align-self:flex-end;font-size:.8rem;padding:7px 18px;">Post Comment</button>
-      </div>
-    </form>
-    <div id="comment-list"></div>
-  </div>
-</main>
-</div>
+  </div><!-- lesson-main -->
+</div><!-- lesson-page -->
 
 <div id="toast"></div>
 
@@ -93,6 +282,16 @@ let allLessons=[], currentIdx=0;
 
 function toast(m,t='success'){const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);}
 
+/* ── Nav panel toggle ──────────────────────────────────────────────────── */
+function toggleNav(){
+  const nav  = document.getElementById('lesson-nav');
+  const main = document.getElementById('lesson-main');
+  const open = nav.classList.toggle('collapsed');
+  main.classList.toggle('nav-open',  !open);
+  main.classList.toggle('nav-closed', open);
+}
+
+/* ── Embeds ────────────────────────────────────────────────────────────── */
 function ytEmbed(url){
   const m=url.match(/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_-]{11})/);
   return m?`https://www.youtube.com/embed/${m[1]}?rel=0&modestbranding=1`:null;
@@ -111,7 +310,7 @@ function buildEmbed(lesson){
   embed.classList.remove('text-mode');
   embed.style.background='#000';
   const url=lesson.content_url||'';
-  if(!url)return `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:1rem;color:var(--fog2);font-family:var(--fb);"><div style="font-size:2.5rem;">${LT[lesson.type]?.icon||'📄'}</div><div>No content URL provided for this lesson.</div></div>`;
+  if(!url)return `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:1rem;color:var(--fog2);font-family:var(--fb);"><div style="font-size:2.5rem;">${LT[lesson.type]?.icon||'📄'}</div><div>No content URL provided.</div></div>`;
   const yt=ytEmbed(url);
   if(yt)return `<iframe src="${yt}" allowfullscreen allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" style="width:100%;height:100%;border:none;"></iframe>`;
   const vm=vimeoEmbed(url);
@@ -121,7 +320,7 @@ function buildEmbed(lesson){
   return `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:1rem;color:var(--fog2);font-family:var(--fb);"><div style="font-size:2.5rem;">${LT[lesson.type]?.icon||'🔗'}</div><a href="${url}" target="_blank" class="portal-btn">Open Content →</a></div>`;
 }
 
-/* ── Text lesson renderer ─────────────────────────────────────────────── */
+/* ── Text lesson renderer ──────────────────────────────────────────────── */
 function buildTextLesson(key, lesson){
   const content = window.DSA_LESSON_CONTENT && window.DSA_LESSON_CONTENT[key];
   if(!content) return `<div class="tl-wrap"><p style="color:var(--fog2);">Content not found for key: <code>${key}</code></p></div>`;
@@ -175,6 +374,7 @@ function copyCode(id){
   });
 }
 
+/* ── portal:ready — load course & build accordion ─────────────────────── */
 document.addEventListener('portal:ready', async()=>{
   const [{data:course},{data:progress}] = await Promise.all([
     supa.from('courses').select('*,modules(*,lessons(*))').eq('id',courseId).single(),
@@ -187,18 +387,29 @@ document.addEventListener('portal:ready', async()=>{
   allLessons = mods.flatMap(m=>(m.lessons||[]).sort((a,b)=>a.order_index-b.order_index).map(l=>({...l,_module:m.title})));
   currentIdx = Math.max(0, allLessons.findIndex(l=>l.id===lessonId));
 
-  // Build sidebar
-  document.getElementById('lesson-list').innerHTML = mods.map(m=>`
-    <div class="lsb-module-title">${m.title}</div>
-    ${(m.lessons||[]).sort((a,b)=>a.order_index-b.order_index).map(l=>`
-      <a href="lesson.html?id=${l.id}&course=${courseId}" class="lsb-lesson ${l.id===lessonId?'active':''} ${done.has(l.id)?'done':''}">
-        <div class="lt-icon ${LT[l.type]?.cls||'lt-video'}" style="width:22px;height:22px;font-size:.65rem;">${done.has(l.id)?'✅':LT[l.type]?.icon||'🎬'}</div>
-        <span class="lsb-lesson-title">${l.title}</span>
-      </a>`).join('')}
-  `).join('');
+  // Build accordion — auto-expand the module that contains the active lesson
+  document.getElementById('lesson-list').innerHTML = mods.map(m => {
+    const hasActive = m.lessons.some(l => l.id === lessonId);
+    const doneCount = m.lessons.filter(l => done.has(l.id)).length;
+    return `
+      <div class="lsb-module ${hasActive ? 'open' : ''}">
+        <div class="lsb-module-hd" onclick="this.closest('.lsb-module').classList.toggle('open')">
+          <span style="flex:1;line-height:1.35;">${m.title}</span>
+          <span style="font-size:.68rem;color:var(--fog2);margin-right:.4rem;white-space:nowrap;">${doneCount}/${m.lessons.length}</span>
+          <span class="lsb-chevron">›</span>
+        </div>
+        <div class="lsb-module-body">
+          ${(m.lessons||[]).sort((a,b)=>a.order_index-b.order_index).map(l=>`
+            <a href="lesson.html?id=${l.id}&course=${courseId}"
+               class="lsb-lesson ${l.id===lessonId?'active':''} ${done.has(l.id)?'done':''}">
+              <div class="lt-icon ${LT[l.type]?.cls||'lt-video'}">${done.has(l.id)?'✅':LT[l.type]?.icon||'🎬'}</div>
+              <span class="lsb-lesson-title">${l.title}</span>
+            </a>`).join('')}
+        </div>
+      </div>`;
+  }).join('');
 
   loadLesson(currentIdx, done);
-  // Load quiz if applicable
   const cur = allLessons[currentIdx];
   if(cur?.type==='quiz') setTimeout(()=>loadQuiz(cur),50);
 });
@@ -209,13 +420,15 @@ function loadLesson(idx, done){
   document.getElementById('player-embed').innerHTML = buildEmbed(l);
   document.getElementById('lesson-title').textContent = l.title;
   document.getElementById('lesson-meta').textContent = `${l._module}${l.duration_mins?' · '+l.duration_mins+' min':''}`;
+  // scroll content area to top
+  document.getElementById('lesson-content-area').scrollTop = 0;
   const doneBtn = document.getElementById('done-btn');
   if(done?.has(l.id)){doneBtn.textContent='✅ Completed';doneBtn.style.opacity='.6';doneBtn.disabled=true;}
   else{doneBtn.textContent='✓ Mark Complete';doneBtn.style.opacity='1';doneBtn.disabled=false;}
   document.getElementById('prev-btn').disabled = idx===0;
   document.getElementById('next-btn').disabled = idx===allLessons.length-1;
-  document.getElementById('next-btn').onclick = ()=>{ currentIdx=idx+1; location.href=`lesson.html?id=${allLessons[currentIdx].id}&course=${courseId}`; };
-  document.getElementById('prev-btn').onclick = ()=>{ currentIdx=idx-1; location.href=`lesson.html?id=${allLessons[currentIdx].id}&course=${courseId}`; };
+  document.getElementById('next-btn').onclick = ()=>{ location.href=`lesson.html?id=${allLessons[idx+1].id}&course=${courseId}`; };
+  document.getElementById('prev-btn').onclick = ()=>{ location.href=`lesson.html?id=${allLessons[idx-1].id}&course=${courseId}`; };
 }
 
 async function markDone(){
@@ -228,7 +441,6 @@ async function markDone(){
   const sideLink=document.querySelector(`.lsb-lesson[href="lesson.html?id=${l.id}&course=${courseId}"] .lt-icon`);
   if(sideLink)sideLink.textContent='✅';
 
-  // Check if ALL lessons now complete → issue certificate
   const {data:prog}=await supa.from('progress').select('lesson_id').eq('user_id',window._user.id);
   const doneNow=new Set(prog.map(p=>p.lesson_id));
   if(allLessons.every(ls=>doneNow.has(ls.id))){
@@ -237,20 +449,18 @@ async function markDone(){
     setTimeout(()=>{ location.href='certificates.html'; },2500);
     return;
   }
-
   if(currentIdx<allLessons.length-1){
     setTimeout(()=>{ location.href=`lesson.html?id=${allLessons[currentIdx+1].id}&course=${courseId}`; },1200);
   }
 }
 
-// Quiz loader — called when lesson type is 'quiz'
+/* ── Quiz ──────────────────────────────────────────────────────────────── */
 async function loadQuiz(lesson){
   const {data:questions}=await supa.from('quiz_questions').select('*').eq('lesson_id',lesson.id).order('order_index');
   if(!questions?.length){
-    document.getElementById('player-embed').innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:1rem;color:var(--fog2);font-family:var(--fb);"><div style="font-size:2.5rem;">📝</div><div>No questions added yet for this quiz.</div></div>`;
+    document.getElementById('player-embed').innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:320px;gap:1rem;color:var(--fog2);font-family:var(--fb);"><div style="font-size:2.5rem;">📝</div><div>No questions added yet for this quiz.</div></div>`;
     return;
   }
-  let score=0,answered=0;
   document.getElementById('player-embed').innerHTML=`
     <div style="padding:2rem;overflow-y:auto;height:100%;font-family:var(--fb);">
       <div style="font-family:var(--fd);font-size:1.3rem;font-weight:600;color:var(--cream);margin-bottom:1.5rem;">${lesson.title}</div>
@@ -268,16 +478,14 @@ async function loadQuiz(lesson){
         <div id="quiz-score" style="font-family:var(--fd);font-size:1.4rem;color:var(--teal);"></div>
       </div>
     </div>`;
-  window._quizTotal=questions.length;
-  window._quizScore=0;
-  window._quizAnswered=new Set();
+  window._quizTotal=questions.length;window._quizScore=0;window._quizAnswered=new Set();
 }
 
 function checkAns(qi,selected,correct,opts){
   const block=document.getElementById(`q-block-${qi}`);
   block.querySelectorAll('label').forEach((lbl,oi)=>{
-    lbl.style.borderColor = oi===correct?'rgba(62,207,178,.5)':oi===selected&&selected!==correct?'rgba(255,80,80,.4)':'var(--border)';
-    lbl.style.background  = oi===correct?'rgba(62,207,178,.07)':oi===selected&&selected!==correct?'rgba(255,80,80,.06)':'';
+    lbl.style.borderColor=oi===correct?'rgba(62,207,178,.5)':oi===selected&&selected!==correct?'rgba(255,80,80,.4)':'var(--border)';
+    lbl.style.background=oi===correct?'rgba(62,207,178,.07)':oi===selected&&selected!==correct?'rgba(255,80,80,.06)':'';
     lbl.querySelector('input').disabled=true;
   });
   if(!window._quizAnswered.has(qi)){
@@ -286,19 +494,14 @@ function checkAns(qi,selected,correct,opts){
     if(window._quizAnswered.size===window._quizTotal){
       const res=document.getElementById('quiz-result');
       document.getElementById('quiz-score').textContent=`You scored ${window._quizScore} / ${window._quizTotal}`;
-      res.style.display='block';
-      res.scrollIntoView({behavior:'smooth'});
+      res.style.display='block';res.scrollIntoView({behavior:'smooth'});
     }
   }
 }
 
-// ── Comments ────────────────────────────────────────────────────────────────
+/* ── Comments ──────────────────────────────────────────────────────────── */
 async function loadComments(){
-  const {data:comments}=await supa
-    .from('comments')
-    .select('*,profiles(name)')
-    .eq('lesson_id',lessonId)
-    .order('created_at',{ascending:true});
+  const {data:comments}=await supa.from('comments').select('*,profiles(name)').eq('lesson_id',lessonId).order('created_at',{ascending:true});
   const list=document.getElementById('comment-list');
   if(!comments||!comments.length){
     list.innerHTML='<div style="color:var(--fog2);font-family:var(--fb);font-size:.85rem;text-align:center;padding:1.5rem 0;">No comments yet. Be the first!</div>';
@@ -311,7 +514,7 @@ async function loadComments(){
         <div class="comment-meta">
           <span class="comment-name">${c.profiles?.name||'Unknown'}</span>
           <span class="comment-time">${timeAgoC(c.created_at)}</span>
-          ${c.user_id===window._user.id?`<button onclick="deleteComment('${c.id}',this)" style="background:none;border:none;color:var(--fog2);cursor:pointer;font-size:.75rem;margin-left:.25rem;padding:0;" title="Delete">✕</button>`:''}
+          ${c.user_id===window._user.id?`<button onclick="deleteComment('${c.id}',this)" style="background:none;border:none;color:var(--fog2);cursor:pointer;font-size:.75rem;margin-left:.25rem;padding:0;">✕</button>`:''}
         </div>
         <div class="comment-text">${c.body.replace(/\n/g,'<br>')}</div>
       </div>
@@ -321,11 +524,11 @@ async function loadComments(){
 document.getElementById('comment-form').addEventListener('submit',async e=>{
   e.preventDefault();
   const body=document.getElementById('comment-input').value.trim();
-  if(!body) return;
+  if(!body)return;
   const btn=e.target.querySelector('button[type=submit]');
-  btn.disabled=true; btn.textContent='Posting…';
+  btn.disabled=true;btn.textContent='Posting…';
   const {error}=await supa.from('comments').insert({lesson_id:lessonId,user_id:window._user.id,body});
-  btn.disabled=false; btn.textContent='Post Comment';
+  btn.disabled=false;btn.textContent='Post Comment';
   if(error){toast(error.message,'error');return;}
   document.getElementById('comment-input').value='';
   await loadComments();
@@ -340,18 +543,18 @@ async function deleteComment(id,btn){
 function timeAgoC(iso){
   const diff=Date.now()-new Date(iso).getTime();
   const m=Math.floor(diff/60000);
-  if(m<1) return 'just now';
-  if(m<60) return m+'m ago';
+  if(m<1)return 'just now';
+  if(m<60)return m+'m ago';
   const h=Math.floor(m/60);
-  if(h<24) return h+'h ago';
+  if(h<24)return h+'h ago';
   return new Date(iso).toLocaleDateString('en-IN');
 }
 
 document.addEventListener('portal:ready',()=>{
   const p=window._profile;
   const av=document.getElementById('comment-avatar');
-  if(av) av.textContent=p.name.charAt(0).toUpperCase();
-  if(lessonId) loadComments();
+  if(av)av.textContent=p.name.charAt(0).toUpperCase();
+  if(lessonId)loadComments();
 });
 </script>
 </body></html>
