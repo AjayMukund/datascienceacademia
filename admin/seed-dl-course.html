@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seed Deep Learning Course — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
+      <div class="portal-page-title">Seed Deep Learning Course</div>
+      <div class="portal-page-sub">8 weeks × 48 lessons (40 text + 8 quizzes) with 40 quiz questions</div>
+    </div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Status</div>
+    <div id="status-area" style="font-family:var(--fb);font-size:.85rem;color:var(--fog2);line-height:1.8;">Waiting to run…</div>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Target Course</div>
+    <p style="font-family:var(--fb);font-size:.83rem;color:var(--fog2);margin-bottom:1rem;">Select the Deep Learning course to seed into.</p>
+    <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field-group" style="margin-bottom:0;flex:1;min-width:220px;">
+        <label class="flbl">Course</label>
+        <select class="fi" id="course-sel"><option value="">Loading courses…</option></select>
+      </div>
+      <div>
+        <label class="flbl">Action</label>
+        <div style="display:flex;gap:.5rem;">
+          <button class="portal-btn-ghost" id="btn-preview" onclick="preview()" style="font-size:.82rem;">Preview plan</button>
+          <button class="portal-btn" id="btn-seed" onclick="runSeed()" disabled>Seed 48 lessons</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-wrap" id="preview-card" style="display:none;">
+    <div class="chart-title">Lesson Plan (48 lessons)</div>
+    <div id="preview-body" style="overflow-x:auto;"></div>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+const MODULES = [
+  { title: 'Week 1 — Neural Network Foundations', lessons: [
+    ['dl-w1-l1','The Biological Inspiration & Perceptron',45,'text'],
+    ['dl-w1-l2','Activation Functions',50,'text'],
+    ['dl-w1-l3','Backpropagation & Gradient Descent',55,'text'],
+    ['dl-w1-l4','Loss Functions & Optimisers',50,'text'],
+    ['dl-w1-l5','Your First Neural Network — MNIST Classifier',60,'text'],
+    ['dl-w1-quiz','Week 1 Quiz — Neural Network Foundations',15,'quiz'],
+  ]},
+  { title: 'Week 2 — Training Deep Networks', lessons: [
+    ['dl-w2-l1','Weight Initialisation & Batch Normalisation',50,'text'],
+    ['dl-w2-l2','Regularisation — Dropout, Weight Decay & Augmentation',50,'text'],
+    ['dl-w2-l3','The Training Loop — Production Patterns',50,'text'],
+    ['dl-w2-l4','Debugging Neural Networks',45,'text'],
+    ['dl-w2-l5','Learning Rate Scheduling & Advanced Tricks',55,'text'],
+    ['dl-w2-quiz','Week 2 Quiz — Training Deep Networks',15,'quiz'],
+  ]},
+  { title: 'Week 3 — Convolutional Neural Networks', lessons: [
+    ['dl-w3-l1','Convolution, Filters & Feature Maps',55,'text'],
+    ['dl-w3-l2','ResNets — Residual Learning & Skip Connections',50,'text'],
+    ['dl-w3-l3','Transfer Learning & Fine-Tuning in Practice',50,'text'],
+    ['dl-w3-l4','Object Detection — YOLO & Faster R-CNN',50,'text'],
+    ['dl-w3-l5','Image Segmentation — Semantic & Instance',50,'text'],
+    ['dl-w3-quiz','Week 3 Quiz — Convolutional Neural Networks',15,'quiz'],
+  ]},
+  { title: 'Week 4 — Recurrent Networks & Sequence Modelling', lessons: [
+    ['dl-w4-l1','Recurrent Neural Networks & LSTMs',50,'text'],
+    ['dl-w4-l2','Sequence-to-Sequence Models & Attention',55,'text'],
+    ['dl-w4-l3','The Transformer Architecture',50,'text'],
+    ['dl-w4-l4','BERT — Pre-training & Fine-Tuning Transformers',50,'text'],
+    ['dl-w4-l5','Time Series & Forecasting with Deep Learning',55,'text'],
+    ['dl-w4-quiz','Week 4 Quiz — Recurrent Networks & Sequence Modelling',15,'quiz'],
+  ]},
+  { title: 'Week 5 — Modern Architectures', lessons: [
+    ['dl-w5-l1','Vision Transformers (ViT) & Modern Vision Architectures',50,'text'],
+    ['dl-w5-l2','Generative Models — VAEs & GANs',50,'text'],
+    ['dl-w5-l3','Diffusion Models — How Stable Diffusion Works',50,'text'],
+    ['dl-w5-l4','Self-Supervised Learning & Contrastive Methods',45,'text'],
+    ['dl-w5-l5','Multimodal Models — CLIP, Flamingo & GPT-4V',50,'text'],
+    ['dl-w5-quiz','Week 5 Quiz — Modern Architectures',15,'quiz'],
+  ]},
+  { title: 'Week 6 — Practical Deep Learning', lessons: [
+    ['dl-w6-l1','Working with Imbalanced Datasets',50,'text'],
+    ['dl-w6-l2','Model Interpretability — Grad-CAM & Attribution',50,'text'],
+    ['dl-w6-l3','Model Compression — Pruning, Quantisation & Distillation',50,'text'],
+    ['dl-w6-l4','Hyperparameter Tuning for Deep Learning',45,'text'],
+    ['dl-w6-l5','Deploying Deep Learning Models',55,'text'],
+    ['dl-w6-quiz','Week 6 Quiz — Practical Deep Learning',15,'quiz'],
+  ]},
+  { title: 'Week 7 — Advanced Topics', lessons: [
+    ['dl-w7-l1','Reinforcement Learning with Deep Networks',50,'text'],
+    ['dl-w7-l2','Graph Neural Networks',50,'text'],
+    ['dl-w7-l3','Parameter-Efficient Fine-Tuning — LoRA & Adapters',50,'text'],
+    ['dl-w7-l4','Ethical AI & Responsible Deep Learning',45,'text'],
+    ['dl-w7-l5','DL Research & Staying Current',55,'text'],
+    ['dl-w7-quiz','Week 7 Quiz — Advanced Topics',15,'quiz'],
+  ]},
+  { title: 'Week 8 — Capstone — End-to-End Deep Learning', lessons: [
+    ['dl-w8-l1','Capstone Project Planning & Dataset Strategy',50,'text'],
+    ['dl-w8-l2','Capstone — Plant Disease Detection (Full Pipeline)',55,'text'],
+    ['dl-w8-l3','Capstone — Text Classification with BERT',50,'text'],
+    ['dl-w8-l4','Building Your Deep Learning Portfolio',50,'text'],
+    ['dl-w8-l5','Capstone Synthesis — What You Have Built',90,'text'],
+    ['dl-w8-quiz','Week 8 Quiz — Capstone & Course Synthesis',15,'quiz'],
+  ]},
+];
+
+const QUIZ_QUESTIONS = {
+  'dl-w1-quiz': [
+    { q: 'Why did the perceptron fail to solve the XOR problem?', opts: ['XOR is not linearly separable — a single hyperplane cannot separate the two classes','XOR requires floating-point weights','The perceptron uses the wrong activation function','The learning rate was too high'], ans: 0 },
+    { q: 'Which activation function is most commonly used in hidden layers of modern deep networks?', opts: ['ReLU','Sigmoid','Tanh','Linear'], ans: 0 },
+    { q: 'In backpropagation, what does the chain rule compute?', opts: ['The gradient of the loss with respect to each weight by multiplying local derivatives layer by layer','The weight update directly from the training data','The forward pass through all layers simultaneously','The optimal learning rate for each parameter'], ans: 0 },
+    { q: 'Why is AdamW preferred over Adam for most deep learning tasks?', opts: ['AdamW applies weight decay directly to weights rather than through the gradient, correcting a subtle L2 regularisation bug in Adam','AdamW is faster to compute','AdamW uses a lower learning rate automatically','AdamW requires no learning rate schedule'], ans: 0 },
+    { q: 'What is the primary purpose of calling model.eval() before evaluation?', opts: ['Disabling dropout and switching BatchNorm to use running statistics instead of batch statistics','Freezing all model weights','Reducing memory usage','Switching from GPU to CPU computation'], ans: 0 },
+  ],
+  'dl-w2-quiz': [
+    { q: 'He (Kaiming) initialisation is preferred over Xavier for networks with ReLU activations because:', opts: ['He accounts for the fact that ReLU zeros out half the neurons, using a 2/fan_in scaling instead of 2/(fan_in+fan_out)','He initialisation uses smaller values than Xavier','Xavier was designed for sigmoid only','He initialisation trains faster on all hardware'], ans: 0 },
+    { q: 'Batch Normalisation is applied BEFORE the activation function (in the original paper). What does it compute?', opts: ['Normalise each feature to zero mean and unit variance within the mini-batch, then apply learnable scale and shift','Average activations across all layers','Clip activations to prevent saturation','Shuffle features to improve generalisation'], ans: 0 },
+    { q: 'Label smoothing (epsilon=0.1) modifies the target distribution by:', opts: ['Replacing hard 0/1 labels with (1-epsilon)*y + epsilon/K, reducing overconfident predictions','Adding Gaussian noise to the inputs','Dropping 10% of training labels randomly','Replacing incorrect labels with the uniform distribution'], ans: 0 },
+    { q: 'When debugging a neural network, the FIRST test to run is:', opts: ['Overfitting a single mini-batch — the loss should reach near zero. If not, the architecture has a bug.','Running a full training loop for 1 epoch','Checking the test accuracy','Visualising the learned weights'], ans: 0 },
+    { q: 'Mixed precision training (AMP) uses FP16 for forward/backward passes. What does GradScaler prevent?', opts: ['FP16 gradient underflow — it scales the loss up before backward and scales the gradients down before the weight update','Gradient explosion in the optimizer step','NaN values in the input data','Memory fragmentation on GPU'], ans: 0 },
+  ],
+  'dl-w3-quiz': [
+    { q: 'Two stacked 3x3 convolutional layers are preferred over one 5x5 layer because:', opts: ['Same receptive field (5x5) but fewer parameters (18 vs 25) and an extra non-linearity between them','3x3 filters are faster to compute regardless of depth','5x5 filters cause vanishing gradients','3x3 avoids boundary effects that 5x5 produces'], ans: 0 },
+    { q: 'In a ResNet, what problem do skip (residual) connections primarily solve?', opts: ['Vanishing gradients in very deep networks — gradients flow directly through the identity shortcut without degradation','Overfitting in shallow networks','Slow inference speed','High memory consumption during training'], ans: 0 },
+    { q: 'When fine-tuning a pretrained CNN on a new dataset, the recommended first step is:', opts: ['Freeze all backbone layers and train only the new classification head for a few epochs','Unfreeze all layers immediately and train with a high learning rate','Train from scratch with the same architecture','Replace all BatchNorm layers with LayerNorm'], ans: 0 },
+    { q: 'YOLOv8 is a one-stage object detector. What does this mean?', opts: ['It predicts bounding boxes and classes in a single forward pass without a separate region proposal stage','It only detects one class per image','It processes video one frame at a time','It uses a single convolutional layer for all predictions'], ans: 0 },
+    { q: 'In semantic segmentation, the Dice Loss is preferred over Cross-Entropy for imbalanced classes because:', opts: ['Dice Loss directly optimises the overlap between prediction and ground truth, making it robust to class imbalance regardless of pixel count ratio','Dice Loss is faster to compute','Dice Loss requires no ground truth masks','Cross-Entropy cannot handle multi-class segmentation'], ans: 0 },
+  ],
+  'dl-w4-quiz': [
+    { q: 'LSTM solves the vanishing gradient problem in RNNs by:', opts: ['Introducing a cell state that is updated additively (not multiplicatively) through forget and input gates, allowing gradients to flow unimpeded over hundreds of timesteps','Using a larger hidden dimension than vanilla RNNs','Applying gradient clipping automatically','Using a different activation function (ReLU instead of tanh)'], ans: 0 },
+    { q: 'In the Transformer, the scaling factor 1/sqrt(dk) in scaled dot-product attention is applied to:', opts: ['Prevent the dot products from growing too large in high-dimensional spaces, which would push softmax into regions with near-zero gradients','Normalise the attention weights to sum to 1','Control the learning rate for the attention parameters','Scale the value vectors before aggregation'], ans: 0 },
+    { q: 'BERT uses Masked Language Modelling (MLM) rather than autoregressive (causal) pretraining. What advantage does this give?', opts: ['MLM trains bidirectional context — each token can attend to both past and future tokens — producing richer representations for understanding tasks','MLM is faster to compute than autoregressive training','MLM requires less data','MLM avoids the need for a tokeniser'], ans: 0 },
+    { q: 'Causal (masked) convolutions in a Temporal Convolutional Network (TCN) ensure that:', opts: ['The output at time t depends only on inputs at times t and earlier, preventing any future information leakage at inference time','Convolutions are applied in reverse time order','The kernel size is always odd','Each output is computed from all timesteps simultaneously'], ans: 0 },
+    { q: 'Teacher forcing in seq2seq training means:', opts: ['Feeding the ground-truth previous token as input to the decoder at each step during training, rather than the model\'s own prediction','The teacher model trains the student model','Using a pretrained encoder as the teacher','The decoder is frozen while the encoder trains'], ans: 0 },
+  ],
+  'dl-w5-quiz': [
+    { q: 'In a Vision Transformer (ViT), the [CLS] token serves what purpose?', opts: ['Its final hidden state is used as the global image representation for classification, aggregating information from all patches via self-attention','It represents the first patch in the image','It replaces the positional embedding','It acts as a separator between image patches'], ans: 0 },
+    { q: 'The reparameterisation trick in VAEs makes sampling differentiable by:', opts: ['Expressing z = mu + sigma * epsilon where epsilon ~ N(0,I) — the stochastic node is moved to epsilon, so gradients can flow through mu and sigma','Replacing the sampling step with a deterministic mean','Using a discrete latent code instead of continuous','Applying the softmax function to the latent vector'], ans: 0 },
+    { q: 'In GANs, mode collapse means:', opts: ['The generator learns to produce only a few high-quality samples and ignores most of the data distribution','The discriminator converges too quickly','The loss function diverges to infinity','The generator produces only blurry samples'], ans: 0 },
+    { q: 'CLIP achieves zero-shot image classification by:', opts: ['Computing cosine similarity between the image embedding and text embeddings of class descriptions, then predicting the closest class','Fine-tuning on a classification dataset for each new class','Using a lookup table of image-class pairs','Generating synthetic training examples for each new class'], ans: 0 },
+    { q: 'In diffusion models, the classifier-free guidance scale controls:', opts: ['How strongly the output image follows the text prompt (higher scale = stronger adherence to prompt, at the cost of diversity)','The number of denoising steps','The resolution of the generated image','The learning rate during inference'], ans: 0 },
+  ],
+  'dl-w6-quiz': [
+    { q: 'WeightedRandomSampler in PyTorch handles class imbalance by:', opts: ['Sampling training examples with probability proportional to their class weight, so each mini-batch has approximately equal class representation','Removing majority class examples','Duplicating minority class examples in the dataset','Applying different loss weights to each class'], ans: 0 },
+    { q: 'Grad-CAM produces its heatmap by:', opts: ['Weighting each channel of the final convolutional feature map by the global-average-pooled gradient of the target class score, then taking a ReLU of the weighted sum','Computing the gradient of every pixel in the input image','Averaging attention weights from all transformer heads','Running a separate segmentation model on the image'], ans: 0 },
+    { q: 'In knowledge distillation, the temperature T in softmax(logits/T) serves to:', opts: ['Soften the teacher\'s output distribution, making the inter-class probability relationships more informative as supervision for the student','Speed up the training of the student model','Reduce the number of classes the student must learn','Prevent the student from memorising specific training examples'], ans: 0 },
+    { q: 'Dynamic quantisation (INT8) converts a model weights to 8-bit. What is the typical accuracy impact?', opts: ['Less than 1% accuracy loss on most models, with 2-4x speedup on CPU inference','10-20% accuracy loss','No speedup — only memory savings','Requires full retraining from scratch'], ans: 0 },
+    { q: 'The LR finder technique identifies the best learning rate by:', opts: ['Exponentially increasing LR over one mini-epoch and picking the LR just before the loss starts rising steeply','Running a full training loop at multiple LRs and picking the best test accuracy','Computing the Hessian of the loss function at initialisation','Using Bayesian optimisation over 50 trials'], ans: 0 },
+  ],
+  'dl-w7-quiz': [
+    { q: 'In DQN, the replay buffer serves what purpose?', opts: ['Stores past transitions (s,a,r,s\') and samples random mini-batches, breaking temporal correlations that would destabilise training','Increases the model capacity by storing additional weights','Provides experience from a teacher agent','Prevents the network from forgetting easy examples'], ans: 0 },
+    { q: 'In a Graph Attention Network (GAT), attention weights are computed per:', opts: ['Each edge (neighbour pair), allowing different neighbours to contribute differently to a node\'s updated representation','Each node independently, ignoring edge structure','Each graph independently across a batch','Each layer uniformly'], ans: 0 },
+    { q: 'LoRA (Low-Rank Adaptation) reduces trainable parameters by:', opts: ['Injecting low-rank matrices A and B alongside frozen pretrained weights, so the effective weight update is BA with rank r << d','Pruning a fraction of weights below a threshold','Sharing weights across transformer layers','Replacing attention with linear attention'], ans: 0 },
+    { q: 'The fairness metric "Equalized Odds" requires:', opts: ['Equal True Positive Rate AND equal False Positive Rate across demographic groups','Equal prediction rates across groups regardless of outcome','Equal accuracy across groups','Zero performance gap between groups on the test set'], ans: 0 },
+    { q: 'Over-smoothing in deep GNNs refers to:', opts: ['Node representations converging to the same value as more message-passing layers are added, making all nodes indistinguishable','The gradient vanishing problem in recurrent graph networks','Excessive dropout in graph attention layers','The computational cost scaling with graph size'], ans: 0 },
+  ],
+  'dl-w8-quiz': [
+    { q: 'When fine-tuning EfficientNet on a small dataset, differential learning rates mean:', opts: ['Using a very small LR for the pretrained backbone (e.g. 1e-5) and a larger LR for the new classification head (e.g. 1e-3) to avoid destroying pretrained features','Using a different optimiser for each layer','Reducing LR by half after each epoch','Setting backbone LR to zero (frozen)'], ans: 0 },
+    { q: 'For multi-label classification, BCEWithLogitsLoss is preferred over CrossEntropyLoss because:', opts: ['Multi-label means each sample can belong to multiple classes simultaneously — BCEWithLogitsLoss applies independent binary decisions per class, while CrossEntropyLoss assumes mutually exclusive classes','BCEWithLogitsLoss is numerically more stable','CrossEntropyLoss requires more memory','BCEWithLogitsLoss trains faster'], ans: 0 },
+    { q: 'In a Gradio demo, what is the primary benefit of providing example inputs?', opts: ['Users can test the model immediately without needing to find their own test images, lowering the barrier to interaction and showcasing model capabilities','Examples speed up model inference','Examples replace the need for documentation','Examples are required for deployment to Hugging Face Spaces'], ans: 0 },
+    { q: 'What makes a deep learning portfolio project most impressive to technical reviewers?', opts: ['Honest evaluation with baseline comparison, failure analysis, and reproducible code — not just high accuracy numbers','The highest accuracy number on a known benchmark','Using the most complex model architecture','Having the most lines of code'], ans: 0 },
+    { q: 'ONNX (Open Neural Network Exchange) is primarily used for:', opts: ['Exporting models from PyTorch/TensorFlow into a framework-agnostic format that can run with ONNX Runtime for cross-platform deployment and often faster CPU inference','Visualising the computation graph during debugging','Sharing model weights between researchers','Compressing models via quantisation'], ans: 0 },
+  ],
+};
+
+function log(msg, cls=''){
+  const area = document.getElementById('status-area');
+  area.innerHTML += `<div style="color:${cls==='ok'?'var(--teal)':cls==='err'?'#f66':cls==='head'?'var(--cream)':'var(--fog2)'}">${msg}</div>`;
+  area.scrollTop = area.scrollHeight;
+}
+function toast(m,t='success'){
+  const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;
+  document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);
+}
+
+document.addEventListener('portal:ready', async () => {
+  const {data: courses, error} = await supa.from('courses').select('id,title').order('title');
+  const sel = document.getElementById('course-sel');
+  if (error || !courses?.length) { sel.innerHTML = '<option value="">No courses found</option>'; return; }
+  sel.innerHTML = '<option value="">— pick a course —</option>';
+  courses.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id; opt.textContent = c.title;
+    if (c.title.toLowerCase().includes('deep learning')) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  document.getElementById('btn-seed').disabled = false;
+});
+
+function preview(){
+  const card = document.getElementById('preview-card');
+  card.style.display = 'block';
+  let totalMins = 0;
+  let html = `<table style="width:100%;border-collapse:collapse;font-family:var(--fb);font-size:.8rem;">
+    <thead><tr style="background:var(--fog2);color:var(--ink);">
+      <th style="padding:.4rem .6rem;text-align:left;">Slug</th>
+      <th style="padding:.4rem .6rem;text-align:left;">Title</th>
+      <th style="padding:.4rem .6rem;text-align:center;">Type</th>
+      <th style="padding:.4rem .6rem;text-align:right;">Mins</th>
+    </tr></thead><tbody>`;
+  MODULES.forEach((mod, mi) => {
+    html += `<tr><td colspan="4" style="padding:.5rem .6rem;background:var(--fog);color:var(--cream);font-weight:600;">${mod.title}</td></tr>`;
+    mod.lessons.forEach(([slug, title, mins, type]) => {
+      totalMins += mins;
+      const typeColor = type === 'quiz' ? 'var(--champ2)' : 'var(--teal)';
+      html += `<tr><td style="padding:.35rem .6rem;color:var(--teal);font-family:monospace;">${slug}</td>
+        <td style="padding:.35rem .6rem;color:var(--fog2);">${title}</td>
+        <td style="padding:.35rem .6rem;text-align:center;color:${typeColor};">${type}</td>
+        <td style="padding:.35rem .6rem;text-align:right;color:var(--fog2);">${mins}</td></tr>`;
+    });
+    const quizSlug = `dl-w${mi+1}-quiz`;
+    const qCount = QUIZ_QUESTIONS[quizSlug]?.length || 0;
+    if (qCount) html += `<tr><td colspan="4" style="padding:.25rem .6rem .5rem 2rem;color:var(--champ2);font-size:.75rem;">📝 ${qCount} quiz questions for ${quizSlug}</td></tr>`;
+  });
+  html += `</tbody><tfoot><tr style="border-top:1px solid var(--border);">
+    <td colspan="3" style="padding:.5rem .6rem;color:var(--cream);font-weight:600;">Total (8 modules, 48 lessons, 40 quiz questions)</td>
+    <td style="padding:.5rem .6rem;text-align:right;color:var(--cream);font-weight:600;">${totalMins} min</td>
+  </tr></tfoot></table>`;
+  document.getElementById('preview-body').innerHTML = html;
+  card.scrollIntoView({ behavior: 'smooth' });
+}
+
+async function runSeed(){
+  const courseId = document.getElementById('course-sel').value;
+  if (!courseId){ toast('Pick a course first','error'); return; }
+  const btn = document.getElementById('btn-seed');
+  btn.disabled = true; btn.textContent = 'Running…';
+  document.getElementById('status-area').innerHTML = '';
+  try {
+    log('=== DEEP LEARNING COURSE SEEDER ===', 'head');
+    log(`Course ID: ${courseId}`);
+
+    log('Step 1 — Removing existing modules, lessons & quiz questions…');
+    const {data: existingMods} = await supa.from('modules').select('id').eq('course_id', courseId);
+    if (existingMods?.length) {
+      const modIds = existingMods.map(m => m.id);
+      const {data: existingLessons} = await supa.from('lessons').select('id').in('module_id', modIds);
+      if (existingLessons?.length) {
+        const lessonIds = existingLessons.map(l => l.id);
+        await supa.from('quiz_questions').delete().in('lesson_id', lessonIds);
+        await supa.from('lessons').delete().in('module_id', modIds);
+      }
+      await supa.from('modules').delete().eq('course_id', courseId);
+      log(`  Removed ${existingMods.length} module(s).`);
+    } else { log('  Clean slate.'); }
+
+    log('Step 2 — Inserting 8 modules, 48 lessons & 40 quiz questions…', 'head');
+    let totalLessons = 0, totalQuestions = 0;
+
+    for (let mi = 0; mi < MODULES.length; mi++) {
+      const mod = MODULES[mi];
+      const {data: modRow, error: modErr} = await supa.from('modules')
+        .insert({ course_id: courseId, title: mod.title, order_index: mi })
+        .select().single();
+      if (modErr) throw new Error(`Module insert failed: ${modErr.message}`);
+      log(`  [${mi+1}/8] Module "${mod.title}" → id ${modRow.id}`);
+
+      for (let li = 0; li < mod.lessons.length; li++) {
+        const [slug, title, mins, type] = mod.lessons[li];
+        const {data: lessonRow, error: lesErr} = await supa.from('lessons')
+          .insert({ module_id: modRow.id, title, type, content_url: slug, duration_mins: mins, order_index: li })
+          .select().single();
+        if (lesErr) throw new Error(`Lesson insert failed for "${title}": ${lesErr.message}`);
+        totalLessons++;
+        if (type === 'quiz') {
+          const questions = QUIZ_QUESTIONS[slug] || [];
+          if (questions.length) {
+            const qRows = questions.map((q, qi) => ({
+              lesson_id: lessonRow.id, question: q.q, options: q.opts,
+              correct_index: q.ans, order_index: qi,
+            }));
+            const {error: qErr} = await supa.from('quiz_questions').insert(qRows);
+            if (qErr) throw new Error(`Quiz insert failed for "${slug}": ${qErr.message}`);
+            log(`    📝 ${questions.length} quiz questions inserted for ${slug}`, 'ok');
+            totalQuestions += questions.length;
+          }
+        }
+      }
+      const textCount = mod.lessons.filter(l => l[3]==='text').length;
+      const quizCount = mod.lessons.filter(l => l[3]==='quiz').length;
+      log(`    └─ ${textCount} text + ${quizCount} quiz inserted`, 'ok');
+    }
+
+    log('Step 3 — Publishing course…');
+    const {error: statusErr} = await supa.from('courses').update({status:'published'}).eq('id',courseId);
+    if (statusErr) log(`  Warning: ${statusErr.message}`, 'err');
+    else log('  Course marked as published.', 'ok');
+
+    log(`=== DONE — ${totalLessons} lessons + ${totalQuestions} quiz questions ===`, 'ok');
+    toast(`${totalLessons} lessons and ${totalQuestions} quiz questions seeded`);
+    document.getElementById('status-area').innerHTML +=
+      `<div style="margin-top:1rem;"><a href="course-editor.html?id=${courseId}" class="portal-btn" style="display:inline-block;text-decoration:none;">Open in Course Editor →</a></div>`;
+  } catch(err) {
+    log(`ERROR: ${err.message}`, 'err');
+    toast(err.message, 'error');
+  }
+  btn.disabled = false; btn.textContent = 'Seed 48 lessons';
+}
+</script>
+</body></html>
