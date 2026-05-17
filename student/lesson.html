@@ -82,11 +82,12 @@
 <script src="../js/auth-guard.js"></script>
 <script src="../js/portal.js"></script>
 <script src="../script.js"></script>
+<script src="../lesson-content.js"></script>
 <script>
 const params   = new URLSearchParams(location.search);
 const lessonId = params.get('id');
 const courseId = params.get('course');
-const LT = {video:{icon:'🎬',cls:'lt-video'},pdf:{icon:'📄',cls:'lt-pdf'},quiz:{icon:'📝',cls:'lt-quiz'},live:{icon:'🔴',cls:'lt-live'}};
+const LT = {video:{icon:'🎬',cls:'lt-video'},pdf:{icon:'📄',cls:'lt-pdf'},quiz:{icon:'📝',cls:'lt-quiz'},live:{icon:'🔴',cls:'lt-live'},text:{icon:'📖',cls:'lt-text'}};
 let allLessons=[], currentIdx=0;
 
 function toast(m,t='success'){const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);}
@@ -100,6 +101,14 @@ function vimeoEmbed(url){
   return m?`https://player.vimeo.com/video/${m[1]}`:null;
 }
 function buildEmbed(lesson){
+  const embed = document.getElementById('player-embed');
+  if(lesson.type==='text'){
+    embed.classList.add('text-mode');
+    embed.style.background='transparent';
+    return buildTextLesson(lesson.content_url, lesson);
+  }
+  embed.classList.remove('text-mode');
+  embed.style.background='#000';
   const url=lesson.content_url||'';
   if(!url)return `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:1rem;color:var(--fog2);font-family:var(--fb);"><div style="font-size:2.5rem;">${LT[lesson.type]?.icon||'📄'}</div><div>No content URL provided for this lesson.</div></div>`;
   const yt=ytEmbed(url);
@@ -109,6 +118,50 @@ function buildEmbed(lesson){
   if(lesson.type==='pdf')return `<iframe src="${url}" style="width:100%;height:100%;border:none;"></iframe>`;
   if(lesson.type==='video')return `<video controls style="width:100%;height:100%;background:#000;"><source src="${url}">Your browser does not support video.</video>`;
   return `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:1rem;color:var(--fog2);font-family:var(--fb);"><div style="font-size:2.5rem;">${LT[lesson.type]?.icon||'🔗'}</div><a href="${url}" target="_blank" class="portal-btn">Open Content →</a></div>`;
+}
+
+/* ── Text lesson renderer ─────────────────────────────────────────────── */
+function buildTextLesson(key, lesson){
+  const content = window.DSA_LESSON_CONTENT && window.DSA_LESSON_CONTENT[key];
+  if(!content) return `<div class="tl-wrap"><p style="color:var(--fog2);">Content not found for key: <code>${key}</code></p></div>`;
+  const weekLabel = lesson._module ? `<span class="tl-meta-week">${lesson._module}</span>` : '';
+  return `<div class="tl-wrap">
+    <div class="tl-meta">${weekLabel}<span class="tl-meta-dur">⏱ ${content.duration_mins} min</span></div>
+    ${(content.sections||[]).map(renderTLSection).join('')}
+  </div>`;
+}
+function renderTLSection(s){
+  if(s.type==='text') return s.body;
+  if(s.type==='tip')  return `<div class="tl-tip"><strong>💡 Tip &nbsp;</strong>${s.body}</div>`;
+  if(s.type==='warn') return `<div class="tl-warn"><strong>⚠ Watch out &nbsp;</strong>${s.body}</div>`;
+  if(s.type==='code'){
+    const id='c'+Math.random().toString(36).slice(2,7);
+    const out=s.out?`<div class="tl-output"><div class="tl-output-label">Output</div>${escHtml(s.out)}</div>`:'';
+    return `<div class="tl-code"><div class="tl-code-header"><span class="tl-code-lang">${s.lang||'python'}</span><button class="tl-code-copy" onclick="copyCode('${id}')">Copy</button></div><pre id="${id}"><code>${highlight(escHtml(s.src))}</code></pre></div>${out}`;
+  }
+  if(s.type==='exercise'){
+    const hid='h'+Math.random().toString(36).slice(2,7);
+    const sid='s'+Math.random().toString(36).slice(2,7);
+    const sol=s.solution?`<button class="tl-solution-toggle" onclick="var el=document.getElementById('${sid}');el.classList.toggle('open');this.textContent=el.classList.contains('open')?'Hide Solution':'Show Solution'">Show Solution</button><div class="tl-solution-body" id="${sid}"><div class="tl-code" style="margin-top:.75rem;"><div class="tl-code-header"><span class="tl-code-lang">solution</span></div><pre><code>${highlight(escHtml(s.solution))}</code></pre></div></div>`:'';
+    return `<div class="tl-exercise"><div class="tl-exercise-label">✏ Exercise</div><div class="tl-exercise-title">${s.title||'Practice'}</div>${s.body||''}<div class="tl-exercise-hint"><button class="tl-hint-toggle" onclick="var el=document.getElementById('${hid}');el.classList.toggle('open');this.textContent=el.classList.contains('open')?'Hide Hint':'Show Hint'">Show Hint</button>${sol}<div class="tl-hint-body" id="${hid}">${s.hint||''}</div></div></div>`;
+  }
+  return '';
+}
+function escHtml(t){return (t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function highlight(c){
+  return c
+    .replace(/(#[^\n]*)/g,'<span class="cm">$1</span>')
+    .replace(/\b(def|class|return|import|from|as|if|elif|else|for|while|in|not|and|or|is|None|True|False|try|except|finally|raise|with|pass|break|continue|lambda|yield|global|nonlocal|del|assert)\b/g,'<span class="kw">$1</span>')
+    .replace(/(&quot;[^&]*?&quot;|&#39;[^&]*?&#39;)/g,'<span class="st">$1</span>')
+    .replace(/\b(\d+\.?\d*)\b/g,'<span class="nm">$1</span>')
+    .replace(/\b(print|len|range|type|int|float|str|bool|list|dict|set|tuple|input|open|enumerate|zip|map|filter|sorted|reversed|sum|min|max|abs|round|isinstance|hasattr|getattr|setattr)\b/g,'<span class="bi">$1</span>');
+}
+function copyCode(id){
+  const el=document.getElementById(id);if(!el)return;
+  navigator.clipboard.writeText(el.textContent).then(()=>{
+    const btn=el.closest('.tl-code')?.querySelector('.tl-code-copy');
+    if(btn){btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',1800);}
+  });
 }
 
 document.addEventListener('portal:ready', async()=>{

@@ -85,7 +85,7 @@
 const params = new URLSearchParams(location.search);
 let courseId = params.get('id');
 const isNew  = courseId === 'new';
-const LT     = {video:{icon:'🎬',cls:'lt-video'},pdf:{icon:'📄',cls:'lt-pdf'},quiz:{icon:'📝',cls:'lt-quiz'},live:{icon:'🔴',cls:'lt-live'}};
+const LT     = {video:{icon:'🎬',cls:'lt-video'},pdf:{icon:'📄',cls:'lt-pdf'},quiz:{icon:'📝',cls:'lt-quiz'},live:{icon:'🔴',cls:'lt-live'},text:{icon:'📖',cls:'lt-text'}};
 
 function toast(m,t='success'){const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);}
 
@@ -159,14 +159,15 @@ function renderModule(m){
         <div class="field-row" style="margin-bottom:.75rem;">
           <div class="field-group" style="margin-bottom:0;"><label class="flbl">Lesson Title</label><input type="text" class="fi" id="lt-${m.id}" placeholder="e.g. Introduction to Python"></div>
           <div class="field-group" style="margin-bottom:0;"><label class="flbl">Type</label>
-            <select class="fi" id="ltype-${m.id}">
+            <select class="fi" id="ltype-${m.id}" onchange="onLessonTypeChange('${m.id}')">
               <option value="video">🎬 Video</option><option value="pdf">📄 PDF</option>
               <option value="quiz">📝 Quiz</option><option value="live">🔴 Live</option>
+              <option value="text">📖 Text Lesson</option>
             </select>
           </div>
         </div>
         <div class="field-row" style="margin-bottom:.75rem;">
-          <div class="field-group" style="margin-bottom:0;"><label class="flbl">Content URL</label><input type="url" class="fi" id="lurl-${m.id}" placeholder="https://youtube.com/..."></div>
+          <div class="field-group" style="margin-bottom:0;"><label class="flbl" id="lurllbl-${m.id}">Content URL</label><input type="text" class="fi" id="lurl-${m.id}" placeholder="https://youtube.com/..."></div>
           <div class="field-group" style="margin-bottom:0;"><label class="flbl">Duration (mins)</label><input type="number" class="fi" id="ldur-${m.id}" placeholder="30" min="0"></div>
         </div>
         <div style="display:flex;gap:.5rem;">
@@ -199,6 +200,19 @@ async function delModule(id){
 function toggleLessonForm(mid){
   const f=document.getElementById(`lform-${mid}`);
   f.classList.toggle('open');
+}
+
+function onLessonTypeChange(mid){
+  const type=document.getElementById(`ltype-${mid}`).value;
+  const urlInput=document.getElementById(`lurl-${mid}`);
+  const urlLabel=document.getElementById(`lurllbl-${mid}`);
+  if(type==='text'){
+    urlLabel.textContent='Content Key';
+    urlInput.placeholder='e.g. python-w1-l1';
+  } else {
+    urlLabel.textContent='Content URL';
+    urlInput.placeholder='https://youtube.com/...';
+  }
 }
 
 async function saveLesson(mid){

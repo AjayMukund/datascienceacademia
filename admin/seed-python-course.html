@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seed Python Course — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
+      <div class="portal-page-title">Seed Python Course</div>
+      <div class="portal-page-sub">One-click import of all 8 weeks × 39 lessons into Supabase</div>
+    </div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <!-- Status card -->
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Status</div>
+    <div id="status-area" style="font-family:var(--fb);font-size:.85rem;color:var(--fog2);line-height:1.8;">
+      Waiting to run…
+    </div>
+  </div>
+
+  <!-- Course picker -->
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Target Course</div>
+    <p style="font-family:var(--fb);font-size:.83rem;color:var(--fog2);margin-bottom:1rem;">
+      Select the Python Programming course to seed into. If it doesn't appear, create it first in the Course Editor.
+    </p>
+    <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field-group" style="margin-bottom:0;flex:1;min-width:220px;">
+        <label class="flbl">Course</label>
+        <select class="fi" id="course-sel"><option value="">Loading courses…</option></select>
+      </div>
+      <div>
+        <label class="flbl">Action</label>
+        <div style="display:flex;gap:.5rem;">
+          <button class="portal-btn-ghost" id="btn-preview" onclick="preview()" style="font-size:.82rem;">Preview plan</button>
+          <button class="portal-btn" id="btn-seed" onclick="runSeed()" disabled>Seed 39 lessons</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preview table -->
+  <div class="chart-wrap" id="preview-card" style="display:none;">
+    <div class="chart-title">Lesson Plan (39 lessons)</div>
+    <div id="preview-body" style="overflow-x:auto;"></div>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+/* ─── Lesson plan ──────────────────────────────────────────────────────────
+   Each module has a title and a lessons array.
+   lesson: [slug, title, duration_mins]
+   slug → content_url value stored in Supabase; matched by lesson-content.js
+─────────────────────────────────────────────────────────────────────────── */
+const PYTHON_MODULES = [
+  {
+    title: 'Week 1 — Python Fundamentals',
+    lessons: [
+      ['python-w1-l1', 'Setup & Your First Python Program',     12],
+      ['python-w1-l2', 'Variables, Numbers & Strings',          14],
+      ['python-w1-l3', 'String Methods & Formatting',           16],
+      ['python-w1-l4', 'User Input & Type Conversion',          12],
+      ['python-w1-l5', 'Operators & Expressions',               14],
+    ]
+  },
+  {
+    title: 'Week 2 — Control Flow & Functions',
+    lessons: [
+      ['python-w2-l1', 'if / elif / else',                      14],
+      ['python-w2-l2', 'while Loops',                           16],
+      ['python-w2-l3', 'for Loops & range()',                   14],
+      ['python-w2-l4', 'Defining & Calling Functions',          12],
+      ['python-w2-l5', 'Scope, Return Values & Defaults',       14],
+    ]
+  },
+  {
+    title: 'Week 3 — Data Structures',
+    lessons: [
+      ['python-w3-l1', 'Lists — Creation & Indexing',           16],
+      ['python-w3-l2', 'List Methods & Slicing',                14],
+      ['python-w3-l3', 'Tuples & Immutability',                 14],
+      ['python-w3-l4', 'Dictionaries',                          12],
+      ['python-w3-l5', 'List & Dict Comprehensions',            14],
+    ]
+  },
+  {
+    title: 'Week 4 — Intermediate Python',
+    lessons: [
+      ['python-w4-l1', 'Higher-Order Functions & Lambdas',      14],
+      ['python-w4-l2', 'Modules & the Standard Library',        16],
+      ['python-w4-l3', 'Working with Sets',                     14],
+      ['python-w4-l4', 'Sorting, zip & enumerate',             12],
+      ['python-w4-l5', 'Sets & Frozen Sets Deep Dive',         12],
+    ]
+  },
+  {
+    title: 'Week 5 — Object-Oriented Programming',
+    lessons: [
+      ['python-w5-l1', 'Classes & Objects',                     20],
+      ['python-w5-l2', '__init__ & Special Methods',            18],
+      ['python-w5-l3', 'Inheritance',                           18],
+      ['python-w5-l4', 'Encapsulation & Polymorphism',          12],
+      ['python-w5-l5', 'Library Management Mini-Project',       12],
+    ]
+  },
+  {
+    title: 'Week 6 — Files, Exceptions & Context Managers',
+    lessons: [
+      ['python-w6-l1', 'Reading & Writing Files',               18],
+      ['python-w6-l2', 'Working with CSV Files',                15],
+      ['python-w6-l3', 'JSON — Exchanging Structured Data',     12],
+      ['python-w6-l4', 'Exception Handling — try/except/finally', 18],
+      ['python-w6-l5', 'Context Managers & the with Statement', 12],
+    ]
+  },
+  {
+    title: 'Week 7 — NumPy & Pandas',
+    lessons: [
+      ['python-w7-l1', 'NumPy Arrays — The Engine of Scientific Python', 20],
+      ['python-w7-l2', 'Broadcasting & Vectorisation',          18],
+      ['python-w7-l3', 'Pandas DataFrames',                     20],
+      ['python-w7-l4', 'Selecting Data with loc & iloc',        15],
+      ['python-w7-l5', 'groupby & Pivot Tables',                12],
+    ]
+  },
+  {
+    title: 'Week 8 — Matplotlib & Capstone',
+    lessons: [
+      ['python-w8-l1', 'Matplotlib — Telling Stories with Data', 18],
+      ['python-w8-l2', 'Subplots & Chart Customisation',        15],
+      ['python-w8-l3', 'Exploratory Data Analysis Workflow',    12],
+      ['python-w8-l4', 'Capstone Project — Data Science Pipeline', 25],
+    ]
+  },
+];
+
+function log(msg, cls=''){
+  const area = document.getElementById('status-area');
+  area.innerHTML += `<div style="color:${cls==='ok'?'var(--teal)':cls==='err'?'#f66':cls==='head'?'var(--cream)':'var(--fog2)'}">${msg}</div>`;
+  area.scrollTop = area.scrollHeight;
+}
+
+function toast(m,t='success'){
+  const el=document.createElement('div');
+  el.className=`toast-item ${t}`;
+  el.textContent=m;
+  document.getElementById('toast').appendChild(el);
+  setTimeout(()=>el.remove(),3500);
+}
+
+document.addEventListener('portal:ready', async () => {
+  const {data: courses, error} = await supa.from('courses').select('id,title').order('title');
+  const sel = document.getElementById('course-sel');
+  if (error || !courses?.length) {
+    sel.innerHTML = '<option value="">No courses found</option>';
+    return;
+  }
+  sel.innerHTML = '<option value="">— pick a course —</option>';
+  courses.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id;
+    opt.textContent = c.title;
+    // pre-select if title contains "python"
+    if (c.title.toLowerCase().includes('python')) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  document.getElementById('btn-seed').disabled = false;
+});
+
+function preview(){
+  const card = document.getElementById('preview-card');
+  card.style.display = 'block';
+  let total = 0;
+  let html = `<table style="width:100%;border-collapse:collapse;font-family:var(--fb);font-size:.8rem;">
+    <thead><tr style="background:var(--fog2);color:var(--ink);">
+      <th style="padding:.4rem .6rem;text-align:left;">Slug (content_url)</th>
+      <th style="padding:.4rem .6rem;text-align:left;">Title</th>
+      <th style="padding:.4rem .6rem;text-align:right;">Mins</th>
+    </tr></thead><tbody>`;
+
+  PYTHON_MODULES.forEach((mod, mi) => {
+    html += `<tr><td colspan="3" style="padding:.5rem .6rem;background:var(--fog);color:var(--cream);font-weight:600;">${mod.title}</td></tr>`;
+    mod.lessons.forEach(([slug, title, mins]) => {
+      total += mins;
+      html += `<tr style="${mi%2===0?'':'background:rgba(255,255,255,.02)'}">
+        <td style="padding:.35rem .6rem;color:var(--teal);font-family:monospace;">${slug}</td>
+        <td style="padding:.35rem .6rem;color:var(--fog2);">${title}</td>
+        <td style="padding:.35rem .6rem;text-align:right;color:var(--fog2);">${mins}</td>
+      </tr>`;
+    });
+  });
+
+  html += `</tbody><tfoot><tr style="border-top:1px solid var(--border);">
+    <td colspan="2" style="padding:.5rem .6rem;color:var(--cream);font-weight:600;">Total (8 modules, 39 lessons)</td>
+    <td style="padding:.5rem .6rem;text-align:right;color:var(--cream);font-weight:600;">${total} min</td>
+  </tr></tfoot></table>`;
+
+  document.getElementById('preview-body').innerHTML = html;
+  document.getElementById('preview-card').scrollIntoView({behavior:'smooth'});
+}
+
+async function runSeed(){
+  const courseId = document.getElementById('course-sel').value;
+  if (!courseId){ toast('Pick a course first','error'); return; }
+
+  const btn = document.getElementById('btn-seed');
+  btn.disabled = true; btn.textContent = 'Running…';
+  document.getElementById('status-area').innerHTML = '';
+
+  try {
+    log('=== PYTHON COURSE SEEDER ===', 'head');
+    log(`Course ID: ${courseId}`);
+
+    /* ── Step 1: Delete existing modules for this course ────────────── */
+    log('Step 1 — Removing existing modules & lessons for this course…');
+    const {data: existingMods} = await supa.from('modules').select('id').eq('course_id', courseId);
+    if (existingMods?.length) {
+      for (const mod of existingMods) {
+        await supa.from('lessons').delete().eq('module_id', mod.id);
+      }
+      await supa.from('modules').delete().eq('course_id', courseId);
+      log(`  Removed ${existingMods.length} existing module(s).`);
+    } else {
+      log('  No existing modules — clean slate.');
+    }
+
+    /* ── Step 2: Insert modules and lessons ─────────────────────────── */
+    log('Step 2 — Inserting 8 modules and 39 lessons…', 'head');
+    let totalLessons = 0;
+
+    for (let mi = 0; mi < PYTHON_MODULES.length; mi++) {
+      const mod = PYTHON_MODULES[mi];
+
+      /* Insert module */
+      const {data: modRow, error: modErr} = await supa.from('modules')
+        .insert({ course_id: courseId, title: mod.title, order_index: mi })
+        .select()
+        .single();
+
+      if (modErr) throw new Error(`Module insert failed: ${modErr.message}`);
+      log(`  [${mi+1}/8] Module "${mod.title}" → id ${modRow.id}`);
+
+      /* Insert lessons in this module */
+      const lessonRows = mod.lessons.map(([slug, title, mins], li) => ({
+        module_id:    modRow.id,
+        title,
+        type:         'text',
+        content_url:  slug,
+        duration_mins: mins,
+        order_index:  li,
+      }));
+
+      const {error: lesErr} = await supa.from('lessons').insert(lessonRows);
+      if (lesErr) throw new Error(`Lesson insert failed for module "${mod.title}": ${lesErr.message}`);
+
+      log(`    └─ ${mod.lessons.length} lessons inserted (${mod.lessons.map(l=>l[0]).join(', ')})`, 'ok');
+      totalLessons += mod.lessons.length;
+    }
+
+    /* ── Step 3: Update course to published ─────────────────────────── */
+    log('Step 3 — Setting course status to "published"…');
+    const {error: statusErr} = await supa.from('courses')
+      .update({status: 'published'})
+      .eq('id', courseId);
+    if (statusErr) log(`  Warning: could not update status — ${statusErr.message}`, 'err');
+    else log('  Course marked as published.', 'ok');
+
+    log(`=== DONE — ${totalLessons} lessons seeded across 8 modules ===`, 'ok');
+    toast(`${totalLessons} lessons seeded successfully`);
+
+    const editorLink = `course-editor.html?id=${courseId}`;
+    document.getElementById('status-area').innerHTML +=
+      `<div style="margin-top:1rem;"><a href="${editorLink}" class="portal-btn" style="display:inline-block;text-decoration:none;">Open in Course Editor →</a></div>`;
+
+  } catch(err) {
+    log(`ERROR: ${err.message}`, 'err');
+    toast(err.message, 'error');
+  }
+
+  btn.disabled = false; btn.textContent = 'Seed 39 lessons';
+}
+</script>
+</body>
+</html>
