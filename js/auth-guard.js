@@ -27,8 +27,20 @@
   }
 
   if (!profile) {
-    // Sign out first so login.html doesn't see a valid session and
-    // bounce the user straight back here — that's what causes the flicker loop.
+    // Profile row is missing (student added by admin directly in Supabase,
+    // or upsert failed at registration). Auto-create it from session metadata.
+    const name = session.user.user_metadata?.name
+              || session.user.email?.split('@')[0]
+              || 'Student';
+    const { data: created } = await supa.from('profiles')
+      .upsert({ id: session.user.id, name, role: 'student' })
+      .select('role, name')
+      .single();
+    profile = created;
+  }
+
+  if (!profile) {
+    // Still null after auto-create attempt — sign out to prevent redirect loop.
     await supa.auth.signOut();
     window.location.href = root + 'login.html';
     return;
