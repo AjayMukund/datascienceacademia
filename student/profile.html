@@ -36,13 +36,34 @@
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;max-width:780px;">
 
-    <!-- Update Name -->
+    <!-- Update Name + Avatar -->
     <div class="editor-card">
       <div class="editor-card-title">Personal Details</div>
       <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
-        <div class="sidebar-avatar portal-avatar" style="width:56px;height:56px;font-size:1.5rem;">A</div>
-        <div><div class="sidebar-user-name portal-username" style="font-size:1rem;">…</div><div style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);margin-top:2px;" id="profile-email">…</div></div>
+
+        <!-- Clickable avatar -->
+        <div style="position:relative;flex-shrink:0;" title="Click to upload photo">
+          <div id="profile-avatar" class="sidebar-avatar portal-avatar"
+               style="width:64px;height:64px;font-size:1.6rem;cursor:pointer;background-size:cover;background-position:center;overflow:hidden;"
+               onclick="document.getElementById('avatar-input').click()">A</div>
+          <div id="avatar-overlay"
+               style="position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none;font-size:.95rem;">
+            📷
+          </div>
+          <div id="avatar-spinner"
+               style="display:none;position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.6);align-items:center;justify-content:center;font-family:var(--fb);font-size:.55rem;color:var(--fog2);">
+            uploading…
+          </div>
+        </div>
+        <input type="file" id="avatar-input" accept="image/png,image/jpeg,image/webp,image/gif" style="display:none;" onchange="handleAvatarUpload(this)">
+
+        <div>
+          <div class="sidebar-user-name portal-username" style="font-size:1rem;">…</div>
+          <div style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);margin-top:2px;" id="profile-email">…</div>
+          <div style="font-family:var(--fb);font-size:.7rem;color:var(--fog2);margin-top:4px;">Click photo to change</div>
+        </div>
       </div>
+
       <div class="field-group"><label class="flbl">Full Name</label><input type="text" class="fi" id="p-name" placeholder="Your name"></div>
       <div id="name-msg" class="auth-success"></div>
       <button class="portal-btn" style="font-size:.78rem;padding:10px 20px;" onclick="saveName()">Update Name</button>
@@ -68,10 +89,79 @@
 <script src="../js/portal.js"></script>
 <script src="../script.js"></script>
 <script>
+function toast(m,t='success'){const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;document.body.appendChild(el);setTimeout(()=>el.remove(),3500);}
+
 document.addEventListener('portal:ready',()=>{
   document.getElementById('p-name').value = window._profile.name;
   document.getElementById('profile-email').textContent = window._user.email;
+  setAvatar(window._profile.avatar_url, window._profile.name);
 });
+
+function setAvatar(url, name){
+  const el = document.getElementById('profile-avatar');
+  if(url){
+    el.style.backgroundImage = `url(${url})`;
+    el.textContent = '';
+  } else {
+    el.style.backgroundImage = '';
+    el.textContent = (name||'?').charAt(0).toUpperCase();
+  }
+}
+
+// Hover overlay
+(function(){
+  const wrap = document.getElementById('profile-avatar').parentElement;
+  const overlay = document.getElementById('avatar-overlay');
+  wrap.addEventListener('mouseenter', ()=> overlay.style.opacity = '1');
+  wrap.addEventListener('mouseleave', ()=> overlay.style.opacity = '0');
+})();
+
+async function handleAvatarUpload(input){
+  const file = input.files[0];
+  if(!file) return;
+  if(file.size > 3 * 1024 * 1024){
+    toast('Image must be under 3 MB', 'error'); input.value=''; return;
+  }
+
+  const spinner  = document.getElementById('avatar-spinner');
+  const overlay  = document.getElementById('avatar-overlay');
+  spinner.style.display  = 'flex';
+  overlay.style.opacity  = '0';
+
+  try {
+    const ext  = file.name.split('.').pop().toLowerCase() || 'jpg';
+    const path = `${window._user.id}/avatar.${ext}`;
+
+    const { error: upErr } = await supa.storage.from('avatars').upload(path, file, {
+      upsert: true, contentType: file.type
+    });
+    if(upErr) throw upErr;
+
+    const { data: { publicUrl } } = supa.storage.from('avatars').getPublicUrl(path);
+
+    const { error: dbErr } = await supa.from('profiles')
+      .update({ avatar_url: publicUrl })
+      .eq('id', window._user.id);
+    if(dbErr) throw dbErr;
+
+    // Update every avatar on the page
+    setAvatar(publicUrl, window._profile.name);
+    document.querySelectorAll('.portal-avatar').forEach(el => {
+      el.style.backgroundImage = `url(${publicUrl})`;
+      el.style.backgroundSize  = 'cover';
+      el.style.backgroundPosition = 'center';
+      el.textContent = '';
+    });
+
+    window._profile.avatar_url = publicUrl;
+    toast('Profile photo updated ✅');
+  } catch(err){
+    toast(err.message || 'Upload failed', 'error');
+  } finally {
+    spinner.style.display = 'none';
+    input.value = '';
+  }
+}
 
 async function saveName(){
   const name=document.getElementById('p-name').value.trim();
