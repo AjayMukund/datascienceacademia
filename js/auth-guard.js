@@ -19,7 +19,7 @@
   for (let attempt = 0; attempt < 2; attempt++) {
     const { data } = await supa
       .from('profiles')
-      .select('role, name')
+      .select('role, name, avatar_url')
       .eq('id', session.user.id)
       .single();
     if (data) { profile = data; break; }
