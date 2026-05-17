@@ -29,7 +29,14 @@
 </aside>
 
 <main class="portal-main">
-  <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:1rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← My Courses</a>
+  <div class="portal-topbar" style="margin-bottom:1rem;">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← My Courses</a>
+    </div>
+    <div style="display:flex;gap:.75rem;align-items:center;">
+      <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+    </div>
+  </div>
 
   <div id="course-header" style="margin-bottom:2rem;">
     <div class="skeleton" style="height:32px;width:60%;margin-bottom:.75rem;"></div>

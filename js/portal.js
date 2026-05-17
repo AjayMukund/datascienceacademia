@@ -20,6 +20,23 @@ document.addEventListener('portal:ready', async function () {
   document.querySelectorAll('.portal-username').forEach(el => el.textContent = p.name);
   document.querySelectorAll('.portal-role').forEach(el => el.textContent =
     p.role === 'admin' ? 'Administrator' : 'Student');
+
+  // Inject avatar into every .portal-topbar (before the ☰ hamburger)
+  // so the student's face is visible on every page without opening the sidebar.
+  const profileHref = (location.pathname.includes('/admin/') ? '../student/' : '') + 'profile.html';
+  document.querySelectorAll('.portal-topbar').forEach(topbar => {
+    if (topbar.querySelector('.topbar-av')) return; // already injected
+    const tog = topbar.querySelector('.portal-mob-tog');
+    if (!tog) return;
+    const av = document.createElement('a');
+    av.href      = profileHref;
+    av.className = 'portal-avatar topbar-av';
+    av.title     = p.name + ' — My Profile';
+    av.style.cssText = 'width:32px;height:32px;font-size:.78rem;flex-shrink:0;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;';
+    tog.insertAdjacentElement('beforebegin', av);
+  });
+
+  // Apply photo / initial to every portal-avatar (includes newly injected topbar ones)
   document.querySelectorAll('.portal-avatar').forEach(el => {
     if (p.avatar_url) {
       el.style.backgroundImage    = `url('${p.avatar_url}')`;
