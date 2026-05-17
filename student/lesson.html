@@ -83,6 +83,7 @@
 <script src="../js/portal.js"></script>
 <script src="../script.js"></script>
 <script src="../lesson-content.js"></script>
+<script src="../sql-content.js"></script>
 <script>
 const params   = new URLSearchParams(location.search);
 const lessonId = params.get('id');
@@ -136,19 +137,29 @@ function renderTLSection(s){
   if(s.type==='warn') return `<div class="tl-warn"><strong>⚠ Watch out &nbsp;</strong>${s.body}</div>`;
   if(s.type==='code'){
     const id='c'+Math.random().toString(36).slice(2,7);
+    const lang=s.lang||'python';
     const out=s.out?`<div class="tl-output"><div class="tl-output-label">Output</div>${escHtml(s.out)}</div>`:'';
-    return `<div class="tl-code"><div class="tl-code-header"><span class="tl-code-lang">${s.lang||'python'}</span><button class="tl-code-copy" onclick="copyCode('${id}')">Copy</button></div><pre id="${id}"><code>${highlight(escHtml(s.src))}</code></pre></div>${out}`;
+    return `<div class="tl-code"><div class="tl-code-header"><span class="tl-code-lang">${lang}</span><button class="tl-code-copy" onclick="copyCode('${id}')">Copy</button></div><pre id="${id}"><code>${highlight(escHtml(s.src),lang)}</code></pre></div>${out}`;
   }
   if(s.type==='exercise'){
     const hid='h'+Math.random().toString(36).slice(2,7);
     const sid='s'+Math.random().toString(36).slice(2,7);
-    const sol=s.solution?`<button class="tl-solution-toggle" onclick="var el=document.getElementById('${sid}');el.classList.toggle('open');this.textContent=el.classList.contains('open')?'Hide Solution':'Show Solution'">Show Solution</button><div class="tl-solution-body" id="${sid}"><div class="tl-code" style="margin-top:.75rem;"><div class="tl-code-header"><span class="tl-code-lang">solution</span></div><pre><code>${highlight(escHtml(s.solution))}</code></pre></div></div>`:'';
+    const lang=s.lang||'python';
+    const sol=s.solution?`<button class="tl-solution-toggle" onclick="var el=document.getElementById('${sid}');el.classList.toggle('open');this.textContent=el.classList.contains('open')?'Hide Solution':'Show Solution'">Show Solution</button><div class="tl-solution-body" id="${sid}"><div class="tl-code" style="margin-top:.75rem;"><div class="tl-code-header"><span class="tl-code-lang">solution</span></div><pre><code>${highlight(escHtml(s.solution),lang)}</code></pre></div></div>`:'';
     return `<div class="tl-exercise"><div class="tl-exercise-label">✏ Exercise</div><div class="tl-exercise-title">${s.title||'Practice'}</div>${s.body||''}<div class="tl-exercise-hint"><button class="tl-hint-toggle" onclick="var el=document.getElementById('${hid}');el.classList.toggle('open');this.textContent=el.classList.contains('open')?'Hide Hint':'Show Hint'">Show Hint</button>${sol}<div class="tl-hint-body" id="${hid}">${s.hint||''}</div></div></div>`;
   }
   return '';
 }
 function escHtml(t){return (t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function highlight(c){
+function highlight(c, lang){
+  if(lang==='sql'){
+    return c
+      .replace(/(--[^\n]*)/g,'<span class="cm">$1</span>')
+      .replace(/\b(SELECT|FROM|WHERE|GROUP\s+BY|ORDER\s+BY|HAVING|LIMIT|OFFSET|INSERT|INTO|VALUES|UPDATE|SET|DELETE|CREATE|ALTER|DROP|TABLE|INDEX|VIEW|CONSTRAINT|ADD|COLUMN|PRIMARY\s+KEY|FOREIGN\s+KEY|REFERENCES|DEFAULT|UNIQUE|NOT\s+NULL|CHECK|SERIAL|INNER\s+JOIN|LEFT\s+JOIN|RIGHT\s+JOIN|FULL\s+OUTER\s+JOIN|CROSS\s+JOIN|JOIN|ON|USING|AS|WITH|RECURSIVE|CASE|WHEN|THEN|ELSE|END|AND|OR|NOT|IN|EXISTS|BETWEEN|LIKE|IS\s+NULL|IS\s+NOT\s+NULL|DISTINCT|ASC|DESC|OVER|PARTITION\s+BY|ROWS|RANGE|UNBOUNDED|PRECEDING|FOLLOWING|CURRENT\s+ROW|NULLS|EXPLAIN|ANALYZE|REFRESH|MATERIALIZED|CONCURRENTLY)\b/gi,'<span class="kw">$1</span>')
+      .replace(/\b(COUNT|SUM|AVG|MIN|MAX|COALESCE|NULLIF|CAST|ROUND|TRUNC|ABS|NOW|DATE_TRUNC|EXTRACT|ROW_NUMBER|RANK|DENSE_RANK|NTILE|LAG|LEAD|FIRST_VALUE|LAST_VALUE|NTH_VALUE|GENERATE_SERIES|STRING_AGG|ARRAY_AGG)\b/gi,'<span class="bi">$1</span>')
+      .replace(/(&quot;[^&]*?&quot;|&#39;[^&]*?&#39;)/g,'<span class="st">$1</span>')
+      .replace(/\b(\d+\.?\d*)\b/g,'<span class="nm">$1</span>');
+  }
   return c
     .replace(/(#[^\n]*)/g,'<span class="cm">$1</span>')
     .replace(/\b(def|class|return|import|from|as|if|elif|else|for|while|in|not|and|or|is|None|True|False|try|except|finally|raise|with|pass|break|continue|lambda|yield|global|nonlocal|del|assert)\b/g,'<span class="kw">$1</span>')

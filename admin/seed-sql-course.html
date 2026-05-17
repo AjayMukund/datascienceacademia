@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seed SQL Course — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
+      <div class="portal-page-title">Seed SQL for Data Science</div>
+      <div class="portal-page-sub">One-click import of 5 weeks × 30 lessons (25 text + 5 quizzes) with 25 quiz questions</div>
+    </div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Status</div>
+    <div id="status-area" style="font-family:var(--fb);font-size:.85rem;color:var(--fog2);line-height:1.8;">
+      Waiting to run…
+    </div>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Target Course</div>
+    <p style="font-family:var(--fb);font-size:.83rem;color:var(--fog2);margin-bottom:1rem;">
+      Select the SQL for Data Science course to seed into. Create it first in the Course Editor if it doesn't appear.
+    </p>
+    <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field-group" style="margin-bottom:0;flex:1;min-width:220px;">
+        <label class="flbl">Course</label>
+        <select class="fi" id="course-sel"><option value="">Loading courses…</option></select>
+      </div>
+      <div>
+        <label class="flbl">Action</label>
+        <div style="display:flex;gap:.5rem;">
+          <button class="portal-btn-ghost" id="btn-preview" onclick="preview()" style="font-size:.82rem;">Preview plan</button>
+          <button class="portal-btn" id="btn-seed" onclick="runSeed()" disabled>Seed 30 lessons</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-wrap" id="preview-card" style="display:none;">
+    <div class="chart-title">Lesson Plan (30 lessons)</div>
+    <div id="preview-body" style="overflow-x:auto;"></div>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+/* ── Lesson plan ────────────────────────────────────────────────────────────
+   [slug, title, duration_mins, type]
+   type = 'text' (renders from sql-content.js) or 'quiz' (renders from quiz_questions table)
+─────────────────────────────────────────────────────────────────────────── */
+const SQL_MODULES = [
+  {
+    title: 'Week 1 — SQL Foundations',
+    lessons: [
+      ['sql-w1-l1',   'Relational Databases & the Data Model',        14, 'text'],
+      ['sql-w1-l2',   'SELECT, FROM & Column Aliases',                 14, 'text'],
+      ['sql-w1-l3',   'Filtering Rows with WHERE',                     16, 'text'],
+      ['sql-w1-l4',   'Sorting & Paging — ORDER BY, LIMIT, OFFSET',   14, 'text'],
+      ['sql-w1-l5',   'NULL Values, COALESCE & NULLIF',                14, 'text'],
+      ['sql-w1-quiz', 'Week 1 Quiz — SQL Foundations',                 10, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 2 — Aggregation & Grouping',
+    lessons: [
+      ['sql-w2-l1',   'Aggregate Functions — COUNT, SUM, AVG, MIN, MAX', 14, 'text'],
+      ['sql-w2-l2',   'GROUP BY — Summarising by Category',            16, 'text'],
+      ['sql-w2-l3',   'HAVING — Filtering Groups',                     14, 'text'],
+      ['sql-w2-l4',   'DISTINCT & CAST',                               12, 'text'],
+      ['sql-w2-l5',   'Building a KPI Report',                         14, 'text'],
+      ['sql-w2-quiz', 'Week 2 Quiz — Aggregation & Grouping',          10, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 3 — JOINs & Relationships',
+    lessons: [
+      ['sql-w3-l1',   'Keys & Relationships',                          14, 'text'],
+      ['sql-w3-l2',   'INNER JOIN',                                    16, 'text'],
+      ['sql-w3-l3',   'LEFT, RIGHT & FULL OUTER JOIN',                 16, 'text'],
+      ['sql-w3-l4',   'Self-Joins & CROSS JOINs',                      14, 'text'],
+      ['sql-w3-l5',   'Multi-Table Joins',                             14, 'text'],
+      ['sql-w3-quiz', 'Week 3 Quiz — JOINs & Relationships',           10, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 4 — Subqueries & Window Functions',
+    lessons: [
+      ['sql-w4-l1',   'Subqueries — Scalar, IN & Correlated',          16, 'text'],
+      ['sql-w4-l2',   'CTEs — WITH Clause & Readable Pipelines',       16, 'text'],
+      ['sql-w4-l3',   'ROW_NUMBER, RANK & DENSE_RANK',                 16, 'text'],
+      ['sql-w4-l4',   'LAG, LEAD & Running Totals',                    16, 'text'],
+      ['sql-w4-l5',   'Window Function Challenges',                    14, 'text'],
+      ['sql-w4-quiz', 'Week 4 Quiz — Subqueries & Window Functions',   10, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 5 — Optimisation & Python Integration',
+    lessons: [
+      ['sql-w5-l1',   'Indexes & B-Tree Internals',                    16, 'text'],
+      ['sql-w5-l2',   'EXPLAIN ANALYZE & Query Plans',                 16, 'text'],
+      ['sql-w5-l3',   'Views & Materialised Views',                    14, 'text'],
+      ['sql-w5-l4',   'Python + PostgreSQL with psycopg2 & pandas',    18, 'text'],
+      ['sql-w5-l5',   'Capstone — E-commerce Analytics Report',        25, 'text'],
+      ['sql-w5-quiz', 'Week 5 Quiz — Optimisation & Python Integration', 10, 'quiz'],
+    ]
+  },
+];
+
+/* ── Quiz questions ──────────────────────────────────────────────────────────
+   Keyed by quiz slug. Each question: { q, opts:[4 strings], ans:correct_index }
+─────────────────────────────────────────────────────────────────────────── */
+const QUIZ_QUESTIONS = {
+  'sql-w1-quiz': [
+    {
+      q: 'What does SELECT * FROM employees return?',
+      opts: ['All columns from the employees table','Only the first row','The count of rows','The column names only'],
+      ans: 0
+    },
+    {
+      q: 'Which clause is used to filter rows in a SELECT statement?',
+      opts: ['WHERE','GROUP BY','ORDER BY','HAVING'],
+      ans: 0
+    },
+    {
+      q: 'What does NULL represent in SQL?',
+      opts: ['An unknown or missing value','An empty string','The number zero','Boolean false'],
+      ans: 0
+    },
+    {
+      q: 'Which ORDER BY clause sorts salaries from highest to lowest?',
+      opts: ['ORDER BY salary DESC','ORDER BY salary ASC','ORDER BY salary TOP','SORT BY salary DESC'],
+      ans: 0
+    },
+    {
+      q: 'What does COALESCE(salary, 0) return when salary IS NULL?',
+      opts: ['0','NULL','salary','An error'],
+      ans: 0
+    },
+  ],
+  'sql-w2-quiz': [
+    {
+      q: 'Which function returns the number of non-NULL values in a column?',
+      opts: ['COUNT(column)','SUM(column)','AVG(column)','TOTAL(column)'],
+      ans: 0
+    },
+    {
+      q: 'You want the average salary per department. Which clause produces one row per department?',
+      opts: ['GROUP BY department_id','HAVING department_id','WHERE department_id','ORDER BY department_id'],
+      ans: 0
+    },
+    {
+      q: 'HAVING filters results…',
+      opts: ['After aggregation, on groups','Before aggregation, on rows','On JOIN conditions','On ORDER BY output'],
+      ans: 0
+    },
+    {
+      q: 'What does SELECT DISTINCT city FROM customers do?',
+      opts: ['Returns each unique city once','Counts distinct cities','Removes NULL cities','Groups by city'],
+      ans: 0
+    },
+    {
+      q: 'Which query correctly finds departments with more than 3 employees?',
+      opts: [
+        'SELECT dept_id, COUNT(*) FROM employees GROUP BY dept_id HAVING COUNT(*) > 3',
+        'SELECT dept_id, COUNT(*) FROM employees WHERE COUNT(*) > 3 GROUP BY dept_id',
+        'SELECT dept_id FROM employees HAVING COUNT(*) > 3',
+        'SELECT dept_id, COUNT(*) FROM employees GROUP BY dept_id WHERE COUNT(*) > 3'
+      ],
+      ans: 0
+    },
+  ],
+  'sql-w3-quiz': [
+    {
+      q: 'An INNER JOIN returns…',
+      opts: [
+        'Only rows where both tables have a matching key',
+        'All rows from the left table',
+        'All rows from both tables',
+        'Only unmatched rows'
+      ],
+      ans: 0
+    },
+    {
+      q: 'Which JOIN preserves all rows from the left table even when there is no match?',
+      opts: ['LEFT JOIN','INNER JOIN','CROSS JOIN','RIGHT JOIN'],
+      ans: 0
+    },
+    {
+      q: 'A CROSS JOIN produces…',
+      opts: [
+        'The Cartesian product of both tables',
+        'Only matching rows',
+        'All rows from the right table',
+        'NULL for unmatched left rows'
+      ],
+      ans: 0
+    },
+    {
+      q: 'A self-join is used to…',
+      opts: [
+        'Join a table to itself',
+        'Join all tables in a schema',
+        'Join without an ON clause',
+        'Produce a cross product'
+      ],
+      ans: 0
+    },
+    {
+      q: 'How many rows result from an INNER JOIN between a 5-row table and a 3-row table when only 2 pairs match?',
+      opts: ['2','8','15','5'],
+      ans: 0
+    },
+  ],
+  'sql-w4-quiz': [
+    {
+      q: 'A correlated subquery…',
+      opts: [
+        'References a column from the outer query',
+        'Runs once and returns a single value',
+        'Is always faster than a JOIN',
+        'Cannot use WHERE'
+      ],
+      ans: 0
+    },
+    {
+      q: 'CTEs (Common Table Expressions) are introduced with which keyword?',
+      opts: ['WITH','SUBQUERY','DEFINE','TEMP'],
+      ans: 0
+    },
+    {
+      q: 'ROW_NUMBER() OVER (PARTITION BY dept_id ORDER BY salary DESC) assigns…',
+      opts: [
+        'A unique sequential rank within each department by salary descending',
+        'A global rank across all employees',
+        'The same rank to employees with equal salary',
+        'A random number per row'
+      ],
+      ans: 0
+    },
+    {
+      q: 'What is the key difference between RANK() and DENSE_RANK()?',
+      opts: [
+        'RANK() skips numbers after ties; DENSE_RANK() does not',
+        'DENSE_RANK() skips numbers after ties; RANK() does not',
+        'They produce identical results',
+        'RANK() only works with ORDER BY ASC'
+      ],
+      ans: 0
+    },
+    {
+      q: 'Which window function returns the value from the previous row in the result set?',
+      opts: ['LAG()','LEAD()','FIRST_VALUE()','ROW_NUMBER()'],
+      ans: 0
+    },
+  ],
+  'sql-w5-quiz': [
+    {
+      q: 'A B-tree index primarily speeds up…',
+      opts: [
+        'Equality and range lookups on indexed columns',
+        'Full-table aggregations',
+        'CROSS JOINs',
+        'INSERT statements'
+      ],
+      ans: 0
+    },
+    {
+      q: 'EXPLAIN ANALYZE (vs plain EXPLAIN) does which of the following?',
+      opts: [
+        'Runs the query and shows actual execution statistics',
+        'Shows the plan without executing the query',
+        'Optimises the query automatically',
+        'Creates an index for the query'
+      ],
+      ans: 0
+    },
+    {
+      q: 'A materialised view differs from a regular view because it…',
+      opts: [
+        'Stores the result set on disk and must be refreshed manually',
+        'Is always up to date automatically',
+        'Cannot be queried with SELECT',
+        'Is computed fresh at query time like a regular view'
+      ],
+      ans: 0
+    },
+    {
+      q: 'Which psycopg2 call executes a parameterised query safely (preventing SQL injection)?',
+      opts: [
+        'cursor.execute(sql, (param,))',
+        'cursor.run(sql + str(param))',
+        'cursor.query(sql, param)',
+        'cursor.call(sql, param)'
+      ],
+      ans: 0
+    },
+    {
+      q: 'pd.read_sql(query, conn) returns…',
+      opts: ['A pandas DataFrame','A list of tuples','A Python dictionary','A psycopg2 cursor'],
+      ans: 0
+    },
+  ],
+};
+
+/* ── Helpers ──────────────────────────────────────────────────────────────── */
+function log(msg, cls=''){
+  const area = document.getElementById('status-area');
+  area.innerHTML += `<div style="color:${cls==='ok'?'var(--teal)':cls==='err'?'#f66':cls==='head'?'var(--cream)':'var(--fog2)'}">${msg}</div>`;
+  area.scrollTop = area.scrollHeight;
+}
+function toast(m,t='success'){
+  const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;
+  document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);
+}
+
+/* ── Load course list ─────────────────────────────────────────────────────── */
+document.addEventListener('portal:ready', async () => {
+  const {data: courses, error} = await supa.from('courses').select('id,title').order('title');
+  const sel = document.getElementById('course-sel');
+  if (error || !courses?.length) {
+    sel.innerHTML = '<option value="">No courses found</option>'; return;
+  }
+  sel.innerHTML = '<option value="">— pick a course —</option>';
+  courses.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id;
+    opt.textContent = c.title;
+    if (c.title.toLowerCase().includes('sql')) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  document.getElementById('btn-seed').disabled = false;
+});
+
+/* ── Preview table ────────────────────────────────────────────────────────── */
+function preview(){
+  const card = document.getElementById('preview-card');
+  card.style.display = 'block';
+  let totalMins = 0;
+  let html = `<table style="width:100%;border-collapse:collapse;font-family:var(--fb);font-size:.8rem;">
+    <thead><tr style="background:var(--fog2);color:var(--ink);">
+      <th style="padding:.4rem .6rem;text-align:left;">Slug</th>
+      <th style="padding:.4rem .6rem;text-align:left;">Title</th>
+      <th style="padding:.4rem .6rem;text-align:center;">Type</th>
+      <th style="padding:.4rem .6rem;text-align:right;">Mins</th>
+    </tr></thead><tbody>`;
+
+  SQL_MODULES.forEach((mod, mi) => {
+    html += `<tr><td colspan="4" style="padding:.5rem .6rem;background:var(--fog);color:var(--cream);font-weight:600;">${mod.title}</td></tr>`;
+    mod.lessons.forEach(([slug, title, mins, type]) => {
+      totalMins += mins;
+      const typeColor = type === 'quiz' ? 'var(--champ2)' : 'var(--teal)';
+      html += `<tr style="${mi%2===0?'':'background:rgba(255,255,255,.02)'}">
+        <td style="padding:.35rem .6rem;color:var(--teal);font-family:monospace;">${slug}</td>
+        <td style="padding:.35rem .6rem;color:var(--fog2);">${title}</td>
+        <td style="padding:.35rem .6rem;text-align:center;color:${typeColor};">${type}</td>
+        <td style="padding:.35rem .6rem;text-align:right;color:var(--fog2);">${mins}</td>
+      </tr>`;
+    });
+    const quizSlug = `sql-w${mi+1}-quiz`;
+    const qCount = QUIZ_QUESTIONS[quizSlug]?.length || 0;
+    if (qCount) {
+      html += `<tr><td colspan="4" style="padding:.25rem .6rem .5rem 2rem;color:var(--champ2);font-size:.75rem;">📝 ${qCount} quiz questions for ${quizSlug}</td></tr>`;
+    }
+  });
+
+  html += `</tbody><tfoot><tr style="border-top:1px solid var(--border);">
+    <td colspan="3" style="padding:.5rem .6rem;color:var(--cream);font-weight:600;">Total (5 modules, 30 lessons, 25 quiz questions)</td>
+    <td style="padding:.5rem .6rem;text-align:right;color:var(--cream);font-weight:600;">${totalMins} min</td>
+  </tr></tfoot></table>`;
+
+  document.getElementById('preview-body').innerHTML = html;
+  card.scrollIntoView({ behavior: 'smooth' });
+}
+
+/* ── Seeder ───────────────────────────────────────────────────────────────── */
+async function runSeed(){
+  const courseId = document.getElementById('course-sel').value;
+  if (!courseId){ toast('Pick a course first','error'); return; }
+
+  const btn = document.getElementById('btn-seed');
+  btn.disabled = true; btn.textContent = 'Running…';
+  document.getElementById('status-area').innerHTML = '';
+
+  try {
+    log('=== SQL COURSE SEEDER ===', 'head');
+    log(`Course ID: ${courseId}`);
+
+    /* Step 1 — Remove existing data ─────────────────────────────────────── */
+    log('Step 1 — Removing existing modules, lessons & quiz questions…');
+    const {data: existingMods} = await supa.from('modules').select('id').eq('course_id', courseId);
+    if (existingMods?.length) {
+      /* Collect all lesson IDs first */
+      const modIds = existingMods.map(m => m.id);
+      const {data: existingLessons} = await supa.from('lessons').select('id').in('module_id', modIds);
+      if (existingLessons?.length) {
+        const lessonIds = existingLessons.map(l => l.id);
+        await supa.from('quiz_questions').delete().in('lesson_id', lessonIds);
+        await supa.from('lessons').delete().in('module_id', modIds);
+      }
+      await supa.from('modules').delete().eq('course_id', courseId);
+      log(`  Removed ${existingMods.length} module(s) and their lessons/questions.`);
+    } else {
+      log('  No existing modules — clean slate.');
+    }
+
+    /* Step 2 — Insert modules, lessons & quiz questions ─────────────────── */
+    log('Step 2 — Inserting 5 modules, 30 lessons & 25 quiz questions…', 'head');
+    let totalLessons = 0, totalQuestions = 0;
+
+    for (let mi = 0; mi < SQL_MODULES.length; mi++) {
+      const mod = SQL_MODULES[mi];
+
+      const {data: modRow, error: modErr} = await supa.from('modules')
+        .insert({ course_id: courseId, title: mod.title, order_index: mi })
+        .select().single();
+      if (modErr) throw new Error(`Module insert failed: ${modErr.message}`);
+      log(`  [${mi+1}/5] Module "${mod.title}" → id ${modRow.id}`);
+
+      for (let li = 0; li < mod.lessons.length; li++) {
+        const [slug, title, mins, type] = mod.lessons[li];
+
+        const {data: lessonRow, error: lesErr} = await supa.from('lessons')
+          .insert({
+            module_id:     modRow.id,
+            title,
+            type,
+            content_url:   slug,
+            duration_mins: mins,
+            order_index:   li,
+          })
+          .select().single();
+        if (lesErr) throw new Error(`Lesson insert failed for "${title}": ${lesErr.message}`);
+        totalLessons++;
+
+        /* Insert quiz questions if this is a quiz lesson */
+        if (type === 'quiz') {
+          const questions = QUIZ_QUESTIONS[slug] || [];
+          if (questions.length) {
+            const qRows = questions.map((q, qi) => ({
+              lesson_id:    lessonRow.id,
+              question:     q.q,
+              options:      q.opts,
+              correct_index: q.ans,
+              order_index:  qi,
+            }));
+            const {error: qErr} = await supa.from('quiz_questions').insert(qRows);
+            if (qErr) throw new Error(`Quiz question insert failed for "${slug}": ${qErr.message}`);
+            log(`    📝 ${questions.length} quiz questions inserted for ${slug}`, 'ok');
+            totalQuestions += questions.length;
+          }
+        }
+      }
+
+      const textCount = mod.lessons.filter(l => l[3]==='text').length;
+      const quizCount = mod.lessons.filter(l => l[3]==='quiz').length;
+      log(`    └─ ${textCount} text lessons + ${quizCount} quiz inserted`, 'ok');
+    }
+
+    /* Step 3 — Publish course ────────────────────────────────────────────── */
+    log('Step 3 — Setting course status to "published"…');
+    const {error: statusErr} = await supa.from('courses').update({status:'published'}).eq('id',courseId);
+    if (statusErr) log(`  Warning: could not update status — ${statusErr.message}`, 'err');
+    else log('  Course marked as published.', 'ok');
+
+    log(`=== DONE — ${totalLessons} lessons + ${totalQuestions} quiz questions seeded ===`, 'ok');
+    toast(`${totalLessons} lessons and ${totalQuestions} quiz questions seeded`);
+
+    document.getElementById('status-area').innerHTML +=
+      `<div style="margin-top:1rem;"><a href="course-editor.html?id=${courseId}" class="portal-btn" style="display:inline-block;text-decoration:none;">Open in Course Editor →</a></div>`;
+
+  } catch(err) {
+    log(`ERROR: ${err.message}`, 'err');
+    toast(err.message, 'error');
+  }
+
+  btn.disabled = false; btn.textContent = 'Seed 30 lessons';
+}
+</script>
+</body></html>
