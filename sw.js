@@ -1,4 +1,4 @@
-const CACHE = 'dsa-v2';
+const CACHE = 'dsa-v3';
 const PRECACHE = [
   '/',
   '/datascienceacademia/',
