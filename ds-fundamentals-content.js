@@ -1,3 +1,4 @@
+(function(){
 'use strict';
 window.DSA_LESSON_CONTENT = window.DSA_LESSON_CONTENT || {};
 const L = window.DSA_LESSON_CONTENT;
@@ -1674,3 +1675,5 @@ print(f"3. {top_cat} drives the highest revenue — increase inventory and targe
 print(f"4. {high_ret} has the highest return rate ({ret_rate.max():.0%}) — review product descriptions or sizing guides.")` }
   ]
 };
+
+})();

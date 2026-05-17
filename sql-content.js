@@ -2,6 +2,7 @@
    DSA Lesson Content — SQL for Data Science (5 weeks, 25 lessons)
    Appends to window.DSA_LESSON_CONTENT (initialised by lesson-content.js)
 ════════════════════════════════════════════════════════════════════════════ */
+(function(){
 'use strict';
 window.DSA_LESSON_CONTENT = window.DSA_LESSON_CONTENT || {};
 const L = window.DSA_LESSON_CONTENT;
@@ -2978,3 +2979,5 @@ loaded = pd.read_csv('monthly_report.csv')
 print(loaded); print(f"Total revenue: ₹{loaded['revenue'].sum():,.0f}")` }
   ]
 };
+
+})();

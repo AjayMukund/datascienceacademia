@@ -2,6 +2,7 @@
    DSA Lesson Content — Python Programming (8 weeks, 39 lessons)
    Each key maps to lesson.content_url in Supabase (type = 'text')
 ════════════════════════════════════════════════════════════════════════════ */
+(function(){
 'use strict';
 window.DSA_LESSON_CONTENT = {};
 const L = window.DSA_LESSON_CONTENT;
@@ -5134,3 +5135,5 @@ plt.title("At-Risk Rate Trend"); plt.ylabel("At-Risk %")
 plt.savefig("trend.png", dpi=150); plt.show()` }
   ]
 };
+
+})();
