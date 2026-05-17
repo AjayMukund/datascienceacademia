@@ -39,12 +39,11 @@
     <div>
       <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
       <div class="portal-page-title">Seed Python Course</div>
-      <div class="portal-page-sub">One-click import of all 8 weeks × 39 lessons into Supabase</div>
+      <div class="portal-page-sub">One-click import of 8 weeks × 47 lessons (39 text + 8 quizzes) with 40 quiz questions</div>
     </div>
     <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
   </div>
 
-  <!-- Status card -->
   <div class="chart-wrap" style="margin-bottom:1.5rem;">
     <div class="chart-title">Status</div>
     <div id="status-area" style="font-family:var(--fb);font-size:.85rem;color:var(--fog2);line-height:1.8;">
@@ -52,7 +51,6 @@
     </div>
   </div>
 
-  <!-- Course picker -->
   <div class="chart-wrap" style="margin-bottom:1.5rem;">
     <div class="chart-title">Target Course</div>
     <p style="font-family:var(--fb);font-size:.83rem;color:var(--fog2);margin-bottom:1rem;">
@@ -67,15 +65,14 @@
         <label class="flbl">Action</label>
         <div style="display:flex;gap:.5rem;">
           <button class="portal-btn-ghost" id="btn-preview" onclick="preview()" style="font-size:.82rem;">Preview plan</button>
-          <button class="portal-btn" id="btn-seed" onclick="runSeed()" disabled>Seed 39 lessons</button>
+          <button class="portal-btn" id="btn-seed" onclick="runSeed()" disabled>Seed 47 lessons</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Preview table -->
   <div class="chart-wrap" id="preview-card" style="display:none;">
-    <div class="chart-title">Lesson Plan (39 lessons)</div>
+    <div class="chart-title">Lesson Plan (47 lessons)</div>
     <div id="preview-body" style="overflow-x:auto;"></div>
   </div>
 </main>
@@ -88,158 +85,478 @@
 <script src="../js/portal.js"></script>
 <script src="../script.js"></script>
 <script>
-/* ─── Lesson plan ──────────────────────────────────────────────────────────
-   Each module has a title and a lessons array.
-   lesson: [slug, title, duration_mins]
-   slug → content_url value stored in Supabase; matched by lesson-content.js
+/* ── Lesson plan ────────────────────────────────────────────────────────────
+   [slug, title, duration_mins, type]
+   type = 'text' (renders from lesson-content.js) or 'quiz' (quiz_questions table)
 ─────────────────────────────────────────────────────────────────────────── */
 const PYTHON_MODULES = [
   {
     title: 'Week 1 — Python Fundamentals',
     lessons: [
-      ['python-w1-l1', 'Setup & Your First Python Program',     12],
-      ['python-w1-l2', 'Variables, Numbers & Strings',          14],
-      ['python-w1-l3', 'String Methods & Formatting',           16],
-      ['python-w1-l4', 'User Input & Type Conversion',          12],
-      ['python-w1-l5', 'Operators & Expressions',               14],
+      ['python-w1-l1',   'Setup & Your First Python Program',    12, 'text'],
+      ['python-w1-l2',   'Variables, Numbers & Strings',          14, 'text'],
+      ['python-w1-l3',   'String Methods & Formatting',           16, 'text'],
+      ['python-w1-l4',   'User Input & Type Conversion',          12, 'text'],
+      ['python-w1-l5',   'Operators & Expressions',               14, 'text'],
+      ['python-w1-quiz', 'Week 1 Quiz — Python Fundamentals',     10, 'quiz'],
     ]
   },
   {
     title: 'Week 2 — Control Flow & Functions',
     lessons: [
-      ['python-w2-l1', 'if / elif / else',                      14],
-      ['python-w2-l2', 'while Loops',                           16],
-      ['python-w2-l3', 'for Loops & range()',                   14],
-      ['python-w2-l4', 'Defining & Calling Functions',          12],
-      ['python-w2-l5', 'Scope, Return Values & Defaults',       14],
+      ['python-w2-l1',   'if / elif / else',                      14, 'text'],
+      ['python-w2-l2',   'while Loops',                           16, 'text'],
+      ['python-w2-l3',   'for Loops & range()',                   14, 'text'],
+      ['python-w2-l4',   'Defining & Calling Functions',          12, 'text'],
+      ['python-w2-l5',   'Scope, Return Values & Defaults',       14, 'text'],
+      ['python-w2-quiz', 'Week 2 Quiz — Control Flow & Functions',10, 'quiz'],
     ]
   },
   {
     title: 'Week 3 — Data Structures',
     lessons: [
-      ['python-w3-l1', 'Lists — Creation & Indexing',           16],
-      ['python-w3-l2', 'List Methods & Slicing',                14],
-      ['python-w3-l3', 'Tuples & Immutability',                 14],
-      ['python-w3-l4', 'Dictionaries',                          12],
-      ['python-w3-l5', 'List & Dict Comprehensions',            14],
+      ['python-w3-l1',   'Lists — Creation & Indexing',           16, 'text'],
+      ['python-w3-l2',   'List Methods & Slicing',                14, 'text'],
+      ['python-w3-l3',   'Tuples & Immutability',                 14, 'text'],
+      ['python-w3-l4',   'Dictionaries',                          12, 'text'],
+      ['python-w3-l5',   'List & Dict Comprehensions',            14, 'text'],
+      ['python-w3-quiz', 'Week 3 Quiz — Data Structures',         10, 'quiz'],
     ]
   },
   {
     title: 'Week 4 — Intermediate Python',
     lessons: [
-      ['python-w4-l1', 'Higher-Order Functions & Lambdas',      14],
-      ['python-w4-l2', 'Modules & the Standard Library',        16],
-      ['python-w4-l3', 'Working with Sets',                     14],
-      ['python-w4-l4', 'Sorting, zip & enumerate',             12],
-      ['python-w4-l5', 'Sets & Frozen Sets Deep Dive',         12],
+      ['python-w4-l1',   'Higher-Order Functions & Lambdas',      14, 'text'],
+      ['python-w4-l2',   'Modules & the Standard Library',        16, 'text'],
+      ['python-w4-l3',   'Working with Sets',                     14, 'text'],
+      ['python-w4-l4',   'Sorting, zip & enumerate',             12, 'text'],
+      ['python-w4-l5',   'Sets & Frozen Sets Deep Dive',         12, 'text'],
+      ['python-w4-quiz', 'Week 4 Quiz — Intermediate Python',    10, 'quiz'],
     ]
   },
   {
     title: 'Week 5 — Object-Oriented Programming',
     lessons: [
-      ['python-w5-l1', 'Classes & Objects',                     20],
-      ['python-w5-l2', '__init__ & Special Methods',            18],
-      ['python-w5-l3', 'Inheritance',                           18],
-      ['python-w5-l4', 'Encapsulation & Polymorphism',          12],
-      ['python-w5-l5', 'Library Management Mini-Project',       12],
+      ['python-w5-l1',   'Classes & Objects',                     20, 'text'],
+      ['python-w5-l2',   '__init__ & Special Methods',            18, 'text'],
+      ['python-w5-l3',   'Inheritance',                           18, 'text'],
+      ['python-w5-l4',   'Encapsulation & Polymorphism',          12, 'text'],
+      ['python-w5-l5',   'Library Management Mini-Project',       12, 'text'],
+      ['python-w5-quiz', 'Week 5 Quiz — Object-Oriented Programming', 10, 'quiz'],
     ]
   },
   {
     title: 'Week 6 — Files, Exceptions & Context Managers',
     lessons: [
-      ['python-w6-l1', 'Reading & Writing Files',               18],
-      ['python-w6-l2', 'Working with CSV Files',                15],
-      ['python-w6-l3', 'JSON — Exchanging Structured Data',     12],
-      ['python-w6-l4', 'Exception Handling — try/except/finally', 18],
-      ['python-w6-l5', 'Context Managers & the with Statement', 12],
+      ['python-w6-l1',   'Reading & Writing Files',               18, 'text'],
+      ['python-w6-l2',   'Working with CSV Files',                15, 'text'],
+      ['python-w6-l3',   'JSON — Exchanging Structured Data',     12, 'text'],
+      ['python-w6-l4',   'Exception Handling — try/except/finally', 18, 'text'],
+      ['python-w6-l5',   'Context Managers & the with Statement', 12, 'text'],
+      ['python-w6-quiz', 'Week 6 Quiz — Files & Exceptions',      10, 'quiz'],
     ]
   },
   {
     title: 'Week 7 — NumPy & Pandas',
     lessons: [
-      ['python-w7-l1', 'NumPy Arrays — The Engine of Scientific Python', 20],
-      ['python-w7-l2', 'Broadcasting & Vectorisation',          18],
-      ['python-w7-l3', 'Pandas DataFrames',                     20],
-      ['python-w7-l4', 'Selecting Data with loc & iloc',        15],
-      ['python-w7-l5', 'groupby & Pivot Tables',                12],
+      ['python-w7-l1',   'NumPy Arrays — The Engine of Scientific Python', 20, 'text'],
+      ['python-w7-l2',   'Broadcasting & Vectorisation',          18, 'text'],
+      ['python-w7-l3',   'Pandas DataFrames',                     20, 'text'],
+      ['python-w7-l4',   'Selecting Data with loc & iloc',        15, 'text'],
+      ['python-w7-l5',   'groupby & Pivot Tables',                12, 'text'],
+      ['python-w7-quiz', 'Week 7 Quiz — NumPy & Pandas',          10, 'quiz'],
     ]
   },
   {
     title: 'Week 8 — Matplotlib & Capstone',
     lessons: [
-      ['python-w8-l1', 'Matplotlib — Telling Stories with Data', 18],
-      ['python-w8-l2', 'Subplots & Chart Customisation',        15],
-      ['python-w8-l3', 'Exploratory Data Analysis Workflow',    12],
-      ['python-w8-l4', 'Capstone Project — Data Science Pipeline', 25],
+      ['python-w8-l1',   'Matplotlib — Telling Stories with Data', 18, 'text'],
+      ['python-w8-l2',   'Subplots & Chart Customisation',        15, 'text'],
+      ['python-w8-l3',   'Exploratory Data Analysis Workflow',    12, 'text'],
+      ['python-w8-l4',   'Capstone Project — Data Science Pipeline', 25, 'text'],
+      ['python-w8-quiz', 'Week 8 Quiz — Matplotlib & Capstone',   10, 'quiz'],
     ]
   },
 ];
 
+/* ── Quiz questions ──────────────────────────────────────────────────────────
+   { q, opts:[4 strings], ans:correct_index }
+─────────────────────────────────────────────────────────────────────────── */
+const QUIZ_QUESTIONS = {
+  'python-w1-quiz': [
+    {
+      q: 'Which of the following is a valid Python variable name?',
+      opts: ['my_var', '1var', 'my-var', 'class'],
+      ans: 0
+    },
+    {
+      q: 'What does type(3.14) return?',
+      opts: ["<class 'float'>", "<class 'int'>", "<class 'str'>", "<class 'double'>"],
+      ans: 0
+    },
+    {
+      q: 'Which string method converts all characters to uppercase?',
+      opts: ['.upper()', '.toUpper()', '.uppercase()', '.toUpperCase()'],
+      ans: 0
+    },
+    {
+      q: 'What does int("42") return?',
+      opts: ['42', '"42"', '42.0', 'TypeError'],
+      ans: 0
+    },
+    {
+      q: 'Which operator tests whether two values are equal in Python?',
+      opts: ['==', '=', '===', '!='],
+      ans: 0
+    },
+  ],
+  'python-w2-quiz': [
+    {
+      q: 'What does the elif keyword stand for?',
+      opts: ['else if', 'end if', 'else loop', 'extended if'],
+      ans: 0
+    },
+    {
+      q: 'What is the output of: for i in range(3): print(i)?',
+      opts: ['0 1 2', '1 2 3', '0 1 2 3', '1 2'],
+      ans: 0
+    },
+    {
+      q: 'Which keyword exits a loop immediately?',
+      opts: ['break', 'exit', 'stop', 'pass'],
+      ans: 0
+    },
+    {
+      q: 'In def greet(name="World"):, what is "World"?',
+      opts: ['A default parameter value', 'A required argument', 'A global variable', 'A return value'],
+      ans: 0
+    },
+    {
+      q: 'Which keyword sends a value back from a function to its caller?',
+      opts: ['return', 'send', 'output', 'give'],
+      ans: 0
+    },
+  ],
+  'python-w3-quiz': [
+    {
+      q: 'Which of the following creates an empty list?',
+      opts: ['[]', '{}', '()', 'list{}'],
+      ans: 0
+    },
+    {
+      q: 'What does my_list[-1] return?',
+      opts: ['The last element', 'The first element', 'An IndexError', 'None'],
+      ans: 0
+    },
+    {
+      q: 'Which Python data structure is immutable (cannot be modified after creation)?',
+      opts: ['tuple', 'list', 'dict', 'set'],
+      ans: 0
+    },
+    {
+      q: 'What does {k: v for k, v in pairs} create?',
+      opts: ['A dictionary', 'A set', 'A list', 'A tuple'],
+      ans: 0
+    },
+    {
+      q: 'What is the output of len({"a": 1, "b": 2, "c": 3})?',
+      opts: ['3', '6', '2', "{'a','b','c'}"],
+      ans: 0
+    },
+  ],
+  'python-w4-quiz': [
+    {
+      q: 'What does lambda x: x * 2 create?',
+      opts: [
+        'An anonymous function that doubles its input',
+        'A named function called lambda',
+        'A list comprehension',
+        'A class'
+      ],
+      ans: 0
+    },
+    {
+      q: 'Which built-in function applies a function to every item in an iterable?',
+      opts: ['map()', 'filter()', 'reduce()', 'apply()'],
+      ans: 0
+    },
+    {
+      q: 'What does import random do?',
+      opts: [
+        'Loads the random module from the standard library',
+        'Generates a random number immediately',
+        'Installs the random package',
+        'Creates a global random variable'
+      ],
+      ans: 0
+    },
+    {
+      q: 'What is the result of sorted([3, 1, 2], reverse=True)?',
+      opts: ['[3, 2, 1]', '[1, 2, 3]', '[3, 1, 2]', 'Error'],
+      ans: 0
+    },
+    {
+      q: 'Which is a characteristic of a Python set?',
+      opts: [
+        'Unordered and contains only unique values',
+        'Ordered and allows duplicates',
+        'Immutable by default',
+        'Supports integer keys only'
+      ],
+      ans: 0
+    },
+  ],
+  'python-w5-quiz': [
+    {
+      q: 'What is the purpose of __init__ in a Python class?',
+      opts: [
+        "Initialise the instance's attributes when it is created",
+        'Define class-level variables shared by all instances',
+        'Destroy the object when it goes out of scope',
+        'Convert the object to a string'
+      ],
+      ans: 0
+    },
+    {
+      q: 'What does class Dog(Animal): mean?',
+      opts: [
+        'Dog inherits from Animal',
+        'Dog contains an Animal attribute',
+        'Dog imports Animal',
+        'Dog is an alias for Animal'
+      ],
+      ans: 0
+    },
+    {
+      q: 'Which OOP concept hides internal state and exposes only a controlled interface?',
+      opts: ['Encapsulation', 'Inheritance', 'Polymorphism', 'Composition'],
+      ans: 0
+    },
+    {
+      q: 'What is method overriding?',
+      opts: [
+        'Redefining an inherited method in a subclass',
+        'Calling a method more than once',
+        'Defining two methods with the same name in one class',
+        'Importing a method from another module'
+      ],
+      ans: 0
+    },
+    {
+      q: 'What does self refer to inside an instance method?',
+      opts: [
+        'The current instance of the class',
+        'The class itself',
+        'The parent class',
+        'A global variable named self'
+      ],
+      ans: 0
+    },
+  ],
+  'python-w6-quiz': [
+    {
+      q: "Which file mode opens a file for reading only?",
+      opts: ["'r'", "'w'", "'a'", "'x'"],
+      ans: 0
+    },
+    {
+      q: 'What does the with statement guarantee when working with files?',
+      opts: [
+        'The file is closed automatically when the block exits',
+        'The file is opened in write mode',
+        'The block runs in a separate thread',
+        'The code executes only once'
+      ],
+      ans: 0
+    },
+    {
+      q: 'Which exception is raised when Python cannot find the specified file?',
+      opts: ['FileNotFoundError', 'IOError', 'ValueError', 'RuntimeError'],
+      ans: 0
+    },
+    {
+      q: 'What does json.dumps(data) do?',
+      opts: [
+        'Converts a Python object to a JSON string',
+        'Writes JSON directly to a file',
+        'Parses a JSON string into a Python object',
+        'Removes JSON formatting (pretty-print → compact)'
+      ],
+      ans: 0
+    },
+    {
+      q: 'In a try / except / finally block, when does the finally block execute?',
+      opts: [
+        'Always — whether or not an exception occurred',
+        'Only when an exception occurs',
+        'Only when no exception occurs',
+        'Only when a specific exception type is raised'
+      ],
+      ans: 0
+    },
+  ],
+  'python-w7-quiz': [
+    {
+      q: 'What does np.array([1, 2, 3]) * 2 produce?',
+      opts: [
+        'array([2, 4, 6]) — element-wise multiplication',
+        'An error — arrays do not support *',
+        'array([1, 2, 3, 1, 2, 3]) — repeated concatenation',
+        '2'
+      ],
+      ans: 0
+    },
+    {
+      q: 'What is broadcasting in NumPy?',
+      opts: [
+        'Performing operations on arrays of different shapes without explicit loops',
+        'Sending array data across a network',
+        'Converting an array to a Python list',
+        'A special form of matrix multiplication'
+      ],
+      ans: 0
+    },
+    {
+      q: 'What is the most idiomatic way to view the first 5 rows of a DataFrame df?',
+      opts: ['df.head()', 'df.rows(5)', 'df.first(5)', 'df.show(5)'],
+      ans: 0
+    },
+    {
+      q: 'What is the key difference between .loc and .iloc?',
+      opts: [
+        '.loc uses labels; .iloc uses integer positions',
+        '.loc uses integer positions; .iloc uses labels',
+        'They produce identical results',
+        '.iloc is for columns only'
+      ],
+      ans: 0
+    },
+    {
+      q: "What does df.groupby('city')['sales'].sum() return?",
+      opts: [
+        'The total sales for each city',
+        'The number of distinct cities',
+        'The average sales across all cities',
+        'A filtered DataFrame containing only the city column'
+      ],
+      ans: 0
+    },
+  ],
+  'python-w8-quiz': [
+    {
+      q: 'Which Matplotlib function creates a line plot?',
+      opts: ['plt.plot()', 'plt.line()', 'plt.draw()', 'plt.render()'],
+      ans: 0
+    },
+    {
+      q: 'What does plt.subplot(2, 2, 1) do?',
+      opts: [
+        'Creates a 2×2 grid of subplots and activates the first panel',
+        'Draws a plot with 2 rows and 2 columns of data',
+        'Shows 2 separate figures with 2 subplots each',
+        'Divides the figure into 2 rows with 2 subplots in row 1'
+      ],
+      ans: 0
+    },
+    {
+      q: 'Which function adds a label to the x-axis in Matplotlib?',
+      opts: ['plt.xlabel()', 'plt.title()', 'plt.label()', 'plt.axis()'],
+      ans: 0
+    },
+    {
+      q: 'EDA stands for…',
+      opts: [
+        'Exploratory Data Analysis',
+        'Extended Data Arrays',
+        'Experimental Data Application',
+        'External Database Access'
+      ],
+      ans: 0
+    },
+    {
+      q: 'In a typical data science pipeline, which step comes after data cleaning?',
+      opts: [
+        'Exploratory analysis and feature engineering',
+        'Data collection',
+        'Model deployment',
+        'Report writing'
+      ],
+      ans: 0
+    },
+  ],
+};
+
+/* ── Helpers ──────────────────────────────────────────────────────────────── */
 function log(msg, cls=''){
   const area = document.getElementById('status-area');
   area.innerHTML += `<div style="color:${cls==='ok'?'var(--teal)':cls==='err'?'#f66':cls==='head'?'var(--cream)':'var(--fog2)'}">${msg}</div>`;
   area.scrollTop = area.scrollHeight;
 }
-
 function toast(m,t='success'){
-  const el=document.createElement('div');
-  el.className=`toast-item ${t}`;
-  el.textContent=m;
-  document.getElementById('toast').appendChild(el);
-  setTimeout(()=>el.remove(),3500);
+  const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;
+  document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);
 }
 
+/* ── Load course list ─────────────────────────────────────────────────────── */
 document.addEventListener('portal:ready', async () => {
   const {data: courses, error} = await supa.from('courses').select('id,title').order('title');
   const sel = document.getElementById('course-sel');
   if (error || !courses?.length) {
-    sel.innerHTML = '<option value="">No courses found</option>';
-    return;
+    sel.innerHTML = '<option value="">No courses found</option>'; return;
   }
   sel.innerHTML = '<option value="">— pick a course —</option>';
   courses.forEach(c => {
     const opt = document.createElement('option');
     opt.value = c.id;
     opt.textContent = c.title;
-    // pre-select if title contains "python"
     if (c.title.toLowerCase().includes('python')) opt.selected = true;
     sel.appendChild(opt);
   });
   document.getElementById('btn-seed').disabled = false;
 });
 
+/* ── Preview table ────────────────────────────────────────────────────────── */
 function preview(){
   const card = document.getElementById('preview-card');
   card.style.display = 'block';
-  let total = 0;
+  let totalMins = 0;
   let html = `<table style="width:100%;border-collapse:collapse;font-family:var(--fb);font-size:.8rem;">
     <thead><tr style="background:var(--fog2);color:var(--ink);">
-      <th style="padding:.4rem .6rem;text-align:left;">Slug (content_url)</th>
+      <th style="padding:.4rem .6rem;text-align:left;">Slug</th>
       <th style="padding:.4rem .6rem;text-align:left;">Title</th>
+      <th style="padding:.4rem .6rem;text-align:center;">Type</th>
       <th style="padding:.4rem .6rem;text-align:right;">Mins</th>
     </tr></thead><tbody>`;
 
   PYTHON_MODULES.forEach((mod, mi) => {
-    html += `<tr><td colspan="3" style="padding:.5rem .6rem;background:var(--fog);color:var(--cream);font-weight:600;">${mod.title}</td></tr>`;
-    mod.lessons.forEach(([slug, title, mins]) => {
-      total += mins;
+    html += `<tr><td colspan="4" style="padding:.5rem .6rem;background:var(--fog);color:var(--cream);font-weight:600;">${mod.title}</td></tr>`;
+    mod.lessons.forEach(([slug, title, mins, type]) => {
+      totalMins += mins;
+      const typeColor = type === 'quiz' ? 'var(--champ2)' : 'var(--teal)';
       html += `<tr style="${mi%2===0?'':'background:rgba(255,255,255,.02)'}">
         <td style="padding:.35rem .6rem;color:var(--teal);font-family:monospace;">${slug}</td>
         <td style="padding:.35rem .6rem;color:var(--fog2);">${title}</td>
+        <td style="padding:.35rem .6rem;text-align:center;color:${typeColor};">${type}</td>
         <td style="padding:.35rem .6rem;text-align:right;color:var(--fog2);">${mins}</td>
       </tr>`;
     });
+    const quizSlug = `python-w${mi+1}-quiz`;
+    const qCount = QUIZ_QUESTIONS[quizSlug]?.length || 0;
+    if (qCount) {
+      html += `<tr><td colspan="4" style="padding:.25rem .6rem .5rem 2rem;color:var(--champ2);font-size:.75rem;">📝 ${qCount} quiz questions for ${quizSlug}</td></tr>`;
+    }
   });
 
   html += `</tbody><tfoot><tr style="border-top:1px solid var(--border);">
-    <td colspan="2" style="padding:.5rem .6rem;color:var(--cream);font-weight:600;">Total (8 modules, 39 lessons)</td>
-    <td style="padding:.5rem .6rem;text-align:right;color:var(--cream);font-weight:600;">${total} min</td>
+    <td colspan="3" style="padding:.5rem .6rem;color:var(--cream);font-weight:600;">Total (8 modules, 47 lessons, 40 quiz questions)</td>
+    <td style="padding:.5rem .6rem;text-align:right;color:var(--cream);font-weight:600;">${totalMins} min</td>
   </tr></tfoot></table>`;
 
   document.getElementById('preview-body').innerHTML = html;
-  document.getElementById('preview-card').scrollIntoView({behavior:'smooth'});
+  card.scrollIntoView({ behavior: 'smooth' });
 }
 
+/* ── Seeder ───────────────────────────────────────────────────────────────── */
 async function runSeed(){
   const courseId = document.getElementById('course-sel').value;
   if (!courseId){ toast('Pick a course first','error'); return; }
@@ -252,12 +569,16 @@ async function runSeed(){
     log('=== PYTHON COURSE SEEDER ===', 'head');
     log(`Course ID: ${courseId}`);
 
-    /* ── Step 1: Delete existing modules for this course ────────────── */
-    log('Step 1 — Removing existing modules & lessons for this course…');
+    /* Step 1 — Remove existing data ─────────────────────────────────────── */
+    log('Step 1 — Removing existing modules, lessons & quiz questions…');
     const {data: existingMods} = await supa.from('modules').select('id').eq('course_id', courseId);
     if (existingMods?.length) {
-      for (const mod of existingMods) {
-        await supa.from('lessons').delete().eq('module_id', mod.id);
+      const modIds = existingMods.map(m => m.id);
+      const {data: existingLessons} = await supa.from('lessons').select('id').in('module_id', modIds);
+      if (existingLessons?.length) {
+        const lessonIds = existingLessons.map(l => l.id);
+        await supa.from('quiz_questions').delete().in('lesson_id', lessonIds);
+        await supa.from('lessons').delete().in('module_id', modIds);
       }
       await supa.from('modules').delete().eq('course_id', courseId);
       log(`  Removed ${existingMods.length} existing module(s).`);
@@ -265,61 +586,76 @@ async function runSeed(){
       log('  No existing modules — clean slate.');
     }
 
-    /* ── Step 2: Insert modules and lessons ─────────────────────────── */
-    log('Step 2 — Inserting 8 modules and 39 lessons…', 'head');
-    let totalLessons = 0;
+    /* Step 2 — Insert modules, lessons & quiz questions ─────────────────── */
+    log('Step 2 — Inserting 8 modules, 47 lessons & 40 quiz questions…', 'head');
+    let totalLessons = 0, totalQuestions = 0;
 
     for (let mi = 0; mi < PYTHON_MODULES.length; mi++) {
       const mod = PYTHON_MODULES[mi];
 
-      /* Insert module */
       const {data: modRow, error: modErr} = await supa.from('modules')
         .insert({ course_id: courseId, title: mod.title, order_index: mi })
-        .select()
-        .single();
-
+        .select().single();
       if (modErr) throw new Error(`Module insert failed: ${modErr.message}`);
       log(`  [${mi+1}/8] Module "${mod.title}" → id ${modRow.id}`);
 
-      /* Insert lessons in this module */
-      const lessonRows = mod.lessons.map(([slug, title, mins], li) => ({
-        module_id:    modRow.id,
-        title,
-        type:         'text',
-        content_url:  slug,
-        duration_mins: mins,
-        order_index:  li,
-      }));
+      for (let li = 0; li < mod.lessons.length; li++) {
+        const [slug, title, mins, type] = mod.lessons[li];
 
-      const {error: lesErr} = await supa.from('lessons').insert(lessonRows);
-      if (lesErr) throw new Error(`Lesson insert failed for module "${mod.title}": ${lesErr.message}`);
+        const {data: lessonRow, error: lesErr} = await supa.from('lessons')
+          .insert({
+            module_id:     modRow.id,
+            title,
+            type,
+            content_url:   slug,
+            duration_mins: mins,
+            order_index:   li,
+          })
+          .select().single();
+        if (lesErr) throw new Error(`Lesson insert failed for "${title}": ${lesErr.message}`);
+        totalLessons++;
 
-      log(`    └─ ${mod.lessons.length} lessons inserted (${mod.lessons.map(l=>l[0]).join(', ')})`, 'ok');
-      totalLessons += mod.lessons.length;
+        /* Insert quiz questions if this is a quiz lesson */
+        if (type === 'quiz') {
+          const questions = QUIZ_QUESTIONS[slug] || [];
+          if (questions.length) {
+            const qRows = questions.map((q, qi) => ({
+              lesson_id:     lessonRow.id,
+              question:      q.q,
+              options:       q.opts,
+              correct_index: q.ans,
+              order_index:   qi,
+            }));
+            const {error: qErr} = await supa.from('quiz_questions').insert(qRows);
+            if (qErr) throw new Error(`Quiz question insert failed for "${slug}": ${qErr.message}`);
+            log(`    📝 ${questions.length} quiz questions inserted for ${slug}`, 'ok');
+            totalQuestions += questions.length;
+          }
+        }
+      }
+
+      const textCount = mod.lessons.filter(l => l[3]==='text').length;
+      log(`    └─ ${textCount} text lessons + 1 quiz inserted`, 'ok');
     }
 
-    /* ── Step 3: Update course to published ─────────────────────────── */
+    /* Step 3 — Publish course ────────────────────────────────────────────── */
     log('Step 3 — Setting course status to "published"…');
-    const {error: statusErr} = await supa.from('courses')
-      .update({status: 'published'})
-      .eq('id', courseId);
+    const {error: statusErr} = await supa.from('courses').update({status:'published'}).eq('id',courseId);
     if (statusErr) log(`  Warning: could not update status — ${statusErr.message}`, 'err');
     else log('  Course marked as published.', 'ok');
 
-    log(`=== DONE — ${totalLessons} lessons seeded across 8 modules ===`, 'ok');
-    toast(`${totalLessons} lessons seeded successfully`);
+    log(`=== DONE — ${totalLessons} lessons + ${totalQuestions} quiz questions seeded ===`, 'ok');
+    toast(`${totalLessons} lessons and ${totalQuestions} quiz questions seeded`);
 
-    const editorLink = `course-editor.html?id=${courseId}`;
     document.getElementById('status-area').innerHTML +=
-      `<div style="margin-top:1rem;"><a href="${editorLink}" class="portal-btn" style="display:inline-block;text-decoration:none;">Open in Course Editor →</a></div>`;
+      `<div style="margin-top:1rem;"><a href="course-editor.html?id=${courseId}" class="portal-btn" style="display:inline-block;text-decoration:none;">Open in Course Editor →</a></div>`;
 
   } catch(err) {
     log(`ERROR: ${err.message}`, 'err');
     toast(err.message, 'error');
   }
 
-  btn.disabled = false; btn.textContent = 'Seed 39 lessons';
+  btn.disabled = false; btn.textContent = 'Seed 47 lessons';
 }
 </script>
-</body>
-</html>
+</body></html>
