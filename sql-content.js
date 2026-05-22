@@ -585,8 +585,68 @@ ORDER  BY order_date ASC, total DESC;` }
 };
 
 L['sql-w1-l5'] = {
-  duration_mins: 15,
+  duration_mins: 25,
   sections: [
+    { type:'text', body:`
+<h2>CASE WHEN — Conditional Logic in SQL</h2>
+<p><code>CASE WHEN</code> is SQL's if/else. It evaluates conditions row by row and returns different values based on which condition is true. It's one of the most frequently used SQL constructs in data analysis — for bucketing, labelling, conditional aggregation, and pivoting data.</p>
+<h3>The simple form</h3>
+`},
+    { type:'code', lang:'sql', src:`-- Label each product by price tier
+SELECT name,
+       price,
+       CASE
+           WHEN price < 1000  THEN 'Budget'
+           WHEN price < 10000 THEN 'Mid-range'
+           WHEN price < 50000 THEN 'Premium'
+           ELSE 'Luxury'
+       END AS price_tier
+FROM   products
+ORDER  BY price;`,
+      out:` name                    │  price │ price_tier
+─────────────────────────┼────────┼────────────
+ Python Handbook         │    599 │ Budget
+ SQL Mastery Book        │    799 │ Budget
+ Wireless Mouse          │   1299 │ Mid-range
+ USB-C Hub               │   2499 │ Mid-range
+ Noise-Cancel Headphones │   8999 │ Mid-range
+ Ergonomic Chair         │  12000 │ Premium
+ Standing Desk           │  18500 │ Premium
+ Laptop Pro 15           │  75000 │ Luxury` },
+    { type:'code', lang:'sql', src:`-- CASE inside aggregate — conditional counting (no need for WHERE)
+-- How many orders in each status, all in one query:
+SELECT
+    COUNT(*) FILTER (WHERE status = 'delivered')  AS delivered,
+    COUNT(*) FILTER (WHERE status = 'shipped')    AS shipped,
+    COUNT(*) FILTER (WHERE status = 'pending')    AS pending,
+    COUNT(*) FILTER (WHERE status = 'cancelled')  AS cancelled,
+    COUNT(*)                                      AS total
+FROM   orders;`,
+      out:` delivered │ shipped │ pending │ cancelled │ total
+───────────┼─────────┼─────────┼───────────┼───────
+        10 │       3 │       2 │         2 │    17` },
+    { type:'text', body:`<h3>CASE in GROUP BY — salary band analysis</h3>
+<p>CASE WHEN inside a GROUP BY lets you group rows into custom buckets. This pattern appears in virtually every analyst's toolkit:</p>`},
+    { type:'code', lang:'sql', src:`-- Salary band distribution with headcount and budget impact
+SELECT
+    CASE
+        WHEN salary < 60000  THEN '< 60k'
+        WHEN salary < 80000  THEN '60k–80k'
+        WHEN salary < 100000 THEN '80k–100k'
+        ELSE                      '100k+'
+    END                           AS salary_band,
+    COUNT(*)                      AS headcount,
+    ROUND(AVG(salary), 0)         AS avg_salary,
+    SUM(salary * 12)              AS annual_cost
+FROM   employees
+GROUP  BY salary_band
+ORDER  BY MIN(salary);`,
+      out:` salary_band │ headcount │ avg_salary │ annual_cost
+─────────────┼───────────┼────────────┼─────────────
+ 60k–80k     │         3 │      74333 │     2676000
+ 80k–100k    │         3 │      89333 │     3216000
+ 100k+       │         2 │     107500 │     2580000` },
+    { type:'tip', body:`The <code>FILTER (WHERE condition)</code> clause (PostgreSQL 9.4+) is a cleaner alternative to <code>SUM(CASE WHEN ... THEN 1 ELSE 0 END)</code> for conditional counting. Both produce identical results but FILTER reads more naturally.` },
     { type:'text', body:`
 <h2>NULL Values — The Absent Data Problem</h2>
 <p>NULL means <em>absent</em> or <em>unknown</em>. It is not zero. It is not an empty string. It is the absence of any value. This distinction matters enormously — NULL behaves differently from any other value in SQL, and misunderstanding it causes some of the most common SQL bugs.</p>
@@ -672,32 +732,52 @@ ORDER  BY product_id;`,
           7 │          2 │   24000.00 │       12000.00
           8 │          3 │    7497.00 │        2499.00` },
     { type:'tip', body:`NULL propagates through arithmetic: <code>NULL + 5 = NULL</code>, <code>NULL * 100 = NULL</code>. If any input to a calculation is NULL, the output is NULL. Always account for this in aggregate queries.` },
-    { type:'exercise', title:'Handle the NULLs',
-      body:`<p>Write queries to:</p>
+    { type:'exercise', title:'CASE WHEN + NULL Analysis',
+      body:`<p>Write four queries combining CASE WHEN and NULL handling:</p>
 <ol>
-<li>Show all customers with their email — replacing NULL with <code>'contact@dsa.com'</code></li>
-<li>List employees who have no manager (manager_id IS NULL) — these are top-level staff</li>
-<li>From the <code>customers</code> table, show each customer with a <code>has_email</code> column that says <code>'Yes'</code> or <code>'No'</code> depending on whether email is NULL (hint: use COALESCE or a CASE expression)</li>
+<li><strong>Product labels:</strong> Show each product's name, price, and a <code>stock_status</code> column: <code>'Out of Stock'</code> (stock=0), <code>'Low'</code> (1–5), <code>'Adequate'</code> (6–20), <code>'Well Stocked'</code> (20+)</li>
+<li><strong>Order risk score:</strong> For each order, assign a <code>risk</code> label: <code>'High'</code> if status is cancelled, <code>'Medium'</code> if pending, <code>'Low'</code> for others. Show order id, total, status, and risk. Count how many orders fall in each risk category.</li>
+<li><strong>NULL audit:</strong> Write a single query over the <code>customers</code> table that reports: total rows, rows with NULL email, rows with NULL city, and rows where BOTH are present — all in one result row.</li>
+<li><strong>Conditional pivot:</strong> Using CASE WHEN inside SUM, show a single row with columns <code>electronics_revenue</code>, <code>furniture_revenue</code>, <code>books_revenue</code> from the order_items and products tables.</li>
 </ol>`,
-      hint:`For (3): <code>CASE WHEN email IS NOT NULL THEN 'Yes' ELSE 'No' END AS has_email</code>. CASE WHEN is SQL's if/else and works inside SELECT.`,
-      solution:`-- 1. Replace NULL email
-SELECT name,
-       COALESCE(email, 'contact@dsa.com') AS email
+      hint:`For (3) use <code>COUNT(*) FILTER (WHERE email IS NULL)</code>. For (4): <code>SUM(CASE WHEN p.category='Electronics' THEN oi.quantity*oi.unit_price ELSE 0 END)</code>.`,
+      solution:`-- 1. Stock status
+SELECT name, stock,
+       CASE WHEN stock = 0    THEN 'Out of Stock'
+            WHEN stock <= 5   THEN 'Low'
+            WHEN stock <= 20  THEN 'Adequate'
+            ELSE                   'Well Stocked'
+       END AS stock_status
+FROM   products ORDER BY stock;
+
+-- 2. Order risk labels + count
+WITH labelled AS (
+    SELECT id, total, status,
+           CASE status
+               WHEN 'cancelled' THEN 'High'
+               WHEN 'pending'   THEN 'Medium'
+               ELSE                  'Low'
+           END AS risk
+    FROM   orders
+)
+SELECT risk, COUNT(*) AS orders, ROUND(AVG(total),2) AS avg_total
+FROM   labelled GROUP BY risk ORDER BY risk;
+
+-- 3. NULL audit in one row
+SELECT COUNT(*)                               AS total_customers,
+       COUNT(*) FILTER (WHERE email IS NULL)  AS null_email,
+       COUNT(*) FILTER (WHERE city  IS NULL)  AS null_city,
+       COUNT(*) FILTER (WHERE email IS NULL
+                           AND city  IS NULL) AS null_both
 FROM   customers;
 
--- 2. Top-level employees (no manager)
-SELECT id, name, salary
-FROM   employees
-WHERE  manager_id IS NULL;
-
--- 3. has_email column
-SELECT name,
-       email,
-       CASE WHEN email IS NOT NULL THEN 'Yes'
-            ELSE 'No'
-       END AS has_email
-FROM   customers
-ORDER  BY has_email DESC, name;` }
+-- 4. Conditional pivot
+SELECT
+    SUM(CASE WHEN p.category = 'Electronics' THEN oi.quantity*oi.unit_price ELSE 0 END) AS electronics_revenue,
+    SUM(CASE WHEN p.category = 'Furniture'   THEN oi.quantity*oi.unit_price ELSE 0 END) AS furniture_revenue,
+    SUM(CASE WHEN p.category = 'Books'       THEN oi.quantity*oi.unit_price ELSE 0 END) AS books_revenue
+FROM   order_items oi
+JOIN   products p ON oi.product_id = p.id;` }
   ]
 };
 
@@ -1072,30 +1152,78 @@ LIMIT  4;`,
   2 │ 2024-01-12 │ 2024 │     1 │ January   2024 │          1898 │ 1898.00 INR
   3 │ 2024-01-20 │ 2024 │     1 │ January   2024 │         83999 │ 83999.00 INR
   4 │ 2024-02-01 │ 2024 │     2 │ February  2024 │          8999 │ 8999.00 INR` },
-    { type:'exercise', title:'Clean up and convert',
-      body:`<p>Write queries to:</p>
-<ol>
-<li>List all distinct product categories</li>
-<li>Show each product's price in three formats: as-is, rounded to the nearest 500, and as a text string like <code>'₹75,000'</code> (hint: use <code>TO_CHAR(price, 'FM₹99,999')</code>)</li>
-<li>From orders, extract year and month, then format as <code>'Jan-2024'</code> using <code>TO_CHAR</code></li>
-</ol>`,
-      hint:`<code>ROUND(price / 500.0) * 500</code> rounds to nearest 500. For the text format: <code>TO_CHAR(price, 'FM₹99,99,999')</code> — FM removes leading spaces.`,
-      solution:`-- 1. Distinct categories
-SELECT DISTINCT category FROM products ORDER BY category;
-
--- 2. Price formats
+    { type:'text', body:`
+<h3>String functions — essential for data cleaning</h3>
+<p>Real-world data is messy: inconsistent casing, trailing spaces, emails mixed with domains. These string functions let you clean and extract text directly in SQL without exporting to Python first:</p>
+`},
+    { type:'code', lang:'sql', src:`-- Core string operations on the customers table
 SELECT name,
-       price,
-       ROUND(price / 500.0) * 500 AS rounded_500,
-       TO_CHAR(price, 'FM"₹"99G999') AS price_text
-FROM   products;
+       UPPER(name)                               AS name_upper,
+       LENGTH(name)                              AS char_count,
+       TRIM(name)                               AS trimmed,
+       REPLACE(name, ' ', '_')                  AS name_slug,
+       LEFT(name, POSITION(' ' IN name)-1)      AS first_name,
+       SUBSTRING(email, POSITION('@' IN email)+1)
+                                                AS email_domain
+FROM   customers
+WHERE  email IS NOT NULL
+LIMIT  4;`,
+      out:` name        │ name_upper  │ char_count │ first_name │ email_domain
+─────────────┼─────────────┼────────────┼────────────┼──────────────
+ Arun Verma  │ ARUN VERMA  │         10 │ Arun       │ gmail.com
+ Bina Sharma │ BINA SHARMA │         11 │ Bina       │ yahoo.com
+ Chetan Rao  │ CHETAN RAO  │         10 │ Chetan     │ gmail.com
+ Diya Joshi  │ DIYA JOSHI  │         10 │ Diya       │ gmail.com` },
+    { type:'code', lang:'sql', src:`-- LIKE / ILIKE pattern matching (% = any chars, _ = one char)
+SELECT name, email, city
+FROM   customers
+WHERE  email ILIKE '%gmail%';    -- ILIKE is case-insensitive
 
--- 3. Month-year format
-SELECT id, order_date,
-       TO_CHAR(order_date, 'Mon-YYYY') AS period,
-       total
-FROM   orders
-ORDER  BY order_date;` }
+-- String concatenation for display labels
+SELECT name || ' (' || city || ')' AS customer_label,
+       TO_CHAR(join_date, 'Mon YYYY') AS joined
+FROM   customers
+ORDER  BY join_date;`,
+      out:` customer_label           │ joined
+──────────────────────────┼──────────
+ Arun Verma (Mumbai)      │ Jan 2023
+ Bina Sharma (Delhi)      │ Feb 2023
+ Chetan Rao (Bengaluru)   │ Mar 2023
+ Diya Joshi (Chennai)     │ Apr 2023` },
+    { type:'tip', body:`Always use <code>ILIKE</code> over <code>LIKE</code> when searching user-entered text — data entry is never case-consistent. For very large tables, LIKE with a leading wildcard (<code>'%term'</code>) cannot use B-tree indexes; consider PostgreSQL full-text search (<code>tsvector</code>) for those cases.` },
+    { type:'exercise', title:'Data cleaning & string transformations',
+      body:`<p>Write four queries using string functions, type casting, and date formatting:</p>
+<ol>
+<li><strong>Product labels:</strong> Create a <code>display_label</code> for each product formatted as <code>"Laptop Pro 15 | Electronics | ₹75,000"</code> using CONCAT and TO_CHAR for price</li>
+<li><strong>Email domain breakdown:</strong> Count customers by email domain (gmail.com, yahoo.com, etc.). Extract the domain using SUBSTRING + POSITION. Show domain and customer count.</li>
+<li><strong>Order period report:</strong> From orders, show month name (e.g., January), year, status, and total formatted with commas. Sort by date.</li>
+<li><strong>Employee first names:</strong> Show each employee's first name only (everything before the first space), department_id, and salary rounded to the nearest ₹5,000. Use SPLIT_PART or LEFT+POSITION.</li>
+</ol>`,
+      hint:`For (1): <code>TO_CHAR(price, 'FM"₹"99G99G999')</code>. For (2): GROUP BY the domain substring. For (4): <code>ROUND(salary/5000.0)*5000</code>.`,
+      solution:`-- 1. Product display label
+SELECT name || ' | ' || INITCAP(category) || ' | ' ||
+       TO_CHAR(price, 'FM"₹"99G99G999') AS display_label
+FROM   products ORDER BY category, price;
+
+-- 2. Email domain breakdown
+SELECT SUBSTRING(email FROM POSITION('@' IN email)+1) AS domain,
+       COUNT(*) AS customers
+FROM   customers
+WHERE  email IS NOT NULL
+GROUP  BY domain ORDER BY customers DESC;
+
+-- 3. Order period report
+SELECT TO_CHAR(order_date, 'FMMonth') AS month_name,
+       EXTRACT(YEAR FROM order_date)::INTEGER AS year,
+       status,
+       TO_CHAR(total, 'FM99G99G999.00') AS formatted_total
+FROM   orders ORDER BY order_date;
+
+-- 4. Employee first names, rounded salary
+SELECT SPLIT_PART(name, ' ', 1)        AS first_name,
+       department_id,
+       ROUND(salary / 5000.0) * 5000   AS salary_rounded
+FROM   employees ORDER BY salary DESC;` }
   ]
 };
 
@@ -1172,23 +1300,51 @@ ORDER  BY segment_revenue DESC;`,
  High Value  │         1 │       76299.00  │  76299.00
  Mid Value   │         4 │       59595.00  │  11919.00
  Entry Level │         5 │        4995.00  │    999.00` },
-    { type:'exercise', title:'Build your own KPI report',
-      body:`<p>Write a single query that produces a complete <em>department payroll report</em> showing: department name, number of employees, total payroll (sum of salaries), average salary, highest salary, and a <code>payroll_health</code> label — <code>'Over Budget'</code> if total payroll > 80% of department budget, <code>'On Track'</code> otherwise.</p>
-<p>Sort by total payroll descending.</p>`,
-      hint:`Join employees to departments. Use SUM for total payroll, AVG/MAX for stats. For payroll_health: <code>CASE WHEN SUM(e.salary) > d.budget * 0.8 THEN 'Over Budget' ELSE 'On Track' END</code>. Since budget is in departments, it's not an aggregate — include it in GROUP BY.`,
-      solution:`SELECT d.name                           AS department,
-       COUNT(e.id)                      AS headcount,
-       SUM(e.salary)                    AS total_payroll,
-       ROUND(AVG(e.salary), 2)         AS avg_salary,
-       MAX(e.salary)                    AS top_salary,
-       CASE
-         WHEN SUM(e.salary) > d.budget * 0.8 THEN 'Over Budget'
-         ELSE 'On Track'
-       END                             AS payroll_health
+    { type:'exercise', title:'Executive KPI dashboard',
+      body:`<p>Write three queries to produce an executive analytics summary:</p>
+<ol>
+<li><strong>Revenue snapshot:</strong> A single row showing total revenue, delivered revenue, cancelled revenue, avg order value, and a <code>delivery_rate</code> (delivered orders ÷ total orders as a %). Use FILTER or CASE WHEN inside aggregates.</li>
+<li><strong>Department payroll health:</strong> Show department name, headcount, total payroll, avg salary, top salary, and a <code>payroll_health</code> label (<code>'Over Budget'</code> if payroll > 80% of budget, else <code>'On Track'</code>). Sort by payroll descending.</li>
+<li><strong>City revenue contribution:</strong> From customers → orders, show each city's total revenue, percentage of grand total (use a subquery or window function), and a <code>tier</code> label: <code>'Key Market'</code> (≥20% of revenue), <code>'Growing'</code> (5–20%), <code>'Emerging'</code> (&lt;5%).</li>
+</ol>`,
+      hint:`For (1): <code>COUNT(*) FILTER (WHERE status='delivered') * 100.0 / COUNT(*)</code>. For (3): <code>SUM(o.total) * 100.0 / SUM(SUM(o.total)) OVER ()</code> — a window function on the aggregate.`,
+      solution:`-- 1. Revenue snapshot
+SELECT
+    COUNT(*)                                             AS total_orders,
+    COUNT(*) FILTER (WHERE status = 'delivered')         AS delivered_orders,
+    SUM(total) FILTER (WHERE status = 'delivered')       AS delivered_revenue,
+    SUM(total) FILTER (WHERE status = 'cancelled')       AS cancelled_revenue,
+    ROUND(AVG(total), 2)                                AS avg_order_value,
+    ROUND(COUNT(*) FILTER (WHERE status='delivered')
+          * 100.0 / COUNT(*), 1)                        AS delivery_rate_pct
+FROM   orders;
+
+-- 2. Department payroll health
+SELECT d.name AS department,
+       COUNT(e.id) AS headcount,
+       SUM(e.salary) AS total_payroll,
+       ROUND(AVG(e.salary), 0) AS avg_salary,
+       MAX(e.salary) AS top_salary,
+       CASE WHEN SUM(e.salary) > d.budget * 0.8
+            THEN 'Over Budget' ELSE 'On Track' END AS payroll_health
 FROM   employees e
 JOIN   departments d ON e.department_id = d.id
 GROUP  BY d.name, d.budget
-ORDER  BY total_payroll DESC;` }
+ORDER  BY total_payroll DESC;
+
+-- 3. City revenue contribution with tier
+SELECT c.city,
+       SUM(o.total) AS city_revenue,
+       ROUND(SUM(o.total) * 100.0 / SUM(SUM(o.total)) OVER (), 1) AS pct_of_total,
+       CASE
+           WHEN SUM(o.total) * 100.0 / SUM(SUM(o.total)) OVER () >= 20 THEN 'Key Market'
+           WHEN SUM(o.total) * 100.0 / SUM(SUM(o.total)) OVER () >= 5  THEN 'Growing'
+           ELSE 'Emerging'
+       END AS tier
+FROM   customers c
+JOIN   orders o ON c.id = o.customer_id
+GROUP  BY c.city
+ORDER  BY city_revenue DESC;` }
   ]
 };
 
@@ -2139,35 +2295,88 @@ ORDER  BY category, price;`,
  Laptop Pro 15           │ Electronics │  75000 │ Wireless Mouse   │            75000
  Ergonomic Chair         │ Furniture   │  12000 │ Ergonomic Chair  │            18500
  Standing Desk           │ Furniture   │  18500 │ Ergonomic Chair  │            18500` },
-    { type:'exercise', title:'Time-series and running aggregates',
-      body:`<p>Write window function queries to:</p>
+    { type:'text', body:`
+<h3>GENERATE_SERIES — filling date gaps</h3>
+<p>A common analytics problem: you want revenue for every month, but months with zero orders simply don't exist in the orders table — they disappear from your results. <code>GENERATE_SERIES</code> generates a complete sequence of dates, and a LEFT JOIN fills in the actual data (or zero for missing months):</p>
+`},
+    { type:'code', lang:'sql', src:`-- Generate all months in the order range, fill missing months with 0
+WITH date_spine AS (
+    SELECT generate_series(
+        DATE_TRUNC('month', MIN(order_date)),
+        DATE_TRUNC('month', MAX(order_date)),
+        '1 month'::INTERVAL
+    )::DATE AS month
+    FROM orders
+),
+monthly AS (
+    SELECT DATE_TRUNC('month', order_date)::DATE AS month,
+           SUM(total) AS revenue,
+           COUNT(*) AS orders
+    FROM   orders
+    WHERE  status IN ('delivered', 'shipped')
+    GROUP  BY DATE_TRUNC('month', order_date)
+)
+SELECT ds.month,
+       TO_CHAR(ds.month, 'Mon YYYY') AS period,
+       COALESCE(m.orders,  0)        AS orders,
+       COALESCE(m.revenue, 0)        AS revenue
+FROM   date_spine ds
+LEFT   JOIN monthly m USING (month)
+ORDER  BY ds.month;`,
+      out:` month      │ period    │ orders │   revenue
+────────────┼───────────┼────────┼──────────
+ 2024-01-01 │ Jan 2024  │      3 │ 162196.00
+ 2024-02-01 │ Feb 2024  │      3 │  11097.00
+ 2024-03-01 │ Mar 2024  │      4 │  35597.00
+ 2024-04-01 │ Apr 2024  │      3 │  23097.00
+ 2024-05-01 │ May 2024  │      3 │ 104898.00` },
+    { type:'tip', body:`The <code>date_spine</code> CTE pattern is the foundation of all time-series reporting in SQL. Always build the spine first (all possible periods), then LEFT JOIN your actual data onto it. This ensures zero-revenue months appear in your chart, preventing misleading gaps.` },
+    { type:'exercise', title:'Time-series, gaps & running aggregates',
+      body:`<p>Write window function and time-series queries:</p>
 <ol>
-<li>For each employee, show their salary and how it compares to the previous hire (by hire_date) using LAG</li>
-<li>Compute a running count and running sum of delivered orders sorted by order_date</li>
-<li>For each order, show the 3-order rolling average total (use <code>ROWS BETWEEN 2 PRECEDING AND CURRENT ROW</code>)</li>
+<li><strong>Gap-free monthly report:</strong> Using GENERATE_SERIES, produce a table with every month from Jan to May 2024, showing order count, revenue, and cumulative revenue — including months where no orders occurred.</li>
+<li><strong>Day-of-week analysis:</strong> What day of the week do most orders occur? Use <code>EXTRACT(DOW FROM order_date)</code> (0=Sunday…6=Saturday) and show the day name with TO_CHAR, order count, and average total.</li>
+<li><strong>Salary tenure analysis:</strong> For each employee, show years of tenure (<code>EXTRACT(YEAR FROM AGE(CURRENT_DATE, hire_date))</code>), and use a window to show their salary rank within their department and the % difference between their salary and the department average.</li>
 </ol>`,
-      hint:`For (2): <code>WHERE status = 'delivered'</code> first, then window over order_date. Or use <code>CASE WHEN</code> inside the window: <code>COUNT(CASE WHEN status='delivered' THEN 1 END) OVER (ORDER BY order_date)</code>.`,
-      solution:`-- 1. Salary vs previous hire
-SELECT name, hire_date, salary,
-       LAG(salary) OVER (ORDER BY hire_date) AS prev_hire_salary,
-       salary - LAG(salary) OVER (ORDER BY hire_date) AS diff
-FROM   employees ORDER BY hire_date;
+      hint:`For (2): <code>TO_CHAR(order_date, 'Day')</code> gives the full day name. For (3): <code>ROUND((salary - AVG(salary) OVER (PARTITION BY department_id)) * 100.0 / AVG(salary) OVER (PARTITION BY department_id), 1)</code>.`,
+      solution:`-- 1. Gap-free monthly report with running total
+WITH spine AS (
+    SELECT generate_series(
+        '2024-01-01'::DATE,
+        '2024-05-01'::DATE,
+        '1 month'::INTERVAL)::DATE AS month
+),
+monthly AS (
+    SELECT DATE_TRUNC('month', order_date)::DATE AS month,
+           COUNT(*) AS orders, SUM(total) AS revenue
+    FROM   orders GROUP BY 1
+)
+SELECT s.month, TO_CHAR(s.month, 'Mon YYYY') AS period,
+       COALESCE(m.orders, 0) AS orders,
+       COALESCE(m.revenue, 0) AS revenue,
+       SUM(COALESCE(m.revenue,0)) OVER (ORDER BY s.month) AS cumulative
+FROM   spine s LEFT JOIN monthly m USING (month)
+ORDER  BY s.month;
 
--- 2. Running delivered order stats
-SELECT id, order_date, total,
-       SUM(CASE WHEN status='delivered' THEN 1 ELSE 0 END)
-           OVER (ORDER BY order_date, id)   AS running_delivered_count,
-       SUM(CASE WHEN status='delivered' THEN total ELSE 0 END)
-           OVER (ORDER BY order_date, id)   AS running_delivered_revenue
-FROM   orders ORDER BY order_date, id;
+-- 2. Day-of-week analysis
+SELECT EXTRACT(DOW FROM order_date)::INTEGER AS dow,
+       TO_CHAR(order_date, 'Day') AS day_name,
+       COUNT(*) AS orders,
+       ROUND(AVG(total), 2) AS avg_total
+FROM   orders
+GROUP  BY dow, day_name
+ORDER  BY orders DESC;
 
--- 3. Rolling 3-order average
-SELECT id, order_date, total,
-       ROUND(AVG(total) OVER (
-           ORDER BY order_date, id
-           ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
-       ), 2) AS rolling_3_avg
-FROM   orders ORDER BY order_date, id;` }
+-- 3. Salary tenure & department comparison
+SELECT name,
+       department_id,
+       salary,
+       EXTRACT(YEAR FROM AGE(CURRENT_DATE, hire_date))::INTEGER AS years_tenure,
+       RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS dept_rank,
+       ROUND((salary - AVG(salary) OVER (PARTITION BY department_id))
+             * 100.0
+             / AVG(salary) OVER (PARTITION BY department_id), 1)   AS pct_vs_dept_avg
+FROM   employees ORDER BY department_id, salary DESC;` }
   ]
 };
 
@@ -2563,13 +2772,64 @@ REFRESH MATERIALIZED VIEW CONCURRENTLY product_sales_summary;`,
  Python Handbook         │    2396.00
  SQL Mastery Book        │    1598.00` },
     { type:'tip', body:`Use regular views for maintainability and reuse. Use materialised views for expensive aggregation queries that power dashboards — and add a scheduled job (cron or pg_cron) to refresh them regularly.` },
-    { type:'exercise', title:'Create useful views',
-      body:`<p>Create two views for the DSA database:</p>
+    { type:'text', body:`
+<h3>Data quality queries — find problems before they find you</h3>
+<p>Every data analyst needs a toolkit of queries to audit data quality. Run these on any new dataset before you start analysis:</p>
+`},
+    { type:'code', lang:'sql', src:`-- ① Find duplicate rows (same customer_id + order_date)
+SELECT customer_id, order_date, COUNT(*) AS duplicates
+FROM   orders
+GROUP  BY customer_id, order_date
+HAVING COUNT(*) > 1;
+
+-- ② NULL audit — count missing values per column
+SELECT
+    COUNT(*) FILTER (WHERE customer_id IS NULL) AS null_customer,
+    COUNT(*) FILTER (WHERE order_date  IS NULL) AS null_date,
+    COUNT(*) FILTER (WHERE status      IS NULL) AS null_status,
+    COUNT(*) FILTER (WHERE total       IS NULL) AS null_total
+FROM   orders;
+
+-- ③ Orphan records — order_items pointing to deleted orders
+SELECT oi.id, oi.order_id
+FROM   order_items oi
+LEFT   JOIN orders o ON oi.order_id = o.id
+WHERE  o.id IS NULL;
+
+-- ④ Value distribution check — are any statuses unexpected?
+SELECT status, COUNT(*) AS cnt,
+       ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (), 1) AS pct
+FROM   orders
+GROUP  BY status ORDER BY cnt DESC;
+
+-- ⑤ Outlier detection — orders more than 3 std devs from mean
+SELECT id, order_date, total
+FROM   orders
+WHERE  ABS(total - (SELECT AVG(total) FROM orders))
+       > 3 * (SELECT STDDEV(total) FROM orders);`,
+      out:`-- ① (0 rows — no duplicates in our dataset)
+
+-- ② (all zeros — clean dataset)
+
+-- ③ (0 rows — no orphans)
+
+-- ④
+ status    │ cnt │  pct
+───────────┼─────┼──────
+ delivered │  10 │ 58.8
+ shipped   │   3 │ 17.6
+ pending   │   2 │ 11.8
+ cancelled │   2 │ 11.8
+
+-- ⑤ (varies — flags unusually large orders)` },
+    { type:'warn', body:`Always run data quality checks before analysis, not after. A subtle duplicate or outlier found <em>after</em> you've built a report means redoing the report. Build a reusable data quality view that you can refresh whenever new data arrives.` },
+    { type:'exercise', title:'Views + data quality audit',
+      body:`<p>Create two views and a data quality audit query:</p>
 <ol>
-<li><code>order_details_view</code>: a join of orders, customers, order_items, and products — showing one row per order line item with customer name, product name, quantities, and line total</li>
-<li><code>department_summary_view</code>: showing department name, headcount, total payroll, average salary, and payroll as a % of budget</li>
-</ol>
-<p>Then query each view to verify it works. Also create a materialised view of <code>department_summary_view</code> and refresh it.</p>`,
+<li><strong>order_details_view:</strong> join orders, customers, order_items, and products — one row per line item with customer name, product name, category, quantity, unit_price, and line total (quantity × unit_price)</li>
+<li><strong>department_summary_view:</strong> department name, headcount, total payroll, avg salary, top salary, and payroll as % of budget. Include departments with no employees (use LEFT JOIN).</li>
+<li><strong>Data quality report:</strong> Write a single query that produces a one-row quality summary for the <code>employees</code> table: total rows, NULL salary count, NULL hire_date count, count of employees with salary below ₹30,000 (likely data entry error), and count of future hire_dates (hire_date > CURRENT_DATE).</li>
+</ol>`,
       hint:`For the materialised version: <code>CREATE MATERIALIZED VIEW dept_summary_mat AS SELECT * FROM department_summary_view;</code> then <code>REFRESH MATERIALIZED VIEW dept_summary_mat;</code>.`,
       solution:`CREATE VIEW order_details_view AS
 SELECT o.id AS order_id, o.order_date, o.status,
@@ -2926,57 +3186,92 @@ SELECT * FROM bi_dashboard;`,
       out:` confirmed_revenue │ delivered_orders │ total_customers │ avg_customer_ltv │ top_product   │ inventory_value │ refreshed_at
 ───────────────────┼──────────────────┼─────────────────┼──────────────────┼───────────────┼─────────────────┼──────────────────────
         140889.00  │               10 │              10 │         34786.22 │ Laptop Pro 15 │    1,249,865.00 │ 2024-06-01 10:23:41` },
-    { type:'exercise', title:'Final capstone extension',
-      body:`<p>Extend the capstone with one of the following:</p>
+    { type:'exercise', title:'Full analyst capstone',
+      body:`<p>You are a data analyst for DSA's e-commerce platform. Write SQL to answer the following questions — each representing a real business ask:</p>
 <ol>
-<li><strong>Churn analysis:</strong> Define a "churned" customer as one whose last order was more than 60 days ago. Write a query that categorises every customer as Active, At Risk (30–60 days since last order), or Churned. Show the count and total LTV of each segment.</li>
-<li><strong>Market basket analysis:</strong> Find the top 5 product pairs that most frequently appear in the same order. For each pair, show how many orders contain both products and what percentage of all orders that represents.</li>
-<li><strong>Python export:</strong> Use psycopg2 or pandas to run the monthly trend query (Section 4) and write the results to a CSV file. Then load the CSV back with pandas and print a summary.</li>
+<li><strong>Customer lifetime value segmentation:</strong> Calculate each customer's LTV (total revenue from delivered orders) and order frequency (distinct order count). Segment customers: <code>'Champion'</code> (LTV≥50000 AND orders≥3), <code>'Loyal'</code> (LTV≥20000 OR orders≥3), <code>'Potential'</code> (1–2 orders), <code>'Lost'</code> (no delivered orders). Show count and average LTV per segment.</li>
+<li><strong>Product performance vs stock risk:</strong> For each product show: units sold, revenue, stock remaining, and a <code>stock_risk</code> label (<code>'Stockout'</code> if stock=0 and sold>0, <code>'Low'</code> if stock≤5, <code>'Healthy'</code> otherwise). Sort by revenue descending.</li>
+<li><strong>Churn prediction signals:</strong> For every customer, compute: days since last order, total orders, total LTV, and a churn risk label (<code>'Active'</code> ≤30 days, <code>'At Risk'</code> 31–90 days, <code>'Churned'</code> >90 days or no orders). Show each customer and their signals.</li>
+<li><strong>Month-over-month revenue with gap filling:</strong> Using GENERATE_SERIES, produce a complete monthly revenue report for Jan–May 2024 with: order count, revenue, MoM change (%), and a <code>trend</code> label (<code>'Growth'</code>/>0%, <code>'Decline'</code>/<0%, <code>'Baseline'</code>/NULL for first month).</li>
 </ol>`,
-      hint:`For (1): <code>CURRENT_DATE - MAX(order_date)</code> gives days since last order. Use CASE WHEN on that value. For (2): join order_items to itself with <code>AND a.product_id < b.product_id</code>, then count. For (3): <code>df.to_csv('monthly_report.csv', index=False)</code>.`,
-      solution:`-- 1. Churn analysis
-WITH last_orders AS (
-    SELECT customer_id, MAX(order_date) AS last_order
-    FROM   orders GROUP BY customer_id
-),
-customer_status AS (
-    SELECT c.name, c.id,
-           lo.last_order,
-           CURRENT_DATE - lo.last_order AS days_since,
-           CASE
-             WHEN CURRENT_DATE - lo.last_order <= 30 THEN 'Active'
-             WHEN CURRENT_DATE - lo.last_order <= 60 THEN 'At Risk'
-             ELSE 'Churned'
-           END AS churn_status
-    FROM   customers c LEFT JOIN last_orders lo ON c.id = lo.customer_id
+      hint:`For (1): CTE to get LTV and order count per customer, then CASE WHEN for segment, then GROUP BY segment. For (2): LEFT JOIN order_items to get sold units (0 if none). For (4): GENERATE_SERIES for the spine, then LAG for prev_rev.`,
+      solution:`-- 1. Customer LTV segmentation
+WITH customer_stats AS (
+    SELECT c.id, c.name,
+           COALESCE(SUM(o.total) FILTER (WHERE o.status='delivered'), 0) AS ltv,
+           COUNT(DISTINCT o.id)                                           AS orders
+    FROM   customers c LEFT JOIN orders o ON c.id = o.customer_id
+    GROUP  BY c.id, c.name
 )
-SELECT churn_status, COUNT(*) AS customers
-FROM   customer_status GROUP BY churn_status;
+SELECT CASE
+         WHEN ltv >= 50000 AND orders >= 3 THEN 'Champion'
+         WHEN ltv >= 20000 OR  orders >= 3 THEN 'Loyal'
+         WHEN orders BETWEEN 1 AND 2       THEN 'Potential'
+         ELSE 'Lost'
+       END AS segment,
+       COUNT(*) AS customers,
+       ROUND(AVG(ltv), 0) AS avg_ltv
+FROM   customer_stats
+GROUP  BY segment ORDER BY avg_ltv DESC;
 
--- 2. Market basket top 5 pairs
-SELECT p1.name, p2.name,
-       COUNT(*) AS co_orders,
-       ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM orders), 1) AS pct_orders
-FROM   order_items a
-JOIN   order_items b ON a.order_id = b.order_id AND a.product_id < b.product_id
-JOIN   products p1 ON a.product_id = p1.id
-JOIN   products p2 ON b.product_id = p2.id
-GROUP  BY p1.name, p2.name
-ORDER  BY co_orders DESC LIMIT 5;
+-- 2. Product performance vs stock risk
+SELECT p.name, p.category, p.stock,
+       COALESCE(SUM(oi.quantity), 0)              AS units_sold,
+       COALESCE(SUM(oi.quantity * oi.unit_price), 0) AS revenue,
+       CASE
+         WHEN p.stock = 0 AND COALESCE(SUM(oi.quantity),0) > 0 THEN 'Stockout'
+         WHEN p.stock <= 5 THEN 'Low'
+         ELSE 'Healthy'
+       END AS stock_risk
+FROM   products p
+LEFT   JOIN order_items oi ON p.id = oi.product_id
+GROUP  BY p.id, p.name, p.category, p.stock
+ORDER  BY revenue DESC;
 
--- 3. Python export
-import pandas as pd
-from sqlalchemy import create_engine
-engine = create_engine("postgresql://postgres:pw@localhost/dsa_ecommerce")
-df = pd.read_sql("""
-  SELECT TO_CHAR(DATE_TRUNC('month',order_date),'Mon YYYY') AS period,
-         SUM(total) AS revenue, COUNT(*) AS orders
-  FROM orders GROUP BY DATE_TRUNC('month',order_date)
-  ORDER BY DATE_TRUNC('month',order_date)
-""", engine)
-df.to_csv('monthly_report.csv', index=False)
-loaded = pd.read_csv('monthly_report.csv')
-print(loaded); print(f"Total revenue: ₹{loaded['revenue'].sum():,.0f}")` }
+-- 3. Churn prediction signals
+WITH customer_signals AS (
+    SELECT c.id, c.name,
+           MAX(o.order_date)          AS last_order,
+           COUNT(DISTINCT o.id)       AS total_orders,
+           COALESCE(SUM(o.total), 0)  AS ltv
+    FROM   customers c LEFT JOIN orders o ON c.id = o.customer_id
+    GROUP  BY c.id, c.name
+)
+SELECT name,
+       last_order,
+       CURRENT_DATE - last_order   AS days_since_order,
+       total_orders,
+       ltv,
+       CASE
+         WHEN last_order IS NULL              THEN 'Churned'
+         WHEN CURRENT_DATE - last_order <= 30 THEN 'Active'
+         WHEN CURRENT_DATE - last_order <= 90 THEN 'At Risk'
+         ELSE 'Churned'
+       END AS churn_risk
+FROM   customer_signals ORDER BY days_since_order DESC NULLS FIRST;
+
+-- 4. Gap-filled MoM revenue with trend
+WITH spine AS (
+    SELECT generate_series('2024-01-01'::DATE,'2024-05-01'::DATE,'1 month'::INTERVAL)::DATE AS month
+),
+monthly AS (
+    SELECT DATE_TRUNC('month',order_date)::DATE AS month,
+           COUNT(*) AS orders, SUM(total) AS revenue
+    FROM   orders GROUP BY 1
+),
+combined AS (
+    SELECT s.month, COALESCE(m.orders,0) AS orders, COALESCE(m.revenue,0) AS revenue,
+           LAG(COALESCE(m.revenue,0)) OVER (ORDER BY s.month) AS prev_rev
+    FROM   spine s LEFT JOIN monthly m USING (month)
+)
+SELECT month, TO_CHAR(month,'Mon YYYY') AS period, orders, revenue,
+       CASE WHEN prev_rev IS NULL THEN NULL
+            ELSE ROUND((revenue - prev_rev)*100.0/NULLIF(prev_rev,0),1) END AS mom_pct,
+       CASE WHEN prev_rev IS NULL               THEN 'Baseline'
+            WHEN revenue > prev_rev             THEN 'Growth'
+            ELSE                                     'Decline'
+       END AS trend
+FROM   combined ORDER BY month;` }
   ]
 };
 
