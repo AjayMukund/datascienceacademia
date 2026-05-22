@@ -1,14 +1,15 @@
 /* ════════════════════════════════════════════════════════════════════════════
-   DSA Lesson Content — Python Programming (8 weeks, 39 lessons)
+   DSA Lesson Content — Python for Data Science (8 weeks, 39 lessons)
    Each key maps to lesson.content_url in Supabase (type = 'text')
 ════════════════════════════════════════════════════════════════════════════ */
 (function(){
 'use strict';
-window.DSA_LESSON_CONTENT = {};
+window.DSA_LESSON_CONTENT = window.DSA_LESSON_CONTENT || {};
 const L = window.DSA_LESSON_CONTENT;
 
 /* ══════════════════════════════════════════════════════════════════════════
    WEEK 1 — PYTHON FUNDAMENTALS
+   Setup, variables, data types, operators, strings, type conversion
 ══════════════════════════════════════════════════════════════════════════ */
 
 L['python-w1-l1'] = {
@@ -48,18 +49,88 @@ print("Hello, World!")   # this is an inline comment
 
 # Python ignores these lines completely
 # They are purely for humans reading the code` },
-    { type:'exercise', title:'Three Lines of Introduction',
-      body:`<p>Write a Python script that prints exactly three lines:</p>
-<ol><li>Your name</li><li>Your city</li><li>One thing you want to build with Python</li></ol>`,
-      hint:`Use three separate <code>print()</code> calls, one per line.`,
-      solution:`print("My name is Priya Sharma.")
-print("I am from Bengaluru.")
-print("I want to build a stock price predictor.")`}
+    { type:'text', body:`
+<h3>Virtual environments — always use one</h3>
+<p>A <strong>virtual environment</strong> is an isolated Python installation for your project. Without it, all your projects share the same packages — and version conflicts are inevitable. With it, each project has its own sandbox.</p>
+<p>Create and activate one before starting any project:</p>
+`},
+    { type:'code', lang:'bash', src:`# Create a virtual environment (do this once per project)
+python -m venv venv
+
+# Activate it — Windows
+venv\\Scripts\\activate
+
+# Activate it — Mac / Linux
+source venv/bin/activate
+
+# Your prompt changes: (venv) C:\\Projects\\my-project>
+# Now install packages — they stay inside this folder
+pip install pandas numpy matplotlib scikit-learn
+
+# Save your project's dependencies to a file
+pip freeze > requirements.txt
+
+# Anyone can recreate your environment later with:
+pip install -r requirements.txt` },
+    { type:'tip', body:`Add <code>venv/</code> to your <code>.gitignore</code> file — never commit the virtual environment folder to git. Commit <code>requirements.txt</code> instead. This is how every professional Python project is managed.` },
+    { type:'text', body:`
+<h3>The data science toolkit</h3>
+<p>Python alone is just a general-purpose language. What makes it the #1 language for data science is its ecosystem. These five libraries are your core toolkit — you'll use them in every project:</p>
+<table style="width:100%;border-collapse:collapse;margin:1rem 0">
+<tr style="background:var(--fog2)"><th style="padding:.5rem .8rem;text-align:left">Library</th><th style="padding:.5rem .8rem;text-align:left">What it does</th><th style="padding:.5rem .8rem;text-align:left">When you use it</th></tr>
+<tr><td style="padding:.4rem .8rem"><code>numpy</code></td><td style="padding:.4rem .8rem">Fast numerical arrays</td><td style="padding:.4rem .8rem">Any math on numbers / matrices</td></tr>
+<tr style="background:var(--fog2)"><td style="padding:.4rem .8rem"><code>pandas</code></td><td style="padding:.4rem .8rem">DataFrames (tables)</td><td style="padding:.4rem .8rem">Loading, cleaning, analysing data</td></tr>
+<tr><td style="padding:.4rem .8rem"><code>matplotlib</code></td><td style="padding:.4rem .8rem">Charts and plots</td><td style="padding:.4rem .8rem">Visualising data and results</td></tr>
+<tr style="background:var(--fog2)"><td style="padding:.4rem .8rem"><code>scikit-learn</code></td><td style="padding:.4rem .8rem">Machine learning algorithms</td><td style="padding:.4rem .8rem">Building ML models</td></tr>
+<tr><td style="padding:.4rem .8rem"><code>seaborn</code></td><td style="padding:.4rem .8rem">Statistical visualisation</td><td style="padding:.4rem .8rem">Beautiful, publication-ready charts</td></tr>
+</table>
+<p>Install all five with one command: <code>pip install numpy pandas matplotlib scikit-learn seaborn</code>. Then verify:</p>
+`},
+    { type:'code', src:`import numpy as np
+import pandas as pd
+import matplotlib
+import sklearn
+import seaborn
+
+print(f"NumPy:       {np.__version__}")
+print(f"Pandas:      {pd.__version__}")
+print(f"Matplotlib:  {matplotlib.__version__}")
+print(f"Scikit-learn:{sklearn.__version__}")
+print(f"Seaborn:     {seaborn.__version__}")
+print("\\nAll libraries loaded successfully! You are ready.")`,
+      out:`NumPy:       1.26.4
+Pandas:      2.2.1
+Matplotlib:  3.8.3
+Scikit-learn:1.4.1.post1
+Seaborn:     0.13.2
+
+All libraries loaded successfully! You are ready.` },
+    { type:'exercise', title:'Environment Setup & Version Check',
+      body:`<p>Create a new folder called <code>dsa-python</code>, set up a virtual environment inside it, and install the data science stack. Then write a script called <code>check_env.py</code> that:</p>
+<ol>
+<li>Imports numpy, pandas, matplotlib, and scikit-learn</li>
+<li>Prints each library's version using <code>.__version__</code></li>
+<li>Prints your Python version using the <code>sys</code> module</li>
+<li>Prints a greeting: <code>Ready to do data science in Python X.X!</code></li>
+</ol>`,
+      hint:`<code>import sys</code> then <code>sys.version</code> gives the full version string. Use <code>sys.version_info.major</code> and <code>sys.version_info.minor</code> for just the numbers.`,
+      solution:`import sys
+import numpy as np
+import pandas as pd
+import matplotlib
+import sklearn
+
+print(f"Python:      {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}")
+print(f"NumPy:       {np.__version__}")
+print(f"Pandas:      {pd.__version__}")
+print(f"Matplotlib:  {matplotlib.__version__}")
+print(f"Scikit-learn:{sklearn.__version__}")
+print(f"\\nReady to do data science in Python {sys.version_info.major}.{sys.version_info.minor}!")`}
   ]
 };
 
 L['python-w1-l2'] = {
-  duration_mins: 18,
+  duration_mins: 25,
   sections: [
     { type:'text', body:`
 <h2>Variables &amp; Data Types</h2>
@@ -136,29 +207,95 @@ print(a, b)   # a is now 25, b is now 10`,
       out:`0 0 0
 13.0827 80.2707
 25 10` },
-    { type:'exercise', title:'Student Profile Variables',
-      body:`<p>Create variables to represent a student profile with these fields:</p>
-<ul>
-<li>full name (string)</li>
-<li>age (integer)</li>
-<li>percentage score (float, e.g. 87.4)</li>
-<li>has_distinction (bool — True if score &gt;= 75)</li>
-</ul>
-<p>Print each variable and its type using <code>type()</code>. Then swap the value of age and score just to practise the swap trick.</p>`,
-      hint:`Use <code>print(variable_name, type(variable_name))</code> to show both at once.`,
-      solution:`full_name = "Ananya Krishnan"
-age = 20
-percentage = 87.4
-has_distinction = True
+    { type:'text', body:`
+<h3>The fifth type: None</h3>
+<p><code>None</code> is Python's way of saying "no value" or "empty". It's not zero, not an empty string, not False — it is its own type (<code>NoneType</code>). You'll encounter it constantly in data science: missing values before they're set, functions that have no explicit return, and database nulls often become <code>None</code> in Python.</p>
+`},
+    { type:'code', src:`result = None
+print(result)           # None
+print(type(result))     # <class 'NoneType'>
 
-print(full_name, type(full_name))
-print(age, type(age))
-print(percentage, type(percentage))
-print(has_distinction, type(has_distinction))
+# Check for None with 'is', not '=='
+if result is None:
+    print("No value assigned yet.")
 
-# Swap age and percentage
-age, percentage = percentage, age
-print("After swap:", age, percentage)`}
+# A function with no return statement returns None
+def process():
+    x = 2 + 2    # does something but returns nothing
+
+output = process()
+print(output)           # None
+print(output is None)   # True` },
+    { type:'text', body:`
+<h3>isinstance() — safer type checking</h3>
+<p>While <code>type(x) == int</code> checks the exact type, <code>isinstance(x, int)</code> checks the type AND its subclasses — which is almost always what you want. More importantly, you can check multiple types at once:</p>
+`},
+    { type:'code', src:`score = 88
+name  = "Priya"
+value = None
+
+# Check if a value is a number (int or float)
+print(isinstance(score, (int, float)))   # True
+print(isinstance(score, str))            # False
+print(isinstance(name, str))             # True
+print(isinstance(value, type(None)))     # True
+
+# Practical: validate input before processing
+def compute_grade(score):
+    if not isinstance(score, (int, float)):
+        raise TypeError(f"Expected a number, got {type(score).__name__}")
+    if score >= 90: return "A"
+    if score >= 75: return "B"
+    if score >= 50: return "C"
+    return "F"
+
+print(compute_grade(88))        # B
+print(compute_grade(92.5))      # A
+# compute_grade("88")  → TypeError: Expected a number, got str`,
+      out:`True
+False
+True
+True
+B
+A` },
+    { type:'warn', body:`<strong>int("88")</strong> works — but <strong>int("88.5")</strong> raises <code>ValueError</code>. This is the #1 beginner bug when reading CSV data. Use <code>float("88.5")</code> then cast to int if needed: <code>int(float("88.5"))</code>.` },
+    { type:'exercise', title:'Student Profile with Validation',
+      body:`<p>Create a function <code>build_profile(name, age, score)</code> that:</p>
+<ol>
+<li>Validates that <code>name</code> is a non-empty string (raise <code>ValueError</code> if not)</li>
+<li>Validates that <code>age</code> is an integer between 15 and 60</li>
+<li>Validates that <code>score</code> is a number between 0 and 100</li>
+<li>Returns a dictionary with keys: <code>name</code>, <code>age</code>, <code>score</code>, <code>grade</code> (A/B/C/F), and <code>has_distinction</code> (bool, True if score ≥ 75)</li>
+</ol>
+<p>Test it with valid data and then with <code>age="twenty"</code> to see the error.</p>`,
+      hint:`Use <code>isinstance()</code> for type checks. Build the return dict using grade logic from an <code>if/elif</code> chain.`,
+      solution:`def build_profile(name, age, score):
+    if not isinstance(name, str) or not name.strip():
+        raise ValueError("name must be a non-empty string")
+    if not isinstance(age, int) or not (15 <= age <= 60):
+        raise ValueError(f"age must be an integer between 15 and 60, got {age!r}")
+    if not isinstance(score, (int, float)) or not (0 <= score <= 100):
+        raise ValueError(f"score must be a number 0–100, got {score!r}")
+
+    if score >= 90:   grade = "A"
+    elif score >= 75: grade = "B"
+    elif score >= 50: grade = "C"
+    else:             grade = "F"
+
+    return {
+        "name": name.strip(),
+        "age": age,
+        "score": float(score),
+        "grade": grade,
+        "has_distinction": score >= 75,
+    }
+
+print(build_profile("Ananya Krishnan", 20, 87.4))
+# Test error case:
+try:
+    build_profile("Ravi", "twenty", 85)
+except ValueError as e:
+    print(f"Error: {e}")`}
   ]
 };
 
@@ -248,28 +385,75 @@ print(grade)              # Distinction`,
 False
 True
 Distinction` },
-    { type:'exercise', title:'BMI Calculator',
-      body:`<p>BMI = weight (kg) ÷ height² (m²). Write a program that:</p>
+    { type:'text', body:`
+<h3>Augmented assignment — the shorthand every data scientist uses</h3>
+<p>Instead of writing <code>total = total + value</code>, Python gives you shorthand operators that combine the operation with assignment. These appear constantly in loops and data processing:</p>
+`},
+    { type:'code', src:`total = 0
+count = 0
+data  = [45, 82, 67, 91, 58, 74]
+
+for value in data:
+    total += value   # same as: total = total + value
+    count += 1
+
+average = total / count
+print(f"Sum: {total}  Count: {count}  Average: {average:.1f}")
+
+# All augmented operators:
+x = 100
+x -= 10    # x = 90    (subtract)
+x *= 2     # x = 180   (multiply)
+x //= 7    # x = 25    (floor divide)
+x **= 2    # x = 625   (power)
+x %= 100   # x = 25    (modulo)
+print(f"Final x: {x}")`,
+      out:`Sum: 417  Count: 6  Average: 69.5
+Final x: 25` },
+    { type:'text', body:`
+<h3>Operator precedence — know the order, avoid the bugs</h3>
+<p>Python evaluates operators in a fixed order. The full hierarchy (highest precedence first):</p>
+<table style="width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem">
+<tr style="background:var(--fog2)"><th style="padding:.4rem .8rem;text-align:left">Precedence</th><th style="padding:.4rem .8rem;text-align:left">Operator(s)</th><th style="padding:.4rem .8rem;text-align:left">Example</th></tr>
+<tr><td style="padding:.4rem .8rem">1 (highest)</td><td style="padding:.4rem .8rem"><code>()</code></td><td style="padding:.4rem .8rem">Parentheses first</td></tr>
+<tr style="background:var(--fog2)"><td style="padding:.4rem .8rem">2</td><td style="padding:.4rem .8rem"><code>**</code></td><td style="padding:.4rem .8rem"><code>2**3 = 8</code></td></tr>
+<tr><td style="padding:.4rem .8rem">3</td><td style="padding:.4rem .8rem"><code>+x  -x  ~x</code></td><td style="padding:.4rem .8rem">Unary operators</td></tr>
+<tr style="background:var(--fog2)"><td style="padding:.4rem .8rem">4</td><td style="padding:.4rem .8rem"><code>*  /  //  %</code></td><td style="padding:.4rem .8rem">Multiply, divide</td></tr>
+<tr><td style="padding:.4rem .8rem">5</td><td style="padding:.4rem .8rem"><code>+  -</code></td><td style="padding:.4rem .8rem">Add, subtract</td></tr>
+<tr style="background:var(--fog2)"><td style="padding:.4rem .8rem">6</td><td style="padding:.4rem .8rem"><code>==  !=  >  <  >=  <=</code></td><td style="padding:.4rem .8rem">Comparisons</td></tr>
+<tr><td style="padding:.4rem .8rem">7</td><td style="padding:.4rem .8rem"><code>not</code></td><td style="padding:.4rem .8rem">Boolean NOT</td></tr>
+<tr style="background:var(--fog2)"><td style="padding:.4rem .8rem">8</td><td style="padding:.4rem .8rem"><code>and</code></td><td style="padding:.4rem .8rem">Boolean AND</td></tr>
+<tr><td style="padding:.4rem .8rem">9 (lowest)</td><td style="padding:.4rem .8rem"><code>or</code></td><td style="padding:.4rem .8rem">Boolean OR</td></tr>
+</table>
+<p>When in doubt, use parentheses. Code with explicit parentheses is always clearer than code that relies on precedence knowledge.</p>
+`},
+    { type:'exercise', title:'Student Score Analyser',
+      body:`<p>Given a list of exam scores <code>[82, 45, 91, 67, 73, 55, 88, 38, 95, 61]</code>, write a program that uses operators and expressions (no loops yet — just Python's built-in <code>max()</code>, <code>min()</code>, <code>sum()</code>, and <code>len()</code>) to:</p>
 <ol>
-<li>Stores a person's weight (68 kg) and height (1.72 m) in variables</li>
-<li>Calculates their BMI</li>
-<li>Prints the result rounded to 2 decimal places</li>
-<li>Prints whether their BMI is under 18.5 (underweight), 18.5–24.9 (normal), or 25+ (overweight) using a single comparison expression</li>
+<li>Calculate the total, average, highest, and lowest score</li>
+<li>Calculate the <strong>pass rate</strong> — percentage of scores ≥ 50 (use a generator expression: <code>sum(1 for s in scores if s >= 50)</code>)</li>
+<li>Determine if the class average qualifies for a distinction (≥ 75) using a boolean expression</li>
+<li>Print a formatted report with all values, aligned to 2 decimal places</li>
 </ol>`,
-      hint:`Use <code>round(value, 2)</code> or an f-string with <code>:.2f</code>. For the classification, try chained comparisons: <code>18.5 <= bmi < 25</code>.`,
-      solution:`weight = 68
-height = 1.72
+      hint:`<code>sum(1 for s in scores if s >= 50) / len(scores) * 100</code> gives the pass rate percentage. Use f-string <code>:.2f</code> for formatting.`,
+      solution:`scores = [82, 45, 91, 67, 73, 55, 88, 38, 95, 61]
 
-bmi = weight / height ** 2
-print(f"BMI: {bmi:.2f}")
+total     = sum(scores)
+average   = total / len(scores)
+highest   = max(scores)
+lowest    = min(scores)
+pass_rate = sum(1 for s in scores if s >= 50) / len(scores) * 100
+has_dist  = average >= 75
 
-is_underweight = bmi < 18.5
-is_normal      = 18.5 <= bmi < 25
-is_overweight  = bmi >= 25
-
-print(f"Underweight: {is_underweight}")
-print(f"Normal:      {is_normal}")
-print(f"Overweight:  {is_overweight}")`}
+print("=" * 35)
+print("  Class Performance Report")
+print("=" * 35)
+print(f"  Total score   : {total}")
+print(f"  Average       : {average:.2f}")
+print(f"  Highest       : {highest}")
+print(f"  Lowest        : {lowest}")
+print(f"  Pass rate     : {pass_rate:.2f}%")
+print(f"  Distinction   : {'Yes' if has_dist else 'No'}")`}
   ]
 };
 
@@ -405,30 +589,70 @@ City  : Madurai
 Score : 91.67%
 Rank  : #3
 ======================` },
-    { type:'exercise', title:'Receipt Formatter',
-      body:`<p>Store these variables: <code>item = "Python Masterclass"</code>, <code>price = 4999</code>, <code>discount_pct = 15</code>, <code>buyer = "kiran kumar"</code>.</p>
-<p>Use f-strings to print a formatted receipt that shows:</p>
-<ul><li>Buyer's name in Title Case</li><li>Item name</li><li>Original price</li><li>Discount amount (calculated)</li><li>Final price</li></ul>`,
-      hint:`Discount amount = <code>price * discount_pct / 100</code>. Final price = <code>price - discount</code>. Use <code>:.2f</code> to show two decimal places.`,
-      solution:`item = "Python Masterclass"
-price = 4999
-discount_pct = 15
-buyer = "kiran kumar"
+    { type:'text', body:`
+<h3>String methods for data cleaning — critical for data science</h3>
+<p>In real datasets, text data is almost always messy: extra spaces, inconsistent casing, mixed delimiters, unwanted characters. These string methods are your cleaning toolkit:</p>
+`},
+    { type:'code', src:`# Simulated messy data from a CSV upload
+raw_records = [
+    "  PRIYA SHARMA  ,  priya.s@gmail.com  ,  mumbai  ",
+    "Rajan Kumar, RAJAN@HOTMAIL.COM ,Delhi ",
+    "  ananya reddy,ananya_r@yahoo.co.in,BENGALURU",
+]
 
-discount = price * discount_pct / 100
-final_price = price - discount
+cleaned = []
+for record in raw_records:
+    parts = record.split(",")
+    name  = parts[0].strip().title()          # strip whitespace, Title Case
+    email = parts[1].strip().lower()          # strip, lowercase
+    city  = parts[2].strip().capitalize()     # strip, Capitalize
 
-print(f"""
-{'=' * 35}
-RECEIPT — Data Science Academia
-{'=' * 35}
-Buyer    : {buyer.title()}
-Item     : {item}
-Price    : ₹{price:,.2f}
-Discount : {discount_pct}% (₹{discount:.2f})
----------------------------------
-TOTAL    : ₹{final_price:,.2f}
-{'=' * 35}""")`}
+    # Validate email has @ and at least one dot after @
+    domain = email.split("@")[-1] if "@" in email else ""
+    valid_email = "@" in email and "." in domain
+
+    cleaned.append({
+        "name":  name,
+        "email": email,
+        "city":  city,
+        "valid_email": valid_email
+    })
+
+for r in cleaned:
+    print(f"{r['name']:<20} | {r['email']:<30} | {r['city']:<12} | valid={r['valid_email']}")`,
+      out:`Priya Sharma         | priya.s@gmail.com              | Mumbai       | valid=True
+Rajan Kumar          | rajan@hotmail.com              | Delhi        | valid=True
+Ananya Reddy         | ananya_r@yahoo.co.in           | Bengaluru    | valid=True` },
+    { type:'tip', body:`<code>str.strip()</code> removes whitespace from BOTH ends. <code>lstrip()</code> removes from the left only, <code>rstrip()</code> from the right. In data pipelines, always strip before splitting — whitespace around delimiters is the #1 source of empty-string bugs.` },
+    { type:'exercise', title:'CSV Record Cleaner',
+      body:`<p>You receive this messy student data (one string per student, pipe-separated):</p>
+<pre style="background:rgba(255,255,255,.04);padding:.75rem;border-radius:6px;font-size:.82rem;font-family:var(--fm)">records = [
+    "  DSA001 | PRIYA SHARMA | priya.s@dsa.in | PYTHON | 88  ",
+    "DSA002|Rajan Kumar |RAJAN@DSA.IN| sql |76",
+    "  DSA003 | ananya REDDY|ananya@dsa.in|Machine Learning| 91 ",
+]</pre>
+<p>Write a function <code>clean_record(raw)</code> that parses each string and returns a dict with: <code>id</code> (stripped), <code>name</code> (Title Case), <code>email</code> (lowercase), <code>course</code> (Title Case), <code>score</code> (integer), <code>grade</code> (A/B/C/F based on score). Print each cleaned record as a formatted line.</p>`,
+      hint:`Split on <code>"|"</code>. Each field needs <code>.strip()</code>. Convert score with <code>int(parts[4].strip())</code>. Grade logic: A≥90, B≥75, C≥50, else F.`,
+      solution:`records = [
+    "  DSA001 | PRIYA SHARMA | priya.s@dsa.in | PYTHON | 88  ",
+    "DSA002|Rajan Kumar |RAJAN@DSA.IN| sql |76",
+    "  DSA003 | ananya REDDY|ananya@dsa.in|Machine Learning| 91 ",
+]
+
+def clean_record(raw):
+    parts = raw.split("|")
+    sid    = parts[0].strip()
+    name   = parts[1].strip().title()
+    email  = parts[2].strip().lower()
+    course = parts[3].strip().title()
+    score  = int(parts[4].strip())
+    grade  = "A" if score >= 90 else "B" if score >= 75 else "C" if score >= 50 else "F"
+    return {"id": sid, "name": name, "email": email,
+            "course": course, "score": score, "grade": grade}
+
+for raw in records:
+    r = clean_record(raw)
+    print(f"{r['id']} | {r['name']:<20} | {r['email']:<25} | {r['course']:<18} | {r['score']:>3} ({r['grade']})")`}
   ]
 };
 
@@ -510,23 +734,89 @@ Principal   : ₹{principal:,.0f}
 Monthly EMI : ₹{emi:,.2f}
 Total paid  : ₹{total_payment:,.2f}
 Interest    : ₹{total_interest:,.2f}""")` },
-    { type:'exercise', title:'Temperature Converter',
-      body:`<p>Write an interactive program that:</p>
-<ol>
-<li>Asks the user to enter a temperature in Celsius</li>
-<li>Converts it to Fahrenheit: <code>F = C × 9/5 + 32</code></li>
-<li>Converts it to Kelvin: <code>K = C + 273.15</code></li>
-<li>Prints all three values, each rounded to 2 decimal places</li>
-</ol>
-<p>Test with 100°C — you should get 212°F and 373.15 K.</p>`,
-      hint:`Get the input as a string, convert to float immediately with <code>float(input(...))</code>.`,
-      solution:`celsius = float(input("Enter temperature in Celsius: "))
-fahrenheit = celsius * 9/5 + 32
-kelvin = celsius + 273.15
+    { type:'text', body:`
+<h3>Safe type conversion — handling bad input like a professional</h3>
+<p>In production code and data pipelines, input is often messy. A robust program doesn't crash on bad input — it handles it gracefully:</p>
+`},
+    { type:'code', src:`def safe_to_float(value, default=None):
+    """Convert a value to float, returning default if conversion fails."""
+    try:
+        return float(value)
+    except (ValueError, TypeError):
+        return default
 
-print(f"Celsius    : {celsius:.2f}°C")
-print(f"Fahrenheit : {fahrenheit:.2f}°F")
-print(f"Kelvin     : {kelvin:.2f} K")`}
+def safe_to_int(value, default=None):
+    try:
+        return int(float(value))   # handles "88.5" → 88
+    except (ValueError, TypeError):
+        return default
+
+# Simulating CSV row values (all strings from file read)
+raw_data = [
+    ("Priya",  "88",    "92.5", "True"),
+    ("Rajan",  "N/A",   "78",   "False"),
+    ("Ananya", "91",    "",     "True"),
+    ("Dev",    "67abc", "85",   "0"),
+]
+
+print(f"{'Name':<10} {'Python':>8} {'SQL':>8} {'Employed':>10}")
+print("-" * 40)
+for name, python_str, sql_str, emp_str in raw_data:
+    python_score = safe_to_int(python_str)
+    sql_score    = safe_to_float(sql_str)
+    employed     = emp_str.strip().lower() in ("true", "1", "yes")
+
+    py_display  = f"{python_score:>8}" if python_score is not None else "     N/A"
+    sql_display = f"{sql_score:>8.1f}" if sql_score   is not None else "     N/A"
+    print(f"{name:<10} {py_display} {sql_display} {str(employed):>10}")`,
+      out:`Name       Python      SQL   Employed
+----------------------------------------
+Priya          88     92.5       True
+Rajan         N/A     78.0      False
+Ananya         91      N/A       True
+Dev           N/A     85.0      False` },
+    { type:'exercise', title:'CSV Row Parser',
+      body:`<p>You receive student data as raw strings (from a file read). Each string is a comma-separated row: <code>id, name, age, score, passed</code>. Some fields may be missing or malformed.</p>
+<pre style="background:rgba(255,255,255,.04);padding:.75rem;border-radius:6px;font-size:.82rem;font-family:var(--fm)">rows = [
+    "S001, Priya Sharma, 22, 88.5, True",
+    "S002, Rajan Kumar, N/A, 76, False",
+    "S003, Ananya Reddy, 24, , True",
+    "S004, Dev Bhatia, 21, 95, 1",
+]</pre>
+<p>Write a parser that converts each row into a dict with properly typed values. Use <code>None</code> for unparseable numbers. Print a summary showing: total students, number with valid scores, and average score (ignoring None values).</p>`,
+      hint:`Split on <code>","</code>, strip each part. For passed: check if the stripped value is in <code>("true","1","yes")</code>. Calculate average by filtering out <code>None</code> scores.`,
+      solution:`rows = [
+    "S001, Priya Sharma, 22, 88.5, True",
+    "S002, Rajan Kumar, N/A, 76, False",
+    "S003, Ananya Reddy, 24, , True",
+    "S004, Dev Bhatia, 21, 95, 1",
+]
+
+def safe_float(s, default=None):
+    try: return float(s)
+    except: return default
+
+def parse_row(raw):
+    parts = [p.strip() for p in raw.split(",")]
+    sid, name, age_s, score_s, passed_s = parts
+    return {
+        "id":     sid,
+        "name":   name.title(),
+        "age":    safe_float(age_s),
+        "score":  safe_float(score_s),
+        "passed": passed_s.lower() in ("true", "1", "yes"),
+    }
+
+students = [parse_row(r) for r in rows]
+valid_scores = [s["score"] for s in students if s["score"] is not None]
+
+print(f"Total students  : {len(students)}")
+print(f"With valid score: {len(valid_scores)}")
+print(f"Average score   : {sum(valid_scores)/len(valid_scores):.2f}")
+print()
+for s in students:
+    sc = f"{s['score']:.1f}" if s['score'] is not None else "N/A"
+    print(f"  {s['id']} | {s['name']:<15} | Age:{s['age'] or 'N/A'!s} | Score:{sc:>5} | Passed:{s['passed']}")`}
   ]
 };
 
@@ -737,19 +1027,78 @@ for student, score in zip(students, scores):
 Arun: 88 (Pass)
 Bala: 72 (Pass)
 Chitra: 95 (Pass)` },
-    { type:'exercise', title:'Multiplication Table Generator',
-      body:`<p>Ask the user for a number n (integer). Print a clean multiplication table for that number from 1 to 12. Format it so the numbers align neatly.</p>
-<p>For n = 7, the output should look like:</p>
-<pre style="background:rgba(255,255,255,.04);padding:.75rem;border-radius:6px;font-family:var(--fm);font-size:.82rem;">7  ×  1  =   7
-7  ×  2  =  14
-...
-7  × 12  =  84</pre>`,
-      hint:`Use an f-string with width specifiers like <code>{n:2d}</code> to right-align numbers.`,
-      solution:`n = int(input("Enter a number: "))
-print(f"\nMultiplication table for {n}:")
-print("-" * 20)
-for i in range(1, 13):
-    print(f"{n:2d}  ×  {i:2d}  =  {n*i:3d}")`}
+    { type:'text', body:`
+<h3>Looping over real data — the data science pattern</h3>
+<p>In data science, you almost never loop over a range of numbers. You loop over <strong>datasets</strong> — lists of records, rows of a CSV, responses from an API. Here's the core pattern with <code>enumerate()</code> and <code>zip()</code>:</p>
+`},
+    { type:'code', src:`# Real pattern: process student records
+students = ["Priya", "Rajan", "Ananya", "Bala", "Chitra"]
+scores   = [92, 78, 85, 61, 88]
+courses  = ["Python", "SQL", "ML", "Python", "ML"]
+
+print(f"{'#':>3}  {'Name':<10}  {'Course':<8}  {'Score':>5}  {'Grade'}")
+print("-" * 44)
+
+for rank, (name, score, course) in enumerate(zip(students, scores, courses), start=1):
+    grade = "A" if score >= 90 else "B" if score >= 75 else "C" if score >= 50 else "F"
+    flag  = " ★" if score >= 90 else ""
+    print(f"{rank:>3}. {name:<10}  {course:<8}  {score:>5}  {grade}{flag}")
+
+print("-" * 44)
+passing = sum(1 for s in scores if s >= 50)
+print(f"Pass rate: {passing}/{len(scores)} = {passing/len(scores):.0%}")`,
+      out:`  #  Name        Course    Score  Grade
+--------------------------------------------
+  1. Priya       Python      92  A ★
+  2. Rajan       SQL         78  B
+  3. Ananya      ML          85  B
+  4. Bala        Python      61  C
+  5. Chitra      ML          88  B
+--------------------------------------------
+Pass rate: 5/5 = 100%` },
+    { type:'exercise', title:'Batch Score Analyser',
+      body:`<p>Given a list of 10 students, each with scores for 3 subjects, write a program using <code>for</code> loops, <code>enumerate()</code>, and <code>zip()</code> to:</p>
+<ol>
+<li>Calculate each student's average score and overall grade (A/B/C/F)</li>
+<li>Print a formatted leaderboard sorted by average (highest first) using the built-in <code>sorted()</code></li>
+<li>Count how many students are in each grade category</li>
+<li>Identify the subject with the highest class average</li>
+</ol>`,
+      hint:`Store each student as a dict. Use <code>sorted(students, key=lambda s: s['avg'], reverse=True)</code> for the leaderboard. Use a dict to count grade categories.`,
+      solution:`students = [
+    {"name": "Priya",   "python": 92, "sql": 88, "ml": 79},
+    {"name": "Rajan",   "python": 78, "sql": 82, "ml": 71},
+    {"name": "Ananya",  "python": 85, "sql": 76, "ml": 91},
+    {"name": "Bala",    "python": 61, "sql": 55, "ml": 48},
+    {"name": "Chitra",  "python": 88, "sql": 93, "ml": 85},
+    {"name": "Dev",     "python": 72, "sql": 68, "ml": 75},
+    {"name": "Esha",    "python": 95, "sql": 91, "ml": 88},
+    {"name": "Faiz",    "python": 47, "sql": 52, "ml": 60},
+    {"name": "Gita",    "python": 83, "sql": 79, "ml": 82},
+    {"name": "Hari",    "python": 66, "sql": 71, "ml": 58},
+]
+
+for s in students:
+    s["avg"] = round((s["python"] + s["sql"] + s["ml"]) / 3, 1)
+    if s["avg"] >= 90:   s["grade"] = "A"
+    elif s["avg"] >= 75: s["grade"] = "B"
+    elif s["avg"] >= 50: s["grade"] = "C"
+    else:                s["grade"] = "F"
+
+ranked = sorted(students, key=lambda s: s["avg"], reverse=True)
+print(f"{'Rank':<5} {'Name':<10} {'Python':>7} {'SQL':>5} {'ML':>5} {'Avg':>6} {'Grade'}")
+print("-" * 50)
+for i, s in enumerate(ranked, 1):
+    print(f"{i:<5} {s['name']:<10} {s['python']:>7} {s['sql']:>5} {s['ml']:>5} {s['avg']:>6} {s['grade']}")
+
+grade_counts = {}
+for s in students:
+    grade_counts[s["grade"]] = grade_counts.get(s["grade"], 0) + 1
+print(f"\nGrade distribution: {grade_counts}")
+
+for subj in ("python", "sql", "ml"):
+    avg = sum(s[subj] for s in students) / len(students)
+    print(f"  {subj.upper()} class avg: {avg:.1f}")` }
   ]
 };
 
@@ -819,29 +1168,53 @@ print(f"Sum of evens: {even_sum}")`,
   Adding 40 → running total: 70
   Adding 6 → running total: 76
 Sum of evens: 76` },
-    { type:'exercise', title:'Number Guessing Game',
-      body:`<p>Write a number guessing game:</p>
+    { type:'exercise', title:'Batch Data Entry Validator',
+      body:`<p>A data entry operator is entering student records one at a time. Write a <code>while True</code> input loop that:</p>
 <ol>
-<li>Set a secret number (e.g., 42)</li>
-<li>Use a <code>while</code> loop to keep asking the user to guess</li>
-<li>Print "Too high!", "Too low!", or "Correct! You got it in X guesses."</li>
-<li>Count the number of guesses</li>
+<li>Asks for: name (non-empty string), age (integer 15–60), score (float 0–100)</li>
+<li>Validates each field — print a specific error message if invalid, and re-ask that field until it's valid</li>
+<li>Stores each valid record in a list of dicts</li>
+<li>After each record, asks "Add another? (y/n)". If n, exit the loop and print a summary table of all records entered</li>
 </ol>`,
-      hint:`Use a <code>guesses = 0</code> counter, increment it each loop, and <code>break</code> when the guess is correct.`,
-      solution:`secret = 42
-guesses = 0
+      hint:`Use nested <code>while True</code> loops for each field. Break from the inner loop once the field is valid. The outer loop runs until the user types 'n'.`,
+      solution:`records = []
 
 while True:
-    guess = int(input("Guess the number (1-100): "))
-    guesses += 1
+    print("\\n--- New Record ---")
 
-    if guess < secret:
-        print("Too low!")
-    elif guess > secret:
-        print("Too high!")
-    else:
-        print(f"Correct! You got it in {guesses} guess{'es' if guesses > 1 else ''}.")
-        break`}
+    while True:
+        name = input("Name: ").strip()
+        if name: break
+        print("  Error: name cannot be empty")
+
+    while True:
+        try:
+            age = int(input("Age (15-60): "))
+            if 15 <= age <= 60: break
+            print("  Error: age must be between 15 and 60")
+        except ValueError:
+            print("  Error: please enter a whole number")
+
+    while True:
+        try:
+            score = float(input("Score (0-100): "))
+            if 0 <= score <= 100: break
+            print("  Error: score must be between 0 and 100")
+        except ValueError:
+            print("  Error: please enter a number")
+
+    records.append({"name": name, "age": age, "score": score})
+    print(f"  ✓ Record saved for {name}")
+
+    again = input("Add another? (y/n): ").strip().lower()
+    if again != "y":
+        break
+
+print("\\n=== Summary ===")
+print(f"{'Name':<20} {'Age':>4} {'Score':>7}")
+print("-" * 34)
+for r in records:
+    print(f"{r['name']:<20} {r['age']:>4} {r['score']:>7.1f}")`}
   ]
 };
 
@@ -919,24 +1292,54 @@ for i in range(len(numbers)):
       out:`Pairs that sum to 9:
   2 + 7 = 9
   -2 + 11 = 9` },
-    { type:'exercise', title:'Hollow Square',
-      body:`<p>Print a hollow square of stars with side length n (taken from user input). For n = 5:</p>
-<pre style="background:rgba(255,255,255,.04);padding:.75rem;border-radius:6px;font-family:var(--fm);">*****
-*   *
-*   *
-*   *
-*****</pre>
-<p>Hint: Only print <code>*</code> on the first row, last row, first column, or last column. Print a space everywhere else.</p>`,
-      hint:`Check: <code>if row == 0 or row == n-1 or col == 0 or col == n-1</code>`,
-      solution:`n = int(input("Enter side length: "))
+    { type:'exercise', title:'Comprehension Data Transformer',
+      body:`<p>You have a raw dataset of student records. Use <strong>only list and dict comprehensions</strong> (no explicit <code>for</code> loops except inside comprehensions) to answer these questions:</p>
+<pre style="background:rgba(255,255,255,.04);padding:.75rem;border-radius:6px;font-size:.82rem;font-family:var(--fm)">students = [
+    {"name": "Priya",  "score": 92, "city": "Mumbai",    "employed": True},
+    {"name": "Rajan",  "score": 78, "city": "Delhi",     "employed": False},
+    {"name": "Ananya", "score": 85, "city": "Bengaluru", "employed": True},
+    {"name": "Bala",   "score": 45, "city": "Chennai",   "employed": False},
+    {"name": "Chitra", "score": 91, "city": "Mumbai",    "employed": True},
+    {"name": "Dev",    "score": 67, "city": "Delhi",     "employed": False},
+]</pre>
+<ol>
+<li>List comprehension: names of all students who scored ≥ 75</li>
+<li>List comprehension: scores normalised to 0–1 scale (divide by 100)</li>
+<li>Dict comprehension: <code>{name: grade}</code> for all students (A≥90, B≥75, C≥50, F)</li>
+<li>List comprehension: dicts with <code>name</code> and <code>status</code> ("Placed" if employed else "Seeking")</li>
+<li>Nested comprehension: group names by city into a dict <code>{city: [names]}</code></li>
+</ol>`,
+      hint:`For (5): <code>{city: [s["name"] for s in students if s["city"]==city] for city in set(s["city"] for s in students)}</code>`,
+      solution:`students = [
+    {"name": "Priya",  "score": 92, "city": "Mumbai",    "employed": True},
+    {"name": "Rajan",  "score": 78, "city": "Delhi",     "employed": False},
+    {"name": "Ananya", "score": 85, "city": "Bengaluru", "employed": True},
+    {"name": "Bala",   "score": 45, "city": "Chennai",   "employed": False},
+    {"name": "Chitra", "score": 91, "city": "Mumbai",    "employed": True},
+    {"name": "Dev",    "score": 67, "city": "Delhi",     "employed": False},
+]
 
-for row in range(n):
-    for col in range(n):
-        if row == 0 or row == n-1 or col == 0 or col == n-1:
-            print("*", end="")
-        else:
-            print(" ", end="")
-    print()`}
+# 1. Names with score >= 75
+top = [s["name"] for s in students if s["score"] >= 75]
+print("Top students:", top)
+
+# 2. Normalised scores
+norm = [round(s["score"] / 100, 2) for s in students]
+print("Normalised:", norm)
+
+# 3. Name → grade dict
+def grade(sc): return "A" if sc>=90 else "B" if sc>=75 else "C" if sc>=50 else "F"
+grades = {s["name"]: grade(s["score"]) for s in students}
+print("Grades:", grades)
+
+# 4. Placement status
+status = [{"name": s["name"], "status": "Placed" if s["employed"] else "Seeking"} for s in students]
+print("Status:", status)
+
+# 5. City → names
+cities = set(s["city"] for s in students)
+by_city = {city: [s["name"] for s in students if s["city"] == city] for city in cities}
+print("By city:", by_city)`}
   ]
 };
 
@@ -1106,29 +1509,93 @@ print(diagnose(40.1))`,
       out:`Temp: 36.8°C (98.2°F) → Normal
 Temp: 38.2°C (100.8°F) → Fever
 Temp: 40.1°C (104.2°F) → Fever` },
-    { type:'exercise', title:'Loan EMI Calculator Function',
-      body:`<p>Write a function <code>calculate_emi(principal, annual_rate, months)</code> that returns the monthly EMI.</p>
-<p>EMI formula: <code>P × r × (1+r)^n / ((1+r)^n - 1)</code> where <code>r</code> is the monthly interest rate (annual_rate / 1200).</p>
-<p>Write a second function <code>emi_report(principal, annual_rate, months)</code> that calls the first function and prints a formatted summary showing EMI, total payment, and total interest.</p>
-<p>Test with: ₹5,00,000 at 8.5% for 60 months.</p>`,
-      hint:`Monthly rate = annual_rate / 1200. Total payment = emi × months. Interest = total payment − principal.`,
-      solution:`def calculate_emi(principal, annual_rate, months):
-    r = annual_rate / 1200
-    emi = principal * r * (1 + r)**months / ((1 + r)**months - 1)
-    return round(emi, 2)
+    { type:'text', body:`
+<h3>Type hints and docstrings — professional Python</h3>
+<p>Type hints (Python 3.5+) annotate what types a function expects and returns. They don't enforce types at runtime, but they make your code self-documenting, help IDEs catch mistakes, and are expected in any professional codebase. A docstring is the string immediately after <code>def</code> that explains what the function does:</p>
+`},
+    { type:'code', src:`def calculate_grade(score: float, max_score: float = 100.0) -> str:
+    """
+    Calculate a letter grade from a numeric score.
 
-def emi_report(principal, annual_rate, months):
-    emi = calculate_emi(principal, annual_rate, months)
-    total = emi * months
-    interest = total - principal
-    print(f"Principal  : ₹{principal:,.0f}")
-    print(f"Rate       : {annual_rate}% p.a.")
-    print(f"Duration   : {months} months")
-    print(f"Monthly EMI: ₹{emi:,.2f}")
-    print(f"Total paid : ₹{total:,.2f}")
-    print(f"Interest   : ₹{interest:,.2f}")
+    Args:
+        score:     The student's raw score.
+        max_score: The maximum possible score (default 100).
 
-emi_report(500000, 8.5, 60)`}
+    Returns:
+        A letter grade: 'A', 'B', 'C', or 'F'.
+
+    Raises:
+        ValueError: If score is negative or exceeds max_score.
+    """
+    if not (0 <= score <= max_score):
+        raise ValueError(f"score {score} is outside valid range [0, {max_score}]")
+
+    pct = score / max_score * 100
+    if pct >= 90: return "A"
+    if pct >= 75: return "B"
+    if pct >= 50: return "C"
+    return "F"
+
+# IDEs show the type hints in autocomplete
+print(calculate_grade(85))          # B
+print(calculate_grade(45, 50))      # A  (45/50 = 90%)
+help(calculate_grade)               # shows the docstring`,
+      out:`B
+A
+Help on function calculate_grade in module __main__:
+
+calculate_grade(score: float, max_score: float = 100.0) -> str
+    Calculate a letter grade from a numeric score.
+    ...` },
+    { type:'tip', body:`Use <code>from typing import Optional, List, Dict, Tuple</code> for complex types. <code>Optional[float]</code> means "float or None". In Python 3.10+, you can write <code>float | None</code> directly. Always annotate function signatures in code you'll share or maintain.` },
+    { type:'exercise', title:'Student Report Generator',
+      body:`<p>Write three functions with full type hints and docstrings:</p>
+<ol>
+<li><code>compute_stats(scores: list[float]) -> dict</code> — returns a dict with <code>mean</code>, <code>median</code>, <code>std</code>, <code>min</code>, <code>max</code> (compute without importing any library)</li>
+<li><code>assign_grade(score: float) -> str</code> — returns A/B/C/F</li>
+<li><code>generate_report(students: list[dict]) -> None</code> — takes a list of <code>{"name": str, "scores": list[float]}</code> dicts and prints a formatted table with each student's average, grade, and whether they are above the class average</li>
+</ol>`,
+      hint:`For median: sort the list, take the middle element (or average of two middle elements for even-length lists). For std: <code>sqrt(sum((x-mean)**2 for x in scores) / len(scores))</code>.`,
+      solution:`import math
+
+def compute_stats(scores: list) -> dict:
+    """Compute descriptive statistics for a list of scores."""
+    n = len(scores)
+    mean   = sum(scores) / n
+    sorted_s = sorted(scores)
+    median = sorted_s[n//2] if n%2 else (sorted_s[n//2-1]+sorted_s[n//2])/2
+    std    = math.sqrt(sum((x - mean)**2 for x in scores) / n)
+    return {"mean": round(mean,2), "median": round(median,2),
+            "std": round(std,2), "min": min(scores), "max": max(scores)}
+
+def assign_grade(score: float) -> str:
+    """Return a letter grade for a score 0–100."""
+    if score >= 90: return "A"
+    if score >= 75: return "B"
+    if score >= 50: return "C"
+    return "F"
+
+def generate_report(students: list) -> None:
+    """Print a formatted performance report for a list of students."""
+    all_avgs = [sum(s["scores"])/len(s["scores"]) for s in students]
+    class_avg = sum(all_avgs) / len(all_avgs)
+
+    print(f"{'Name':<12} {'Avg':>6} {'Grade':>6} {'vs Class':>10}")
+    print("-" * 38)
+    for s, avg in zip(students, all_avgs):
+        grade = assign_grade(avg)
+        flag  = "↑ above" if avg >= class_avg else "↓ below"
+        print(f"{s['name']:<12} {avg:>6.1f} {grade:>6} {flag:>10}")
+    print(f"\nClass average: {class_avg:.2f}")
+
+students = [
+    {"name": "Priya",  "scores": [92, 88, 79]},
+    {"name": "Rajan",  "scores": [78, 82, 71]},
+    {"name": "Ananya", "scores": [85, 76, 91]},
+    {"name": "Bala",   "scores": [61, 55, 48]},
+    {"name": "Chitra", "scores": [88, 93, 85]},
+]
+generate_report(students)`}
   ]
 };
 
@@ -1507,33 +1974,95 @@ b
 [8, 3, 5]
 2025-05-17
 17 May 2025, 09:30` },
-    { type:'exercise', title:'Lucky Draw System',
-      body:`<p>Build a lucky draw function <code>lucky_draw(participants, num_winners)</code> that:</p>
+    { type:'text', body:`
+<h3>Generators — memory-efficient iteration</h3>
+<p>A <strong>generator</strong> is a function that uses <code>yield</code> instead of <code>return</code>. It produces values one at a time — on demand — rather than building the entire sequence in memory. This is critical when working with large datasets:</p>
+`},
+    { type:'code', src:`# Compare: list vs generator for large sequence
+import sys
+
+# List — builds all 1M values in memory at once
+big_list = [x ** 2 for x in range(1_000_000)]
+print(f"List size: {sys.getsizeof(big_list):,} bytes")   # ~8 MB
+
+# Generator — builds values ONE at a time, tiny memory footprint
+def squares(n):
+    for x in range(n):
+        yield x ** 2
+
+gen = squares(1_000_000)
+print(f"Generator size: {sys.getsizeof(gen)} bytes")     # ~112 bytes
+
+# Both work the same in a for loop:
+total = sum(squares(1_000_000))   # never holds all values at once
+print(f"Sum: {total:,}")`,
+      out:`List size: 8,448,728 bytes
+Generator size: 112 bytes
+Sum: 333,332,833,333,500,000` },
+    { type:'code', src:`# Practical generator: read a large CSV line by line
+def read_csv_rows(filename: str):
+    """Yield one parsed row at a time from a CSV file."""
+    with open(filename, "r", encoding="utf-8") as f:
+        headers = [h.strip() for h in next(f).split(",")]
+        for line in f:
+            values = [v.strip() for v in line.split(",")]
+            yield dict(zip(headers, values))
+
+# Process a 1M-row CSV without loading it all into RAM:
+# for row in read_csv_rows("big_data.csv"):
+#     process(row)   # each row is a dict, one at a time
+
+# Generator expression — like a list comprehension but lazy:
+scores = [88, 45, 92, 67, 71, 55, 83]
+passing_gen = (s for s in scores if s >= 50)   # parentheses, not brackets
+print("Passing scores:", list(passing_gen))`,
+      out:`Passing scores: [88, 92, 67, 71, 55, 83]` },
+    { type:'exercise', title:'Data Pipeline with Generators',
+      body:`<p>Write a data processing pipeline using generators:</p>
 <ol>
-<li>Validates that <code>num_winners &lt;= len(participants)</code></li>
-<li>Uses <code>random.sample()</code> to pick unique winners</li>
-<li>Returns the winners list</li>
-</ol>
-<p>Also write a separate <code>draw_report(participants, num_winners)</code> that calls the function and prints: the date, total participants, number of winners, and each winner's name with their prize position.</p>`,
-      hint:`<code>random.sample(list, k)</code> returns k unique items. Use <code>datetime.date.today()</code> for the date.`,
+<li><code>generate_students(n: int)</code> — yields <code>n</code> dicts, each with a random <code>name</code>, <code>score</code> (50–100), and <code>city</code></li>
+<li><code>filter_top(students, threshold: float)</code> — a generator that yields only students with score ≥ threshold</li>
+<li><code>enrich(students)</code> — a generator that adds a <code>"grade"</code> key to each student dict</li>
+<li>Chain them: <code>enrich(filter_top(generate_students(1000), 80))</code> and print a summary of how many passed and their average score — all without building intermediate lists</li>
+</ol>`,
+      hint:`Each generator function uses <code>yield</code>. Chain them by passing one generator as the iterable to the next. To get count and sum without a list: use a <code>for</code> loop over the chained generator and accumulate.`,
       solution:`import random
-import datetime
 
-def lucky_draw(participants, num_winners):
-    if num_winners > len(participants):
-        raise ValueError("Cannot pick more winners than participants.")
-    return random.sample(participants, num_winners)
+names = ["Priya","Rajan","Ananya","Bala","Chitra","Dev","Esha","Faiz","Gita","Hari"]
+cities = ["Mumbai","Delhi","Bengaluru","Chennai","Hyderabad"]
 
-def draw_report(participants, num_winners):
-    winners = lucky_draw(participants, num_winners)
-    print(f"Lucky Draw — {datetime.date.today()}")
-    print(f"Participants: {len(participants)}  |  Winners: {num_winners}")
-    print("-" * 35)
-    for i, w in enumerate(winners, 1):
-        print(f"  #{i}: {w}")
+def generate_students(n: int):
+    for i in range(n):
+        yield {
+            "name":  random.choice(names) + f"_{i}",
+            "score": random.randint(50, 100),
+            "city":  random.choice(cities),
+        }
 
-names = ["Arun","Priya","Bala","Chitra","Dev","Esha","Faiz"]
-draw_report(names, 3)`}
+def filter_top(students, threshold: float):
+    for s in students:
+        if s["score"] >= threshold:
+            yield s
+
+def enrich(students):
+    for s in students:
+        score = s["score"]
+        s["grade"] = "A" if score >= 90 else "B" if score >= 75 else "C"
+        yield s
+
+random.seed(42)
+pipeline = enrich(filter_top(generate_students(1000), 80))
+
+count, total = 0, 0
+grade_counts = {"A": 0, "B": 0, "C": 0}
+for student in pipeline:
+    count += 1
+    total += student["score"]
+    grade_counts[student["grade"]] += 1
+
+print(f"Students scoring ≥ 80: {count}")
+print(f"Average score        : {total/count:.2f}")
+print(f"Grade distribution   : {grade_counts}")`}
   ]
 };
 
@@ -1937,6 +2466,56 @@ print(above_80)`,
   ✓ Chemistry   : 85
   ✓ English     : 94
 {'Maths': 91, 'Chemistry': 85, 'English': 94}` },
+    { type:'text', body:`
+<h3>The collections module — power-ups for dicts</h3>
+<p>Python's <code>collections</code> module provides specialised dict-like containers that solve recurring problems cleanly. Three are essential for data science work:</p>
+`},
+    { type:'code', src:`from collections import Counter, defaultdict
+
+# Counter — count things in one line
+text = "data science is the science of data and data analysis"
+word_counts = Counter(text.split())
+print(word_counts.most_common(3))    # 3 most frequent
+
+votes = ["BJP","INC","BJP","AAP","BJP","INC","BJP"]
+print(Counter(votes))                # vote tally in one line
+
+# Arithmetic on counters
+morning = Counter({"Python": 40, "SQL": 25})
+evening = Counter({"Python": 15, "SQL": 35, "ML": 20})
+total   = morning + evening
+print(total)                         # combined totals`,
+      out:`[('data', 3), ('science', 2), ('is', 1)]
+Counter({'BJP': 4, 'INC': 2, 'AAP': 1})
+Counter({'Python': 55, 'SQL': 60, 'ML': 20})` },
+    { type:'code', src:`from collections import defaultdict
+
+# defaultdict — no KeyError for missing keys, auto-initialises
+# Group students by city without "key exists?" checks:
+students = [
+    ("Priya",  "Mumbai"),  ("Rajan",  "Delhi"),
+    ("Ananya", "Mumbai"),  ("Bala",   "Chennai"),
+    ("Chitra", "Delhi"),   ("Dev",    "Mumbai"),
+]
+
+by_city = defaultdict(list)         # default value is an empty list
+for name, city in students:
+    by_city[city].append(name)      # no if-else needed!
+
+for city, names in sorted(by_city.items()):
+    print(f"  {city}: {names}")
+
+# defaultdict(int) — count without initialisation
+word = "mississippi"
+freq = defaultdict(int)
+for char in word:
+    freq[char] += 1                  # starts at 0 automatically
+print(dict(sorted(freq.items())))`,
+      out:`  Chennai: ['Bala']
+  Delhi: ['Rajan', 'Chitra']
+  Mumbai: ['Priya', 'Ananya', 'Dev']
+{'i': 4, 'm': 1, 'p': 2, 's': 4}` },
+    { type:'tip', body:`<code>Counter</code> is the right tool whenever you're counting things. <code>defaultdict(list)</code> is the right tool whenever you're grouping things. Both save the "check if key exists first" boilerplate that clutters plain-dict code.` },
     { type:'text', body:`<h3>Nested dictionaries — the standard for structured data</h3>
 <p>Real-world data is rarely flat. Dicts inside dicts mirror the structure of JSON APIs, database records, and config files:</p>`},
     { type:'code', src:`classroom = {
@@ -1951,25 +2530,58 @@ for name, info in classroom.items():
       out:`  Arun (Chennai): avg = 85.0
   Priya (Mumbai): avg = 93.7
   Bala (Delhi): avg = 69.0` },
-    { type:'exercise', title:'Word Frequency Counter',
-      body:`<p>Write a function <code>word_frequency(text)</code> that counts how many times each word appears in a string. It should be case-insensitive and ignore punctuation.</p>
-<p>Return the result as a dict, then print the top 5 most frequent words.</p>
-<p>Test with: <code>"To be or not to be that is the question to be asked"</code></p>`,
-      hint:`Use <code>text.lower().split()</code> to get words. For each word, use <code>freq[word] = freq.get(word, 0) + 1</code>. Sort the dict by value using <code>sorted(freq.items(), key=lambda x: x[1], reverse=True)</code>.`,
-      solution:`def word_frequency(text):
-    words = text.lower().split()
-    freq = {}
-    for word in words:
-        word = word.strip(".,!?;:'\"")
-        freq[word] = freq.get(word, 0) + 1
-    return freq
+    { type:'exercise', title:'Text Analytics Dashboard',
+      body:`<p>You have a corpus of customer feedback strings. Build a text analytics function <code>analyse_feedback(texts: list[str]) -> dict</code> that returns:</p>
+<ol>
+<li><code>word_freq</code>: a <code>Counter</code> of all words (lowercase, punctuation stripped)</li>
+<li><code>top_10</code>: the 10 most common words (excluding stopwords: "the","a","is","in","of","and","to","for","it","this","that","i","we","our","was","are","with","on","at","be")</li>
+<li><code>avg_length</code>: average number of words per feedback string</li>
+<li><code>by_sentiment</code>: a defaultdict grouping feedbacks as "positive" (if they contain "good","great","excellent","love","amazing") or "negative" (if "bad","poor","terrible","worst","hate"), else "neutral"</li>
+</ol>`,
+      hint:`Use <code>Counter</code> with a generator expression inside: <code>Counter(word for text in texts for word in ...)</code>. For top_10, filter out stopwords: <code>Counter({w:c for w,c in freq.items() if w not in stopwords}).most_common(10)</code>.`,
+      solution:`import re
+from collections import Counter, defaultdict
 
-text = "To be or not to be that is the question to be asked"
-freq = word_frequency(text)
-top5 = sorted(freq.items(), key=lambda x: x[1], reverse=True)[:5]
-print("Top 5 words:")
-for word, count in top5:
-    print(f"  '{word}': {count}")`}
+STOPWORDS = {"the","a","is","in","of","and","to","for","it","this","that",
+             "i","we","our","was","are","with","on","at","be","an"}
+POS_WORDS = {"good","great","excellent","love","amazing","wonderful","best"}
+NEG_WORDS = {"bad","poor","terrible","worst","hate","awful","horrible"}
+
+def analyse_feedback(texts: list) -> dict:
+    def tokenise(t):
+        return re.sub(r"[^a-z\\s]", "", t.lower()).split()
+
+    all_words = Counter(w for t in texts for w in tokenise(t))
+    top_10 = Counter({w: c for w, c in all_words.items()
+                      if w not in STOPWORDS}).most_common(10)
+
+    avg_length = sum(len(tokenise(t)) for t in texts) / len(texts)
+
+    by_sentiment = defaultdict(list)
+    for t in texts:
+        words = set(tokenise(t))
+        if words & POS_WORDS:        by_sentiment["positive"].append(t)
+        elif words & NEG_WORDS:      by_sentiment["negative"].append(t)
+        else:                        by_sentiment["neutral"].append(t)
+
+    return {"word_freq": all_words, "top_10": top_10,
+            "avg_length": avg_length, "by_sentiment": dict(by_sentiment)}
+
+texts = [
+    "The course is great and the instructors are excellent!",
+    "Poor material, terrible support. Worst experience.",
+    "Good content but the platform needs improvement.",
+    "I love the live sessions! Amazing community.",
+    "Average course, nothing special in the content.",
+]
+
+result = analyse_feedback(texts)
+print("Top 10 words (no stopwords):")
+for word, count in result["top_10"]:
+    print(f"  {word}: {count}")
+print(f"\\nAvg words per feedback: {result['avg_length']:.1f}")
+for sentiment, items in result["by_sentiment"].items():
+    print(f"{sentiment}: {len(items)} feedback(s)")`}
   ]
 };
 
@@ -2607,29 +3219,73 @@ generate_reports(reports)`,
       out:`Exporting as PDF...
 Exporting as Excel spreadsheet...
 Sending via email...` },
-    { type:'exercise', title:'Animal sound orchestra',
-      body:`<p>Create a <code>Animal</code> base class with a <code>make_sound()</code> method that raises <code>NotImplementedError</code>. Create three subclasses: <code>Dog</code> (returns "Woof!"), <code>Cat</code> (returns "Meow!"), and <code>Cow</code> (returns "Moo!"). Write a function <code>animal_chorus(animals)</code> that prints each animal's name and sound. Test it with a mixed list.</p>`,
-      hint:`Each subclass overrides <code>make_sound()</code>. The <code>animal_chorus</code> function just iterates and calls <code>make_sound()</code> without caring about the specific type.`,
-      solution:`class Animal:
-    def __init__(self, name):
-        self.name = name
-    def make_sound(self):
+    { type:'exercise', title:'Data Pipeline with Polymorphism',
+      body:`<p>Design a polymorphic data processing pipeline. Create:</p>
+<ol>
+<li>A base class <code>DataSource</code> with abstract methods: <code>load() -> list</code> and <code>describe() -> str</code> (both raise <code>NotImplementedError</code>)</li>
+<li>Two subclasses: <code>InMemorySource(data)</code> that wraps a list, and <code>FilteredSource(source, predicate)</code> that wraps any source and filters its output</li>
+<li>A <code>Pipeline</code> class accepting any <code>DataSource</code>, with chainable <code>filter(fn)</code>, <code>transform(fn)</code>, and <code>summary()</code> methods</li>
+<li>Show that the same Pipeline code works identically with either source — demonstrating polymorphism</li>
+</ol>`,
+      hint:`<code>filter</code> and <code>transform</code> update <code>self._data</code> and return <code>self</code>. <code>FilteredSource.load()</code> calls <code>self._inner.load()</code> then filters the result.`,
+      solution:`class DataSource:
+    def load(self) -> list:
+        raise NotImplementedError
+    def describe(self) -> str:
         raise NotImplementedError
 
-class Dog(Animal):
-    def make_sound(self): return "Woof!"
+class InMemorySource(DataSource):
+    def __init__(self, data: list):
+        self._data = data
+    def load(self) -> list:
+        return list(self._data)
+    def describe(self) -> str:
+        return f"InMemorySource({len(self._data)} records)"
 
-class Cat(Animal):
-    def make_sound(self): return "Meow!"
+class FilteredSource(DataSource):
+    def __init__(self, inner: DataSource, predicate):
+        self._inner     = inner
+        self._predicate = predicate
+    def load(self) -> list:
+        return [r for r in self._inner.load() if self._predicate(r)]
+    def describe(self) -> str:
+        return f"FilteredSource(wraps {self._inner.describe()})"
 
-class Cow(Animal):
-    def make_sound(self): return "Moo!"
+class Pipeline:
+    def __init__(self, source: DataSource):
+        self._data = source.load()
+        print(f"Loaded: {source.describe()} → {len(self._data)} records")
 
-def animal_chorus(animals):
-    for a in animals:
-        print(f"{a.name}: {a.make_sound()}")
+    def filter(self, fn):
+        self._data = [r for r in self._data if fn(r)]
+        return self
 
-animal_chorus([Dog("Bruno"), Cat("Milo"), Cow("Gauri"), Dog("Rocky")])` }
+    def transform(self, fn):
+        self._data = [fn(r) for r in self._data]
+        return self
+
+    def summary(self):
+        print(f"Records remaining: {len(self._data)}")
+        for r in self._data[:3]:
+            print(f"  {r}")
+
+students = [
+    {"name": "Priya",  "score": 92, "city": "Mumbai"},
+    {"name": "Rajan",  "score": 78, "city": "Delhi"},
+    {"name": "Ananya", "score": 85, "city": "Bengaluru"},
+    {"name": "Bala",   "score": 45, "city": "Chennai"},
+    {"name": "Chitra", "score": 91, "city": "Mumbai"},
+]
+
+# Same pipeline, two different sources — polymorphism in action
+for source in [
+    InMemorySource(students),
+    FilteredSource(InMemorySource(students), lambda r: r["city"] == "Mumbai"),
+]:
+    (Pipeline(source)
+        .filter(lambda r: r["score"] >= 75)
+        .transform(lambda r: {**r, "grade": "A" if r["score"]>=90 else "B"})
+        .summary())` }
   ]
 };
 
@@ -2893,34 +3549,87 @@ with open("report.txt") as f:
   Bala Subramanian       Python      79  (C)
 ==================================================
   Class average: 86.0` },
-    { type:'exercise', title:'Word frequency counter',
-      body:`<p>Write a program that reads a text file named <code>passage.txt</code>, counts how many times each word appears (case-insensitive, ignoring punctuation), and writes the top-10 words to <code>word_freq.txt</code> in descending order of frequency. First create <code>passage.txt</code> with a few sentences of your choice.</p>`,
-      hint:`Use <code>str.lower()</code> and <code>str.strip('.,!?;:')</code> to normalise words. Store counts in a dictionary. Use <code>sorted(counts.items(), key=lambda x: x[1], reverse=True)</code> to get the top 10.`,
-      solution:`import re
+    { type:'text', body:`
+<h3>pathlib — the modern way to handle file paths</h3>
+<p>The old <code>os.path</code> approach works, but <code>pathlib.Path</code> (Python 3.4+) is cleaner, more readable, and cross-platform. Use it for all new code:</p>
+`},
+    { type:'code', src:`from pathlib import Path
 
-# Create a sample passage
-with open("passage.txt", "w") as f:
-    f.write("Python is great. Python is powerful. Python is easy to learn. "
-            "Data science with Python is very popular. Python programs are readable.")
+# Create Path objects — works on Windows and Mac/Linux automatically
+data_dir  = Path("data")
+report    = Path("reports") / "weekly" / "report.txt"  # / joins paths
 
-# Count words
-counts = {}
-with open("passage.txt") as f:
-    for line in f:
-        words = re.findall(r"[a-z']+", line.lower())
-        for word in words:
-            counts[word] = counts.get(word, 0) + 1
+# Check existence
+print(report.exists())          # False (doesn't exist yet)
+print(report.parent)            # reports/weekly
+print(report.name)              # report.txt
+print(report.stem)              # report
+print(report.suffix)            # .txt
 
-top10 = sorted(counts.items(), key=lambda x: x[1], reverse=True)[:10]
+# Create directories (like mkdir -p)
+data_dir.mkdir(parents=True, exist_ok=True)
+(Path("reports") / "weekly").mkdir(parents=True, exist_ok=True)
 
-with open("word_freq.txt", "w") as f:
-    f.write(f"{'Word':<15} {'Count':>5}\\n")
-    f.write("-" * 22 + "\\n")
-    for word, count in top10:
-        f.write(f"{word:<15} {count:>5}\\n")
+# Write and read using Path directly (no open() needed!)
+report.write_text("Sales: ₹1,23,456\\nUnits: 142\\n", encoding="utf-8")
+content = report.read_text(encoding="utf-8")
+print(content)
 
-with open("word_freq.txt") as f:
-    print(f.read())` }
+# List all CSV files in a directory
+for csv_file in data_dir.glob("*.csv"):
+    print(f"Found: {csv_file.name}  size={csv_file.stat().st_size} bytes")`,
+      out:`False
+reports/weekly
+report.txt
+report
+.txt
+Sales: ₹1,23,456
+Units: 142` },
+    { type:'tip', body:`Always use <code>pathlib.Path</code> instead of string concatenation for file paths. <code>"data/" + filename</code> breaks on Windows (backslashes). <code>Path("data") / filename</code> works everywhere. It's also more readable — <code>path.stem</code>, <code>path.suffix</code>, <code>path.parent</code> replace cryptic <code>os.path.splitext()</code> calls.` },
+    { type:'exercise', title:'File System Organiser',
+      body:`<p>Write a program that simulates a data project file organiser:</p>
+<ol>
+<li>Create this directory structure using <code>pathlib</code>: <code>project/data/raw/</code>, <code>project/data/processed/</code>, <code>project/reports/</code>, <code>project/models/</code></li>
+<li>Create 3 fake CSV files in <code>data/raw/</code> (write a header line + 2 data rows to each)</li>
+<li>Write a function <code>scan_project(root_dir)</code> that prints a summary of the project: each subdirectory, the number of files in it, and their names and sizes</li>
+<li>Write a <code>project/README.txt</code> summarising what you found</li>
+</ol>`,
+      hint:`Use <code>Path.iterdir()</code> to list directory contents, <code>path.stat().st_size</code> for file size. <code>path.is_dir()</code> and <code>path.is_file()</code> distinguish types.`,
+      solution:`from pathlib import Path
+
+# 1. Create directory structure
+root = Path("project")
+for sub in ["data/raw", "data/processed", "reports", "models"]:
+    (root / sub).mkdir(parents=True, exist_ok=True)
+
+# 2. Create fake CSV files
+for i, name in enumerate(["sales_jan", "sales_feb", "sales_mar"], 1):
+    p = root / "data" / "raw" / f"{name}.csv"
+    p.write_text(
+        "month,region,sales,units\\n"
+        f"2024-{i:02d},North,{120000+i*5000},{15+i}\\n"
+        f"2024-{i:02d},South,{95000+i*3000},{12+i}\\n",
+        encoding="utf-8"
+    )
+
+# 3. Scan project
+def scan_project(root_dir: Path) -> str:
+    lines = [f"Project: {root_dir.resolve()}\\n"]
+    for subdir in sorted(root_dir.rglob("*")):
+        if subdir.is_dir():
+            files = list(subdir.iterdir())
+            files = [f for f in files if f.is_file()]
+            lines.append(f"  {subdir.relative_to(root_dir)}/  ({len(files)} files)")
+            for f in files:
+                lines.append(f"    {f.name}  ({f.stat().st_size} bytes)")
+    return "\\n".join(lines)
+
+summary = scan_project(root)
+print(summary)
+
+# 4. Write README
+(root / "README.txt").write_text(summary, encoding="utf-8")
+print("\\nREADME.txt written.")` }
   ]
 };
 
