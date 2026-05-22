@@ -108,7 +108,46 @@ cv_scores = cross_val_score(model, X_train, y_train,
 print(f"\n5-Fold CV Accuracy: {cv_scores}")
 print(f"Mean: {cv_scores.mean():.4f}  Std: {cv_scores.std():.4f}")
 # Low std = stable model; high std = model sensitive to which data it sees` },
-    { type: 'warn', body: `<strong>Data leakage</strong> is the silent killer of ML projects. It occurs when information from the test set influences training — through preprocessing fitted on all data, through target encoding without cross-validation, or through lookahead in time-series problems. Always fit your preprocessing (scalers, imputers, encoders) only on the training set.` }
+    { type: 'warn', body: `<strong>Data leakage</strong> is the silent killer of ML projects. It occurs when information from the test set influences training — through preprocessing fitted on all data, through target encoding without cross-validation, or through lookahead in time-series problems. Always fit your preprocessing (scalers, imputers, encoders) only on the training set.` },
+    { type: 'exercise', title: 'Detect & Fix Data Leakage', body: `<p>The code below contains a data leakage bug — the scaler is fitted on the full dataset before splitting. Fix it, then compare the (inflated) leaked accuracy vs the correct accuracy. Finally, demonstrate that <code>cross_val_score</code> with a <code>Pipeline</code> is immune to this class of bug.</p>
+<pre style="background:rgba(255,255,255,.05);padding:.75rem;border-radius:6px;font-size:.82rem;font-family:monospace">from sklearn.datasets import load_breast_cancer
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+
+data = load_breast_cancer()
+X, y = data.data, data.target
+
+# ⚠ BUG: scaler fitted on full X before split
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)           # ← leakage here!
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, y_train)
+print(f"Leaked accuracy: {model.score(X_test, y_test):.4f}")</pre>`,
+    hint: `Fix by splitting FIRST, then fitting the scaler on X_train only. Use <code>scaler.fit_transform(X_train)</code> and <code>scaler.transform(X_test)</code>. For the Pipeline version: wrap scaler + model in <code>Pipeline([('scaler', StandardScaler()), ('model', LogisticRegression())])</code> and call <code>cross_val_score</code>.`,
+    solution: `from sklearn.datasets import load_breast_cancer
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.pipeline import Pipeline
+
+data = load_breast_cancer()
+X, y = data.data, data.target
+
+# ✓ FIXED: split first, scale second
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+scaler = StandardScaler()
+X_train_s = scaler.fit_transform(X_train)   # fit only on train
+X_test_s  = scaler.transform(X_test)        # transform test with train stats
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train_s, y_train)
+print(f"Correct accuracy: {model.score(X_test_s, y_test):.4f}")
+
+# ✓ Pipeline: leakage-immune by construction
+pipe = Pipeline([('scaler', StandardScaler()), ('model', LogisticRegression(max_iter=1000))])
+cv_scores = cross_val_score(pipe, X, y, cv=5, scoring='accuracy')
+print(f"Pipeline 5-fold CV: {cv_scores.mean():.4f} ± {cv_scores.std():.4f}")` }
   ]
 };
 
@@ -199,7 +238,48 @@ print(f"Test accuracy: {pipeline.score(X_test, y_test):.4f}")
 cv = cross_val_score(pipeline, X, y, cv=5, scoring='roc_auc')
 print(f"5-Fold ROC-AUC: {cv.mean():.4f} ± {cv.std():.4f}")
 # Everything inside the pipeline — preprocessing is refitted each fold` },
-    { type: 'tip', body: `Always use <code>sklearn.pipeline.Pipeline</code> in production code. It eliminates an entire category of bugs (preprocessing fitted on test data), makes cross-validation correct by default, and lets you save the entire preprocessing + model chain as a single serialised object.` }
+    { type: 'tip', body: `Always use <code>sklearn.pipeline.Pipeline</code> in production code. It eliminates an entire category of bugs (preprocessing fitted on test data), makes cross-validation correct by default, and lets you save the entire preprocessing + model chain as a single serialised object.` },
+    { type: 'exercise', title: 'Build a Mixed-Type Preprocessing Pipeline', body: `<p>Using the Titanic dataset (<code>sns.load_dataset('titanic')</code>), build a complete preprocessing + classification pipeline:</p>
+<ol>
+<li>Select these features: <code>pclass</code>, <code>sex</code>, <code>age</code>, <code>fare</code>, <code>embarked</code>, <code>sibsp</code>, <code>parch</code></li>
+<li>Numeric features (<code>age</code>, <code>fare</code>, <code>sibsp</code>, <code>parch</code>): impute median, then StandardScale</li>
+<li>Categorical features (<code>sex</code>, <code>embarked</code>): impute most_frequent, then OneHotEncode</li>
+<li>Ordinal feature (<code>pclass</code>): leave as-is (tree handles it) or ordinal-encode</li>
+<li>Classifier: <code>RandomForestClassifier(n_estimators=200, random_state=42)</code></li>
+<li>Evaluate with 5-fold stratified CV, reporting accuracy and ROC-AUC</li>
+</ol>`,
+    hint: `<code>sns.load_dataset('titanic')</code> returns a DataFrame. Drop rows where 'survived' is null. Use <code>ColumnTransformer</code> with <code>remainder='drop'</code> to ignore any extra columns. Evaluate with <code>cross_val_score(pipe, X, y, cv=StratifiedKFold(5), scoring='roc_auc')</code>.`,
+    solution: `import seaborn as sns
+import pandas as pd
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.impute import SimpleImputer
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score, StratifiedKFold
+
+titanic = sns.load_dataset('titanic').dropna(subset=['survived'])
+features = ['pclass','sex','age','fare','embarked','sibsp','parch']
+X = titanic[features]; y = titanic['survived']
+
+num_features = ['age','fare','sibsp','parch']
+cat_features = ['sex','embarked','pclass']
+
+preprocessor = ColumnTransformer([
+    ('num', Pipeline([('imp', SimpleImputer(strategy='median')),
+                      ('sc',  StandardScaler())]), num_features),
+    ('cat', Pipeline([('imp', SimpleImputer(strategy='most_frequent')),
+                      ('ohe', OneHotEncoder(handle_unknown='ignore'))]), cat_features),
+])
+
+pipe = Pipeline([('prep', preprocessor),
+                 ('clf',  RandomForestClassifier(n_estimators=200, random_state=42))])
+
+cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+acc = cross_val_score(pipe, X, y, cv=cv, scoring='accuracy')
+auc = cross_val_score(pipe, X, y, cv=cv, scoring='roc_auc')
+print(f"Accuracy: {acc.mean():.4f} ± {acc.std():.4f}")
+print(f"ROC-AUC:  {auc.mean():.4f} ± {auc.std():.4f}")` }
   ]
 };
 
@@ -281,7 +361,51 @@ ConfusionMatrixDisplay.from_predictions(
     cmap='Blues', ax=ax)
 ax.set_title('Confusion Matrix')
 plt.tight_layout(); plt.show()` },
-    { type: 'warn', body: `Never pick your final evaluation metric after seeing the results. Decide on it during problem framing, before you train a single model. Changing the metric post-hoc to make results look better is p-hacking and leads to models that don't perform in production.` }
+    { type: 'warn', body: `Never pick your final evaluation metric after seeing the results. Decide on it during problem framing, before you train a single model. Changing the metric post-hoc to make results look better is p-hacking and leads to models that don't perform in production.` },
+    { type: 'exercise', title: 'Metric Sensitivity Analysis', body: `<p>The metric you choose changes which model you select. Use the breast cancer dataset to demonstrate this:</p>
+<ol>
+<li>Train three models: Logistic Regression, Decision Tree (max_depth=5), and a dummy classifier that always predicts the majority class</li>
+<li>For each model, compute: Accuracy, Precision, Recall, F1, ROC-AUC on the test set</li>
+<li>Rank the three models by each metric — does the ranking change? Which metric would you choose for a cancer screening tool (and why)?</li>
+<li>Find the probability threshold that maximises F1 for Logistic Regression (hint: iterate thresholds 0.1 to 0.9 in steps of 0.05)</li>
+</ol>`,
+    hint: `Use <code>model.predict_proba(X_test)[:, 1] >= threshold</code> to apply a custom threshold. For the dummy classifier: <code>from sklearn.dummy import DummyClassifier; DummyClassifier(strategy='most_frequent')</code>.`,
+    solution: `from sklearn.datasets import load_breast_cancer
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.dummy import DummyClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
+import numpy as np, pandas as pd
+
+data = load_breast_cancer(); X, y = data.data, data.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+sc = StandardScaler(); X_tr_s = sc.fit_transform(X_train); X_te_s = sc.transform(X_test)
+
+models = {'LogReg': LogisticRegression(max_iter=10000).fit(X_tr_s, y_train),
+          'Tree':   DecisionTreeClassifier(max_depth=5, random_state=42).fit(X_train, y_train),
+          'Dummy':  DummyClassifier(strategy='most_frequent').fit(X_train, y_train)}
+
+results = {}
+for name, m in models.items():
+    Xt = X_te_s if name == 'LogReg' else X_test
+    yp = m.predict(Xt)
+    ypr = m.predict_proba(Xt)[:, 1] if hasattr(m, 'predict_proba') else yp
+    results[name] = {'Accuracy': accuracy_score(y_test, yp),
+                     'Precision': precision_score(y_test, yp),
+                     'Recall': recall_score(y_test, yp),
+                     'F1': f1_score(y_test, yp),
+                     'ROC-AUC': roc_auc_score(y_test, ypr)}
+print(pd.DataFrame(results).T.round(4))
+
+# Threshold search for best F1
+lr = models['LogReg']; probs = lr.predict_proba(X_te_s)[:, 1]
+best_t, best_f1 = 0.5, 0.0
+for t in np.arange(0.1, 0.95, 0.05):
+    f1 = f1_score(y_test, (probs >= t).astype(int))
+    if f1 > best_f1: best_t, best_f1 = t, f1
+print(f"Best threshold: {best_t:.2f}  F1: {best_f1:.4f}")` }
   ]
 };
 
@@ -442,7 +566,44 @@ axes[1].axhline(0, color='red', ls='--')
 axes[1].set_xlabel('Fitted values'); axes[1].set_ylabel('Residuals')
 axes[1].set_title('Residual Plot (should look random)')
 plt.tight_layout(); plt.show()` },
-    { type: 'tip', body: `A funnel-shaped residual plot (scatter increases with fitted values) signals heteroscedasticity. The fix is usually a log transform on the target: <code>y_log = np.log1p(y)</code>. Train on log-transformed target, then exponentiate predictions back: <code>np.expm1(model.predict(X))</code>.` }
+    { type: 'tip', body: `A funnel-shaped residual plot (scatter increases with fitted values) signals heteroscedasticity. The fix is usually a log transform on the target: <code>y_log = np.log1p(y)</code>. Train on log-transformed target, then exponentiate predictions back: <code>np.expm1(model.predict(X))</code>.` },
+    { type: 'exercise', title: 'Gradient Descent from Scratch', body: `<p>Implement mini-batch gradient descent for linear regression without using sklearn's LinearRegression. Compare your result to sklearn's OLS on the California Housing dataset.</p>
+<ol>
+<li>Standardise features and add a bias column (column of 1s)</li>
+<li>Initialise weights to zero; run <strong>200 epochs</strong> of mini-batch gradient descent (batch size 64, learning rate 0.01)</li>
+<li>Compute training MSE after every 20 epochs and print it</li>
+<li>After training, compare your weights to sklearn's coefficients and your test RMSE to sklearn's RMSE</li>
+</ol>`,
+    hint: `Gradient for MSE: <code>dW = (2/n) * X.T @ (X @ W - y)</code>. For mini-batch: shuffle indices each epoch, then iterate over batches of size 64. Use <code>np.linalg.norm(W_yours - W_sklearn)</code> to compare weights.`,
+    solution: `import numpy as np
+from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+housing = fetch_california_housing(); X, y = housing.data, housing.target
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42)
+sc = StandardScaler(); Xs_tr = sc.fit_transform(X_tr); Xs_te = sc.transform(X_te)
+
+# Add bias
+X_b = np.c_[np.ones(len(Xs_tr)), Xs_tr]
+X_te_b = np.c_[np.ones(len(Xs_te)), Xs_te]
+W = np.zeros(X_b.shape[1]); lr = 0.01; batch = 64
+
+for epoch in range(200):
+    idx = np.random.permutation(len(X_b))
+    for start in range(0, len(X_b), batch):
+        Xb = X_b[idx[start:start+batch]]; yb = y_tr[idx[start:start+batch]]
+        W -= lr * (2/len(Xb)) * Xb.T @ (Xb @ W - yb)
+    if (epoch+1) % 20 == 0:
+        mse = mean_squared_error(y_tr, X_b @ W)
+        print(f"Epoch {epoch+1:3d}: Train MSE = {mse:.4f}")
+
+rmse_gd = mean_squared_error(y_te, X_te_b @ W, squared=False)
+sk = LinearRegression().fit(Xs_tr, y_tr)
+rmse_sk = mean_squared_error(y_te, sk.predict(Xs_te), squared=False)
+print(f"GD RMSE: {rmse_gd:.4f}  sklearn RMSE: {rmse_sk:.4f}")` }
   ]
 };
 
@@ -494,7 +655,40 @@ vif_df = pd.DataFrame({
             for i in range(X.shape[1])]
 })
 print("\nVIF (>10 = multicollinearity concern):")
-print(vif_df.sort_values('VIF', ascending=False))` }
+print(vif_df.sort_values('VIF', ascending=False))` },
+    { type: 'exercise', title: 'Diagnose & Fix Multicollinearity', body: `<p>Create a dataset with deliberate multicollinearity, diagnose it, and compare OLS vs Ridge:</p>
+<ol>
+<li>Generate 500 samples: <code>x1 = randn(500)</code>, <code>x2 = x1 + 0.05*randn(500)</code> (nearly identical), <code>x3 = randn(500)</code>, and <code>y = 2*x1 + 3*x3 + noise</code></li>
+<li>Fit OLS with features [x1, x2, x3]. Print the coefficients — does OLS correctly recover [2, 0, 3]? Look at the standard errors.</li>
+<li>Compute the VIF for each feature using <code>variance_inflation_factor</code></li>
+<li>Fit Ridge with α from 0.001 to 100 (log scale). Plot Ridge coefficients vs α. At what α do x1 and x2 coefficients stabilise?</li>
+</ol>`,
+    hint: `<code>from statsmodels.stats.outliers_influence import variance_inflation_factor</code>. For Ridge paths: use a loop over alphas and collect <code>ridge.coef_</code> for each α.`,
+    solution: `import numpy as np, matplotlib.pyplot as plt, pandas as pd
+from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.preprocessing import StandardScaler
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+np.random.seed(42)
+x1 = np.random.randn(500); x2 = x1 + 0.05*np.random.randn(500); x3 = np.random.randn(500)
+y = 2*x1 + 3*x3 + np.random.randn(500)*0.5
+X = np.c_[x1, x2, x3]
+sc = StandardScaler(); Xs = sc.fit_transform(X)
+
+ols = LinearRegression().fit(Xs, y)
+print("OLS coefs:", ols.coef_.round(3), " — expected ~[2, 0, 3] but multicollinearity distorts x1/x2")
+
+vif = pd.DataFrame({'feature':['x1','x2','x3'],
+                    'VIF': [variance_inflation_factor(Xs, i) for i in range(3)]})
+print(vif)
+
+alphas = np.logspace(-3, 2, 50)
+coef_paths = np.array([Ridge(alpha=a).fit(Xs, y).coef_ for a in alphas])
+plt.figure(figsize=(9,4))
+for i, name in enumerate(['x1','x2','x3']):
+    plt.semilogx(alphas, coef_paths[:,i], label=name)
+plt.xlabel('alpha'); plt.ylabel('Coefficient'); plt.legend(); plt.title('Ridge Coefficient Paths')
+plt.axhline(0, color='k', lw=0.5); plt.tight_layout(); plt.show()` }
   ]
 };
 
@@ -553,7 +747,42 @@ print(f"Ridge best α={ridge_cv.alpha_:.4f}  Test R²={ridge_cv.score(Xs_te, y_t
 
 lasso_cv = LassoCV(cv=5, max_iter=5000, random_state=42).fit(Xs_tr, y_train)
 print(f"Lasso best α={lasso_cv.alpha_:.4f}  Test R²={lasso_cv.score(Xs_te, y_test):.4f}")
-print(f"Features kept: {np.sum(lasso_cv.coef_!=0)} / {X_noisy.shape[1]}")` }
+print(f"Features kept: {np.sum(lasso_cv.coef_!=0)} / {X_noisy.shape[1]}")` },
+    { type: 'exercise', title: 'Regularisation Comparison on Real Data', body: `<p>Use the diabetes dataset (<code>from sklearn.datasets import load_diabetes</code>) to compare regularisation strategies:</p>
+<ol>
+<li>Train OLS, Ridge (best α via RidgeCV), Lasso (best α via LassoCV), and ElasticNet (l1_ratio=0.5) on 80% of the data</li>
+<li>Report test RMSE and test R² for each</li>
+<li>For Lasso: list which features survived (non-zero coefficients) and which were eliminated</li>
+<li>Plot a coefficient comparison bar chart — all 4 models' coefficients side by side for each feature</li>
+</ol>`,
+    hint: `<code>load_diabetes()</code> returns X with 10 features (all standardised) and y (a continuous health outcome). Use <code>pd.DataFrame({'OLS': ols.coef_, 'Ridge': ridge.coef_, ...}, index=feature_names).plot.bar()</code>.`,
+    solution: `import numpy as np, pandas as pd, matplotlib.pyplot as plt
+from sklearn.datasets import load_diabetes
+from sklearn.linear_model import LinearRegression, RidgeCV, LassoCV, ElasticNet
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+
+data = load_diabetes(); X, y = data.data, data.target
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42)
+alphas = np.logspace(-3, 3, 100)
+
+models = {
+    'OLS':        LinearRegression().fit(X_tr, y_tr),
+    'Ridge':      RidgeCV(alphas=alphas, cv=5).fit(X_tr, y_tr),
+    'Lasso':      LassoCV(cv=5, max_iter=5000, random_state=42).fit(X_tr, y_tr),
+    'ElasticNet': ElasticNet(l1_ratio=0.5, max_iter=5000).fit(X_tr, y_tr),
+}
+for name, m in models.items():
+    yp = m.predict(X_te)
+    print(f"{name:<12} RMSE={mean_squared_error(y_te,yp,squared=False):.2f}  R²={r2_score(y_te,yp):.4f}")
+
+lasso = models['Lasso']
+kept = [n for n, c in zip(data.feature_names, lasso.coef_) if c != 0]
+print(f"Lasso kept {len(kept)}/{len(data.feature_names)} features:", kept)
+
+coef_df = pd.DataFrame({n: m.coef_ for n, m in models.items()}, index=data.feature_names)
+coef_df.plot.bar(figsize=(12,5)); plt.title('Coefficient Comparison')
+plt.axhline(0, color='k', lw=0.5); plt.tight_layout(); plt.show()` }
   ]
 };
 
@@ -610,7 +839,45 @@ print("\nThreshold sensitivity:")
 for t in [0.3, 0.4, 0.5, 0.6, 0.7]:
     from sklearn.metrics import precision_score, recall_score
     p = (y_prob >= t).astype(int)
-    print(f"  t={t:.1f}  precision={precision_score(y_te,p):.3f}  recall={recall_score(y_te,p):.3f}")` }
+    print(f"  t={t:.1f}  precision={precision_score(y_te,p):.3f}  recall={recall_score(y_te,p):.3f}")` },
+    { type: 'exercise', title: 'Threshold Tuning for Business Objectives', body: `<p>A credit risk model should catch at least 90% of defaulters (recall ≥ 0.90) while maintaining the highest possible precision. Using the breast cancer dataset as a proxy:</p>
+<ol>
+<li>Train a Logistic Regression and vary the decision threshold from 0.05 to 0.95 (step 0.05)</li>
+<li>For each threshold, record precision, recall, and F1 on the test set</li>
+<li>Plot the Precision-Recall curve and mark the point where recall first reaches 0.90</li>
+<li>Report: what is the threshold, precision, and F1 at recall = 0.90? Also find the threshold that maximises F1.</li>
+</ol>`,
+    hint: `Use <code>from sklearn.metrics import precision_recall_curve</code> for the PR curve. For the threshold search: <code>thresholds = np.arange(0.05, 0.95, 0.05)</code>, apply each to <code>y_prob >= t</code>.`,
+    solution: `import numpy as np, matplotlib.pyplot as plt
+from sklearn.datasets import load_breast_cancer
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import precision_recall_curve, f1_score, precision_score, recall_score
+
+data = load_breast_cancer(); X, y = data.data, data.target
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+sc = StandardScaler(); Xs_tr = sc.fit_transform(X_tr); Xs_te = sc.transform(X_te)
+model = LogisticRegression(max_iter=10000).fit(Xs_tr, y_tr)
+y_prob = model.predict_proba(Xs_te)[:, 1]
+
+rows = []
+for t in np.arange(0.05, 0.95, 0.05):
+    yp = (y_prob >= t).astype(int)
+    rows.append({'t': round(t,2), 'prec': precision_score(y_te,yp,zero_division=0),
+                 'rec': recall_score(y_te,yp), 'f1': f1_score(y_te,yp,zero_division=0)})
+
+import pandas as pd; df = pd.DataFrame(rows)
+at_90 = df[df['rec'] >= 0.90].iloc[-1]
+best_f1 = df.loc[df['f1'].idxmax()]
+print("At recall ≥ 0.90:", at_90.to_dict())
+print("Best F1:         ", best_f1.to_dict())
+
+prec, rec, thr = precision_recall_curve(y_te, y_prob)
+plt.figure(figsize=(8,5))
+plt.plot(rec, prec, lw=2); plt.axvline(at_90['rec'], color='red', ls='--', label=f'recall=0.90 @ t={at_90["t"]}')
+plt.xlabel('Recall'); plt.ylabel('Precision'); plt.title('Precision-Recall Curve')
+plt.legend(); plt.grid(alpha=.3); plt.tight_layout(); plt.show()` }
   ]
 };
 
@@ -729,7 +996,39 @@ print(export_text(tree_pruned, feature_names=list(data.feature_names)))
 importances = tree_pruned.feature_importances_
 for name, imp in sorted(zip(data.feature_names, importances), key=lambda x: -x[1]):
     print(f"  {name:25s}: {imp:.4f}")` },
-    { type: 'tip', body: `The decision tree is the building block of the two most powerful tabular ML algorithms — Random Forest and Gradient Boosting. Master the tree first, then the ensembles will make intuitive sense.` }
+    { type: 'tip', body: `The decision tree is the building block of the two most powerful tabular ML algorithms — Random Forest and Gradient Boosting. Master the tree first, then the ensembles will make intuitive sense.` },
+    { type: 'exercise', title: 'Decision Tree Depth vs Accuracy', body: `<p>Using the wine dataset (<code>from sklearn.datasets import load_wine</code>), explore how tree depth affects performance:</p>
+<ol>
+<li>Train Decision Trees for max_depth = 1, 2, 3, 4, 5, 6, 8, 10, None (unlimited)</li>
+<li>For each depth, record train accuracy, 5-fold CV accuracy, and test accuracy</li>
+<li>Plot all three curves on the same graph (x = max_depth, y = accuracy)</li>
+<li>Identify the depth where the gap between train and CV accuracy becomes "too large" (more than 5%). What is the optimal depth?</li>
+<li>Print the text rules of the optimal tree using <code>export_text</code></li>
+</ol>`,
+    hint: `For max_depth=None, use a string 'None' on the x-axis. The "overfit cliff" is where train accuracy → 1.0 but CV drops. Use <code>export_text(tree, feature_names=list(load_wine().feature_names))</code>.`,
+    solution: `import numpy as np, matplotlib.pyplot as plt, pandas as pd
+from sklearn.datasets import load_wine
+from sklearn.tree import DecisionTreeClassifier, export_text
+from sklearn.model_selection import train_test_split, cross_val_score
+
+data = load_wine(); X, y = data.data, data.target
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+
+depths = [1,2,3,4,5,6,8,10,None]; results = []
+for d in depths:
+    m = DecisionTreeClassifier(max_depth=d, random_state=42)
+    cv = cross_val_score(m, X_tr, y_tr, cv=5, scoring='accuracy').mean()
+    m.fit(X_tr, y_tr)
+    results.append({'depth': str(d), 'train': m.score(X_tr,y_tr), 'cv': cv, 'test': m.score(X_te,y_te)})
+
+df = pd.DataFrame(results)
+df.plot(x='depth', y=['train','cv','test'], figsize=(10,5), marker='o')
+plt.title('Decision Tree: Depth vs Accuracy'); plt.ylabel('Accuracy'); plt.tight_layout(); plt.show()
+
+best_d = df.loc[df['cv'].idxmax(), 'depth']
+print(f"Best CV depth: {best_d}")
+best_tree = DecisionTreeClassifier(max_depth=int(best_d) if best_d != 'None' else None, random_state=42).fit(X_tr, y_tr)
+print(export_text(best_tree, feature_names=list(data.feature_names)))` }
   ]
 };
 
@@ -799,7 +1098,36 @@ ccp_alphas = path.ccp_alphas
 cv_scores  = [cross_val_score(DecisionTreeClassifier(ccp_alpha=a, random_state=42),
                X_tr, y_tr, cv=5).mean() for a in ccp_alphas[::5]]
 best_alpha = ccp_alphas[::5][np.argmax(cv_scores)]
-print(f"\nBest ccp_alpha (pruning): {best_alpha:.6f}")` }
+print(f"\nBest ccp_alpha (pruning): {best_alpha:.6f}")` },
+    { type: 'exercise', title: 'Learning Curves for Bias-Variance Diagnosis', body: `<p>Plot learning curves for a Decision Tree (max_depth=1 and max_depth=10) on the breast cancer dataset to visually diagnose underfitting vs overfitting:</p>
+<ol>
+<li>Use <code>sklearn.model_selection.learning_curve</code> with train sizes from 10% to 100% (20 points)</li>
+<li>For each model, plot mean training score and mean CV score (with shaded ±1 std band)</li>
+<li>Interpret the plots: which depth underfits (high bias)? Which overfits (high variance)?</li>
+<li>Find the depth at which train-CV gap is minimised at 100% training data</li>
+</ol>`,
+    hint: `<code>from sklearn.model_selection import learning_curve</code>. Call <code>learning_curve(model, X, y, cv=5, train_sizes=np.linspace(0.1,1,20), scoring='accuracy')</code>. Returns <code>(train_sizes_abs, train_scores, val_scores)</code> — each is shape (n_sizes, n_folds).`,
+    solution: `import numpy as np, matplotlib.pyplot as plt
+from sklearn.datasets import load_breast_cancer
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import learning_curve
+
+data = load_breast_cancer(); X, y = data.data, data.target
+fig, axes = plt.subplots(1,2,figsize=(13,5))
+
+for ax, depth, title in zip(axes, [1,10], ['depth=1 (Underfitting)','depth=10 (Overfitting)']):
+    model = DecisionTreeClassifier(max_depth=depth, random_state=42)
+    train_sizes, tr_sc, cv_sc = learning_curve(
+        model, X, y, cv=5, train_sizes=np.linspace(0.1,1,20), scoring='accuracy', n_jobs=-1)
+    tr_mean, tr_std = tr_sc.mean(1), tr_sc.std(1)
+    cv_mean, cv_std = cv_sc.mean(1), cv_sc.std(1)
+    ax.plot(train_sizes, tr_mean, 'o-', label='Train', color='blue')
+    ax.fill_between(train_sizes, tr_mean-tr_std, tr_mean+tr_std, alpha=.15, color='blue')
+    ax.plot(train_sizes, cv_mean, 'o-', label='CV', color='red')
+    ax.fill_between(train_sizes, cv_mean-cv_std, cv_mean+cv_std, alpha=.15, color='red')
+    ax.set_title(title); ax.set_xlabel('Training examples'); ax.set_ylabel('Accuracy')
+    ax.legend(); ax.set_ylim(0.7, 1.02)
+plt.tight_layout(); plt.show()` }
   ]
 };
 
@@ -865,7 +1193,36 @@ for n in n_trees:
 axes[1].semilogx(n_trees, oob_scores, marker='o')
 axes[1].set_xlabel('n_estimators (log scale)'); axes[1].set_ylabel('OOB Accuracy')
 axes[1].set_title('OOB Accuracy vs Number of Trees')
-plt.tight_layout(); plt.show()` }
+plt.tight_layout(); plt.show()` },
+    { type: 'exercise', title: 'Permutation Importance vs Impurity Importance', body: `<p>Impurity-based importance (Random Forest default) is biased toward high-cardinality features. Permutation importance is model-agnostic and more reliable. Compare both on a dataset with a high-cardinality feature:</p>
+<ol>
+<li>Create a dataset: 500 samples, features = [<code>age</code> (int 18–60), <code>income</code> (random), <code>random_id</code> (unique integer 0–500, a nuisance feature), <code>is_customer</code> (bool)], target = 1 if income > 60000 else 0</li>
+<li>Train a Random Forest. Print impurity importances — does <code>random_id</code> look important?</li>
+<li>Compute permutation importance with <code>sklearn.inspection.permutation_importance</code></li>
+<li>Plot both side by side. What does each say about <code>random_id</code>?</li>
+</ol>`,
+    hint: `<code>from sklearn.inspection import permutation_importance; result = permutation_importance(rf, X_te, y_te, n_repeats=30, random_state=42)</code>. The <code>importances_mean</code> and <code>importances_std</code> attributes give the results.`,
+    solution: `import numpy as np, pandas as pd, matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.inspection import permutation_importance
+from sklearn.model_selection import train_test_split
+
+np.random.seed(42); n=500
+X = pd.DataFrame({'age': np.random.randint(18,60,n), 'income': np.random.randint(20000,200000,n),
+                   'random_id': np.arange(n), 'is_customer': np.random.choice([0,1],n)})
+y = (X['income'] > 60000).astype(int)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42)
+
+rf = RandomForestClassifier(n_estimators=200, random_state=42).fit(X_tr, y_tr)
+imp_imp = pd.Series(rf.feature_importances_, index=X.columns).sort_values(ascending=True)
+pi = permutation_importance(rf, X_te, y_te, n_repeats=30, random_state=42)
+perm_imp = pd.Series(pi.importances_mean, index=X.columns).sort_values(ascending=True)
+
+fig, (ax1, ax2) = plt.subplots(1,2,figsize=(12,4))
+imp_imp.plot.barh(ax=ax1, title='Impurity Importance (biased!)')
+perm_imp.plot.barh(ax=ax2, title='Permutation Importance (reliable)')
+plt.tight_layout(); plt.show()
+print("Note: impurity importance inflates 'random_id' — permutation importance correctly shows it near 0")` }
   ]
 };
 
@@ -940,7 +1297,41 @@ for lr, color in [(0.3,'red'),(0.1,'blue'),(0.01,'green')]:
 ax.set_xlabel('n_estimators'); ax.set_ylabel('CV ROC-AUC')
 ax.set_title('Learning Rate vs n_estimators Tradeoff')
 ax.legend(); plt.tight_layout(); plt.show()
-# Small learning rate needs more trees but often finds a better optimum` }
+# Small learning rate needs more trees but often finds a better optimum` },
+    { type: 'exercise', title: 'XGBoost Early Stopping & Feature Importance', body: `<p>Train XGBoost on the breast cancer dataset with early stopping, then analyse feature importance three ways:</p>
+<ol>
+<li>Train XGBoost with <code>n_estimators=500</code> and <code>early_stopping_rounds=20</code> using the test set as eval_set. How many trees were actually used?</li>
+<li>Plot the training log-loss vs iteration (XGBoost tracks this in <code>model.evals_result()</code>)</li>
+<li>Plot feature importances three ways: <code>weight</code> (split count), <code>gain</code> (average gain), <code>cover</code>. Do the top features differ?</li>
+</ol>`,
+    hint: `<code>xgb_model.evals_result()['validation_0']['logloss']</code> gives the per-iteration loss. For importance types: <code>xgb_model.get_booster().get_score(importance_type='weight')</code>. Or use <code>plot_importance(model, importance_type='gain')</code>.`,
+    solution: `try:
+    import xgboost as xgb
+    from xgboost import plot_importance
+    import matplotlib.pyplot as plt
+    from sklearn.datasets import load_breast_cancer
+    from sklearn.model_selection import train_test_split
+
+    data = load_breast_cancer(); X, y = data.data, data.target
+    X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+
+    model = xgb.XGBClassifier(n_estimators=500, learning_rate=0.05, max_depth=4,
+                               eval_metric='logloss', early_stopping_rounds=20, n_jobs=-1, random_state=42)
+    model.fit(X_tr, y_tr, eval_set=[(X_te, y_te)], verbose=False)
+    print(f"Trees used (early stopping): {model.best_iteration}")
+
+    losses = model.evals_result()['validation_0']['logloss']
+    plt.figure(figsize=(9,4))
+    plt.plot(losses, lw=1.5)
+    plt.axvline(model.best_iteration, color='red', ls='--', label=f'best={model.best_iteration}')
+    plt.xlabel('Iteration'); plt.ylabel('Log Loss'); plt.title('XGBoost Early Stopping'); plt.legend(); plt.show()
+
+    fig, axes = plt.subplots(1,3,figsize=(15,5))
+    for ax, itype in zip(axes, ['weight','gain','cover']):
+        plot_importance(model, importance_type=itype, max_num_features=10, ax=ax, title=itype)
+    plt.tight_layout(); plt.show()
+except ImportError:
+    print("Install xgboost: pip install xgboost")` }
   ]
 };
 
@@ -1070,6 +1461,38 @@ fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 for ax, C, title in zip(axes, [0.1, 10.0], ['SVM C=0.1 (wide margin)', 'SVM C=10 (narrow margin)']):
     m = SVC(kernel='linear', C=C).fit(Xs_tr, y_tr)
     plot_svm_boundary(m, Xs_tr, y_tr, ax, title)
+plt.tight_layout(); plt.show()` },
+    { type: 'exercise', title: 'SVM C Parameter & Support Vector Count', body: `<p>Explore how the regularisation parameter C affects SVM behaviour on the breast cancer dataset:</p>
+<ol>
+<li>Train linear SVM for C = [0.001, 0.01, 0.1, 1, 10, 100, 1000]</li>
+<li>For each C, record: number of support vectors, train accuracy, 5-fold CV accuracy, test accuracy</li>
+<li>Plot support vector count vs C (log scale x-axis). What happens as C → ∞?</li>
+<li>Identify the C value with the best CV accuracy. Is it different from the C with fewest support vectors?</li>
+</ol>`,
+    hint: `<code>model.n_support_</code> gives support vector count per class; sum them. Use a Pipeline: <code>Pipeline([('scale', StandardScaler()), ('svm', SVC(kernel='linear', C=c))])</code>.`,
+    solution: `import numpy as np, pandas as pd, matplotlib.pyplot as plt
+from sklearn.svm import SVC
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+
+data = load_breast_cancer(); X, y = data.data, data.target
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+
+results = []
+for C in [0.001, 0.01, 0.1, 1, 10, 100, 1000]:
+    pipe = Pipeline([('sc', StandardScaler()), ('svm', SVC(kernel='linear', C=C))])
+    cv = cross_val_score(pipe, X_tr, y_tr, cv=5, scoring='accuracy').mean()
+    pipe.fit(X_tr, y_tr)
+    nsv = sum(pipe.named_steps['svm'].n_support_)
+    results.append({'C': C, 'n_sv': nsv, 'train': pipe.score(X_tr,y_tr), 'cv': cv, 'test': pipe.score(X_te,y_te)})
+
+df = pd.DataFrame(results); print(df.round(4).to_string(index=False))
+fig, (ax1,ax2) = plt.subplots(1,2,figsize=(12,4))
+ax1.semilogx(df['C'], df['n_sv'], 'o-'); ax1.set_xlabel('C'); ax1.set_ylabel('Support Vectors'); ax1.set_title('SVs vs C')
+ax2.semilogx(df['C'], df['cv'], 'o-', label='CV'); ax2.semilogx(df['C'], df['test'], 's--', label='Test')
+ax2.set_xlabel('C'); ax2.set_ylabel('Accuracy'); ax2.set_title('Accuracy vs C'); ax2.legend()
 plt.tight_layout(); plt.show()` }
   ]
 };
@@ -1131,7 +1554,36 @@ param_grid = {'svm__C': [0.1, 1, 10, 100], 'svm__gamma': [0.001, 0.01, 0.1, 1]}
 gs = GridSearchCV(pipeline, param_grid, cv=5, scoring='accuracy', n_jobs=-1)
 gs.fit(X_tr, y_tr)
 print(f"Best C={gs.best_params_['svm__C']}, gamma={gs.best_params_['svm__gamma']}")
-print(f"Best CV accuracy: {gs.best_score_:.4f}")` }
+print(f"Best CV accuracy: {gs.best_score_:.4f}")` },
+    { type: 'exercise', title: 'Kernel Comparison on Real Data', body: `<p>Compare three SVM kernels on the wine dataset. For each kernel, use a Pipeline with StandardScaler and tune the key hyperparameters with 5-fold CV:</p>
+<ol>
+<li><strong>Linear SVM</strong>: tune C ∈ [0.01, 0.1, 1, 10, 100]</li>
+<li><strong>RBF SVM</strong>: tune C × gamma grid (3×3 log-spaced)</li>
+<li><strong>Polynomial SVM</strong>: tune degree ∈ [2, 3, 4] with C=1</li>
+<li>Report best CV accuracy, best params, and test accuracy for each. Which kernel wins?</li>
+</ol>`,
+    hint: `Use <code>GridSearchCV</code> with each pipeline separately. For RBF: <code>{'svm__C': [0.1,1,10], 'svm__gamma': [0.01,0.1,1]}</code>. Remember <code>wine</code> is 3-class — use <code>decision_function_shape='ovr'</code>.`,
+    solution: `from sklearn.datasets import load_wine
+from sklearn.svm import SVC
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import GridSearchCV, train_test_split
+
+data = load_wine(); X, y = data.data, data.target
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+
+configs = [
+    ('Linear',  {'svm__C': [0.01,0.1,1,10,100]}, {}),
+    ('RBF',     {'svm__C': [0.1,1,10], 'svm__gamma': [0.01,0.1,1]}, {}),
+    ('Poly',    {'svm__C': [1]}, {'degree': 3}),
+]
+
+for name, grid, extra in configs:
+    pipe = Pipeline([('sc', StandardScaler()), ('svm', SVC(kernel=name.lower(), **extra))])
+    if name == 'Poly': pipe.set_params(**{'svm__kernel': 'poly'})
+    gs = GridSearchCV(pipe, grid, cv=5, n_jobs=-1)
+    gs.fit(X_tr, y_tr)
+    print(f"{name:<8} best_params={gs.best_params_}  CV={gs.best_score_:.4f}  Test={gs.score(X_te,y_te):.4f}")` }
   ]
 };
 
@@ -1195,7 +1647,48 @@ print(f"Test accuracy: {best_knn.score(Xs_te, y_te):.4f}")
 for metric in ['euclidean', 'manhattan', 'chebyshev']:
     knn = KNeighborsClassifier(n_neighbors=best_k, metric=metric)
     cv = cross_val_score(knn, Xs_tr, y_tr, cv=5).mean()
-    print(f"  metric={metric:12s}  CV acc={cv:.4f}")` }
+    print(f"  metric={metric:12s}  CV acc={cv:.4f}")` },
+    { type: 'exercise', title: 'KNN Sensitivity Analysis', body: `<p>Use the digits dataset (<code>from sklearn.datasets import load_digits</code>) to do a thorough KNN analysis:</p>
+<ol>
+<li>Plot train vs CV accuracy for k = 1 to 30. Mark the optimal k.</li>
+<li>At the optimal k, compare three distance metrics: euclidean, manhattan, cosine. Which is best?</li>
+<li>Compare <code>weights='uniform'</code> vs <code>weights='distance'</code> at the optimal k. Does distance weighting help?</li>
+<li>The digits dataset has 64 features. Apply PCA to reduce to 20 components first — does it improve KNN accuracy? (This demonstrates the curse of dimensionality.)</li>
+</ol>`,
+    hint: `<code>from sklearn.decomposition import PCA</code>. Use <code>Pipeline([('pca', PCA(n_components=20)), ('scaler', StandardScaler()), ('knn', KNeighborsClassifier(n_neighbors=k))])</code>.`,
+    solution: `import numpy as np, matplotlib.pyplot as plt
+from sklearn.datasets import load_digits
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.pipeline import Pipeline
+
+data = load_digits(); X, y = data.data, data.target
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+sc = StandardScaler(); Xs_tr = sc.fit_transform(X_tr); Xs_te = sc.transform(X_te)
+
+k_vals = range(1,31); cv_acc = []
+for k in k_vals:
+    cv_acc.append(cross_val_score(KNeighborsClassifier(n_neighbors=k), Xs_tr, y_tr, cv=5).mean())
+best_k = k_vals[np.argmax(cv_acc)]
+
+plt.figure(figsize=(9,4)); plt.plot(k_vals, cv_acc, 'o-', ms=4)
+plt.axvline(best_k, color='red', ls='--', label=f'best k={best_k}')
+plt.xlabel('k'); plt.ylabel('CV Accuracy'); plt.legend(); plt.title('KNN k Sensitivity'); plt.show()
+
+for metric in ['euclidean','manhattan','cosine']:
+    cv = cross_val_score(KNeighborsClassifier(n_neighbors=best_k,metric=metric), Xs_tr,y_tr,cv=5).mean()
+    print(f"metric={metric:12s}  CV={cv:.4f}")
+
+for w in ['uniform','distance']:
+    cv = cross_val_score(KNeighborsClassifier(n_neighbors=best_k,weights=w), Xs_tr,y_tr,cv=5).mean()
+    print(f"weights={w:10s}  CV={cv:.4f}")
+
+pca_pipe = Pipeline([('pca', PCA(n_components=20)), ('sc', StandardScaler()),
+                     ('knn', KNeighborsClassifier(n_neighbors=best_k))])
+cv_pca = cross_val_score(pca_pipe, X_tr, y_tr, cv=5).mean()
+print(f"With PCA(20): CV={cv_pca:.4f}  vs without: {max(cv_acc):.4f}")` }
   ]
 };
 
@@ -1259,7 +1752,40 @@ from sklearn.pipeline import Pipeline
 pipeline = Pipeline([('scale', StandardScaler()), ('knn', KNeighborsClassifier(n_neighbors=7))])
 cv_scaled = cross_val_score(pipeline, X, y, cv=5).mean()
 print(f"  CV accuracy (scaled)  : {cv_scaled:.4f}")` },
-    { type: 'warn', body: `Scaling is <strong>mandatory</strong> for KNN. A salary feature ranging 0–200,000 will completely dominate a age feature ranging 18–70 in Euclidean distance calculations, making age effectively invisible. Always use a StandardScaler or MinMaxScaler inside a Pipeline.` }
+    { type: 'warn', body: `Scaling is <strong>mandatory</strong> for KNN. A salary feature ranging 0–200,000 will completely dominate a age feature ranging 18–70 in Euclidean distance calculations, making age effectively invisible. Always use a StandardScaler or MinMaxScaler inside a Pipeline.` },
+    { type: 'exercise', title: 'KNN Regression for House Price Imputation', body: `<p>Use KNN regression as a feature imputation strategy — a common real-world use case:</p>
+<ol>
+<li>Load the California Housing dataset. Deliberately set 10% of <code>MedHouseVal</code> (the target) to NaN</li>
+<li>For the rows with NaN target, use KNN regression (k=10) trained on the non-NaN rows to predict the missing values</li>
+<li>Compare the imputed values to the true values: compute MAE and correlation</li>
+<li>Bonus: compare k=3, 5, 10, 20 — which k gives the best imputation MAE?</li>
+</ol>`,
+    hint: `Split rows into <code>train_mask = ~y.isna()</code> and <code>pred_mask = y.isna()</code>. Scale features before KNN. <code>KNeighborsRegressor</code> is in <code>sklearn.neighbors</code>. Evaluate with <code>mean_absolute_error(y_true[pred_mask], y_imputed)</code>.`,
+    solution: `import numpy as np, pandas as pd
+from sklearn.datasets import fetch_california_housing
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import mean_absolute_error
+import scipy.stats
+
+housing = fetch_california_housing(as_frame=True)
+X = housing.data.values; y = housing.target.values.copy()
+
+np.random.seed(42)
+nan_idx = np.random.choice(len(y), int(0.1*len(y)), replace=False)
+y_nan = y.copy(); y_nan[nan_idx] = np.nan
+
+train_mask = ~np.isnan(y_nan); pred_mask = np.isnan(y_nan)
+
+sc = StandardScaler(); Xs = sc.fit_transform(X)
+
+for k in [3, 5, 10, 20]:
+    knn = KNeighborsRegressor(n_neighbors=k)
+    knn.fit(Xs[train_mask], y_nan[train_mask])
+    y_imputed = knn.predict(Xs[pred_mask])
+    mae = mean_absolute_error(y[pred_mask], y_imputed)
+    corr, _ = scipy.stats.pearsonr(y[pred_mask], y_imputed)
+    print(f"k={k:2d}  MAE={mae:.4f}  r={corr:.4f}")` }
   ]
 };
 
@@ -1397,7 +1923,50 @@ plt.tight_layout(); plt.show()
 print(f"Best K = {best_k}")
 print(f"Cluster sizes: {np.bincount(labels)}")
 print(f"Silhouette score: {silhouette_score(Xs, labels):.4f}")` },
-    { type: 'warn', body: `K-Means assumes clusters are spherical and roughly equal in size. It will partition the data into K groups no matter what — even if the true structure is non-spherical, nested, or has no clusters at all. Always visualise your clusters and ask whether the groupings make domain sense.` }
+    { type: 'warn', body: `K-Means assumes clusters are spherical and roughly equal in size. It will partition the data into K groups no matter what — even if the true structure is non-spherical, nested, or has no clusters at all. Always visualise your clusters and ask whether the groupings make domain sense.` },
+    { type: 'exercise', title: 'K-Means on Real Customer Data', body: `<p>Apply K-Means to the wine dataset (treat it as unlabelled clustering, ignore the true labels for training):</p>
+<ol>
+<li>Scale features with StandardScaler. Run K-Means for K = 2 to 10. Plot inertia (elbow) and silhouette score.</li>
+<li>Choose the best K. Compute the Adjusted Rand Index (<code>adjusted_rand_score</code>) between your cluster labels and the true wine labels — how well do the clusters align with reality?</li>
+<li>Profile each cluster: compute mean of every feature per cluster. Which features differ most between clusters?</li>
+<li>Visualise clusters using the first 2 PCA components. Colour by cluster label and mark true class with marker shape.</li>
+</ol>`,
+    hint: `<code>from sklearn.metrics import adjusted_rand_score, silhouette_score</code>. For profiling: <code>pd.DataFrame(Xs, columns=feature_names).assign(cluster=labels).groupby('cluster').mean()</code>.`,
+    solution: `import numpy as np, pandas as pd, matplotlib.pyplot as plt
+from sklearn.datasets import load_wine
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.metrics import silhouette_score, adjusted_rand_score
+
+data = load_wine(); X, y = data.data, data.target
+sc = StandardScaler(); Xs = sc.fit_transform(X)
+
+inertias, silhouettes = [], []
+for k in range(2,11):
+    km = KMeans(n_clusters=k, random_state=42, n_init=10)
+    lbl = km.fit_predict(Xs); inertias.append(km.inertia_)
+    silhouettes.append(silhouette_score(Xs, lbl))
+
+fig,(ax1,ax2)=plt.subplots(1,2,figsize=(12,4))
+ax1.plot(range(2,11),inertias,'o-'); ax1.set_xlabel('K'); ax1.set_ylabel('Inertia'); ax1.set_title('Elbow')
+ax2.plot(range(2,11),silhouettes,'o-',color='coral'); ax2.set_xlabel('K'); ax2.set_ylabel('Silhouette'); ax2.set_title('Silhouette')
+plt.tight_layout(); plt.show()
+
+best_k = 3
+km = KMeans(n_clusters=best_k, random_state=42, n_init=10)
+labels = km.fit_predict(Xs)
+print(f"ARI (vs true labels): {adjusted_rand_score(y, labels):.4f}")
+
+profile = pd.DataFrame(Xs, columns=data.feature_names).assign(cluster=labels).groupby('cluster').mean()
+print(profile.round(2))
+
+pca = PCA(n_components=2); Xp = pca.fit_transform(Xs)
+markers = ['o','s','^']
+for cls in range(3):
+    m = y==cls
+    plt.scatter(Xp[m,0], Xp[m,1], c=labels[m], marker=markers[cls], s=40, alpha=0.7, cmap='Set1', label=f'True class {cls}')
+plt.colorbar(label='Cluster'); plt.legend(); plt.title('K-Means clusters (colour) vs true class (shape)'); plt.show()` }
   ]
 };
 
@@ -1455,7 +2024,41 @@ for linkage_method in ['ward', 'complete', 'average', 'single']:
     model = AgglomerativeClustering(n_clusters=4, linkage=linkage_method)
     labels = model.fit_predict(Xs)
     sil = silhouette_score(Xs, labels)
-    print(f"  {linkage_method:10s}: {sil:.4f}")` }
+    print(f"  {linkage_method:10s}: {sil:.4f}")` },
+    { type: 'exercise', title: 'Hierarchical vs K-Means Comparison', body: `<p>Compare K-Means and Hierarchical Clustering on two synthetic datasets: one with circular clusters and one with elongated clusters:</p>
+<ol>
+<li>Generate: (a) 3 isotropic blobs with <code>make_blobs</code> (standard), (b) 3 elongated clusters using <code>make_blobs</code> with <code>cluster_std=[0.5,2,0.5]</code> and rotate one cluster</li>
+<li>Apply K-Means (k=3) and Agglomerative Clustering (k=3, linkage='ward') to both datasets</li>
+<li>Plot 4 panels: 2 datasets × 2 algorithms, coloured by cluster label</li>
+<li>Compute ARI against ground truth for all 4 combinations. Which algorithm handles elongated clusters better?</li>
+</ol>`,
+    hint: `<code>from sklearn.cluster import AgglomerativeClustering</code>. For rotation: use a 2D rotation matrix on the elongated blob. <code>make_blobs(n_samples=300, centers=3, cluster_std=[1,2.5,0.8])</code> creates different-sized clusters.`,
+    solution: `import numpy as np, matplotlib.pyplot as plt
+from sklearn.datasets import make_blobs
+from sklearn.cluster import KMeans, AgglomerativeClustering
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import adjusted_rand_score
+
+np.random.seed(42)
+X_iso, y_iso = make_blobs(300, centers=3, cluster_std=1.2, random_state=42)
+X_aniso, y_aniso = make_blobs(300, centers=3, cluster_std=[0.5,2.5,0.8], random_state=42)
+# Rotate one cluster
+theta=np.pi/4; R=np.array([[np.cos(theta),-np.sin(theta)],[np.sin(theta),np.cos(theta)]])
+mask=y_aniso==1; X_aniso[mask] = X_aniso[mask] @ R
+
+datasets=[('Isotropic',X_iso,y_iso),('Elongated',X_aniso,y_aniso)]
+algorithms=[('K-Means', KMeans(3,random_state=42,n_init=10)),
+            ('Ward Hierarchical', AgglomerativeClustering(3, linkage='ward'))]
+
+fig,axes=plt.subplots(2,2,figsize=(12,8))
+for row,(dname,X,y_true) in enumerate(datasets):
+    sc=StandardScaler(); Xs=sc.fit_transform(X)
+    for col,(aname,alg) in enumerate(algorithms):
+        labels=alg.fit_predict(Xs)
+        ari=adjusted_rand_score(y_true,labels)
+        axes[row,col].scatter(X[:,0],X[:,1],c=labels,cmap='Set1',s=15,alpha=0.7)
+        axes[row,col].set_title(f'{dname} — {aname}\nARI={ari:.3f}')
+plt.tight_layout(); plt.show()` }
   ]
 };
 
@@ -1527,7 +2130,36 @@ ax.plot(k_dists)
 ax.set_xlabel('Points sorted by 5th-nearest-neighbour distance')
 ax.set_ylabel('Distance')
 ax.set_title('k-Distance Plot — the "knee" suggests a good eps value')
-plt.tight_layout(); plt.show()` }
+plt.tight_layout(); plt.show()` },
+    { type: 'exercise', title: 'DBSCAN for Anomaly Detection', body: `<p>DBSCAN labels low-density points as noise (label = -1), making it a natural anomaly detector:</p>
+<ol>
+<li>Generate 1000 normal transactions: amount ~ Normal(500, 100), duration ~ Normal(30, 5). Add 20 anomalous transactions: amount ~ Normal(5000, 500), duration ~ Normal(2, 0.5)</li>
+<li>Standardise features. Apply DBSCAN with eps=0.3 and min_samples=10</li>
+<li>How many points were labelled as noise (label=-1)? What fraction of the noise points are true anomalies?</li>
+<li>Sweep eps from 0.1 to 1.0 (step 0.1). For each eps, report: n_clusters, n_noise, and precision/recall for anomaly detection.</li>
+</ol>`,
+    hint: `Create a ground-truth anomaly array: 0 for normal, 1 for anomalous. Points with <code>labels == -1</code> are DBSCAN's anomalies. Precision = TP/(TP+FP), Recall = TP/(TP+FN) where TP = anomalies that DBSCAN flags as noise.`,
+    solution: `import numpy as np, matplotlib.pyplot as plt
+from sklearn.cluster import DBSCAN
+from sklearn.preprocessing import StandardScaler
+
+np.random.seed(42)
+X_normal = np.column_stack([np.random.normal(500,100,1000), np.random.normal(30,5,1000)])
+X_anomaly = np.column_stack([np.random.normal(5000,500,20), np.random.normal(2,0.5,20)])
+X = np.vstack([X_normal, X_anomaly])
+y_true = np.array([0]*1000 + [1]*20)
+
+sc = StandardScaler(); Xs = sc.fit_transform(X)
+
+print(f"{'eps':>5} {'clusters':>9} {'noise':>7} {'precision':>10} {'recall':>8}")
+for eps in np.arange(0.1, 1.1, 0.1):
+    db = DBSCAN(eps=round(eps,1), min_samples=10).fit(Xs)
+    flagged = (db.labels_ == -1).astype(int)
+    tp = ((flagged==1) & (y_true==1)).sum(); fp = ((flagged==1) & (y_true==0)).sum()
+    fn = ((flagged==0) & (y_true==1)).sum()
+    prec = tp/(tp+fp) if (tp+fp)>0 else 0; rec = tp/(tp+fn) if (tp+fn)>0 else 0
+    n_cl = len(set(db.labels_)) - (1 if -1 in db.labels_ else 0)
+    print(f"{eps:5.1f} {n_cl:>9} {flagged.sum():>7} {prec:>10.3f} {rec:>8.3f}")` }
   ]
 };
 
@@ -1598,7 +2230,49 @@ for n_comp in [10, 20, 30, 40, 64]:
     ])
     cv = cross_val_score(pipe, X_d, y_d, cv=5).mean()
     print(f"n_components={n_comp:3d}  CV accuracy={cv:.4f}")
-print("\n64 components = original (no PCA) — compare accuracy loss")` }
+print("\n64 components = original (no PCA) — compare accuracy loss")` },
+    { type: 'exercise', title: 'PCA for Noise Reduction & Feature Engineering', body: `<p>Apply PCA in two practical ways:</p>
+<ol>
+<li><strong>Explained variance selection:</strong> On the breast cancer dataset, find the minimum number of PCA components that capture 95% of total variance. Plot the cumulative explained variance curve.</li>
+<li><strong>PCA as preprocessing:</strong> Compare Logistic Regression accuracy with: (a) raw features, (b) top-k PCA components (k chosen for 95% variance), (c) all PCA components. Use 5-fold CV for each.</li>
+<li><strong>Noise reduction:</strong> Add Gaussian noise to the features (noise_std=2.0). Re-run the comparison — does PCA help more when the data is noisy?</li>
+</ol>`,
+    hint: `<code>pca.explained_variance_ratio_.cumsum()</code> gives cumulative variance. Find k where this first exceeds 0.95: <code>k = np.argmax(pca.explained_variance_ratio_.cumsum() >= 0.95) + 1</code>.`,
+    solution: `import numpy as np, matplotlib.pyplot as plt
+from sklearn.datasets import load_breast_cancer
+from sklearn.decomposition import PCA
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import cross_val_score
+from sklearn.pipeline import Pipeline
+
+data = load_breast_cancer(); X, y = data.data, data.target
+
+# 1. Find k for 95% variance
+sc = StandardScaler(); Xs = sc.fit_transform(X)
+pca_full = PCA().fit(Xs)
+cumvar = pca_full.explained_variance_ratio_.cumsum()
+k95 = np.argmax(cumvar >= 0.95) + 1
+plt.plot(range(1,len(cumvar)+1), cumvar); plt.axvline(k95, ls='--', color='red', label=f'k={k95} (95%)')
+plt.xlabel('Components'); plt.ylabel('Cumulative Explained Variance')
+plt.title('PCA Variance'); plt.legend(); plt.show()
+print(f"Components for 95% variance: {k95}")
+
+# 2. Accuracy comparison (clean)
+for name, pipe in [
+    ('Raw', Pipeline([('sc', StandardScaler()), ('lr', LogisticRegression(max_iter=2000))])),
+    (f'PCA-{k95}', Pipeline([('sc', StandardScaler()), ('pca', PCA(n_components=k95)), ('lr', LogisticRegression(max_iter=2000))])),
+    (f'PCA-all', Pipeline([('sc', StandardScaler()), ('pca', PCA()), ('lr', LogisticRegression(max_iter=2000))])),
+]:
+    cv = cross_val_score(pipe, X, y, cv=5).mean()
+    print(f"{name:<12}: CV accuracy = {cv:.4f}")
+
+# 3. With noise
+X_noisy = X + np.random.normal(0, 2.0, X.shape)
+print("\nWith noise:")
+for name, pipe in [('Raw noisy', Pipeline([('sc', StandardScaler()), ('lr', LogisticRegression(max_iter=2000))])),
+                    (f'PCA-{k95} noisy', Pipeline([('sc', StandardScaler()), ('pca', PCA(n_components=k95)), ('lr', LogisticRegression(max_iter=2000))]))]:
+    print(f"{name}: {cross_val_score(pipe, X_noisy, y, cv=5).mean():.4f}")` }
   ]
 };
 
@@ -1848,7 +2522,33 @@ for ax, model, label in zip(axes,
                     va_mean+val_scores.std(axis=1), alpha=0.1, color='coral')
     ax.set_title(label); ax.set_xlabel('Training set size')
     ax.set_ylabel('Accuracy'); ax.legend()
-plt.tight_layout(); plt.show()` }
+plt.tight_layout(); plt.show()` },
+    { type: 'exercise', title: 'TimeSeriesSplit vs Standard CV', body: `<p>Demonstrate that standard K-Fold is invalid for time series — it leaks future data into training:</p>
+<ol>
+<li>Generate a time-ordered synthetic series: <code>y = sin(t/10) + 0.1*t + noise</code> for t=0..999. Features: lags [y_{t-1}, y_{t-2}, y_{t-3}]. Target: y_t.</li>
+<li>Train a Ridge regression model and evaluate with: (a) 5-fold KFold (shuffled), (b) TimeSeriesSplit(n_splits=5). Report mean RMSE for each.</li>
+<li>Why should KFold give an overly optimistic (low) RMSE for time series? Explain in a comment.</li>
+<li>Bonus: plot the TimeSeriesSplit fold boundaries on the time axis to visualise why ordering matters.</li>
+</ol>`,
+    hint: `Create lag features with <code>np.column_stack([y[i:n+i] for i in range(3, 0, -1)])</code>. Don't shuffle TimeSeriesSplit. The KFold RMSE is optimistic because it trains on future data to predict past values.`,
+    solution: `import numpy as np, matplotlib.pyplot as plt
+from sklearn.linear_model import Ridge
+from sklearn.model_selection import KFold, TimeSeriesSplit, cross_val_score
+from sklearn.metrics import mean_squared_error
+
+np.random.seed(42); n=1000; t=np.arange(n)
+y = np.sin(t/10) + 0.01*t + np.random.normal(0,0.5,n)
+X = np.column_stack([y[2:n], y[1:n-1], y[0:n-2]]); y_target = y[3:]
+
+kf   = KFold(n_splits=5, shuffle=True, random_state=42)
+tscv = TimeSeriesSplit(n_splits=5)
+
+for name, cv in [('KFold (shuffled)', kf), ('TimeSeriesSplit', tscv)]:
+    rmse = np.sqrt(-cross_val_score(Ridge(), X, y_target, cv=cv, scoring='neg_mean_squared_error').mean())
+    print(f"{name:25s} RMSE={rmse:.4f}")
+# KFold gives optimistic RMSE because it trains on future data to predict past values.
+# A model trained on data from t=500-900 to predict t=100 appears accurate
+# but this would never happen in production.` }
   ]
 };
 
@@ -1915,7 +2615,40 @@ axes[1].bar(['No weight\n(accuracy)','Balanced\n(accuracy)','No weight\n(F1)','B
             [0.953, 0.891, 0.10, 0.55], color=['steelblue','steelblue','coral','coral'])
 axes[1].set_title('Class Imbalance: Accuracy hides the problem; F1 reveals it')
 axes[1].set_ylabel('Score')
-plt.tight_layout(); plt.show()` }
+plt.tight_layout(); plt.show()` },
+    { type: 'exercise', title: 'Validation Curve & Hyperparameter Sensitivity', body: `<p>Use validation curves to understand how two key hyperparameters affect a model:</p>
+<ol>
+<li>For a Random Forest on the wine dataset, plot two validation curves: one varying <code>n_estimators</code> (10 to 300) and one varying <code>max_features</code> (0.1 to 1.0). Scoring: accuracy.</li>
+<li>For each, identify: (a) the value where CV accuracy plateaus, (b) whether increasing the parameter causes overfitting</li>
+<li>Run a quick <code>RandomizedSearchCV</code> (20 iterations) over both parameters simultaneously. Does the best combo match your curves?</li>
+</ol>`,
+    hint: `<code>validation_curve(estimator, X, y, param_name='max_features', param_range=np.linspace(0.1,1,10), cv=5)</code>. For the combined search: <code>{'n_estimators': randint(10,300), 'max_features': uniform(0.1,0.9)}</code>.`,
+    solution: `import numpy as np, matplotlib.pyplot as plt
+from sklearn.datasets import load_wine
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import validation_curve, RandomizedSearchCV
+from scipy.stats import randint, uniform
+
+data = load_wine(); X, y = data.data, data.target
+fig, axes = plt.subplots(1,2,figsize=(13,5))
+
+for ax, param, rng, label in [
+    (axes[0], 'n_estimators', range(10,305,20), 'n_estimators'),
+    (axes[1], 'max_features', np.linspace(0.1,1,10), 'max_features'),
+]:
+    tr, va = validation_curve(RandomForestClassifier(random_state=42, n_jobs=-1),
+                               X, y, param_name=param, param_range=list(rng), cv=5, n_jobs=-1)
+    ax.plot(list(rng), tr.mean(1), 'o-', label='Train')
+    ax.fill_between(list(rng), tr.mean(1)-tr.std(1), tr.mean(1)+tr.std(1), alpha=.1)
+    ax.plot(list(rng), va.mean(1), 's-', label='CV', color='coral')
+    ax.fill_between(list(rng), va.mean(1)-va.std(1), va.mean(1)+va.std(1), alpha=.1, color='coral')
+    ax.set_xlabel(label); ax.set_ylabel('Accuracy'); ax.legend(); ax.set_title(f'{label} Validation Curve')
+plt.tight_layout(); plt.show()
+
+rs = RandomizedSearchCV(RandomForestClassifier(random_state=42, n_jobs=-1),
+                         {'n_estimators': randint(10,300), 'max_features': uniform(0.1,0.9)},
+                         n_iter=20, cv=5, n_jobs=-1, random_state=42)
+rs.fit(X, y); print(f"Best CV accuracy: {rs.best_score_:.4f}  params: {rs.best_params_}")` }
   ]
 };
 
@@ -2063,7 +2796,48 @@ for name, model in models.items():
 rf = RandomForestClassifier(n_estimators=200, oob_score=True, random_state=42, n_jobs=-1)
 rf.fit(X_tr, y_tr)
 print(f"\nOOB score (free):  {rf.oob_score_:.4f}")
-print(f"Test accuracy    :  {rf.score(X_te, y_te):.4f}")` }
+print(f"Test accuracy    :  {rf.score(X_te, y_te):.4f}")` },
+    { type: 'exercise', title: 'Bootstrap vs Full-Dataset Training', body: `<p>Empirically demonstrate why bootstrap sampling helps Random Forest:</p>
+<ol>
+<li>Train 100 individual Decision Trees on the full training set (same data, same model). Measure their average CV AUC and std.</li>
+<li>Train 100 individual Decision Trees each on a different bootstrap sample. Measure average CV AUC and std.</li>
+<li>Train a Random Forest (100 trees, max_features='sqrt'). Compare its test AUC to the two above.</li>
+<li>Plot the distribution of individual tree test accuracies for both approaches. Which has higher variance?</li>
+</ol>`,
+    hint: `For bootstrap samples: <code>idx = np.random.choice(len(X_tr), len(X_tr), replace=True); tree.fit(X_tr[idx], y_tr[idx])</code>. Plot histograms with <code>plt.hist(accs_full, alpha=0.5, label='Full', bins=20)</code>.`,
+    solution: `import numpy as np, matplotlib.pyplot as plt
+from sklearn.datasets import load_breast_cancer
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score
+
+data = load_breast_cancer(); X, y = data.data, data.target
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+
+np.random.seed(42)
+aucs_full, aucs_boot = [], []
+for _ in range(100):
+    t_full = DecisionTreeClassifier(max_depth=None, random_state=np.random.randint(10000))
+    t_full.fit(X_tr, y_tr); aucs_full.append(roc_auc_score(y_te, t_full.predict_proba(X_te)[:,1]))
+
+    idx = np.random.choice(len(X_tr), len(X_tr), replace=True)
+    t_boot = DecisionTreeClassifier(max_depth=None, random_state=np.random.randint(10000))
+    t_boot.fit(X_tr[idx], y_tr[idx]); aucs_boot.append(roc_auc_score(y_te, t_boot.predict_proba(X_te)[:,1]))
+
+rf = RandomForestClassifier(100, max_features='sqrt', random_state=42).fit(X_tr, y_tr)
+rf_auc = roc_auc_score(y_te, rf.predict_proba(X_te)[:,1])
+
+print(f"Full trees:   mean={np.mean(aucs_full):.4f} std={np.std(aucs_full):.4f}")
+print(f"Boot trees:   mean={np.mean(aucs_boot):.4f} std={np.std(aucs_boot):.4f}")
+print(f"Random Forest AUC: {rf_auc:.4f}")
+
+plt.figure(figsize=(9,4))
+plt.hist(aucs_full, bins=20, alpha=0.5, label='Full dataset trees')
+plt.hist(aucs_boot, bins=20, alpha=0.5, label='Bootstrap trees')
+plt.axvline(rf_auc, color='red', ls='--', lw=2, label=f'Random Forest={rf_auc:.4f}')
+plt.xlabel('Test AUC'); plt.ylabel('Count'); plt.legend(); plt.title('Individual Trees vs Random Forest')
+plt.show()` }
   ]
 };
 
@@ -2127,7 +2901,38 @@ ax.axvline(best_n-1, ls='--', color='red', label=f'Best n_estimators={best_n}')
 ax.set_xlabel('n_estimators'); ax.set_ylabel('ROC-AUC')
 ax.set_title('Gradient Boosting: Staged AUC (train vs val)')
 ax.legend(); plt.tight_layout(); plt.show()
-print(f"Best n_estimators: {best_n}  Val AUC: {val_auc[best_n-1]:.4f}")` }
+print(f"Best n_estimators: {best_n}  Val AUC: {val_auc[best_n-1]:.4f}")` },
+    { type: 'exercise', title: 'AdaBoost Weight Dynamics', body: `<p>Visualise how AdaBoost reweights training examples through its iterations:</p>
+<ol>
+<li>Generate a binary classification dataset with 200 samples and 2 features (for 2D plotting)</li>
+<li>Train an AdaBoost with 50 stumps. After fitting, access the sample weights at each round — <code>model.estimator_weights_</code> and examine how weight evolves</li>
+<li>Plot the training AUC vs number of boosting rounds (use <code>staged_predict_proba</code>)</li>
+<li>Identify which training points have the highest final weight — visualise them with larger markers. Are they the hard cases near the decision boundary?</li>
+</ol>`,
+    hint: `<code>list(model.staged_predict_proba(X_te))</code> gives probabilities at each stage. For sample weights: after fitting, <code>model.estimators_</code> holds the stumps; to get the raw AdaBoost weight vector, access <code>model.estimator_weights_</code> (the α values, not sample weights directly).`,
+    solution: `import numpy as np, matplotlib.pyplot as plt
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score
+
+np.random.seed(42)
+X, y = make_classification(200, n_features=2, n_redundant=0, n_informative=2, random_state=42)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42)
+
+ada = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1), n_estimators=50, random_state=42)
+ada.fit(X_tr, y_tr)
+
+staged_aucs = [roc_auc_score(y_te, p[:,1]) for p in ada.staged_predict_proba(X_te)]
+plt.figure(figsize=(9,4)); plt.plot(range(1,51), staged_aucs, 'o-', ms=3)
+plt.xlabel('Boosting round'); plt.ylabel('Test AUC'); plt.title('AdaBoost: AUC vs Rounds')
+plt.tight_layout(); plt.show()
+
+# Sample weights after fitting — AdaBoost computes them internally via SAMME
+# Approximate: re-fit and track errors
+print(f"Estimator weights (alpha): {ada.estimator_weights_[:5].round(3)} ...")
+print(f"Final test AUC: {staged_aucs[-1]:.4f}")` }
   ]
 };
 
@@ -2210,7 +3015,39 @@ if LIBS_AVAILABLE:
     }
     for p, desc in params.items():
         print(f"  {p:20s}: {desc}")` },
-    { type: 'tip', body: `Always use early stopping with XGBoost and LightGBM. Set <code>n_estimators</code> very high (1000+), provide an eval set, and let early stopping find the optimal number automatically. This prevents overfitting without manual grid searching over n_estimators.` }
+    { type: 'tip', body: `Always use early stopping with XGBoost and LightGBM. Set <code>n_estimators</code> very high (1000+), provide an eval set, and let early stopping find the optimal number automatically. This prevents overfitting without manual grid searching over n_estimators.` },
+    { type: 'exercise', title: 'LightGBM vs XGBoost Benchmark', body: `<p>Run a fair speed and accuracy benchmark between LightGBM and XGBoost on a large dataset:</p>
+<ol>
+<li>Generate a dataset with 50,000 samples and 50 features using <code>make_classification</code></li>
+<li>Train both LightGBM and XGBoost with comparable settings (n_estimators=300, learning_rate=0.05, max_depth=6) and measure training time</li>
+<li>Compare test ROC-AUC for both</li>
+<li>If you don't have both installed, implement with whichever is available and compare against sklearn GradientBoostingClassifier</li>
+</ol>`,
+    hint: `<code>import time; t0=time.time(); model.fit(X_tr,y_tr); elapsed=time.time()-t0</code>. For LightGBM: <code>import lightgbm as lgb; lgb.LGBMClassifier(n_estimators=300, learning_rate=0.05, max_depth=6, n_jobs=-1)</code>.`,
+    solution: `import numpy as np, time
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score
+from sklearn.ensemble import GradientBoostingClassifier
+
+np.random.seed(42)
+X, y = make_classification(50000, n_features=50, n_informative=25, random_state=42)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42)
+
+models = {'sklearn GB': GradientBoostingClassifier(n_estimators=300, learning_rate=0.05, max_depth=6, random_state=42)}
+try:
+    import xgboost as xgb
+    models['XGBoost'] = xgb.XGBClassifier(n_estimators=300, learning_rate=0.05, max_depth=6, n_jobs=-1, random_state=42, use_label_encoder=False, eval_metric='logloss')
+except ImportError: pass
+try:
+    import lightgbm as lgb
+    models['LightGBM'] = lgb.LGBMClassifier(n_estimators=300, learning_rate=0.05, max_depth=6, n_jobs=-1, random_state=42)
+except ImportError: pass
+
+for name, m in models.items():
+    t0 = time.time(); m.fit(X_tr, y_tr); elapsed = time.time()-t0
+    auc = roc_auc_score(y_te, m.predict_proba(X_te)[:,1])
+    print(f"{name:<15} AUC={auc:.4f}  Time={elapsed:.1f}s")` }
   ]
 };
 
@@ -2283,7 +3120,48 @@ print(f"Stacking:     {cv_stack:.4f}")
 soft_voter.fit(Xs_tr, y_tr)
 stacker.fit(Xs_tr, y_tr)
 print(f"\nSoft Voting test AUC : {roc_auc_score(y_te, soft_voter.predict_proba(Xs_te)[:,1]):.4f}")
-print(f"Stacking test AUC    : {roc_auc_score(y_te, stacker.predict_proba(Xs_te)[:,1]):.4f}")` }
+print(f"Stacking test AUC    : {roc_auc_score(y_te, stacker.predict_proba(Xs_te)[:,1]):.4f}")` },
+    { type: 'exercise', title: 'Hard vs Soft Voting Comparison', body: `<p>Compare hard voting (majority vote) vs soft voting (average probabilities) on the wine dataset:</p>
+<ol>
+<li>Build 5 diverse base classifiers: Logistic Regression, SVM (RBF), Random Forest, KNN, Gradient Boosting</li>
+<li>Train and evaluate each individually. Record test accuracy and ROC-AUC (macro OVR).</li>
+<li>Build VotingClassifier with voting='hard' and voting='soft'. Report accuracy and AUC for each.</li>
+<li>Does the ensemble beat all individual models? Does soft outperform hard?</li>
+</ol>`,
+    hint: `For wine (3 classes): <code>roc_auc_score(y_te, model.predict_proba(X_te), multi_class='ovr')</code>. All base models must support <code>predict_proba</code> for soft voting. Use <code>probability=True</code> for SVC.`,
+    solution: `import numpy as np
+from sklearn.datasets import load_wine
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, VotingClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, roc_auc_score
+
+data = load_wine(); X, y = data.data, data.target
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+sc = StandardScaler(); Xs_tr = sc.fit_transform(X_tr); Xs_te = sc.transform(X_te)
+
+estimators = [
+    ('lr',  LogisticRegression(max_iter=2000)),
+    ('svc', SVC(probability=True, kernel='rbf', C=10)),
+    ('rf',  RandomForestClassifier(200, random_state=42)),
+    ('knn', KNeighborsClassifier(n_neighbors=7)),
+    ('gb',  GradientBoostingClassifier(100, random_state=42)),
+]
+
+for name, est in estimators:
+    est.fit(Xs_tr, y_tr); acc=est.score(Xs_te,y_te)
+    auc=roc_auc_score(y_te, est.predict_proba(Xs_te), multi_class='ovr')
+    print(f"  {name:<5} acc={acc:.4f}  AUC={auc:.4f}")
+
+for voting in ['hard','soft']:
+    vc = VotingClassifier(estimators=estimators, voting=voting)
+    vc.fit(Xs_tr, y_tr); acc=vc.score(Xs_te,y_te)
+    auc = roc_auc_score(y_te, vc.predict_proba(Xs_te), multi_class='ovr') if voting=='soft' else None
+    print(f"Voting({voting}):  acc={acc:.4f}{'  AUC='+f'{auc:.4f}' if auc else ''}")` }
   ]
 };
 
@@ -2388,7 +3266,53 @@ L['ml-w8-l2'] = {
     { type: 'code', lang: 'python', src: 'from sklearn.model_selection import RandomizedSearchCV\nfrom scipy.stats import randint, uniform\n\nparam_dist = {\n    "classifier__n_estimators":  randint(100, 500),\n    "classifier__learning_rate": uniform(0.01, 0.2),\n    "classifier__max_depth":     randint(3, 8),\n    "classifier__subsample":     uniform(0.6, 0.4),\n    "preprocessor__num__imputer__strategy": ["median", "mean"]\n}\n\nsearch = RandomizedSearchCV(\n    pipeline, param_distributions=param_dist,\n    n_iter=50, cv=5, scoring="roc_auc",\n    n_jobs=-1, random_state=42, verbose=1\n)\n# search.fit(X_train, y_train)\n# best_pipeline = search.best_estimator_' },
     { type: 'text', body: '<h3>Testing Your Pipeline</h3><p>Production pipelines need automated tests:</p>' },
     { type: 'code', lang: 'python', src: 'import numpy as np\nimport pandas as pd\n\ndef make_sample_data(n=100):\n    np.random.seed(0)\n    return pd.DataFrame({\n        "tenure_months":         np.random.randint(1, 60, n),\n        "avg_monthly_spend_90d": np.random.uniform(20, 200, n),\n        "days_since_last_login": np.random.randint(0, 90, n),\n        "support_tickets_30d":   np.random.randint(0, 10, n),\n        "plan_type":    np.random.choice(["basic","premium","enterprise"], n),\n        "payment_method": np.random.choice(["card","bank","paypal"], n),\n        "region":       np.random.choice(["north","south","east","west"], n),\n    })\n\ndef test_pipeline_output_shape():\n    X = make_sample_data(200)\n    y = np.random.randint(0, 2, 200)\n    pipeline.fit(X, y)\n    preds = pipeline.predict(X)\n    assert preds.shape == (200,)\n\ndef test_pipeline_handles_unseen_categories():\n    X_train = make_sample_data(200)\n    y_train = np.random.randint(0, 2, 200)\n    pipeline.fit(X_train, y_train)\n    X_new = make_sample_data(10)\n    X_new["plan_type"] = "unknown_plan"\n    proba = pipeline.predict_proba(X_new)  # should not raise\n    assert proba.shape == (10, 2)' },
-    { type: 'tip', title: 'Use set_output(transform="pandas")', body: 'sklearn >= 1.2 supports pipeline.set_output(transform="pandas") which makes all transformers return DataFrames with column names instead of numpy arrays. Invaluable for debugging intermediate steps.' }
+    { type: 'tip', title: 'Use set_output(transform="pandas")', body: 'sklearn >= 1.2 supports pipeline.set_output(transform="pandas") which makes all transformers return DataFrames with column names instead of numpy arrays. Invaluable for debugging intermediate steps.' },
+    { type: 'exercise', title: 'Build & Test a Production Pipeline', body: `<p>Build a complete, tested sklearn Pipeline for the wine quality dataset:</p>
+<ol>
+<li>Load the white wine dataset: <code>pd.read_csv('https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv', sep=';')</code>. Target: <code>quality >= 7</code> (binary).</li>
+<li>Add a custom transformer that creates two features: <code>alcohol_acid_ratio = alcohol / (volatile acidity + 0.01)</code> and <code>density_sugar_ratio = density / (residual sugar + 0.01)</code></li>
+<li>Build a full Pipeline: custom transformer → ColumnTransformer (scale numeric) → GradientBoosting. Tune with RandomizedSearchCV (20 iterations, 5-fold CV, ROC-AUC).</li>
+<li>Write two pytest-style assert tests: (a) pipeline output shape matches input rows, (b) pipeline handles NaN in test set without crashing (add 5% NaN to X_test first)</li>
+</ol>`,
+    hint: `<code>from sklearn.base import BaseEstimator, TransformerMixin</code>. Your custom transformer must define <code>fit(self, X, y=None)</code> and <code>transform(self, X)</code> and work on both DataFrames and numpy arrays. Use <code>pd.DataFrame(X).copy()</code> inside transform.`,
+    solution: `import pandas as pd, numpy as np
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import RobustScaler
+from sklearn.impute import SimpleImputer
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.model_selection import train_test_split, RandomizedSearchCV
+from scipy.stats import randint, uniform
+
+url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv'
+df = pd.read_csv(url, sep=';'); df.columns = df.columns.str.replace(' ','_')
+X = df.drop(columns=['quality']); y = (df['quality'] >= 7).astype(int)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+
+class WineFeatures(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None): return self
+    def transform(self, X):
+        X = pd.DataFrame(X, columns=self._columns).copy() if not isinstance(X, pd.DataFrame) else X.copy()
+        X['alc_acid'] = X['alcohol'] / (X['volatile_acidity'] + 0.01)
+        X['den_sugar'] = X['density'] / (X['residual_sugar'] + 0.01)
+        return X
+    def fit_transform(self, X, y=None): self._columns = list(X.columns); return self.fit(X,y).transform(X)
+
+pipe = Pipeline([('fe', WineFeatures()),
+                 ('sc', ColumnTransformer([('sc', RobustScaler(), X.columns.tolist()+ ['alc_acid','den_sugar'])], remainder='drop')),
+                 ('clf', GradientBoostingClassifier(random_state=42))])
+
+rs = RandomizedSearchCV(pipe, {'clf__n_estimators': randint(100,400), 'clf__learning_rate': uniform(0.01,0.2)},
+                         n_iter=20, cv=5, scoring='roc_auc', random_state=42)
+rs.fit(X_tr, y_tr)
+print(f"Best AUC: {rs.best_score_:.4f}  Test AUC: {rs.score(X_te, y_te):.4f}")
+
+# Tests
+assert rs.best_estimator_.predict(X_te).shape == (len(X_te),), "Shape mismatch"
+X_te_nan = X_te.copy(); X_te_nan.iloc[np.random.choice(len(X_te),5), 0] = np.nan
+try: rs.best_estimator_.predict_proba(X_te_nan); print("NaN test: PASS (imputer handles NaN)")
+except: print("NaN test: FAIL — add SimpleImputer to pipeline")` }
   ]
 };
 
@@ -2403,8 +3327,57 @@ L['ml-w8-l3'] = {
     { type: 'text', body: '<h3>Batch Scoring</h3><p>Many production use cases do not need real-time APIs � a nightly batch job that writes scores to a database is simpler and more robust:</p>' },
     { type: 'code', lang: 'python', src: '# batch_score.py\nimport joblib\nimport pandas as pd\nfrom datetime import date\n\ndef run_batch_scoring(db_conn, model_path, threshold=0.42):\n    pipeline = joblib.load(model_path)\n    customers = pd.read_sql(\n        "SELECT * FROM customer_features_daily WHERE snapshot_date = CURRENT_DATE", db_conn\n    )\n    print(f"Scoring {len(customers):,} customers...")\n\n    probs = pipeline.predict_proba(customers.drop(columns=["customer_id","snapshot_date"]))\n    customers["churn_prob"]    = probs[:, 1]\n    customers["churn_flag"]    = customers["churn_prob"] >= threshold\n    customers["scored_date"]   = date.today()\n    customers["model_version"] = model_path.split("/")[-1]\n\n    scores = customers[["customer_id","churn_prob","churn_flag","scored_date","model_version"]]\n    scores.to_sql("churn_scores", db_conn, if_exists="append", index=False)\n    print(f"Flagged {customers[\'churn_flag\'].sum():,} high-risk customers.")' },
     { type: 'text', body: '<h3>Versioning Strategy</h3><p><strong>Champion/Challenger</strong>: production always runs one champion model. New challenger models score on shadow copy and are promoted only when they beat the champion on held-out data. <strong>Semantic versioning</strong>: v{major}.{minor} � major for architecture changes, minor for retraining on new data. <strong>Never overwrite models</strong>: always append timestamp to filename � rollback requires preserved old models.</p>' },
-    { type: 'warn', title: 'pickle security risk', body: 'Both pickle and joblib are unsafe to load from untrusted sources � a malicious .pkl file can execute arbitrary code on load. Only load model files from sources you control. Never expose a model-loading endpoint to public input.' },
-    { type: 'tip', title: 'Model cards', body: 'For any model that informs decisions affecting people, write a model card: intended use, evaluation data, performance across demographic slices, known limitations. This is now required practice at major tech companies and increasingly expected by regulators.' }
+    { type: 'warn', title: 'pickle security risk', body: 'Both pickle and joblib are unsafe to load from untrusted sources — a malicious .pkl file can execute arbitrary code on load. Only load model files from sources you control. Never expose a model-loading endpoint to public input.' },
+    { type: 'tip', title: 'Model cards', body: 'For any model that informs decisions affecting people, write a model card: intended use, evaluation data, performance across demographic slices, known limitations. This is now required practice at major tech companies and increasingly expected by regulators.' },
+    { type: 'exercise', title: 'Save, Load & Version a Pipeline', body: `<p>Build a complete model versioning workflow:</p>
+<ol>
+<li>Train a RandomForest + StandardScaler Pipeline on the breast cancer dataset</li>
+<li>Save it with joblib to <code>models/breast_cancer_v1_YYYYMMDD.joblib</code> and save a JSON metadata file with: model_name, version, trained_at, n_features, feature_names, test_auc, sklearn_version</li>
+<li>Load the model back and verify: (a) same predictions as original, (b) file size < 2 MB</li>
+<li>Write a <code>load_latest_model(model_dir, model_name)</code> function that scans the directory for all files matching <code>{model_name}_*.joblib</code> and loads the most recently created one</li>
+</ol>`,
+    hint: `<code>Path(model_dir).glob(f'{model_name}_*.joblib')</code> lists matching files. Sort by <code>path.stat().st_ctime</code> to find the latest. Use <code>np.allclose(preds_original, preds_loaded)</code> to verify round-trip consistency.`,
+    solution: `import joblib, json, numpy as np
+from pathlib import Path
+from datetime import datetime
+from sklearn.datasets import load_breast_cancer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score
+import sklearn
+
+data = load_breast_cancer(); X, y = data.data, data.target
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+
+pipe = Pipeline([('sc', StandardScaler()), ('rf', RandomForestClassifier(200, random_state=42))])
+pipe.fit(X_tr, y_tr)
+auc = roc_auc_score(y_te, pipe.predict_proba(X_te)[:,1])
+orig_preds = pipe.predict_proba(X_te[:,1])
+
+Path("models").mkdir(exist_ok=True)
+ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+model_path = f"models/breast_cancer_v1_{ts}.joblib"
+joblib.dump(pipe, model_path, compress=3)
+meta = {"model_name": "breast_cancer", "version": "1.0", "trained_at": ts,
+        "n_features": X.shape[1], "feature_names": list(data.feature_names),
+        "test_auc": round(auc,4), "sklearn_version": sklearn.__version__}
+with open(model_path.replace(".joblib","_meta.json"),"w") as f: json.dump(meta, f, indent=2)
+print(f"Saved {model_path} ({Path(model_path).stat().st_size/1024:.0f} KB)")
+
+loaded = joblib.load(model_path)
+loaded_preds = loaded.predict_proba(X_te)[:,1]
+print(f"Round-trip OK: {np.allclose(pipe.predict_proba(X_te)[:,1], loaded_preds)}")
+assert Path(model_path).stat().st_size < 2*1024*1024
+
+def load_latest_model(model_dir, model_name):
+    files = list(Path(model_dir).glob(f"{model_name}_*.joblib"))
+    if not files: raise FileNotFoundError
+    latest = max(files, key=lambda p: p.stat().st_ctime)
+    print(f"Loading: {latest.name}"); return joblib.load(latest)
+
+m = load_latest_model("models", "breast_cancer_v1"); print(type(m))` }
   ]
 };
 
@@ -2417,6 +3390,42 @@ L['ml-w8-l4'] = {
     { type: 'code', lang: 'python', src: '# Performance monitoring with delayed labels\nimport pandas as pd\nfrom sklearn.metrics import roc_auc_score, precision_score, recall_score\n\ndef monitor_performance(predictions_db, label_db):\n    merged = predictions_db.merge(label_db, on="customer_id")\n    merged["week"] = pd.to_datetime(merged["score_date"]).dt.to_period("W")\n    weekly = []\n    for week, grp in merged.groupby("week"):\n        if len(grp) < 30:\n            continue\n        weekly.append({\n            "week":       str(week),\n            "n":          len(grp),\n            "auc":        roc_auc_score(grp["churned"], grp["churn_prob"]),\n            "precision":  precision_score(grp["churned"], grp["churn_flag"]),\n            "recall":     recall_score(grp["churned"], grp["churn_flag"]),\n            "churn_rate": grp["churned"].mean()\n        })\n    return pd.DataFrame(weekly)' },
     { type: 'text', body: '<h3>Alerting & Retraining Triggers</h3><ul><li><strong>Hard alert</strong>: if AUC drops below minimum bar (e.g., 0.70), page oncall immediately.</li><li><strong>Soft alert</strong>: if AUC drops 5% from baseline over 2 weeks, schedule retraining within 48 hours.</li><li><strong>Drift alert</strong>: if >30% of features show drift, trigger data investigation before retraining.</li><li><strong>Scheduled retraining</strong>: regardless of drift, retrain monthly on rolling 12-month window to stay current.</li></ul>' },
     { type: 'text', body: '<h3>Tools Overview</h3><table style="width:100%;border-collapse:collapse;font-size:.9rem"><thead><tr><th style="border:1px solid #444;padding:6px">Tool</th><th style="border:1px solid #444;padding:6px">Use case</th></tr></thead><tbody><tr><td style="border:1px solid #444;padding:6px">Evidently AI</td><td style="border:1px solid #444;padding:6px">Open-source drift reports, HTML dashboards, Grafana integration</td></tr><tr><td style="border:1px solid #444;padding:6px">WhyLogs / WhyLabs</td><td style="border:1px solid #444;padding:6px">Statistical profiles, lightweight logging, cloud monitoring</td></tr><tr><td style="border:1px solid #444;padding:6px">MLflow</td><td style="border:1px solid #444;padding:6px">Experiment tracking, model registry, champion/challenger tagging</td></tr><tr><td style="border:1px solid #444;padding:6px">Prometheus + Grafana</td><td style="border:1px solid #444;padding:6px">Infrastructure metrics + custom ML metrics via /metrics endpoint</td></tr></tbody></table>' },
+    { type: 'exercise', title: 'Simulate & Detect Data Drift', body: `<p>Build a drift simulation and detector:</p>
+<ol>
+<li>Train a logistic regression on the breast cancer dataset (80/20 split). Record baseline AUC and mean prediction probability.</li>
+<li>Create drifted test data by multiplying features 0–9 by 2.5 (simulates a calibration shift)</li>
+<li>For each feature, run a KS test comparing training vs drifted distribution. Print features where p &lt; 0.05.</li>
+<li>Show AUC drop on drifted data. Plot overlapping histograms of prediction scores (original vs drifted) — this is what a monitoring dashboard shows.</li>
+</ol>`,
+    hint: `<code>from scipy.stats import ks_2samp; stat, p = ks_2samp(X_train[:,i], X_drifted[:,i])</code>. Multiply only the test set by 2.5 for columns 0-9, not the training set.`,
+    solution: `import numpy as np, matplotlib.pyplot as plt
+from sklearn.datasets import load_breast_cancer
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score
+from scipy.stats import ks_2samp
+
+data = load_breast_cancer(); X, y = data.data, data.target
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+pipe = Pipeline([('sc', StandardScaler()), ('lr', LogisticRegression(max_iter=10000))])
+pipe.fit(X_tr, y_tr)
+
+X_drifted = X_te.copy(); X_drifted[:, :10] *= 2.5
+probs_orig  = pipe.predict_proba(X_te)[:,1]
+probs_drift = pipe.predict_proba(X_drifted)[:,1]
+print(f"Original AUC: {roc_auc_score(y_te, probs_orig):.4f}  mean={probs_orig.mean():.3f}")
+print(f"Drifted  AUC: {roc_auc_score(y_te, probs_drift):.4f}  mean={probs_drift.mean():.3f}")
+
+print("Drifted features (KS p<0.05):")
+for i, name in enumerate(data.feature_names):
+    _, p = ks_2samp(X_tr[:,i], X_drifted[:,i])
+    if p < 0.05: print(f"  {name}")
+
+plt.figure(figsize=(9,4))
+plt.hist(probs_orig, bins=30, alpha=0.5, label='Original'); plt.hist(probs_drift, bins=30, alpha=0.5, label='Drifted', color='red')
+plt.xlabel('Predicted Probability'); plt.title('Score Distribution Drift'); plt.legend(); plt.tight_layout(); plt.show()` },
     { type: 'tip', title: 'Monitor prediction distributions first', body: 'Performance metrics require ground-truth labels which arrive with delay. Monitor prediction score distributions (mean probability, % flagged) daily � sudden shifts are an early warning of drift even before labels arrive.' }
   ]
 };
