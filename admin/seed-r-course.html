@@ -358,6 +358,17 @@ const QUIZ_QUESTIONS = {
   ],
 };
 
+/* ── Helpers ──────────────────────────────────────────────────────────────── */
+function log(msg, cls=''){
+  const area = document.getElementById('status-area');
+  area.innerHTML += `<div style="color:${cls==='ok'?'var(--teal)':cls==='err'?'#f66':cls==='head'?'var(--cream)':'var(--fog2)'}">${msg}</div>`;
+  area.scrollTop = area.scrollHeight;
+}
+function toast(m,t='success'){
+  const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;
+  document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);
+}
+
 /* ── Load course list ─────────────────────────────────────────────────────── */
 document.addEventListener('portal:ready', async () => {
   const {data: courses, error} = await supa.from('courses').select('id,title').order('title');
