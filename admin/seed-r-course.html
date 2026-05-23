@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seed R Programming — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
+      <div class="portal-page-title">Seed R Programming Course</div>
+      <div class="portal-page-sub">One-click import of 6 weeks × 30 lessons with 30 quiz questions (5 per week)</div>
+    </div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Status</div>
+    <div id="status-area" style="font-family:var(--fb);font-size:.85rem;color:var(--fog2);line-height:1.8;">
+      Waiting to run…
+    </div>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Target Course</div>
+    <p style="font-family:var(--fb);font-size:.83rem;color:var(--fog2);margin-bottom:1rem;">
+      Select the R Programming course to seed into. If it doesn't appear, create it first in the Course Editor.
+    </p>
+    <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field-group" style="margin-bottom:0;flex:1;min-width:220px;">
+        <label class="flbl">Course</label>
+        <select class="fi" id="course-sel"><option value="">Loading courses…</option></select>
+      </div>
+      <div>
+        <label class="flbl">Action</label>
+        <div style="display:flex;gap:.5rem;">
+          <button class="portal-btn-ghost" id="btn-preview" onclick="preview()" style="font-size:.82rem;">Preview plan</button>
+          <button class="portal-btn" id="btn-seed" onclick="runSeed()" disabled>Seed 30 lessons</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-wrap" id="preview-card" style="display:none;">
+    <div class="chart-title">Lesson Plan (30 lessons + 6 quizzes)</div>
+    <div id="preview-body" style="overflow-x:auto;"></div>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+/* ── Lesson plan ────────────────────────────────────────────────────────────
+   [slug, title, duration_mins, type]
+─────────────────────────────────────────────────────────────────────────── */
+const R_MODULES = [
+  {
+    title: 'Week 1 — R Basics & RStudio',
+    lessons: [
+      ['r-w1-l1', 'Setup, RStudio Tour & Your First R Script',  35, 'text'],
+      ['r-w1-l2', 'Vectors — The Fundamental R Data Structure', 40, 'text'],
+      ['r-w1-l3', 'Factors & Core Data Types',                  35, 'text'],
+      ['r-w1-l4', 'Control Flow — if/else, Loops & Functions',  40, 'text'],
+      ['r-w1-l5', 'String Manipulation & Getting Help in R',    35, 'text'],
+      ['r-w1-quiz', 'Week 1 Quiz — R Basics & RStudio',         10, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 2 — R Data Structures',
+    lessons: [
+      ['r-w2-l1', 'Matrices & Arrays',                          40, 'text'],
+      ['r-w2-l2', 'Lists — Heterogeneous Containers',           35, 'text'],
+      ['r-w2-l3', 'Data Frames & Tibbles',                      45, 'text'],
+      ['r-w2-l4', 'Importing Data — CSV, Excel, RDS & More',    40, 'text'],
+      ['r-w2-l5', 'Inspecting, Understanding & Cleaning Data',  40, 'text'],
+      ['r-w2-quiz', 'Week 2 Quiz — R Data Structures',          10, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 3 — Data Wrangling with dplyr & tidyr',
+    lessons: [
+      ['r-w3-l1', 'The Pipe Operator & dplyr Foundations',      45, 'text'],
+      ['r-w3-l2', 'mutate(), arrange() & Advanced Columns',     45, 'text'],
+      ['r-w3-l3', 'group_by() & summarise() — Aggregation',     45, 'text'],
+      ['r-w3-l4', 'Reshaping Data with tidyr',                  40, 'text'],
+      ['r-w3-l5', 'Join Functions — Combining Data Frames',     45, 'text'],
+      ['r-w3-quiz', 'Week 3 Quiz — Data Wrangling',             10, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 4 — Data Visualisation with ggplot2',
+    lessons: [
+      ['r-w4-l1', 'The Grammar of Graphics — ggplot2 Framework', 45, 'text'],
+      ['r-w4-l2', 'Bar Charts, Line Charts & Histograms',        45, 'text'],
+      ['r-w4-l3', 'Boxplots, Violin Plots & Distributions',      40, 'text'],
+      ['r-w4-l4', 'Faceting, Themes & Scales',                   40, 'text'],
+      ['r-w4-l5', 'Publication-Ready Charts & ggsave',           40, 'text'],
+      ['r-w4-quiz', 'Week 4 Quiz — Data Visualisation',          10, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 5 — Statistical Analysis in R',
+    lessons: [
+      ['r-w5-l1', 'Descriptive Statistics — Summarising Data',  40, 'text'],
+      ['r-w5-l2', 'Probability Distributions in R',             40, 'text'],
+      ['r-w5-l3', 'Hypothesis Testing — t-test, Chi-sq, ANOVA', 45, 'text'],
+      ['r-w5-l4', 'Correlation Analysis',                       40, 'text'],
+      ['r-w5-l5', 'Linear Regression in R',                     45, 'text'],
+      ['r-w5-quiz', 'Week 5 Quiz — Statistical Analysis',       10, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 6 — R Markdown & Capstone',
+    lessons: [
+      ['r-w6-l1', 'R Markdown — Reproducible Research Reports', 40, 'text'],
+      ['r-w6-l2', 'Advanced R Markdown & Quarto',               35, 'text'],
+      ['r-w6-l3', 'Introduction to Shiny',                      40, 'text'],
+      ['r-w6-l4', 'Capstone EDA Project — End-to-End Analysis', 55, 'text'],
+      ['r-w6-l5', 'Next Steps — tidymodels, Career Paths & R Ecosystem', 45, 'text'],
+      ['r-w6-quiz', 'Week 6 Quiz — R Markdown & Capstone',      10, 'quiz'],
+    ]
+  },
+];
+
+/* ── Quiz questions (5 per week) ─────────────────────────────────────────── */
+const QUIZ_QUESTIONS = {
+  'r-w1-quiz': [
+    {
+      q: 'What is the preferred assignment operator in R?',
+      opts: ['<-', '=', '->', ':='],
+      ans: 0
+    },
+    {
+      q: 'Which function creates a vector in R?',
+      opts: ['c()', 'vector()', 'list()', 'array()'],
+      ans: 0
+    },
+    {
+      q: 'What does class(TRUE) return?',
+      opts: ['"logical"', '"boolean"', '"integer"', '"numeric"'],
+      ans: 0
+    },
+    {
+      q: 'R uses 1-based indexing. What does x[1] return?',
+      opts: ['The first element of x', 'The second element of x', 'NULL', 'An error'],
+      ans: 0
+    },
+    {
+      q: 'Which function displays the type and structure of an R object?',
+      opts: ['str()', 'type()', 'class()', 'summary()'],
+      ans: 0
+    },
+  ],
+  'r-w2-quiz': [
+    {
+      q: 'Which function creates a matrix filled row by row in R?',
+      opts: ['matrix(..., byrow=TRUE)', 'matrix(..., byrow=FALSE)', 'rbind()', 'array()'],
+      ans: 0
+    },
+    {
+      q: 'How do you access a named element from an R list?',
+      opts: ['mylist$name or mylist[["name"]]', 'mylist["name"]', 'mylist{name}', 'mylist.name'],
+      ans: 0
+    },
+    {
+      q: 'Which tidyverse function gives a concise, column-per-row view of a data frame?',
+      opts: ['glimpse()', 'str()', 'summary()', 'head()'],
+      ans: 0
+    },
+    {
+      q: 'What does read_csv() from the readr package return?',
+      opts: ['A tibble', 'A data frame', 'A list', 'A matrix'],
+      ans: 0
+    },
+    {
+      q: 'Which function counts the number of NAs per column in a data frame df?',
+      opts: ['colSums(is.na(df))', 'sum(is.na(df))', 'na.count(df)', 'count_na(df)'],
+      ans: 0
+    },
+  ],
+  'r-w3-quiz': [
+    {
+      q: 'What does the pipe operator |> do in R?',
+      opts: [
+        'Passes the left-hand result as the first argument to the right-hand function',
+        'Creates a new variable',
+        'Filters rows from a data frame',
+        'Concatenates two strings'
+      ],
+      ans: 0
+    },
+    {
+      q: 'Which dplyr function creates new columns or transforms existing ones?',
+      opts: ['mutate()', 'select()', 'filter()', 'arrange()'],
+      ans: 0
+    },
+    {
+      q: 'What does group_by(city) |> summarise(n=n()) compute?',
+      opts: ['Count of rows per city', 'Sum of all values per city', 'Mean per city', 'First row per city'],
+      ans: 0
+    },
+    {
+      q: 'Which tidyr function converts wide data to long (tidy) format?',
+      opts: ['pivot_longer()', 'pivot_wider()', 'spread()', 'gather()'],
+      ans: 0
+    },
+    {
+      q: 'Which join returns ALL rows from the left table plus matching rows from the right?',
+      opts: ['left_join()', 'inner_join()', 'full_join()', 'right_join()'],
+      ans: 0
+    },
+  ],
+  'r-w4-quiz': [
+    {
+      q: 'In ggplot2, what does aes() stand for and what does it do?',
+      opts: [
+        'Aesthetics — maps data columns to visual properties like x, y, colour',
+        'Aesthetics — sets fixed visual properties for all data points',
+        'Arguments — passes function arguments',
+        'Arrays — creates a grid layout'
+      ],
+      ans: 0
+    },
+    {
+      q: 'Which ggplot2 function creates small multiples of the same plot for each level of a variable?',
+      opts: ['facet_wrap()', 'geom_facet()', 'grid_wrap()', 'theme_grid()'],
+      ans: 0
+    },
+    {
+      q: 'What is the difference between geom_bar() and geom_col() in ggplot2?',
+      opts: [
+        'geom_bar() counts rows automatically; geom_col() uses a pre-computed height column',
+        'geom_col() counts rows; geom_bar() uses heights',
+        'They are identical',
+        'geom_bar() is for horizontal bars only'
+      ],
+      ans: 0
+    },
+    {
+      q: 'Which ggplot2 function saves a plot to a file?',
+      opts: ['ggsave()', 'save_plot()', 'export_plot()', 'write_plot()'],
+      ans: 0
+    },
+    {
+      q: 'Which patchwork operator stacks two ggplot2 plots vertically?',
+      opts: ['p1 / p2', 'p1 | p2', 'p1 + p2', 'p1 & p2'],
+      ans: 0
+    },
+  ],
+  'r-w5-quiz': [
+    {
+      q: 'Which R function computes the inter-quartile range (IQR)?',
+      opts: ['IQR(x)', 'iqr(x)', 'quantile(x, 0.75) - quantile(x, 0.25)', 'range(x)'],
+      ans: 0
+    },
+    {
+      q: 'What does pnorm(1.96) return (approximately)?',
+      opts: ['0.975 — the cumulative probability up to 1.96 standard deviations', '0.025', '1.96', '0.5'],
+      ans: 0
+    },
+    {
+      q: 'Which R function performs a two-sample t-test?',
+      opts: ['t.test(x, y)', 'ttest(x, y)', 'test.t(x, y)', 'student.test(x, y)'],
+      ans: 0
+    },
+    {
+      q: 'What does a Pearson correlation of r = -0.85 indicate?',
+      opts: [
+        'A strong negative linear relationship between the two variables',
+        'A strong positive linear relationship',
+        'No relationship',
+        'A non-linear relationship'
+      ],
+      ans: 0
+    },
+    {
+      q: 'In R\'s lm() output, what does R-squared measure?',
+      opts: [
+        'The proportion of variance in y explained by the model',
+        'The correlation between predictors',
+        'The number of significant predictors',
+        'The mean squared error'
+      ],
+      ans: 0
+    },
+  ],
+  'r-w6-quiz': [
+    {
+      q: 'In R Markdown, what chunk option hides the code but still shows its output?',
+      opts: ['echo=FALSE', 'eval=FALSE', 'include=FALSE', 'results="hide"'],
+      ans: 0
+    },
+    {
+      q: 'Which R Markdown chunk option prevents a chunk from running at all?',
+      opts: ['eval=FALSE', 'echo=FALSE', 'include=FALSE', 'cache=TRUE'],
+      ans: 0
+    },
+    {
+      q: 'In a Shiny app, what is the purpose of a reactive() expression?',
+      opts: [
+        'It auto-recalculates and caches a value when its inputs change',
+        'It creates a static UI element',
+        'It renders a plot',
+        'It connects to a database'
+      ],
+      ans: 0
+    },
+    {
+      q: 'Which tidymodels function defines the preprocessing steps applied to training data?',
+      opts: ['recipe()', 'workflow()', 'fit()', 'model_spec()'],
+      ans: 0
+    },
+    {
+      q: 'What is the main advantage of Quarto over R Markdown?',
+      opts: [
+        'Quarto supports multiple languages (R, Python, Julia) in one document natively',
+        'Quarto can only produce HTML output',
+        'Quarto requires no YAML header',
+        'Quarto is faster to compile than R Markdown'
+      ],
+      ans: 0
+    },
+  ],
+};
+
+/* ── Load course list ─────────────────────────────────────────────────────── */
+document.addEventListener('portal:ready', async () => {
+  const {data: courses, error} = await supa.from('courses').select('id,title').order('title');
+  const sel = document.getElementById('course-sel');
+  if (error || !courses?.length) {
+    sel.innerHTML = '<option value="">No courses found</option>'; return;
+  }
+  sel.innerHTML = '<option value="">— pick a course —</option>';
+  courses.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id;
+    opt.textContent = c.title;
+    if (c.title.toLowerCase().includes('r programming') || c.title.toLowerCase() === 'r') opt.selected = true;
+    sel.appendChild(opt);
+  });
+  document.getElementById('btn-seed').disabled = false;
+});
+
+/* ── Preview table ────────────────────────────────────────────────────────── */
+function preview(){
+  const card = document.getElementById('preview-card');
+  card.style.display = 'block';
+  let totalMins = 0;
+  let html = `<table style="width:100%;border-collapse:collapse;font-family:var(--fb);font-size:.8rem;">
+    <thead><tr style="background:var(--fog2);color:var(--ink);">
+      <th style="padding:.4rem .6rem;text-align:left;">Slug</th>
+      <th style="padding:.4rem .6rem;text-align:left;">Title</th>
+      <th style="padding:.4rem .6rem;text-align:center;">Type</th>
+      <th style="padding:.4rem .6rem;text-align:right;">Mins</th>
+    </tr></thead><tbody>`;
+
+  R_MODULES.forEach((mod, mi) => {
+    html += `<tr><td colspan="4" style="padding:.5rem .6rem;background:var(--fog);color:var(--cream);font-weight:600;">${mod.title}</td></tr>`;
+    mod.lessons.forEach(([slug, title, mins, type]) => {
+      totalMins += mins;
+      const typeColor = type === 'quiz' ? 'var(--champ2)' : 'var(--teal)';
+      html += `<tr style="${mi%2===0?'':'background:rgba(255,255,255,.02)'}">
+        <td style="padding:.35rem .6rem;color:var(--teal);font-family:monospace;">${slug}</td>
+        <td style="padding:.35rem .6rem;color:var(--fog2);">${title}</td>
+        <td style="padding:.35rem .6rem;text-align:center;color:${typeColor};">${type}</td>
+        <td style="padding:.35rem .6rem;text-align:right;color:var(--fog2);">${mins}</td>
+      </tr>`;
+    });
+    const quizSlug = `r-w${mi+1}-quiz`;
+    const qCount = QUIZ_QUESTIONS[quizSlug]?.length || 0;
+    if (qCount) {
+      html += `<tr><td colspan="4" style="padding:.25rem .6rem .5rem 2rem;color:var(--champ2);font-size:.75rem;">📝 ${qCount} quiz questions for ${quizSlug}</td></tr>`;
+    }
+  });
+
+  const totalLessons = R_MODULES.reduce((s,m) => s + m.lessons.length, 0);
+  const totalQ = Object.values(QUIZ_QUESTIONS).reduce((s,qs) => s + qs.length, 0);
+  html += `</tbody><tfoot><tr style="border-top:1px solid var(--border);">
+    <td colspan="3" style="padding:.5rem .6rem;color:var(--cream);font-weight:600;">Total (6 modules, ${totalLessons} lessons incl. 6 quizzes, ${totalQ} quiz questions)</td>
+    <td style="padding:.5rem .6rem;text-align:right;color:var(--cream);font-weight:600;">${totalMins} min</td>
+  </tr></tfoot></table>`;
+
+  document.getElementById('preview-body').innerHTML = html;
+  card.scrollIntoView({ behavior: 'smooth' });
+}
+
+/* ── Seeder ───────────────────────────────────────────────────────────────── */
+async function runSeed(){
+  const courseId = document.getElementById('course-sel').value;
+  if (!courseId){ toast('Pick a course first','error'); return; }
+
+  const btn = document.getElementById('btn-seed');
+  btn.disabled = true; btn.textContent = 'Running…';
+  document.getElementById('status-area').innerHTML = '';
+
+  try {
+    log('=== R PROGRAMMING COURSE SEEDER ===', 'head');
+    log(`Course ID: ${courseId}`);
+
+    /* Step 1 — Remove existing data ─────────────────────────────────────── */
+    log('Step 1 — Removing existing modules, lessons & quiz questions…');
+    const {data: existingMods} = await supa.from('modules').select('id').eq('course_id', courseId);
+    if (existingMods?.length) {
+      const modIds = existingMods.map(m => m.id);
+      const {data: existingLessons} = await supa.from('lessons').select('id').in('module_id', modIds);
+      if (existingLessons?.length) {
+        const lessonIds = existingLessons.map(l => l.id);
+        await supa.from('quiz_questions').delete().in('lesson_id', lessonIds);
+        await supa.from('lessons').delete().in('module_id', modIds);
+      }
+      await supa.from('modules').delete().eq('course_id', courseId);
+      log(`  Removed ${existingMods.length} existing module(s).`);
+    } else {
+      log('  No existing modules — clean slate.');
+    }
+
+    /* Step 2 — Insert modules, lessons & quiz questions ─────────────────── */
+    log('Step 2 — Inserting 6 modules, 36 lessons & 30 quiz questions…', 'head');
+    let totalLessons = 0, totalQuestions = 0;
+
+    for (let mi = 0; mi < R_MODULES.length; mi++) {
+      const mod = R_MODULES[mi];
+
+      const {data: modRow, error: modErr} = await supa.from('modules')
+        .insert({ course_id: courseId, title: mod.title, order_index: mi })
+        .select().single();
+      if (modErr) throw new Error(`Module insert failed: ${modErr.message}`);
+      log(`  [${mi+1}/6] Module "${mod.title}" → id ${modRow.id}`);
+
+      for (let li = 0; li < mod.lessons.length; li++) {
+        const [slug, title, mins, type] = mod.lessons[li];
+
+        const {data: lessonRow, error: lesErr} = await supa.from('lessons')
+          .insert({
+            module_id:     modRow.id,
+            title,
+            type,
+            content_url:   slug,
+            duration_mins: mins,
+            order_index:   li,
+          })
+          .select().single();
+        if (lesErr) throw new Error(`Lesson insert failed for "${title}": ${lesErr.message}`);
+        totalLessons++;
+
+        /* Insert quiz questions */
+        if (type === 'quiz') {
+          const questions = QUIZ_QUESTIONS[slug] || [];
+          if (questions.length) {
+            const qRows = questions.map((q, qi) => ({
+              lesson_id:     lessonRow.id,
+              question:      q.q,
+              options:       q.opts,
+              correct_index: q.ans,
+              order_index:   qi,
+            }));
+            const {error: qErr} = await supa.from('quiz_questions').insert(qRows);
+            if (qErr) throw new Error(`Quiz question insert failed for "${slug}": ${qErr.message}`);
+            log(`    📝 ${questions.length} quiz questions inserted for ${slug}`, 'ok');
+            totalQuestions += questions.length;
+          }
+        }
+      }
+
+      const textCount = mod.lessons.filter(l => l[3]==='text').length;
+      log(`    └─ ${textCount} text lessons + 1 quiz inserted`, 'ok');
+    }
+
+    /* Step 3 — Publish course ────────────────────────────────────────────── */
+    log('Step 3 — Setting course status to "published"…');
+    const {error: statusErr} = await supa.from('courses').update({status:'published'}).eq('id',courseId);
+    if (statusErr) log(`  Warning: could not update status — ${statusErr.message}`, 'err');
+    else log('  Course marked as published.', 'ok');
+
+    log(`=== DONE — ${totalLessons} lessons + ${totalQuestions} quiz questions seeded ===`, 'ok');
+    toast(`${totalLessons} lessons and ${totalQuestions} quiz questions seeded`);
+
+    document.getElementById('status-area').innerHTML +=
+      `<div style="margin-top:1rem;"><a href="course-editor.html?id=${courseId}" class="portal-btn" style="display:inline-block;text-decoration:none;">Open in Course Editor →</a></div>`;
+
+  } catch(err) {
+    log(`ERROR: ${err.message}`, 'err');
+    toast(err.message, 'error');
+  }
+
+  btn.disabled = false; btn.textContent = 'Seed 30 lessons';
+}
+</script>
+</body></html>
