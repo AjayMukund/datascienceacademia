@@ -93,33 +93,97 @@ async function del(id,title){
 }
 
 const SEED_DEFS=[
-  {label:'Python',href:'seed-python-course.html',expected:47,match:/python/i},
-  {label:'SQL',href:'seed-sql-course.html',expected:30,match:/sql/i},
-  {label:'R',href:'seed-r-course.html',expected:30,match:/\br\b|r programming/i},
-  {label:'ML',href:'seed-ml-course.html',expected:48,match:/machine learning|ml/i},
-  {label:'DL',href:'seed-dl-course.html',expected:48,match:/deep learning|dl/i},
-  {label:'Feature Eng.',href:'seed-fe-course.html',expected:36,match:/feature engineering/i},
-  {label:'NLP',href:'seed-nlp-course.html',expected:48,match:/natural language|nlp/i},
+  {label:'Python',href:'seed-python-course.html',expected:47,match:/python/i,
+   content:{file:'lesson-content.js',prefix:'python'}},
+  {label:'SQL',href:'seed-sql-course.html',expected:30,match:/sql/i,
+   content:{file:'sql-content.js',prefix:'sql'}},
+  {label:'R',href:'seed-r-course.html',expected:30,match:/\br\b|r programming/i,
+   content:{file:'r-content.js',prefix:'r'}},
+  {label:'ML',href:'seed-ml-course.html',expected:48,match:/machine learning|ml/i,
+   content:{file:'ml-content.js',prefix:'ml'}},
+  {label:'DL',href:'seed-dl-course.html',expected:48,match:/deep learning|dl/i,
+   content:{file:'dl-content.js',prefix:'dl'}},
+  {label:'Feature Eng.',href:'seed-fe-course.html',expected:36,match:/feature engineering/i,
+   content:{file:'fe-content.js',prefix:'fe'}},
+  {label:'NLP',href:'seed-nlp-course.html',expected:48,match:/natural language|nlp/i,
+   content:{file:'nlp-content.js',prefix:'nlp'}},
 ];
+
+function saveFp(prefix){
+  localStorage.setItem('dsa_fp_'+prefix,contentFingerprint(prefix));
+}
+
+// Fingerprint = lesson count + section count per lesson (detects added/removed lessons and sections)
+function contentFingerprint(prefix){
+  const L=window.DSA_LESSON_CONTENT||{};
+  const keys=Object.keys(L).filter(k=>k.startsWith(prefix+'-w')&&/l\d+$/.test(k)).sort();
+  return keys.length+':'+keys.map(k=>(L[k].sections||[]).length).join(',');
+}
+
+function loadContentScripts(){
+  return Promise.all(SEED_DEFS.map(d=>new Promise(resolve=>{
+    if(document.querySelector('script[data-content="'+d.content.file+'"]')){resolve();return;}
+    const s=document.createElement('script');
+    s.src='../'+d.content.file;
+    s.dataset.content=d.content.file;
+    s.onload=resolve;s.onerror=resolve;
+    document.head.appendChild(s);
+  })));
+}
 
 async function checkSeeds(){
   const btn=document.getElementById('btn-check');
   btn.textContent='Checking…';btn.disabled=true;
   try{
-    const {data:courses,error}=await supa.from('courses').select('id,title,modules(id,lessons(id))');
+    const[,{data:courses,error}]=await Promise.all([
+      loadContentScripts(),
+      supa.from('courses').select('id,title,modules(id,lessons(id,type,content_url))')
+    ]);
     if(error)throw error;
+    const content=window.DSA_LESSON_CONTENT||{};
     const needed=[];
+    const passed=[];
     for(const def of SEED_DEFS){
+      const prefix=def.content.prefix;
+      const fp=contentFingerprint(prefix);
+      const stored=localStorage.getItem('dsa_fp_'+prefix);
+      // No baseline yet but content exists → unverified, must seed to establish baseline
+      if(stored===null&&fp!=='0:'){
+        needed.push({...def,reasons:['content file not yet verified — seed to establish baseline']});
+        continue;
+      }
+      // Baseline exists but content has changed since then → flag
+      if(stored!==null&&stored!==fp){
+        needed.push({...def,reasons:['content file updated since last seed']});
+        continue;
+      }
+      // DB check + content-in-DB check
       const course=courses.find(c=>def.match.test(c.title));
-      const actual=course?(course.modules||[]).reduce((s,m)=>s+(m.lessons||[]).length,0):0;
-      if(!course||actual<def.expected)needed.push({...def,actual,missing:!course});
+      const allLessons=course?(course.modules||[]).flatMap(m=>m.lessons||[]):[];
+      const actual=allLessons.length;
+      const dbOk=course&&actual>=def.expected;
+      const missing=allLessons
+        .filter(l=>l.type==='text')
+        .filter(l=>!content[l.content_url]||!(content[l.content_url].sections||[]).length);
+      const contentOk=course&&missing.length===0;
+      if(!dbOk||!contentOk){
+        const reasons=[];
+        if(!course)reasons.push('not seeded');
+        else if(!dbOk)reasons.push(actual+'/'+def.expected+' lessons in DB');
+        if(course&&!contentOk)reasons.push(missing.length+' lesson'+(missing.length!==1?'s':'')+' missing content ('+missing.map(l=>l.content_url).join(', ')+')');
+        needed.push({...def,reasons});
+      }else{
+        passed.push({prefix,fp});
+      }
     }
+    // Save fingerprints only for courses that fully passed — advances the baseline
+    passed.forEach(({prefix,fp})=>localStorage.setItem('dsa_fp_'+prefix,fp));
     const container=document.getElementById('seed-btns');
     if(!needed.length){
       container.style.display='none';
       toast('All courses are up to date ✓');
     }else{
-      container.innerHTML=needed.map(d=>`<a href="${d.href}" class="portal-btn-ghost" style="font-size:.8rem;" title="${d.missing?'Not seeded yet':'Incomplete — '+d.actual+' / '+d.expected+' lessons'}">⚡ Seed ${d.label}</a>`).join('');
+      container.innerHTML=needed.map(d=>`<a href="${d.href}" class="portal-btn-ghost" style="font-size:.8rem;" title="${d.reasons.join(' · ')}" onclick="saveFp('${d.content.prefix}')">⚡ Seed ${d.label}</a>`).join('');
       container.style.display='flex';
       toast(`${needed.length} course${needed.length>1?'s':''} need seeding`,'error');
     }
