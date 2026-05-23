@@ -41,6 +41,7 @@
     <div><div class="portal-page-title">Courses</div><div class="portal-page-sub" id="sub-count">Loading…</div></div>
     <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;">
       <div id="seed-btns" style="display:none;gap:.5rem;align-items:center;flex-wrap:wrap;"></div>
+      <button id="btn-reset" class="portal-btn-ghost" style="font-size:.8rem;opacity:.5;" title="Clear all stored content baselines so every course is re-evaluated" onclick="resetBaselines()">↺ Reset baselines</button>
       <button id="btn-check" class="portal-btn-ghost" style="font-size:.8rem;" onclick="checkSeeds()">🔍 Check for updates</button>
       <a href="course-editor.html?id=new" class="portal-btn">+ New Course</a>
       <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
@@ -113,6 +114,11 @@ function saveFp(prefix){
   localStorage.setItem('dsa_fp_'+prefix,contentFingerprint(prefix));
 }
 
+function resetBaselines(){
+  Object.keys(localStorage).filter(k=>k.startsWith('dsa_fp_')).forEach(k=>localStorage.removeItem(k));
+  toast('Baselines cleared — run Check for updates');
+}
+
 // Fingerprint = lesson count + section count per lesson (detects added/removed lessons and sections)
 function contentFingerprint(prefix){
   const L=window.DSA_LESSON_CONTENT||{};
@@ -147,9 +153,9 @@ async function checkSeeds(){
       const prefix=def.content.prefix;
       const fp=contentFingerprint(prefix);
       const stored=localStorage.getItem('dsa_fp_'+prefix);
-      // No baseline yet but content exists → unverified, must seed to establish baseline
-      if(stored===null&&fp!=='0:'){
-        needed.push({...def,reasons:['content file not yet verified — seed to establish baseline']});
+      // No baseline yet → unverified regardless of current state
+      if(stored===null){
+        needed.push({...def,reasons:[fp==='0:'?'content file missing or failed to load':'content not yet verified — seed to establish baseline']});
         continue;
       }
       // Baseline exists but content has changed since then → flag
@@ -176,8 +182,6 @@ async function checkSeeds(){
         passed.push({prefix,fp});
       }
     }
-    // Save fingerprints only for courses that fully passed — advances the baseline
-    passed.forEach(({prefix,fp})=>localStorage.setItem('dsa_fp_'+prefix,fp));
     const container=document.getElementById('seed-btns');
     if(!needed.length){
       container.style.display='none';
