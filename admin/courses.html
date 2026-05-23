@@ -41,8 +41,13 @@
     <div><div class="portal-page-title">Courses</div><div class="portal-page-sub" id="sub-count">Loading…</div></div>
     <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;">
       <div id="seed-btns" style="display:none;gap:.5rem;align-items:center;flex-wrap:wrap;"></div>
-      <button id="btn-reset" class="portal-btn-ghost" style="font-size:.8rem;opacity:.5;" title="Clear all stored content baselines so every course is re-evaluated" onclick="resetBaselines()">↺ Reset baselines</button>
-      <button id="btn-check" class="portal-btn-ghost" style="font-size:.8rem;" onclick="checkSeeds()">🔍 Check for updates</button>
+      <div style="position:relative;">
+        <button id="btn-gear" class="portal-btn-ghost" style="font-size:.9rem;padding:7px 10px;" onclick="toggleGear()" title="Course tools">⚙</button>
+        <div id="gear-menu" style="display:none;position:absolute;right:0;top:calc(100% + 6px);background:var(--surface,#1a1b1e);border:1px solid var(--border,#2a2b2e);border-radius:8px;min-width:170px;padding:6px;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.4);">
+          <button class="portal-btn-ghost" style="width:100%;text-align:left;font-size:.8rem;padding:8px 10px;" onclick="checkSeeds();toggleGear()">🔍 Check for updates</button>
+          <button class="portal-btn-ghost" style="width:100%;text-align:left;font-size:.8rem;padding:8px 10px;opacity:.6;" onclick="resetBaselines();toggleGear()" title="Clear all stored content baselines">↺ Reset baselines</button>
+        </div>
+      </div>
       <a href="course-editor.html?id=new" class="portal-btn">+ New Course</a>
       <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
     </div>
@@ -109,6 +114,15 @@ const SEED_DEFS=[
   {label:'NLP',href:'seed-nlp-course.html',expected:48,match:/natural language|nlp/i,
    content:{file:'nlp-content.js',prefix:'nlp'}},
 ];
+
+function toggleGear(){
+  const m=document.getElementById('gear-menu');
+  m.style.display=m.style.display==='none'?'block':'none';
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#btn-gear')&&!e.target.closest('#gear-menu'))
+    document.getElementById('gear-menu').style.display='none';
+});
 
 function saveFp(prefix){
   localStorage.setItem('dsa_fp_'+prefix,contentFingerprint(prefix));
