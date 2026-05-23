@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seed Feature Engineering Course — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Account</div>
+    <a href="profile.html"><span class="nav-icon">👤</span> My Profile</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
+      <div class="portal-page-title">Seed Feature Engineering & Model Selection Course</div>
+      <div class="portal-page-sub">6 weeks × 36 lessons (30 text + 6 quizzes) with 30 quiz questions</div>
+    </div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Status</div>
+    <div id="status-area" style="font-family:var(--fb);font-size:.85rem;color:var(--fog2);line-height:1.8;">Waiting to run…</div>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Target Course</div>
+    <p style="font-family:var(--fb);font-size:.83rem;color:var(--fog2);margin-bottom:1rem;">
+      Select the Feature Engineering & Model Selection course to seed into. If it doesn't appear, create it first in the Course Editor.
+    </p>
+    <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field-group" style="margin-bottom:0;flex:1;min-width:220px;">
+        <label class="flbl">Course</label>
+        <select class="fi" id="course-sel"><option value="">Loading courses…</option></select>
+      </div>
+      <div>
+        <label class="flbl">Action</label>
+        <div style="display:flex;gap:.5rem;">
+          <button class="portal-btn-ghost" id="btn-preview" onclick="preview()" style="font-size:.82rem;">Preview plan</button>
+          <button class="portal-btn" id="btn-seed" onclick="runSeed()" disabled>Seed 36 lessons</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-wrap" id="preview-card" style="display:none;">
+    <div class="chart-title">Lesson Plan (36 lessons + 6 quizzes)</div>
+    <div id="preview-body" style="overflow-x:auto;"></div>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+const MODULES = [
+  {
+    title: 'Week 1 — Missing Data & Data Quality',
+    lessons: [
+      ['fe-w1-l1',   'Understanding Missing Data — MCAR, MAR & MNAR',              40, 'text'],
+      ['fe-w1-l2',   'Simple Imputation — Mean, Median, Mode & Constant Fill',      35, 'text'],
+      ['fe-w1-l3',   'Advanced Imputation — KNN & Iterative Imputer (MICE)',        45, 'text'],
+      ['fe-w1-l4',   'Missing Indicators & End-of-Distribution Imputation',         40, 'text'],
+      ['fe-w1-l5',   'Data Quality Audit — Outliers, Duplicates & Type Errors',     40, 'text'],
+      ['fe-w1-quiz', 'Week 1 Quiz — Missing Data & Data Quality',                   10, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 2 — Categorical Encoding',
+    lessons: [
+      ['fe-w2-l1',   'Label & Ordinal Encoding — When Order Matters',               35, 'text'],
+      ['fe-w2-l2',   'One-Hot Encoding — Dummies, Sparse & the Dummy Trap',         40, 'text'],
+      ['fe-w2-l3',   'Target Encoding & Leave-One-Out Encoding',                    45, 'text'],
+      ['fe-w2-l4',   'Frequency Encoding, Binary Encoding & Feature Hashing',       40, 'text'],
+      ['fe-w2-l5',   'High-Cardinality & Rare-Label Encoding at Scale',             40, 'text'],
+      ['fe-w2-quiz', 'Week 2 Quiz — Categorical Encoding',                          10, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 3 — Numerical Transformations',
+    lessons: [
+      ['fe-w3-l1',   'Feature Scaling — StandardScaler, MinMaxScaler & RobustScaler', 40, 'text'],
+      ['fe-w3-l2',   'Power Transformations — Log, Box-Cox & Yeo-Johnson',           40, 'text'],
+      ['fe-w3-l3',   'Discretisation & Binning — Equal-Width, Equal-Frequency & Decision Tree', 40, 'text'],
+      ['fe-w3-l4',   'Outlier Handling — Capping, Winsorization & IQR Clipping',    35, 'text'],
+      ['fe-w3-l5',   'Date, Time & Cyclical Feature Engineering',                   40, 'text'],
+      ['fe-w3-quiz', 'Week 3 Quiz — Numerical Transformations',                     10, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 4 — Feature Creation & Domain Engineering',
+    lessons: [
+      ['fe-w4-l1',   'Interaction Features — Products, Ratios & Polynomial Expansion', 45, 'text'],
+      ['fe-w4-l2',   'Aggregation Features — Group Statistics & Rolling Windows',    45, 'text'],
+      ['fe-w4-l3',   'Feature-engine — Automated Transformers & Custom Transformers', 40, 'text'],
+      ['fe-w4-l4',   'Leakage-Free Engineering — Building Safe sklearn Pipelines',   45, 'text'],
+      ['fe-w4-l5',   'Domain Knowledge Features — Text Counts, Geospatial & Temporal Signals', 40, 'text'],
+      ['fe-w4-quiz', 'Week 4 Quiz — Feature Creation & Domain Engineering',          10, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 5 — Feature Selection',
+    lessons: [
+      ['fe-w5-l1',   'Filter Methods — Variance Threshold, Correlation & Mutual Information', 40, 'text'],
+      ['fe-w5-l2',   'Wrapper Methods — RFE, RFECV & Sequential Feature Selection', 45, 'text'],
+      ['fe-w5-l3',   'Embedded Methods — Lasso, Tree Importance & Permutation Importance', 45, 'text'],
+      ['fe-w5-l4',   'SHAP Values — Model-Agnostic Importance & Interpretability',  50, 'text'],
+      ['fe-w5-l5',   'Dimensionality Reduction as Selection — PCA, t-SNE & UMAP',   45, 'text'],
+      ['fe-w5-quiz', 'Week 5 Quiz — Feature Selection',                             10, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 6 — Hyperparameter Optimisation & Model Selection',
+    lessons: [
+      ['fe-w6-l1',   'Model Selection Strategies — Baselines, Benchmarks & Fair Comparison', 40, 'text'],
+      ['fe-w6-l2',   'Grid Search & Random Search — Exhaustive vs Probabilistic Tuning', 40, 'text'],
+      ['fe-w6-l3',   'Optuna — Bayesian Optimisation & Efficient Hyperparameter Search', 50, 'text'],
+      ['fe-w6-l4',   'AutoML — TPOT, AutoSklearn & H2O AutoML',                     40, 'text'],
+      ['fe-w6-l5',   'Capstone — End-to-End Feature Engineering & Model Selection Pipeline', 90, 'text'],
+      ['fe-w6-quiz', 'Week 6 Quiz — Hyperparameter Optimisation & Model Selection', 10, 'quiz'],
+    ]
+  },
+];
+
+const QUIZ_QUESTIONS = {
+  'fe-w1-quiz': [
+    { q: 'Which missing data mechanism assumes missingness depends on unobserved data, making it the hardest to handle statistically?',
+      opts: ['MNAR (Missing Not at Random)', 'MCAR (Missing Completely at Random)', 'MAR (Missing at Random)', 'Structural missingness'], ans: 0 },
+    { q: 'When should you prefer median imputation over mean imputation?',
+      opts: ['When the feature has a skewed distribution or outliers that would distort the mean', 'When the feature is perfectly normally distributed', 'When there are fewer than 5% missing values', 'When all features are categorical'], ans: 0 },
+    { q: 'IterativeImputer (MICE) models each feature with missing values as…',
+      opts: ['A function of all other features, iteratively refining estimates across multiple rounds', 'The global mean of that feature computed once', 'The median of the feature within each class label', 'A constant equal to the most frequent observed value'], ans: 0 },
+    { q: 'Adding a binary "missing indicator" column alongside an imputed feature helps because…',
+      opts: ['It lets the model learn whether missingness itself is predictive of the target variable', 'It eliminates the need for imputation entirely', 'It prevents the imputed column from being used in training', 'It halves the number of missing values in the dataset'], ans: 0 },
+    { q: 'End-of-distribution imputation replaces missing values with a value several standard deviations beyond the observed range. Its key assumption is…',
+      opts: ['That missing values are not missing at random and the missingness pattern should be distinguishable from real observations', 'That all missing values are MCAR and have no relationship with the target', 'That the feature is normally distributed', 'That missing values always correspond to zero in the real world'], ans: 0 },
+  ],
+  'fe-w2-quiz': [
+    { q: 'The "dummy variable trap" in one-hot encoding causes…',
+      opts: ['Perfect multicollinearity when all dummy columns are included, which makes linear model coefficients unidentifiable', 'Memory overflow when the number of categories exceeds 1000', 'Loss of the ordinal relationship between categories', 'Sparse matrices that cannot be used in sklearn pipelines'], ans: 0 },
+    { q: 'Target encoding replaces each category with the mean of the target for that category. Its primary risk during training is…',
+      opts: ['Target leakage — information from the target variable contaminates the feature, inflating cross-validation scores artificially', 'Creating too many binary columns that increase dimensionality', 'Only being applicable to regression tasks, not classification', 'Requiring categories to have a natural ordinal order'], ans: 0 },
+    { q: 'Leave-One-Out (LOO) encoding mitigates target leakage by…',
+      opts: ['Excluding the current observation\'s own target value when computing the category mean for that row', 'Using cross-validation folds to encode each training fold separately', 'Adding Gaussian noise proportional to category frequency', 'Computing encoding statistics on the test set independently'], ans: 0 },
+    { q: 'Which encoding strategy is most appropriate for a high-cardinality feature with 500 unique city names?',
+      opts: ['Target encoding or feature hashing — one-hot encoding would create 500 sparse columns and cause the curse of dimensionality', 'One-hot encoding — more columns always means more information for the model', 'Label encoding with integers 1–500 — the arbitrary order has no effect on tree models', 'Ordinal encoding based on city population size'], ans: 0 },
+    { q: 'Rare-label encoding groups infrequent categories below a frequency threshold into a single "Rare" bin primarily to…',
+      opts: ['Prevent overfitting on categories the model sees too rarely, and to handle unseen categories gracefully at inference time', 'Reduce the number of training samples in the dataset', 'Increase the entropy of the categorical feature', 'Ensure every category has an equal number of training observations'], ans: 0 },
+  ],
+  'fe-w3-quiz': [
+    { q: 'RobustScaler is preferred over StandardScaler when…',
+      opts: ['The feature contains outliers — RobustScaler uses the median and IQR and is resistant to extreme values that would skew the standard deviation', 'The feature is perfectly normally distributed with no outliers', 'The model is a neural network requiring values between 0 and 1', 'You want to preserve the original feature distribution exactly'], ans: 0 },
+    { q: 'The Box-Cox transformation requires all input values to be strictly positive because…',
+      opts: ['The transformation involves a logarithm for λ=0 or a power function that is undefined or complex for non-positive values', 'Negative values cause sklearn\'s PowerTransformer to raise a ConvergenceWarning', 'Box-Cox is only defined for binary features with values 0 and 1', 'Negative values would reverse the skewness correction direction'], ans: 0 },
+    { q: 'Equal-frequency (quantile) binning is preferred over equal-width binning for skewed distributions because…',
+      opts: ['It guarantees each bin contains roughly the same number of observations, avoiding near-empty bins in sparse regions', 'It produces bins of equal numerical width which are easier to interpret', 'It always outperforms equal-width binning in downstream model accuracy', 'It requires no specification of the number of bins'], ans: 0 },
+    { q: 'Winsorization caps outliers by…',
+      opts: ['Replacing values below the pth percentile with that lower boundary and values above the (100-p)th percentile with the upper boundary', 'Removing all rows where any feature exceeds 3 standard deviations from the mean', 'Replacing outlier values with the feature mean after trimming', 'Applying a log transformation to compress the tails of the distribution'], ans: 0 },
+    { q: 'Encoding a "month" feature (values 1–12) using sine and cosine transforms ensures…',
+      opts: ['December (12) and January (1) are treated as adjacent, preserving the circular continuity of the calendar', 'The model treats month as a continuous linear variable from 1 to 12', 'Seasonal patterns are eliminated from the model entirely', 'The month feature is treated as a nominal categorical variable'], ans: 0 },
+  ],
+  'fe-w4-quiz': [
+    { q: 'A ratio feature such as (loan_amount / annual_income) is often more informative than the raw components separately because…',
+      opts: ['It captures the proportional relationship between the two quantities that neither feature alone expresses, and carries direct business meaning (debt-to-income)', 'Ratio features always improve model AUC by at least 5%', 'sklearn\'s PolynomialFeatures automatically generates all meaningful ratio features', 'It reduces the total number of features in the dataset'], ans: 0 },
+    { q: 'PolynomialFeatures(degree=2, interaction_only=True) generates…',
+      opts: ['Only pairwise cross-product terms (x_i × x_j for i≠j), excluding squared terms (x_i²)', 'All polynomial terms up to degree 2 including both products and squares', 'Only squared terms for each individual feature', 'A random subset of polynomial and interaction features'], ans: 0 },
+    { q: 'When constructing aggregation features (e.g. mean transaction value per customer), they must be computed…',
+      opts: ['Using only training-set rows for each group\'s statistics, then those statistics are applied to validation and test rows — computing on the full dataset leaks future information', 'On the entire dataset before any train/test split to ensure consistency', 'On the test set first to determine appropriate aggregation windows', 'Using the target variable as the groupby key to capture label-conditional distributions'], ans: 0 },
+    { q: 'Feature-engine\'s DropCorrelatedFeatures transformer identifies and removes features that…',
+      opts: ['Have a pairwise Pearson correlation above a user-defined threshold, retaining the first feature in each correlated pair', 'Have zero variance across all training observations', 'Are not normally distributed after transformation', 'Have more than a specified percentage of missing values'], ans: 0 },
+    { q: 'Encapsulating all feature engineering steps inside a sklearn Pipeline (rather than transforming the DataFrame directly) is essential because…',
+      opts: ['Transformers are fit only on training data and applied to unseen data consistently, preventing leakage and making the full pipeline serialisable for deployment', 'It makes all transformations automatically reversible for model explainability', 'Pipeline steps run in parallel by default, improving training speed', 'It eliminates the need for cross-validation when evaluating the model'], ans: 0 },
+  ],
+  'fe-w5-quiz': [
+    { q: 'Mutual information between a feature and the target measures…',
+      opts: ['The reduction in uncertainty about the target when the feature value is known, capturing non-linear relationships that Pearson correlation misses', 'The linear correlation coefficient between the feature and the target variable', 'The p-value of a two-sample t-test comparing feature distributions across classes', 'The fraction of total variance in the target explained by the feature alone'], ans: 0 },
+    { q: 'RFECV differs from plain RFE in that…',
+      opts: ['RFECV uses cross-validation to automatically identify the optimal number of features, while RFE requires the user to specify n_features_to_select in advance', 'RFECV is computationally faster because it skips some elimination steps', 'RFECV is restricted to tree-based estimators, while RFE works with any model', 'RFE uses SHAP values internally while RFECV uses feature_importances_'], ans: 0 },
+    { q: 'Permutation importance is generally more reliable than a tree model\'s built-in feature_importances_ because…',
+      opts: ['It measures the actual drop in held-out performance when a feature is randomly shuffled, and is not biased towards high-cardinality or high-variance features', 'It is faster to compute and requires no additional model fitting', 'It only works for classification and not regression tasks', 'It is a built-in attribute of sklearn\'s DecisionTreeClassifier'], ans: 0 },
+    { q: 'A SHAP summary plot (beeswarm plot) displays…',
+      opts: ['Each feature\'s SHAP values for every sample, revealing both the magnitude of impact and whether high feature values push the prediction up or down', 'The global mean absolute SHAP value per feature as a single bar chart', 'The pairwise Pearson correlation matrix between all features', 'SHAP interaction values for a single chosen prediction'], ans: 0 },
+    { q: 'When applying PCA before a linear model, the resulting principal components…',
+      opts: ['Are orthogonal linear combinations of the original features, eliminating multicollinearity entirely at the cost of interpretability', 'Preserve the original feature names and units for direct coefficient interpretation', 'Can be interpreted as individual original features with modified scales', 'Increase the dimensionality of the data to improve linear separability'], ans: 0 },
+  ],
+  'fe-w6-quiz': [
+    { q: 'A "dummy baseline" (e.g. DummyClassifier with strategy="most_frequent") establishes…',
+      opts: ['The minimum performance bar any real model must beat — a model that ignores features and always predicts the majority class or target mean', 'A model trained with all hyperparameters set to their default sklearn values', 'A benchmark trained on a random 10% subset of the training data', 'A model that applies no preprocessing and uses raw features directly'], ans: 0 },
+    { q: 'RandomizedSearchCV is preferred over GridSearchCV for large hyperparameter spaces because…',
+      opts: ['For a fixed budget of n_iter evaluations it covers a wider region of the search space, often finding good configurations faster than exhaustive grid search', 'It always finds the globally optimal hyperparameters given enough iterations', 'It automatically determines the optimal number of cross-validation folds', 'It avoids overfitting to the validation set by using random sampling'], ans: 0 },
+    { q: 'In Optuna, a "trial" is…',
+      opts: ['A single evaluation of the objective function with one specific set of hyperparameters suggested by the sampler', 'A complete cross-validation run across all folds for a given hyperparameter set', 'A group of 100 random hyperparameter combinations evaluated in parallel', 'A pruned run that was terminated early because its intermediate value was poor'], ans: 0 },
+    { q: 'Optuna\'s MedianPruner stops unpromising trials early by…',
+      opts: ['Comparing the trial\'s intermediate value at a given step against the median of completed trials at that step, pruning if it falls below the median', 'Removing the trials with the highest validation loss at the end of each epoch', 'Pruning the slowest 50% of trials measured by wall-clock time', 'Eliminating trials whose hyperparameter values duplicate a previous trial'], ans: 0 },
+    { q: 'The test set must be evaluated only once at the very end of model development because…',
+      opts: ['Repeatedly selecting or tuning models based on test performance causes the test set to act as a second validation set, producing optimistically biased generalisation estimates', 'The test set is statistically too small to support multiple significance tests', 'sklearn\'s model_selection module prevents multiple calls to score() on the same test set', 'Cross-validation already uses the test set implicitly during hyperparameter search'], ans: 0 },
+  ],
+};
+
+function log(msg, cls=''){
+  const area = document.getElementById('status-area');
+  area.innerHTML += `<div style="color:${cls==='ok'?'var(--teal)':cls==='err'?'#f66':cls==='head'?'var(--cream)':'var(--fog2)'}">${msg}</div>`;
+  area.scrollTop = area.scrollHeight;
+}
+function toast(m,t='success'){
+  const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;
+  document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);
+}
+
+document.addEventListener('portal:ready', async () => {
+  const {data: courses, error} = await supa.from('courses').select('id,title').order('title');
+  const sel = document.getElementById('course-sel');
+  if (error || !courses?.length) { sel.innerHTML = '<option value="">No courses found</option>'; return; }
+  sel.innerHTML = '<option value="">— pick a course —</option>';
+  courses.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id; opt.textContent = c.title;
+    if (c.title.toLowerCase().includes('feature engineering')) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  document.getElementById('btn-seed').disabled = false;
+});
+
+function preview(){
+  const card = document.getElementById('preview-card');
+  card.style.display = 'block';
+  let totalMins = 0;
+  let html = `<table style="width:100%;border-collapse:collapse;font-family:var(--fb);font-size:.8rem;">
+    <thead><tr style="background:var(--fog2);color:var(--ink);">
+      <th style="padding:.4rem .6rem;text-align:left;">Slug</th>
+      <th style="padding:.4rem .6rem;text-align:left;">Title</th>
+      <th style="padding:.4rem .6rem;text-align:center;">Type</th>
+      <th style="padding:.4rem .6rem;text-align:right;">Mins</th>
+    </tr></thead><tbody>`;
+  MODULES.forEach((mod, mi) => {
+    html += `<tr><td colspan="4" style="padding:.5rem .6rem;background:var(--fog);color:var(--cream);font-weight:600;">${mod.title}</td></tr>`;
+    mod.lessons.forEach(([slug, title, mins, type]) => {
+      totalMins += mins;
+      const typeColor = type === 'quiz' ? 'var(--champ2)' : 'var(--teal)';
+      html += `<tr><td style="padding:.35rem .6rem;color:var(--teal);font-family:monospace;">${slug}</td>
+        <td style="padding:.35rem .6rem;color:var(--fog2);">${title}</td>
+        <td style="padding:.35rem .6rem;text-align:center;color:${typeColor};">${type}</td>
+        <td style="padding:.35rem .6rem;text-align:right;color:var(--fog2);">${mins}</td></tr>`;
+    });
+    const quizSlug = `fe-w${mi+1}-quiz`;
+    const qCount = QUIZ_QUESTIONS[quizSlug]?.length || 0;
+    if (qCount) html += `<tr><td colspan="4" style="padding:.25rem .6rem .5rem 2rem;color:var(--champ2);font-size:.75rem;">📝 ${qCount} quiz questions for ${quizSlug}</td></tr>`;
+  });
+  html += `</tbody><tfoot><tr style="border-top:1px solid var(--border);">
+    <td colspan="3" style="padding:.5rem .6rem;color:var(--cream);font-weight:600;">Total (6 modules, 36 lessons, 30 quiz questions)</td>
+    <td style="padding:.5rem .6rem;text-align:right;color:var(--cream);font-weight:600;">${totalMins} min</td>
+  </tr></tfoot></table>`;
+  document.getElementById('preview-body').innerHTML = html;
+  card.scrollIntoView({ behavior: 'smooth' });
+}
+
+async function runSeed(){
+  const courseId = document.getElementById('course-sel').value;
+  if (!courseId){ toast('Pick a course first','error'); return; }
+  const btn = document.getElementById('btn-seed');
+  btn.disabled = true; btn.textContent = 'Running…';
+  document.getElementById('status-area').innerHTML = '';
+  try {
+    log('=== FEATURE ENGINEERING & MODEL SELECTION COURSE SEEDER ===', 'head');
+    log(`Course ID: ${courseId}`);
+
+    log('Step 1 — Removing existing modules, lessons & quiz questions…');
+    const {data: existingMods} = await supa.from('modules').select('id').eq('course_id', courseId);
+    if (existingMods?.length) {
+      const modIds = existingMods.map(m => m.id);
+      const {data: existingLessons} = await supa.from('lessons').select('id').in('module_id', modIds);
+      if (existingLessons?.length) {
+        const lessonIds = existingLessons.map(l => l.id);
+        await supa.from('quiz_questions').delete().in('lesson_id', lessonIds);
+        await supa.from('lessons').delete().in('module_id', modIds);
+      }
+      await supa.from('modules').delete().eq('course_id', courseId);
+      log(`  Removed ${existingMods.length} module(s).`);
+    } else { log('  Clean slate.'); }
+
+    log('Step 2 — Inserting 6 modules, 36 lessons & 30 quiz questions…', 'head');
+    let totalLessons = 0, totalQuestions = 0;
+
+    for (let mi = 0; mi < MODULES.length; mi++) {
+      const mod = MODULES[mi];
+      const {data: modRow, error: modErr} = await supa.from('modules')
+        .insert({ course_id: courseId, title: mod.title, order_index: mi })
+        .select().single();
+      if (modErr) throw new Error(`Module insert failed: ${modErr.message}`);
+      log(`  [${mi+1}/6] Module "${mod.title}" → id ${modRow.id}`);
+
+      for (let li = 0; li < mod.lessons.length; li++) {
+        const [slug, title, mins, type] = mod.lessons[li];
+        const {data: lessonRow, error: lesErr} = await supa.from('lessons')
+          .insert({ module_id: modRow.id, title, type, content_url: slug, duration_mins: mins, order_index: li })
+          .select().single();
+        if (lesErr) throw new Error(`Lesson insert failed for "${title}": ${lesErr.message}`);
+        totalLessons++;
+        if (type === 'quiz') {
+          const questions = QUIZ_QUESTIONS[slug] || [];
+          if (questions.length) {
+            const qRows = questions.map((q, qi) => ({
+              lesson_id: lessonRow.id, question: q.q, options: q.opts,
+              correct_index: q.ans, order_index: qi,
+            }));
+            const {error: qErr} = await supa.from('quiz_questions').insert(qRows);
+            if (qErr) throw new Error(`Quiz question insert failed for "${slug}": ${qErr.message}`);
+            log(`    📝 ${questions.length} quiz questions inserted for ${slug}`, 'ok');
+            totalQuestions += questions.length;
+          }
+        }
+      }
+      const textCount = mod.lessons.filter(l => l[3]==='text').length;
+      const quizCount = mod.lessons.filter(l => l[3]==='quiz').length;
+      log(`    └─ ${textCount} text + ${quizCount} quiz inserted`, 'ok');
+    }
+
+    log('Step 3 — Publishing course…');
+    const {error: statusErr} = await supa.from('courses').update({status:'published'}).eq('id',courseId);
+    if (statusErr) log(`  Warning: ${statusErr.message}`, 'err');
+    else log('  Course marked as published.', 'ok');
+
+    log(`=== DONE — ${totalLessons} lessons + ${totalQuestions} quiz questions ===`, 'ok');
+    toast(`${totalLessons} lessons and ${totalQuestions} quiz questions seeded`);
+    document.getElementById('status-area').innerHTML +=
+      `<div style="margin-top:1rem;"><a href="course-editor.html?id=${courseId}" class="portal-btn" style="display:inline-block;text-decoration:none;">Open in Course Editor →</a></div>`;
+  } catch(err) {
+    log(`ERROR: ${err.message}`, 'err');
+    toast(err.message, 'error');
+  }
+  btn.disabled = false; btn.textContent = 'Seed 36 lessons';
+}
+</script>
+</body></html>
