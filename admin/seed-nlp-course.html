@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seed NLP Course — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Account</div>
+    <a href="profile.html"><span class="nav-icon">👤</span> My Profile</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
+      <div class="portal-page-title">Seed Natural Language Processing Course</div>
+      <div class="portal-page-sub">8 weeks × 48 lessons (40 text + 8 quizzes) with 40 quiz questions</div>
+    </div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Status</div>
+    <div id="status-area" style="font-family:var(--fb);font-size:.85rem;color:var(--fog2);line-height:1.8;">Waiting to run…</div>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Target Course</div>
+    <p style="font-family:var(--fb);font-size:.83rem;color:var(--fog2);margin-bottom:1rem;">
+      Select the Natural Language Processing course to seed into. If it doesn't appear, create it first in the Course Editor.
+    </p>
+    <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field-group" style="margin-bottom:0;flex:1;min-width:220px;">
+        <label class="flbl">Course</label>
+        <select class="fi" id="course-sel"><option value="">Loading courses…</option></select>
+      </div>
+      <div>
+        <label class="flbl">Action</label>
+        <div style="display:flex;gap:.5rem;">
+          <button class="portal-btn-ghost" id="btn-preview" onclick="preview()" style="font-size:.82rem;">Preview plan</button>
+          <button class="portal-btn" id="btn-seed" onclick="runSeed()" disabled>Seed 48 lessons</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-wrap" id="preview-card" style="display:none;">
+    <div class="chart-title">Lesson Plan (48 lessons)</div>
+    <div id="preview-body" style="overflow-x:auto;"></div>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+const MODULES = [
+  {
+    title: 'Week 1 — Text Preprocessing & Linguistics Foundations',
+    lessons: [
+      ['nlp-w1-l1',   'NLP Landscape — Use Cases, Pipeline & Tools Overview',         45, 'text'],
+      ['nlp-w1-l2',   'Text Cleaning — Lowercasing, Punctuation, HTML & Unicode',      40, 'text'],
+      ['nlp-w1-l3',   'Tokenisation — Word, Sentence & Subword Strategies',            45, 'text'],
+      ['nlp-w1-l4',   'Stopwords, Stemming & Lemmatisation',                           40, 'text'],
+      ['nlp-w1-l5',   'Regular Expressions for NLP',                                   45, 'text'],
+      ['nlp-w1-quiz', 'Week 1 Quiz — Text Preprocessing & Linguistics',                15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 2 — Text Representation: BoW & TF-IDF',
+    lessons: [
+      ['nlp-w2-l1',   'Bag-of-Words — CountVectorizer & the Document-Term Matrix',     45, 'text'],
+      ['nlp-w2-l2',   'TF-IDF — Term Frequency-Inverse Document Frequency',            45, 'text'],
+      ['nlp-w2-l3',   'N-grams & Vocabulary Management',                               40, 'text'],
+      ['nlp-w2-l4',   'Text Feature Engineering — Lexical & Statistical Features',     40, 'text'],
+      ['nlp-w2-l5',   'Text Classification with BoW — Naive Bayes & Logistic Regression', 50, 'text'],
+      ['nlp-w2-quiz', 'Week 2 Quiz — BoW & TF-IDF',                                   15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 3 — Word Embeddings',
+    lessons: [
+      ['nlp-w3-l1',   'From One-Hot to Dense Vectors — The Embedding Idea',            45, 'text'],
+      ['nlp-w3-l2',   'Word2Vec — CBOW & Skip-gram Architecture',                      50, 'text'],
+      ['nlp-w3-l3',   'GloVe & FastText — Global Vectors & Subword Embeddings',        45, 'text'],
+      ['nlp-w3-l4',   'Using Pretrained Embeddings in sklearn & Keras Pipelines',      45, 'text'],
+      ['nlp-w3-l5',   'Visualising & Evaluating Word Embeddings',                      40, 'text'],
+      ['nlp-w3-quiz', 'Week 3 Quiz — Word Embeddings',                                 15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 4 — NLP with spaCy & NLTK',
+    lessons: [
+      ['nlp-w4-l1',   'spaCy Architecture — Doc, Token, Span & the Pipeline',         45, 'text'],
+      ['nlp-w4-l2',   'Part-of-Speech Tagging & Dependency Parsing',                   45, 'text'],
+      ['nlp-w4-l3',   'Named Entity Recognition (NER) with spaCy',                    50, 'text'],
+      ['nlp-w4-l4',   'Rule-Based Matching & Custom spaCy Pipelines',                  45, 'text'],
+      ['nlp-w4-l5',   'NLTK Deep Dive — Corpora, Chunking & Semantic Similarity',     40, 'text'],
+      ['nlp-w4-quiz', 'Week 4 Quiz — spaCy & NLTK',                                   15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 5 — Sequence Models — RNNs & LSTMs',
+    lessons: [
+      ['nlp-w5-l1',   'Recurrent Neural Networks — Motivation & Architecture',         50, 'text'],
+      ['nlp-w5-l2',   'Vanishing Gradients & the LSTM Solution',                       50, 'text'],
+      ['nlp-w5-l3',   'Text Classification with LSTM (Keras)',                         55, 'text'],
+      ['nlp-w5-l4',   'Sequence-to-Sequence Models & Encoder-Decoder',                 50, 'text'],
+      ['nlp-w5-l5',   'Attention Mechanism — The Bridge to Transformers',              50, 'text'],
+      ['nlp-w5-quiz', 'Week 5 Quiz — Sequence Models',                                 15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 6 — Transformers & BERT',
+    lessons: [
+      ['nlp-w6-l1',   'The Transformer Architecture — Self-Attention & Positional Encoding', 55, 'text'],
+      ['nlp-w6-l2',   'BERT — Pre-training Tasks, Tokenisation & the [CLS] Token',    50, 'text'],
+      ['nlp-w6-l3',   'Fine-Tuning BERT for Text Classification with HuggingFace',    55, 'text'],
+      ['nlp-w6-l4',   'BERT Variants — RoBERTa, DistilBERT & ALBERT',                 45, 'text'],
+      ['nlp-w6-l5',   'Zero-Shot & Few-Shot Classification with Transformers',         45, 'text'],
+      ['nlp-w6-quiz', 'Week 6 Quiz — Transformers & BERT',                             15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 7 — Advanced NLP Applications',
+    lessons: [
+      ['nlp-w7-l1',   'Sentiment Analysis — Lexicon-Based & Model-Based Approaches',  50, 'text'],
+      ['nlp-w7-l2',   'Text Summarisation — Extractive & Abstractive Methods',        50, 'text'],
+      ['nlp-w7-l3',   'Question Answering with Transformers',                          45, 'text'],
+      ['nlp-w7-l4',   'Topic Modelling — LDA & NMF',                                  45, 'text'],
+      ['nlp-w7-l5',   'Building a Semantic Search Engine with Sentence Embeddings',   50, 'text'],
+      ['nlp-w7-quiz', 'Week 7 Quiz — Advanced NLP Applications',                      15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 8 — Production NLP & Capstone',
+    lessons: [
+      ['nlp-w8-l1',   'NLP Pipelines for Production — Speed, Batching & Caching',     50, 'text'],
+      ['nlp-w8-l2',   'Evaluation Metrics — BLEU, ROUGE, F1 & BERTScore',             45, 'text'],
+      ['nlp-w8-l3',   'Multilingual NLP & Cross-Lingual Transformers (XLM-RoBERTa)',  45, 'text'],
+      ['nlp-w8-l4',   'Ethics & Bias in NLP Models',                                  40, 'text'],
+      ['nlp-w8-l5',   'Capstone — End-to-End Sentiment & Review Intelligence System', 90, 'text'],
+      ['nlp-w8-quiz', 'Week 8 Quiz — Production NLP & Capstone',                      15, 'quiz'],
+    ]
+  },
+];
+
+const QUIZ_QUESTIONS = {
+  'nlp-w1-quiz': [
+    { q: 'Which tokenisation strategy splits text into subword units (e.g. "playing" → "play" + "##ing") and is used by BERT?',
+      opts: ['WordPiece tokenisation', 'Word-level tokenisation with a fixed vocabulary', 'Character-level tokenisation', 'Sentence-level tokenisation'], ans: 0 },
+    { q: 'Stemming differs from lemmatisation in that…',
+      opts: ['Stemming applies heuristic rules to chop suffixes (often producing non-words); lemmatisation uses vocabulary and morphological analysis to return a valid base form', 'Stemming is always more accurate than lemmatisation', 'Lemmatisation is faster because it requires no dictionary lookup', 'Stemming preserves grammatical context while lemmatisation discards it'], ans: 0 },
+    { q: 'Removing stopwords from a sentiment analysis task can be harmful because…',
+      opts: ['Words like "not", "never", and "but" are often listed as stopwords yet carry crucial negation and contrast signals for sentiment', 'Stopwords always improve TF-IDF scores when retained', 'Stopwords are never defined for English corpora', 'Removing stopwords always improves downstream classification accuracy'], ans: 0 },
+    { q: 'Unicode normalisation (e.g. NFKC) is important in NLP preprocessing because…',
+      opts: ['Different Unicode representations of visually identical characters (e.g. full-width vs half-width digits) would otherwise be treated as distinct tokens', 'It automatically converts all text to ASCII, removing multilingual characters', 'It removes all non-English characters from the input corpus', 'It doubles the effective vocabulary size for multilingual models'], ans: 0 },
+    { q: 'The regex pattern r\'\\b\\w+\\b\' matches…',
+      opts: ['All complete word tokens — sequences of word characters bounded by word boundaries', 'All whitespace sequences in the string', 'Only alphabetic characters, excluding digits and underscores', 'Punctuation and special characters only'], ans: 0 },
+  ],
+  'nlp-w2-quiz': [
+    { q: 'In TF-IDF, the IDF component assigns lower scores to terms appearing in many documents because…',
+      opts: ['Terms common across the whole corpus carry less discriminative information about any individual document', 'Frequent terms are always stopwords and should be removed automatically', 'IDF is a measure of document length normalisation', 'Lower IDF scores indicate higher term relevance to the query'], ans: 0 },
+    { q: 'A document-term matrix from CountVectorizer is typically very sparse because…',
+      opts: ['Each document uses only a small fraction of the total vocabulary — most vocabulary terms have a count of zero in any given document', 'Documents are sorted alphabetically, creating structural zeros in the matrix', 'CountVectorizer removes rare terms below min_df by default, zeroing most entries', 'TF-IDF normalisation introduces zeros for the most common terms'], ans: 0 },
+    { q: 'Bigram features (e.g. "not_good") improve sentiment analysis over unigrams because…',
+      opts: ['They capture local word order and negation patterns that individual unigrams miss — "not" and "good" alone cannot convey "not good"', 'Bigrams always outperform trigrams for sentiment tasks', 'They reduce the vocabulary size compared to unigrams alone', 'They eliminate the need for stopword removal as a preprocessing step'], ans: 0 },
+    { q: 'Naive Bayes is particularly well-suited for BoW text classification because…',
+      opts: ['It assumes feature independence, which is computationally tractable for high-dimensional sparse BoW vectors, and performs well even with small training sets', 'It produces the highest accuracy of all text classification algorithms', 'It requires no text preprocessing and handles raw strings directly', 'It automatically addresses class imbalance through its prior probability estimates'], ans: 0 },
+    { q: 'TF-IDF sublinear term frequency scaling (1 + log(tf) instead of raw tf) is applied to…',
+      opts: ['Reduce the disproportionate influence of very high-frequency terms within a document — a word appearing 100 times is not 100× more important than one appearing once', 'Ensure all TF-IDF scores are between 0 and 1', 'Replace the IDF component for short documents', 'Convert the document-term matrix to a dense format'], ans: 0 },
+  ],
+  'nlp-w3-quiz': [
+    { q: 'Word2Vec Skip-gram predicts…',
+      opts: ['The surrounding context words given a centre word, learning embeddings that capture word co-occurrence across a sliding window', 'The centre word given its surrounding context words (that is CBOW, not Skip-gram)', 'The next sentence given the current sentence (that is Next Sentence Prediction in BERT)', 'The document topic given the averaged word embeddings'], ans: 0 },
+    { q: 'The word analogy "king − man + woman ≈ queen" works in Word2Vec because…',
+      opts: ['Word2Vec embeddings encode semantic relationships as linear vector offsets — gender and royalty are captured as consistent geometric directions in the embedding space', 'Word2Vec memorises known analogies explicitly during the training phase', 'The embedding space is discretised into discrete semantic clusters', 'Cosine similarity is replaced by Euclidean distance for analogy arithmetic'], ans: 0 },
+    { q: 'FastText improves over Word2Vec for rare words and morphologically rich languages by…',
+      opts: ['Representing each word as the sum of its character n-gram embeddings, allowing generation of vectors for unseen words from their subword components', 'Using a vocabulary 10× larger than standard Word2Vec models', 'Training a character-level language model instead of a word-level model', 'Replacing the softmax output with a hierarchical softmax at every layer'], ans: 0 },
+    { q: 'Cosine similarity is preferred over Euclidean distance for comparing word embeddings because…',
+      opts: ['Cosine similarity measures the angle between vectors and is invariant to vector magnitude, making it robust to frequency-driven differences in embedding norms', 'Cosine similarity is computationally faster than Euclidean distance in high dimensions', 'Euclidean distance cannot be computed in spaces with more than 300 dimensions', 'Cosine similarity always returns values between 0 and 1 for any real-valued vectors'], ans: 0 },
+    { q: 'When using pretrained GloVe embeddings as an initialisation, the embedding layer should be…',
+      opts: ['Initialised with GloVe weights and optionally fine-tuned on the target task — freezing trains faster but fine-tuning adapts representations to the target domain', 'Always frozen — fine-tuning pretrained embeddings destroys all learned semantic structure', 'Always fine-tuned — frozen GloVe embeddings never outperform random initialisation', 'Replaced with a fresh randomly initialised layer for any domain-specific task'], ans: 0 },
+  ],
+  'nlp-w4-quiz': [
+    { q: 'In spaCy, a pipeline component is…',
+      opts: ['A callable that takes a Doc and returns an annotated Doc, applied sequentially when nlp(text) is called — examples include the tagger, parser, and ner', 'A preprocessing function applied to raw text before tokenisation begins', 'A rule-based entity pattern defined as a dictionary in a JSON file', 'A subprocess that handles parallel tokenisation of large batches'], ans: 0 },
+    { q: 'In a dependency parse tree, each token\'s "head" is…',
+      opts: ['The syntactic parent of that token in the grammatical structure — the root token is its own head', 'The token that immediately precedes it in the sentence', 'The most semantically important word in the sentence', 'The first token of the noun phrase that contains it'], ans: 0 },
+    { q: 'spaCy\'s EntityRuler is preferred over training a custom NER model when…',
+      opts: ['Entities follow predictable patterns or come from a known list (e.g. product codes, city names) — rules are deterministic and require no labelled training data', 'There are more than 10,000 annotated training examples available for the entity types', 'The entity types are entirely absent from all of spaCy\'s pretrained model families', 'You need to detect entities across more than 20 languages simultaneously'], ans: 0 },
+    { q: 'NLTK\'s WordNet synset similarity (e.g. path_similarity) measures…',
+      opts: ['How closely two concepts are related based on their position in the WordNet lexical hierarchy — shorter paths mean higher similarity', 'Cosine similarity of word frequency vectors in a reference corpus', 'Edit distance between the string representations of two words', 'Co-occurrence counts between two terms in the Brown corpus'], ans: 0 },
+    { q: 'When building a custom spaCy pipeline for medical NLP, the recommended strategy is…',
+      opts: ['Start from a pretrained spaCy model and add or retrain specific components (e.g. NER) with domain-annotated data rather than training the full pipeline from scratch', 'Always train all pipeline components from scratch using domain-specific data only', 'Use exclusively rule-based components — ML components are unreliable for clinical text', 'Download the largest general-purpose model and use it without any domain adaptation'], ans: 0 },
+  ],
+  'nlp-w5-quiz': [
+    { q: 'Vanishing gradients in plain RNNs occur because…',
+      opts: ['Repeated multiplication of gradients across many timesteps causes them to shrink exponentially, preventing the network from learning long-range dependencies', 'The activation function saturates at large positive input values during the forward pass', 'The recurrent weight matrix is initialised to zero, preventing any gradient flow', 'The hidden state vector is too small to represent sequences longer than 20 tokens'], ans: 0 },
+    { q: 'In an LSTM, the forget gate controls…',
+      opts: ['How much of the previous cell state to retain at the current timestep, allowing selective erasure of irrelevant long-term memory', 'How much new information from the current input to write into the cell state', 'The magnitude of the hidden state output passed to the next layer', 'The learning rate applied to recurrent weight updates during backpropagation'], ans: 0 },
+    { q: 'Packing padded sequences (pack_padded_sequence) in PyTorch is important because…',
+      opts: ['It instructs the RNN to skip computation on padding tokens, improving efficiency and preventing padding from corrupting the final hidden state used for classification', 'It compresses the sequence data to reduce GPU memory consumption', 'It converts variable-length sequences to a fixed length via truncation', 'It enables the RNN to process all timesteps in parallel like a Transformer'], ans: 0 },
+    { q: 'In a sequence-to-sequence encoder-decoder model, the encoder produces…',
+      opts: ['A context representation (fixed vector or sequence of hidden states with attention) summarising the entire source sequence for the decoder to condition on', 'The translated output tokens directly via a linear projection', 'A probability distribution over the target vocabulary at each source timestep', 'A set of attention scores over the decoder\'s output tokens'], ans: 0 },
+    { q: 'The key innovation of the attention mechanism over vanilla seq2seq is…',
+      opts: ['The decoder attends to ALL encoder hidden states at each decoding step via learned weights rather than only the final encoder state, solving the information bottleneck for long sequences', 'Attention removes the need for an encoder by processing source and target jointly', 'Attention replaces the LSTM recurrence with a feedforward network at each timestep', 'Attention allows the encoder and decoder to share all weight parameters'], ans: 0 },
+  ],
+  'nlp-w6-quiz': [
+    { q: 'In the Transformer\'s self-attention, the Query, Key, and Value matrices are…',
+      opts: ['Learned linear projections of the input — Q and K compute attention weights via scaled dot-product similarity, and V is aggregated using those weights', 'The input, hidden, and output states of an LSTM cell respectively', 'Fixed sinusoidal positional encoding matrices added to the embeddings', 'Separate embedding lookup tables for different grammatical word senses'], ans: 0 },
+    { q: 'Positional encoding is added to Transformer input embeddings because…',
+      opts: ['Self-attention is permutation-invariant and has no inherent notion of token order — positional encodings inject sequence position information into the representations', 'Transformers cannot process sequences longer than 512 tokens without explicit position signals', 'Positional encoding replaces the need for a [CLS] classification token in BERT', 'It reduces the O(n²) computational cost of multi-head self-attention'], ans: 0 },
+    { q: 'BERT uses Masked Language Modelling (MLM) rather than left-to-right language modelling because…',
+      opts: ['MLM enables bidirectional context — each masked token is predicted using both left and right context simultaneously, unlike autoregressive models that only attend to past tokens', 'MLM is computationally cheaper than standard causal language modelling', 'MLM allows BERT to generate text autoregressively at inference time', 'MLM prevents BERT from memorising the pretraining corpus verbatim'], ans: 0 },
+    { q: 'Fine-tuning BERT for binary text classification involves…',
+      opts: ['Adding a linear classification head on the [CLS] token representation and fine-tuning all layers end-to-end with a small learning rate (e.g. 2e-5)', 'Freezing all BERT layers and training only the newly added classification head', 'Averaging all token embeddings and feeding the mean to the classification head', 'Fine-tuning only the last two transformer blocks and freezing all earlier layers'], ans: 0 },
+    { q: 'DistilBERT achieves ~97% of BERT\'s performance at 40% fewer parameters through…',
+      opts: ['Knowledge distillation — a smaller student model is trained to mimic the output distributions of the larger BERT teacher using soft targets', 'Pruning all attention heads that fall below an importance threshold', 'Post-training quantisation of all weight matrices to 8-bit integers', 'Removing the Next Sentence Prediction objective and one of the two pretraining tasks'], ans: 0 },
+  ],
+  'nlp-w7-quiz': [
+    { q: 'VADER is a rule-based sentiment tool best suited for…',
+      opts: ['Short social media text (tweets, reviews) where it handles capitalisation, punctuation emphasis, and emoticons via a curated lexicon without any training data', 'Long formal documents such as legal contracts and academic abstracts', 'Multilingual sentiment analysis across 50+ languages simultaneously', 'Aspect-based sentiment where each entity receives a separate sentiment score'], ans: 0 },
+    { q: 'Extractive summarisation differs from abstractive summarisation in that…',
+      opts: ['Extractive methods select and concatenate existing sentences from the source; abstractive methods generate novel sentences that may not appear verbatim in the source text', 'Extractive methods use neural networks while abstractive methods use rule-based sentence scoring', 'Extractive summarisation always produces longer summaries than abstractive methods', 'Abstractive summarisation is only achievable with fine-tuned BERT-based encoder-decoder models'], ans: 0 },
+    { q: 'In extractive Question Answering (e.g. BERT on SQuAD), the model outputs…',
+      opts: ['Start and end token positions in the context passage that span the answer to the given question', 'A free-text answer generated token by token using a language model head', 'A binary yes/no answer derived from the [CLS] token representation', 'A ranked list of candidate answer passages retrieved from a large document corpus'], ans: 0 },
+    { q: 'In Latent Dirichlet Allocation (LDA), the optimal number of topics K is chosen by…',
+      opts: ['Evaluating coherence scores or perplexity on a held-out set across a range of K values and selecting the K that maximises coherence or minimises perplexity', 'Setting K equal to the square root of the number of unique documents in the corpus', 'Deriving K automatically from the eigenvalues of the document-term matrix (as in NMF)', 'Using K = 10 as the universal default for all English language corpora'], ans: 0 },
+    { q: 'A semantic search engine using SBERT sentence embeddings differs from keyword (BM25) search because…',
+      opts: ['It retrieves documents by semantic meaning similarity — queries and documents are encoded as dense vectors and compared by cosine similarity, finding relevant results even without keyword overlap', 'It requires exact keyword matches in the document title or abstract to return a result', 'It uses TF-IDF scores to rank documents by term frequency within the corpus', 'It only supports English-language queries and single-sentence documents'], ans: 0 },
+  ],
+  'nlp-w8-quiz': [
+    { q: 'BLEU score measures translation quality by…',
+      opts: ['Computing the precision of n-gram matches between the hypothesis and one or more reference translations, with a brevity penalty for outputs shorter than the reference', 'Measuring the recall of all reference n-grams present in the generated hypothesis', 'Computing semantic embedding similarity between the hypothesis and reference using BERT', 'Counting exact matching words between hypothesis and reference regardless of position'], ans: 0 },
+    { q: 'ROUGE-L is used for summarisation evaluation and measures…',
+      opts: ['The F-score of the Longest Common Subsequence between the generated and reference summary, capturing sentence-level structural similarity', 'Unigram precision of the generated summary against the reference summary only', 'The exact word-level overlap between generated and reference summaries as a percentage', 'The BLEU score computed at the sentence level for each summary sentence independently'], ans: 0 },
+    { q: 'XLM-RoBERTa achieves cross-lingual transfer by…',
+      opts: ['Training masked language modelling on 100 languages simultaneously using a shared SentencePiece vocabulary, producing language-agnostic contextual representations', 'Using separate transformer encoders per language with shared self-attention weights only', 'Pretraining on English only and applying translation-based data augmentation for other languages', 'Using character-level tokenisation to handle all writing scripts without a learned vocabulary'], ans: 0 },
+    { q: 'Gender bias in NLP models (e.g. associating "doctor" with male and "nurse" with female pronouns) originates primarily from…',
+      opts: ['Pretraining corpora that reflect historical societal biases — the model learns statistical associations between gender and occupation present in large-scale web text', 'Incorrect subword tokenisation of gendered language in the WordPiece vocabulary', 'The multi-head attention mechanism attending disproportionately to gender pronoun tokens', 'Using a softmax classification head instead of a sigmoid head for gender-sensitive tasks'], ans: 0 },
+    { q: 'BERTScore evaluates generated text by…',
+      opts: ['Computing token-level cosine similarity between BERT embeddings of hypothesis and reference tokens, then aggregating into precision, recall and F1 — more robust to paraphrasing than n-gram metrics like BLEU', 'Running a BERT model fine-tuned on human preference ratings to directly score outputs', 'Measuring the perplexity of the generated text under a pretrained language model', 'Comparing only the [CLS] token embeddings of the hypothesis and reference sentences'], ans: 0 },
+  ],
+};
+
+function log(msg, cls=''){
+  const area = document.getElementById('status-area');
+  area.innerHTML += `<div style="color:${cls==='ok'?'var(--teal)':cls==='err'?'#f66':cls==='head'?'var(--cream)':'var(--fog2)'}">${msg}</div>`;
+  area.scrollTop = area.scrollHeight;
+}
+function toast(m,t='success'){
+  const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;
+  document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);
+}
+
+document.addEventListener('portal:ready', async () => {
+  const {data: courses, error} = await supa.from('courses').select('id,title').order('title');
+  const sel = document.getElementById('course-sel');
+  if (error || !courses?.length) { sel.innerHTML = '<option value="">No courses found</option>'; return; }
+  sel.innerHTML = '<option value="">— pick a course —</option>';
+  courses.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id; opt.textContent = c.title;
+    if (c.title.toLowerCase().includes('natural language') || c.title.toLowerCase().includes('nlp')) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  document.getElementById('btn-seed').disabled = false;
+});
+
+function preview(){
+  const card = document.getElementById('preview-card');
+  card.style.display = 'block';
+  let totalMins = 0;
+  let html = `<table style="width:100%;border-collapse:collapse;font-family:var(--fb);font-size:.8rem;">
+    <thead><tr style="background:var(--fog2);color:var(--ink);">
+      <th style="padding:.4rem .6rem;text-align:left;">Slug</th>
+      <th style="padding:.4rem .6rem;text-align:left;">Title</th>
+      <th style="padding:.4rem .6rem;text-align:center;">Type</th>
+      <th style="padding:.4rem .6rem;text-align:right;">Mins</th>
+    </tr></thead><tbody>`;
+  MODULES.forEach((mod, mi) => {
+    html += `<tr><td colspan="4" style="padding:.5rem .6rem;background:var(--fog);color:var(--cream);font-weight:600;">${mod.title}</td></tr>`;
+    mod.lessons.forEach(([slug, title, mins, type]) => {
+      totalMins += mins;
+      const typeColor = type === 'quiz' ? 'var(--champ2)' : 'var(--teal)';
+      html += `<tr><td style="padding:.35rem .6rem;color:var(--teal);font-family:monospace;">${slug}</td>
+        <td style="padding:.35rem .6rem;color:var(--fog2);">${title}</td>
+        <td style="padding:.35rem .6rem;text-align:center;color:${typeColor};">${type}</td>
+        <td style="padding:.35rem .6rem;text-align:right;color:var(--fog2);">${mins}</td></tr>`;
+    });
+    const quizSlug = `nlp-w${mi+1}-quiz`;
+    const qCount = QUIZ_QUESTIONS[quizSlug]?.length || 0;
+    if (qCount) html += `<tr><td colspan="4" style="padding:.25rem .6rem .5rem 2rem;color:var(--champ2);font-size:.75rem;">📝 ${qCount} quiz questions for ${quizSlug}</td></tr>`;
+  });
+  html += `</tbody><tfoot><tr style="border-top:1px solid var(--border);">
+    <td colspan="3" style="padding:.5rem .6rem;color:var(--cream);font-weight:600;">Total (8 modules, 48 lessons, 40 quiz questions)</td>
+    <td style="padding:.5rem .6rem;text-align:right;color:var(--cream);font-weight:600;">${totalMins} min</td>
+  </tr></tfoot></table>`;
+  document.getElementById('preview-body').innerHTML = html;
+  card.scrollIntoView({ behavior: 'smooth' });
+}
+
+async function runSeed(){
+  const courseId = document.getElementById('course-sel').value;
+  if (!courseId){ toast('Pick a course first','error'); return; }
+  const btn = document.getElementById('btn-seed');
+  btn.disabled = true; btn.textContent = 'Running…';
+  document.getElementById('status-area').innerHTML = '';
+  try {
+    log('=== NATURAL LANGUAGE PROCESSING COURSE SEEDER ===', 'head');
+    log(`Course ID: ${courseId}`);
+
+    log('Step 1 — Removing existing modules, lessons & quiz questions…');
+    const {data: existingMods} = await supa.from('modules').select('id').eq('course_id', courseId);
+    if (existingMods?.length) {
+      const modIds = existingMods.map(m => m.id);
+      const {data: existingLessons} = await supa.from('lessons').select('id').in('module_id', modIds);
+      if (existingLessons?.length) {
+        const lessonIds = existingLessons.map(l => l.id);
+        await supa.from('quiz_questions').delete().in('lesson_id', lessonIds);
+        await supa.from('lessons').delete().in('module_id', modIds);
+      }
+      await supa.from('modules').delete().eq('course_id', courseId);
+      log(`  Removed ${existingMods.length} module(s).`);
+    } else { log('  Clean slate.'); }
+
+    log('Step 2 — Inserting 8 modules, 48 lessons & 40 quiz questions…', 'head');
+    let totalLessons = 0, totalQuestions = 0;
+
+    for (let mi = 0; mi < MODULES.length; mi++) {
+      const mod = MODULES[mi];
+      const {data: modRow, error: modErr} = await supa.from('modules')
+        .insert({ course_id: courseId, title: mod.title, order_index: mi })
+        .select().single();
+      if (modErr) throw new Error(`Module insert failed: ${modErr.message}`);
+      log(`  [${mi+1}/8] Module "${mod.title}" → id ${modRow.id}`);
+
+      for (let li = 0; li < mod.lessons.length; li++) {
+        const [slug, title, mins, type] = mod.lessons[li];
+        const {data: lessonRow, error: lesErr} = await supa.from('lessons')
+          .insert({ module_id: modRow.id, title, type, content_url: slug, duration_mins: mins, order_index: li })
+          .select().single();
+        if (lesErr) throw new Error(`Lesson insert failed for "${title}": ${lesErr.message}`);
+        totalLessons++;
+        if (type === 'quiz') {
+          const questions = QUIZ_QUESTIONS[slug] || [];
+          if (questions.length) {
+            const qRows = questions.map((q, qi) => ({
+              lesson_id: lessonRow.id, question: q.q, options: q.opts,
+              correct_index: q.ans, order_index: qi,
+            }));
+            const {error: qErr} = await supa.from('quiz_questions').insert(qRows);
+            if (qErr) throw new Error(`Quiz question insert failed for "${slug}": ${qErr.message}`);
+            log(`    📝 ${questions.length} quiz questions inserted for ${slug}`, 'ok');
+            totalQuestions += questions.length;
+          }
+        }
+      }
+      const textCount = mod.lessons.filter(l => l[3]==='text').length;
+      const quizCount = mod.lessons.filter(l => l[3]==='quiz').length;
+      log(`    └─ ${textCount} text + ${quizCount} quiz inserted`, 'ok');
+    }
+
+    log('Step 3 — Publishing course…');
+    const {error: statusErr} = await supa.from('courses').update({status:'published'}).eq('id',courseId);
+    if (statusErr) log(`  Warning: ${statusErr.message}`, 'err');
+    else log('  Course marked as published.', 'ok');
+
+    log(`=== DONE — ${totalLessons} lessons + ${totalQuestions} quiz questions ===`, 'ok');
+    toast(`${totalLessons} lessons and ${totalQuestions} quiz questions seeded`);
+    document.getElementById('status-area').innerHTML +=
+      `<div style="margin-top:1rem;"><a href="course-editor.html?id=${courseId}" class="portal-btn" style="display:inline-block;text-decoration:none;">Open in Course Editor →</a></div>`;
+  } catch(err) {
+    log(`ERROR: ${err.message}`, 'err');
+    toast(err.message, 'error');
+  }
+  btn.disabled = false; btn.textContent = 'Seed 48 lessons';
+}
+</script>
+</body></html>
