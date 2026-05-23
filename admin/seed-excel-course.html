@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seed Excel for Data Analysis Course — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Account</div>
+    <a href="profile.html"><span class="nav-icon">👤</span> My Profile</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
+      <div class="portal-page-title">Seed Excel for Data Analysis Course</div>
+      <div class="portal-page-sub">6 weeks × 36 lessons (30 text + 6 quizzes) with 30 quiz questions</div>
+    </div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Status</div>
+    <div id="status-area" style="font-family:var(--fb);font-size:.85rem;color:var(--fog2);line-height:1.8;">Waiting to run…</div>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Target Course</div>
+    <p style="font-family:var(--fb);font-size:.83rem;color:var(--fog2);margin-bottom:1rem;">
+      Select the Excel for Data Analysis course to seed into. If it doesn't appear, create it first in the Course Editor.
+    </p>
+    <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field-group" style="margin-bottom:0;flex:1;min-width:220px;">
+        <label class="flbl">Course</label>
+        <select class="fi" id="course-sel"><option value="">Loading courses…</option></select>
+      </div>
+      <div>
+        <label class="flbl">Action</label>
+        <div style="display:flex;gap:.5rem;">
+          <button class="portal-btn-ghost" id="btn-preview" onclick="preview()" style="font-size:.82rem;">Preview plan</button>
+          <button class="portal-btn" id="btn-seed" onclick="runSeed()" disabled>Seed 36 lessons</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-wrap" id="preview-card" style="display:none;">
+    <div class="chart-title">Lesson Plan (36 lessons)</div>
+    <div id="preview-body" style="overflow-x:auto;"></div>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+const MODULES = [
+  {
+    title: 'Week 1 — Excel Fundamentals',
+    lessons: [
+      ['excel-w1-l1', 'Workbooks, Worksheets & Navigation',                           40, 'text'],
+      ['excel-w1-l2', 'Data Types, Formatting & Input Validation',                    35, 'text'],
+      ['excel-w1-l3', 'Cell References — Relative, Absolute & Mixed',                 40, 'text'],
+      ['excel-w1-l4', 'Essential Functions — SUM, COUNT, AVERAGE, IF & IFERROR',      40, 'text'],
+      ['excel-w1-l5', 'Text Functions — CONCATENATE, LEFT, RIGHT, MID, TRIM & TEXT',  35, 'text'],
+      ['excel-w1-quiz', 'Week 1 Quiz — Excel Fundamentals',                           15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 2 — Lookup & Data Cleaning',
+    lessons: [
+      ['excel-w2-l1', 'Finding & Removing Duplicates',                                35, 'text'],
+      ['excel-w2-l2', 'VLOOKUP & HLOOKUP',                                            40, 'text'],
+      ['excel-w2-l3', 'INDEX & MATCH — The Power Combination',                         40, 'text'],
+      ['excel-w2-l4', 'XLOOKUP — The Modern Lookup Function',                          35, 'text'],
+      ['excel-w2-l5', 'Data Validation & Drop-Down Lists',                             35, 'text'],
+      ['excel-w2-quiz', 'Week 2 Quiz — Lookup & Data Cleaning',                        15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 3 — Advanced Formulas',
+    lessons: [
+      ['excel-w3-l1', 'SUMIF, SUMIFS, COUNTIF & COUNTIFS',                            40, 'text'],
+      ['excel-w3-l2', 'Logical Functions — AND, OR, NOT & Nested IF',                  35, 'text'],
+      ['excel-w3-l3', 'Date & Time Functions',                                         35, 'text'],
+      ['excel-w3-l4', 'Dynamic Array Functions — FILTER, SORT, UNIQUE & SEQUENCE',     40, 'text'],
+      ['excel-w3-l5', 'Named Ranges & Table Structured References',                    35, 'text'],
+      ['excel-w3-quiz', 'Week 3 Quiz — Advanced Formulas',                             15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 4 — Data Visualisation',
+    lessons: [
+      ['excel-w4-l1', 'Choosing the Right Chart Type',                                 35, 'text'],
+      ['excel-w4-l2', 'Building & Formatting Charts',                                  40, 'text'],
+      ['excel-w4-l3', 'Conditional Formatting for Data Insight',                       40, 'text'],
+      ['excel-w4-l4', 'Sparklines & In-Cell Mini-Charts',                              30, 'text'],
+      ['excel-w4-l5', 'Dashboard Design Principles',                                   45, 'text'],
+      ['excel-w4-quiz', 'Week 4 Quiz — Data Visualisation',                            15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 5 — Pivot Tables & Pivot Charts',
+    lessons: [
+      ['excel-w5-l1', 'Pivot Tables — Basics & Layout',                                40, 'text'],
+      ['excel-w5-l2', 'Grouping, Sorting & Filtering in Pivot Tables',                 35, 'text'],
+      ['excel-w5-l3', 'Calculated Fields & Calculated Items',                          40, 'text'],
+      ['excel-w5-l4', 'Slicers & Timeline Filters',                                    35, 'text'],
+      ['excel-w5-l5', 'Pivot Charts',                                                  35, 'text'],
+      ['excel-w5-quiz', 'Week 5 Quiz — Pivot Tables & Pivot Charts',                   15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Week 6 — Automation & Capstone',
+    lessons: [
+      ['excel-w6-l1', 'Excel Tables — Structured Data Management',                     35, 'text'],
+      ['excel-w6-l2', 'Recording & Running Macros',                                    35, 'text'],
+      ['excel-w6-l3', 'VBA Basics for Data Tasks',                                     40, 'text'],
+      ['excel-w6-l4', 'Excel with Python — openpyxl & xlsxwriter',                    45, 'text'],
+      ['excel-w6-l5', 'Capstone — Sales Analysis Dashboard',                           90, 'text'],
+      ['excel-w6-quiz', 'Week 6 Quiz — Automation & Capstone',                         15, 'quiz'],
+    ]
+  },
+];
+
+const QUIZ_QUESTIONS = {
+  'excel-w1-quiz': [
+    { q: 'In Excel, what is the difference between a relative reference like A1 and an absolute reference like $A$1?',
+      opts: ['A relative reference adjusts automatically when a formula is copied to another cell, while an absolute reference always points to the fixed cell $A$1 regardless of where the formula is copied', 'A relative reference is faster to calculate than an absolute reference', 'An absolute reference can only be used in SUM formulas', 'Relative references are used in charts, absolute references in formulas'], ans: 0 },
+    { q: 'The IFERROR function is used to…',
+      opts: ['Return a custom value (such as 0 or "N/A") whenever a formula produces an error, preventing error values from propagating through the spreadsheet', 'Detect which cells contain errors and highlight them in red', 'Force Excel to recalculate a formula when an error is detected', 'Replace all errors in the workbook with blank cells in a single operation'], ans: 0 },
+    { q: 'Which function would you use to extract the first 5 characters from text in cell A1?',
+      opts: ['=LEFT(A1, 5) — extracts the specified number of characters from the left (start) of the text string', '=MID(A1, 1, 5) — also works but LEFT is the direct function for this purpose', '=TRIM(A1, 5) — TRIM only removes spaces, not characters', '=RIGHT(A1, 5) — RIGHT extracts from the end, not the beginning'], ans: 0 },
+    { q: 'Data validation in Excel is used to…',
+      opts: ['Restrict what values a user can enter into a cell — for example, only whole numbers between 1 and 100, or values from a predefined drop-down list', 'Automatically correct spelling mistakes in cell entries', 'Validate that all formulas in the worksheet return correct results', 'Lock cells so they cannot be edited by any user'], ans: 0 },
+    { q: 'The TRIM function in Excel removes…',
+      opts: ['Leading and trailing spaces, and reduces multiple consecutive spaces within the text to a single space — useful for cleaning data imported from external sources', 'All spaces from the text string, including spaces between words', 'Only trailing spaces at the end of the text string', 'Special characters and numbers, leaving only alphabetic text'], ans: 0 },
+  ],
+  'excel-w2-quiz': [
+    { q: 'VLOOKUP returns an error (#N/A) when…',
+      opts: ['The lookup value is not found in the first column of the lookup range, or when the lookup value is smaller than the smallest value in the range when using approximate match', 'The lookup table has more than 1000 rows', 'The column index number equals 1', 'The lookup range contains any blank cells'], ans: 0 },
+    { q: 'Why is INDEX/MATCH generally preferred over VLOOKUP for data analysis?',
+      opts: ['INDEX/MATCH can look left of the lookup column and is not affected by inserting or deleting columns in the table, whereas VLOOKUP breaks when columns are inserted because it relies on a fixed column index number', 'INDEX/MATCH is faster to type than VLOOKUP', 'VLOOKUP cannot handle numeric lookup values, only text', 'INDEX/MATCH works with any Excel version while VLOOKUP requires Excel 365'], ans: 0 },
+    { q: 'XLOOKUP improves on VLOOKUP by…',
+      opts: ['Searching in any direction (left, right, up, down), returning multiple columns in one formula, supporting an "if not found" argument natively, and defaulting to exact match — eliminating most VLOOKUP limitations', 'Running 10× faster than VLOOKUP on large datasets', 'Being the only lookup function that works with Pivot Tables', 'Automatically updating lookup results when source data changes without needing to press F9'], ans: 0 },
+    { q: 'The best way to find and highlight duplicate values in Excel is to…',
+      opts: ['Use Conditional Formatting → Highlight Cell Rules → Duplicate Values, which colour-codes cells that appear more than once in the selected range', 'Use the DUPLICATE() function which is built into Excel 365', 'Sort the column and manually scan for repeated values', 'Use Find & Replace with the "Find All" option to select duplicates'], ans: 0 },
+    { q: 'Data validation with a drop-down list is created by…',
+      opts: ['Going to Data → Data Validation → Allow: List, then specifying the source as either a comma-separated list or a cell range containing the valid options', 'Right-clicking the cell and selecting "Add Drop-Down List" from the context menu', 'Using the DROPDOWN() function and passing the list items as arguments', 'Inserting a Form Control combo box from the Developer tab'], ans: 0 },
+  ],
+  'excel-w3-quiz': [
+    { q: 'What is the difference between SUMIF and SUMIFS?',
+      opts: ['SUMIF applies one condition to sum matching values; SUMIFS applies multiple conditions (all must be true) — SUMIFS is the more flexible, preferred function for conditional aggregation', 'SUMIF works on numeric data only; SUMIFS works on both text and numeric data', 'SUMIFS is slower than SUMIF and should only be used when multiple conditions are absolutely necessary', 'SUMIF sums a separate range based on one criteria range; SUMIFS sums the same range it evaluates'], ans: 0 },
+    { q: 'Dynamic array functions like FILTER and SORT are described as "dynamic" because…',
+      opts: ['They automatically spill results into multiple cells and update instantly when the source data changes — no need to press Ctrl+Shift+Enter or manually copy formulas down', 'They run in a background thread so Excel does not freeze when processing large datasets', 'They can be applied to charts as well as cell ranges', 'They dynamically adjust their syntax based on the data type detected in the source range'], ans: 0 },
+    { q: 'To count the number of sales transactions where Region = "North" AND Amount > 1000, you would use…',
+      opts: ['=COUNTIFS(region_range, "North", amount_range, ">1000") — COUNTIFS allows multiple criteria across different ranges, all of which must be satisfied', '=COUNTIF(region_range, "North") + COUNTIF(amount_range, ">1000")', '=COUNT(IF((region_range="North")*(amount_range>1000),1)) as an array formula only', '=SUMPRODUCT with IF inside is the only way to count with two conditions'], ans: 0 },
+    { q: 'A structured table reference like Table1[Sales] is better than a range reference like C2:C100 because…',
+      opts: ['It automatically expands when new rows are added to the table, is self-documenting (the column name makes the formula readable), and always refers to the correct data even if the table is moved or columns are reordered', 'Table references calculate faster than range references in large workbooks', 'Table references work in Pivot Tables while range references do not', 'Structured references are required when using XLOOKUP'], ans: 0 },
+    { q: 'The SEQUENCE function =SEQUENCE(5, 3, 1, 2) generates…',
+      opts: ['A 5-row by 3-column array of numbers starting at 1 and incrementing by 2: the first row is 1, 3, 5; the second row is 7, 9, 11; and so on', 'A list of 5 numbers from 1 to 3 with step 2', 'A single column of 15 sequential numbers starting at 5', 'A 3-row by 5-column array starting at 2 with step 1'], ans: 0 },
+  ],
+  'excel-w4-quiz': [
+    { q: 'A scatter plot (XY chart) is most appropriate when you want to…',
+      opts: ['Show the relationship (correlation) between two numeric variables — each data point represents a pair of values, revealing patterns, clusters, and outliers that bar or line charts cannot show', 'Display how a total is divided into parts, similar to a pie chart', 'Show change over time for one or more categories', 'Compare values across discrete categories with equal spacing on the x-axis'], ans: 0 },
+    { q: 'Conditional formatting with a colour scale (e.g. red-yellow-green) applied to a column of numbers…',
+      opts: ['Automatically assigns colours based on the relative magnitude of each cell\'s value within the selected range — the highest values get one colour, lowest another, with a gradient in between', 'Highlights only cells that exceed a fixed threshold value entered by the user', 'Applies the same colour to all cells that contain the same value', 'Changes the cell colour permanently, even if the data values change later'], ans: 0 },
+    { q: 'Sparklines in Excel are most useful for…',
+      opts: ['Showing trends within a single cell next to each row of data — they give a compact visual summary of the data pattern (trend, high/low) without requiring a full chart', 'Creating interactive charts that update when users change a drop-down selection', 'Displaying detailed chart axes and labels within a small space', 'Replacing a Pivot Chart when data needs to be filtered'], ans: 0 },
+    { q: 'A key principle of dashboard design in Excel is…',
+      opts: ['Keeping all interactive controls (slicers, drop-downs) and key KPIs on a single visible screen without scrolling, using consistent colour coding and minimising chart junk (gridlines, 3D effects, unnecessary labels)', 'Using as many chart types as possible to demonstrate data richness', 'Including all raw data tables on the dashboard sheet for transparency', 'Applying bright colours to every element to draw the viewer\'s attention'], ans: 0 },
+    { q: 'To make a chart automatically update when new data rows are added, the best approach is to…',
+      opts: ['Convert the data source to an Excel Table (Ctrl+T) before creating the chart — Excel Tables expand automatically, and charts based on them inherit this dynamic range', 'Use a OFFSET/COUNTA dynamic named range as the chart source', 'Manually update the chart data range via "Select Data" each time new rows are added', 'Enable "Auto-refresh" in the chart\'s Format Chart Area settings'], ans: 0 },
+  ],
+  'excel-w5-quiz': [
+    { q: 'In a Pivot Table, the "Values" area by default summarises numeric fields by…',
+      opts: ['SUM for numeric fields — if the field contains any text or blank cells, Excel defaults to COUNT instead, which is a common source of confusion when totals appear unexpectedly as counts', 'AVERAGE, regardless of the data type in the field', 'COUNT for all fields, both numeric and text', 'MAX, showing the largest value in each group'], ans: 0 },
+    { q: 'A Pivot Table calculated field is used to…',
+      opts: ['Create a new virtual column by defining a formula based on other fields in the Pivot Table — for example, dividing Profit by Revenue to get a Margin % without needing to add a column to the source data', 'Filter the Pivot Table to show only rows matching a calculated condition', 'Add a running total or percentage-of-total calculation to an existing value field', 'Link the Pivot Table to an external data source using a formula'], ans: 0 },
+    { q: 'Slicers in Excel Pivot Tables differ from the standard Row/Column filter drop-downs in that…',
+      opts: ['Slicers are visual, clickable buttons that filter the Pivot Table and can be connected to multiple Pivot Tables simultaneously — they make dashboards much more interactive than traditional filter drop-downs', 'Slicers can only filter date fields, while filter drop-downs work on all field types', 'Slicers apply permanent filters that cannot be cleared without deleting the slicer', 'Slicers are only available in Excel 365 and not in Excel 2019 or earlier'], ans: 0 },
+    { q: 'Grouping dates by Month and Year in a Pivot Table requires that…',
+      opts: ['The date column in the source data must contain actual Excel date values (not text that looks like dates) — Excel cannot group text-formatted dates and will show an error or group each date individually', 'The source data must be sorted by date before creating the Pivot Table', 'You must first use the TEXT function to convert dates to "YYYY-MM" format in the source data', 'A timeline slicer must be added to the Pivot Table before date grouping is possible'], ans: 0 },
+    { q: 'The main advantage of a Pivot Chart over a regular Excel chart is that…',
+      opts: ['It is directly connected to the Pivot Table and updates automatically when the Pivot Table is filtered or rearranged — filters applied via slicers affect both the Pivot Table and the Pivot Chart simultaneously', 'Pivot Charts support more chart types than regular Excel charts', 'Pivot Charts can display data from multiple workbooks simultaneously', 'Pivot Charts automatically choose the most appropriate chart type based on the data'], ans: 0 },
+  ],
+  'excel-w6-quiz': [
+    { q: 'Excel Tables (created with Ctrl+T) automatically provide which benefit when new data is added?',
+      opts: ['The table range expands to include new rows, and all formulas, formatting, and data validation referencing the table update automatically — you never need to manually extend ranges', 'New rows are validated against the existing data to prevent duplicate entries', 'Formulas in the total row are automatically recalculated in real time as new data is typed', 'New rows are highlighted in a different colour until they are explicitly confirmed'], ans: 0 },
+    { q: 'When recording a macro in Excel, you should use "Use Relative References" when…',
+      opts: ['You want the macro to apply its actions relative to the currently selected cell, rather than always acting on the same fixed cells that were selected during recording — essential for macros that process one row at a time', 'You want the macro to use named ranges instead of cell addresses in the generated VBA code', 'You need the macro to run on all sheets in the workbook, not just the active sheet', 'The macro needs to reference cells on a different workbook'], ans: 0 },
+    { q: 'In VBA, a "For Each" loop is used to…',
+      opts: ['Iterate over every item in a collection — such as every cell in a range, every sheet in a workbook, or every row in a table — and perform an action on each item without needing to know the total count', 'Repeat a block of code a fixed number of times using a counter variable', 'Continue looping until a specific condition becomes True', 'Loop over all open workbooks and close them one by one'], ans: 0 },
+    { q: 'The openpyxl Python library is used to…',
+      opts: ['Read and write Excel .xlsx files programmatically from Python — you can create workbooks, populate cells, apply formatting, and add charts without opening Excel', 'Run Excel VBA macros from a Python script', 'Connect Python to Excel via a live data feed that updates in real time', 'Convert Excel files to CSV or JSON format using a command-line interface'], ans: 0 },
+    { q: 'When building a sales analysis dashboard in Excel, using a single "Control" sheet for all input parameters (date ranges, region filters, targets) is good practice because…',
+      opts: ['It centralises all assumptions and inputs in one place — calculations reference this sheet, so changing one value updates the entire dashboard consistently without hunting through multiple sheets', 'Excel requires all user inputs to be on a separate sheet from calculated outputs', 'Control sheets allow multiple users to edit inputs simultaneously without conflicts', 'Placing inputs on a separate sheet makes the dashboard load faster'], ans: 0 },
+  ],
+};
+
+function log(msg, cls=''){
+  const area = document.getElementById('status-area');
+  area.innerHTML += `<div style="color:${cls==='ok'?'var(--teal)':cls==='err'?'#f66':cls==='head'?'var(--cream)':'var(--fog2)'}">${msg}</div>`;
+  area.scrollTop = area.scrollHeight;
+}
+function toast(m,t='success'){
+  const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;
+  document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);
+}
+
+document.addEventListener('portal:ready', async () => {
+  const {data: courses, error} = await supa.from('courses').select('id,title').order('title');
+  const sel = document.getElementById('course-sel');
+  if (error || !courses?.length) { sel.innerHTML = '<option value="">No courses found</option>'; return; }
+  sel.innerHTML = '<option value="">— pick a course —</option>';
+  courses.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id; opt.textContent = c.title;
+    if (/excel/i.test(c.title)) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  document.getElementById('btn-seed').disabled = false;
+});
+
+function preview(){
+  const card = document.getElementById('preview-card');
+  card.style.display = 'block';
+  let totalMins = 0;
+  let html = `<table style="width:100%;border-collapse:collapse;font-family:var(--fb);font-size:.8rem;">
+    <thead><tr style="background:var(--fog2);color:var(--ink);">
+      <th style="padding:.4rem .6rem;text-align:left;">Slug</th>
+      <th style="padding:.4rem .6rem;text-align:left;">Title</th>
+      <th style="padding:.4rem .6rem;text-align:center;">Type</th>
+      <th style="padding:.4rem .6rem;text-align:right;">Mins</th>
+    </tr></thead><tbody>`;
+  MODULES.forEach((mod, mi) => {
+    html += `<tr><td colspan="4" style="padding:.5rem .6rem;background:var(--fog);color:var(--cream);font-weight:600;">${mod.title}</td></tr>`;
+    mod.lessons.forEach(([slug, title, mins, type]) => {
+      totalMins += mins;
+      const typeColor = type === 'quiz' ? 'var(--champ2)' : 'var(--teal)';
+      html += `<tr><td style="padding:.35rem .6rem;color:var(--teal);font-family:monospace;">${slug}</td>
+        <td style="padding:.35rem .6rem;color:var(--fog2);">${title}</td>
+        <td style="padding:.35rem .6rem;text-align:center;color:${typeColor};">${type}</td>
+        <td style="padding:.35rem .6rem;text-align:right;color:var(--fog2);">${mins}</td></tr>`;
+    });
+    const quizSlug = `excel-w${mi+1}-quiz`;
+    const qCount = QUIZ_QUESTIONS[quizSlug]?.length || 0;
+    if (qCount) html += `<tr><td colspan="4" style="padding:.25rem .6rem .5rem 2rem;color:var(--champ2);font-size:.75rem;">📝 ${qCount} quiz questions for ${quizSlug}</td></tr>`;
+  });
+  html += `</tbody><tfoot><tr style="border-top:1px solid var(--border);">
+    <td colspan="3" style="padding:.5rem .6rem;color:var(--cream);font-weight:600;">Total (6 modules, 36 lessons, 30 quiz questions)</td>
+    <td style="padding:.5rem .6rem;text-align:right;color:var(--cream);font-weight:600;">${totalMins} min</td>
+  </tr></tfoot></table>`;
+  document.getElementById('preview-body').innerHTML = html;
+  card.scrollIntoView({ behavior: 'smooth' });
+}
+
+async function runSeed(){
+  const courseId = document.getElementById('course-sel').value;
+  if (!courseId){ toast('Pick a course first','error'); return; }
+  const btn = document.getElementById('btn-seed');
+  btn.disabled = true; btn.textContent = 'Running…';
+  document.getElementById('status-area').innerHTML = '';
+  try {
+    log('=== EXCEL FOR DATA ANALYSIS COURSE SEEDER ===', 'head');
+    log(`Course ID: ${courseId}`);
+
+    log('Step 1 — Removing existing modules, lessons & quiz questions…');
+    const {data: existingMods} = await supa.from('modules').select('id').eq('course_id', courseId);
+    if (existingMods?.length) {
+      const modIds = existingMods.map(m => m.id);
+      const {data: existingLessons} = await supa.from('lessons').select('id').in('module_id', modIds);
+      if (existingLessons?.length) {
+        const lessonIds = existingLessons.map(l => l.id);
+        await supa.from('quiz_questions').delete().in('lesson_id', lessonIds);
+        await supa.from('lessons').delete().in('module_id', modIds);
+      }
+      await supa.from('modules').delete().eq('course_id', courseId);
+      log(`  Removed ${existingMods.length} module(s).`);
+    } else { log('  Clean slate.'); }
+
+    log('Step 2 — Inserting 6 modules, 36 lessons & 30 quiz questions…', 'head');
+    let totalLessons = 0, totalQuestions = 0;
+
+    for (let mi = 0; mi < MODULES.length; mi++) {
+      const mod = MODULES[mi];
+      const {data: modRow, error: modErr} = await supa.from('modules')
+        .insert({ course_id: courseId, title: mod.title, order_index: mi })
+        .select().single();
+      if (modErr) throw new Error(`Module insert failed: ${modErr.message}`);
+      log(`  [${mi+1}/6] Module "${mod.title}" → id ${modRow.id}`);
+
+      for (let li = 0; li < mod.lessons.length; li++) {
+        const [slug, title, mins, type] = mod.lessons[li];
+        const {data: lessonRow, error: lesErr} = await supa.from('lessons')
+          .insert({ module_id: modRow.id, title, type, content_url: slug, duration_mins: mins, order_index: li })
+          .select().single();
+        if (lesErr) throw new Error(`Lesson insert failed for "${title}": ${lesErr.message}`);
+        totalLessons++;
+        if (type === 'quiz') {
+          const questions = QUIZ_QUESTIONS[slug] || [];
+          if (questions.length) {
+            const qRows = questions.map((q, qi) => ({
+              lesson_id: lessonRow.id, question: q.q, options: q.opts,
+              correct_index: q.ans, order_index: qi,
+            }));
+            const {error: qErr} = await supa.from('quiz_questions').insert(qRows);
+            if (qErr) throw new Error(`Quiz question insert failed for "${slug}": ${qErr.message}`);
+            log(`    📝 ${questions.length} quiz questions inserted for ${slug}`, 'ok');
+            totalQuestions += questions.length;
+          }
+        }
+      }
+      const textCount = mod.lessons.filter(l => l[3]==='text').length;
+      const quizCount = mod.lessons.filter(l => l[3]==='quiz').length;
+      log(`    └─ ${textCount} text + ${quizCount} quiz inserted`, 'ok');
+    }
+
+    log('Step 3 — Publishing course…');
+    const {error: statusErr} = await supa.from('courses').update({status:'published'}).eq('id',courseId);
+    if (statusErr) log(`  Warning: ${statusErr.message}`, 'err');
+    else log('  Course marked as published.', 'ok');
+
+    log(`=== DONE — ${totalLessons} lessons + ${totalQuestions} quiz questions ===`, 'ok');
+    toast(`${totalLessons} lessons and ${totalQuestions} quiz questions seeded`);
+    document.getElementById('status-area').innerHTML +=
+      `<div style="margin-top:1rem;"><a href="course-editor.html?id=${courseId}" class="portal-btn" style="display:inline-block;text-decoration:none;">Open in Course Editor →</a></div>`;
+  } catch(err) {
+    log(`ERROR: ${err.message}`, 'err');
+    toast(err.message, 'error');
+  }
+  btn.disabled = false; btn.textContent = 'Seed 36 lessons';
+}
+</script>
+</body></html>
