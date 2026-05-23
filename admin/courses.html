@@ -37,12 +37,9 @@
 <main class="portal-main">
   <div class="portal-topbar">
     <div><div class="portal-page-title">Courses</div><div class="portal-page-sub" id="sub-count">Loading…</div></div>
-    <div style="display:flex;gap:.75rem;align-items:center;">
-      <a href="seed-python-course.html" class="portal-btn-ghost" style="font-size:.8rem;">⚡ Seed Python</a>
-      <a href="seed-sql-course.html" class="portal-btn-ghost" style="font-size:.8rem;">⚡ Seed SQL</a>
-      <a href="seed-r-course.html" class="portal-btn-ghost" style="font-size:.8rem;">⚡ Seed R</a>
-      <a href="seed-ml-course.html" class="portal-btn-ghost" style="font-size:.8rem;">⚡ Seed ML</a>
-      <a href="seed-dl-course.html" class="portal-btn-ghost" style="font-size:.8rem;">⚡ Seed DL</a>
+    <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;">
+      <div id="seed-btns" style="display:none;gap:.5rem;align-items:center;flex-wrap:wrap;"></div>
+      <button id="btn-check" class="portal-btn-ghost" style="font-size:.8rem;" onclick="checkSeeds()">🔍 Check for updates</button>
       <a href="course-editor.html?id=new" class="portal-btn">+ New Course</a>
       <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
     </div>
@@ -91,6 +88,39 @@ async function del(id,title){
   if(!confirm(`Delete "${title}"? This cannot be undone.`))return;
   const {error}=await supa.from('courses').delete().eq('id',id);
   error?toast(error.message,'error'):(toast('Course deleted'),location.reload());
+}
+
+const SEED_DEFS=[
+  {label:'Python',href:'seed-python-course.html',expected:47,match:/python/i},
+  {label:'SQL',href:'seed-sql-course.html',expected:30,match:/sql/i},
+  {label:'R',href:'seed-r-course.html',expected:30,match:/\br\b|r programming/i},
+  {label:'ML',href:'seed-ml-course.html',expected:48,match:/machine learning|ml/i},
+  {label:'DL',href:'seed-dl-course.html',expected:48,match:/deep learning|dl/i},
+];
+
+async function checkSeeds(){
+  const btn=document.getElementById('btn-check');
+  btn.textContent='Checking…';btn.disabled=true;
+  try{
+    const {data:courses,error}=await supa.from('courses').select('id,title,modules(id,lessons(id))');
+    if(error)throw error;
+    const needed=[];
+    for(const def of SEED_DEFS){
+      const course=courses.find(c=>def.match.test(c.title));
+      const actual=course?(course.modules||[]).reduce((s,m)=>s+(m.lessons||[]).length,0):0;
+      if(!course||actual<def.expected)needed.push({...def,actual,missing:!course});
+    }
+    const container=document.getElementById('seed-btns');
+    if(!needed.length){
+      container.style.display='none';
+      toast('All courses are up to date ✓');
+    }else{
+      container.innerHTML=needed.map(d=>`<a href="${d.href}" class="portal-btn-ghost" style="font-size:.8rem;" title="${d.missing?'Not seeded yet':'Incomplete — '+d.actual+' / '+d.expected+' lessons'}">⚡ Seed ${d.label}</a>`).join('');
+      container.style.display='flex';
+      toast(`${needed.length} course${needed.length>1?'s':''} need seeding`,'error');
+    }
+  }catch(e){toast(e.message,'error');}
+  btn.textContent='🔍 Check for updates';btn.disabled=false;
 }
 </script>
 </body></html>
