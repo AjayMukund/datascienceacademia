@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seed AWS for Data Science Course — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Account</div>
+    <a href="profile.html"><span class="nav-icon">👤</span> My Profile</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
+      <div class="portal-page-title">Seed AWS for Data Science Course</div>
+      <div class="portal-page-sub">6 modules × 36 lessons (30 text + 6 quizzes) with 30 quiz questions</div>
+    </div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Status</div>
+    <div id="status-area" style="font-family:var(--fb);font-size:.85rem;color:var(--fog2);line-height:1.8;">Waiting to run…</div>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Target Course</div>
+    <p style="font-family:var(--fb);font-size:.83rem;color:var(--fog2);margin-bottom:1rem;">
+      Select the AWS course to seed into. If it doesn't appear, create it first in the Course Editor.
+    </p>
+    <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field-group" style="margin-bottom:0;flex:1;min-width:220px;">
+        <label class="flbl">Course</label>
+        <select class="fi" id="course-sel"><option value="">Loading courses…</option></select>
+      </div>
+      <div>
+        <label class="flbl">Action</label>
+        <div style="display:flex;gap:.5rem;">
+          <button class="portal-btn-ghost" id="btn-preview" onclick="preview()" style="font-size:.82rem;">Preview plan</button>
+          <button class="portal-btn" id="btn-seed" onclick="runSeed()" disabled>Seed 36 lessons</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-wrap" id="preview-card" style="display:none;">
+    <div class="chart-title">Lesson Plan (36 lessons)</div>
+    <div id="preview-body" style="overflow-x:auto;"></div>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+const MODULES = [
+  {
+    title: 'Module 1 — AWS Foundations & Cloud Essentials',
+    lessons: [
+      ['aws-w1-l1', 'The AWS Cloud — Regions, Availability Zones & Global Infrastructure',   35, 'text'],
+      ['aws-w1-l2', 'IAM — Users, Groups, Roles & Policies',                                 40, 'text'],
+      ['aws-w1-l3', 'AWS CLI, SDK & the Console — Three Ways to Control AWS',                40, 'text'],
+      ['aws-w1-l4', 'Amazon EC2 — Virtual Machines in the Cloud',                            40, 'text'],
+      ['aws-w1-l5', 'Amazon S3 Introduction — Object Storage Fundamentals',                  35, 'text'],
+      ['aws-w1-quiz', 'Module 1 Quiz — AWS Foundations & Cloud Essentials',                  15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Module 2 — Data Storage on AWS',
+    lessons: [
+      ['aws-w2-l1', 'Amazon S3 Deep Dive — Versioning, Lifecycle, Encryption & Glacier',    45, 'text'],
+      ['aws-w2-l2', 'Amazon RDS — Managed Relational Databases on AWS',                      40, 'text'],
+      ['aws-w2-l3', 'Amazon DynamoDB — NoSQL at Scale',                                      40, 'text'],
+      ['aws-w2-l4', 'Amazon Redshift — Cloud Data Warehouse',                                45, 'text'],
+      ['aws-w2-l5', 'Data Lake Architecture on AWS',                                         40, 'text'],
+      ['aws-w2-quiz', 'Module 2 Quiz — Data Storage on AWS',                                 15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Module 3 — Data Processing & ETL',
+    lessons: [
+      ['aws-w3-l1', 'AWS Glue — Crawlers, Data Catalog & ETL Jobs',                         45, 'text'],
+      ['aws-w3-l2', 'Amazon Athena — Serverless SQL on S3',                                  40, 'text'],
+      ['aws-w3-l3', 'Amazon EMR — Spark & Hadoop Clusters on AWS',                           45, 'text'],
+      ['aws-w3-l4', 'AWS Lambda — Serverless Functions for Data Transforms',                 40, 'text'],
+      ['aws-w3-l5', 'AWS Glue DataBrew — No-Code Data Preparation',                         35, 'text'],
+      ['aws-w3-quiz', 'Module 3 Quiz — Data Processing & ETL',                               15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Module 4 — Machine Learning with Amazon SageMaker',
+    lessons: [
+      ['aws-w4-l1', 'SageMaker Studio — The Unified ML IDE',                                 40, 'text'],
+      ['aws-w4-l2', 'Built-in Algorithms & Training Jobs',                                   45, 'text'],
+      ['aws-w4-l3', 'SageMaker Notebooks, Experiments & Debugger',                           40, 'text'],
+      ['aws-w4-l4', 'Deploying Models — Real-Time & Batch Endpoints',                        45, 'text'],
+      ['aws-w4-l5', 'SageMaker Feature Store & Data Wrangler',                               40, 'text'],
+      ['aws-w4-quiz', 'Module 4 Quiz — Machine Learning with Amazon SageMaker',              15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Module 5 — Data Pipelines & Streaming',
+    lessons: [
+      ['aws-w5-l1', 'Amazon Kinesis — Real-Time Data Streaming',                             45, 'text'],
+      ['aws-w5-l2', 'AWS Step Functions — Orchestrating ML Workflows',                       40, 'text'],
+      ['aws-w5-l3', 'Amazon MWAA — Managed Apache Airflow on AWS',                           45, 'text'],
+      ['aws-w5-l4', 'Amazon EventBridge & SNS — Event-Driven Data Pipelines',               35, 'text'],
+      ['aws-w5-l5', 'AWS Batch — Large-Scale Batch Processing',                              40, 'text'],
+      ['aws-w5-quiz', 'Module 5 Quiz — Data Pipelines & Streaming',                          15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Module 6 — MLOps, Monitoring & Capstone',
+    lessons: [
+      ['aws-w6-l1', 'SageMaker Pipelines — CI/CD for Machine Learning',                     45, 'text'],
+      ['aws-w6-l2', 'SageMaker Model Monitor — Detecting Data & Model Drift',                40, 'text'],
+      ['aws-w6-l3', 'Amazon QuickSight — Cloud Business Intelligence',                       40, 'text'],
+      ['aws-w6-l4', 'CloudWatch, Cost Optimisation & AWS Best Practices',                    40, 'text'],
+      ['aws-w6-l5', 'Capstone — End-to-End ML Pipeline on AWS',                              90, 'text'],
+      ['aws-w6-quiz', 'Module 6 Quiz — MLOps, Monitoring & Capstone',                        15, 'quiz'],
+    ]
+  },
+];
+
+const QUIZ_QUESTIONS = {
+  'aws-w1-quiz': [
+    { q: 'What is an AWS Region?',
+      opts: ['A geographic area containing multiple isolated Availability Zones (data centres) where AWS services run — choosing the right Region reduces latency for end users and helps meet data residency requirements', 'A single high-availability data centre that hosts all AWS global services', 'A billing unit that groups all your AWS resources for consolidated cost management', 'A virtual network boundary that isolates your cloud resources from other AWS customers'], ans: 0 },
+    { q: 'In AWS IAM, a Role differs from a User in that:',
+      opts: ['A Role can only be assumed by human users; a User can only be used by AWS services', 'A Role is an identity with permissions that can be assumed temporarily by any trusted entity (user, EC2 instance, Lambda function, or external account) without long-term static credentials — a User has permanent username/password or access key credentials', 'A Role always has AdministratorAccess; a User starts with no permissions and must be granted them', 'A Role is region-specific; a User is a global IAM entity across all regions'], ans: 1 },
+    { q: 'The AWS CLI is primarily used to:',
+      opts: ['Monitor AWS service health and visualise billing from a graphical web dashboard', 'Interact with AWS services programmatically from the terminal — automating tasks, scripting deployments, querying resources, and integrating AWS operations into CI/CD pipelines without using the browser console', 'Write CloudFormation infrastructure-as-code templates for repeatable environment provisioning', 'Access the AWS Management Console through a text-based browser interface'], ans: 1 },
+    { q: 'Amazon S3 stores data as:',
+      opts: ['Rows and columns in a managed relational database with SQL query support', 'Objects (files) in flat containers called buckets — each object has a unique key, the data payload, and metadata; key prefixes simulate folder structure but S3 itself has no true directory hierarchy', 'Fixed-size blocks on virtual hard drives attached to running EC2 instances', 'JSON documents within collections, similar to a managed MongoDB service'], ans: 1 },
+    { q: 'The AWS Shared Responsibility Model means:',
+      opts: ['AWS handles all security including customer applications, data encryption, and user access management', 'AWS is responsible for security "of" the cloud (physical hardware, network, hypervisor, managed service software); the customer is responsible for security "in" the cloud (data encryption, IAM configuration, OS patching, application security)', 'The customer is responsible for physical hardware security; AWS manages all software-layer security', 'Security responsibilities are negotiated per service via an SLA and split case by case'], ans: 1 },
+  ],
+  'aws-w2-quiz': [
+    { q: 'Amazon S3 storage classes are designed to:',
+      opts: ['Select the optimal EC2 instance type for data-intensive processing workloads', 'Optimise storage cost by matching the pricing tier to data access frequency — S3 Standard for frequent access, S3-IA or S3 Glacier Instant Retrieval for infrequent access, S3 Glacier Deep Archive for long-term archival — with automated lifecycle transitions', 'Enforce maximum file size and upload speed limits on a per-bucket basis', 'Control which IAM users and roles have read/write/delete permissions on each bucket'], ans: 1 },
+    { q: 'Amazon Redshift is best described as:',
+      opts: ['A fully managed NoSQL key-value store for high-throughput, low-latency reads and writes at any scale', 'A fully managed cloud data warehouse optimised for OLAP queries on structured data at petabyte scale — uses columnar storage, Massively Parallel Processing (MPP), and result caching for fast analytical queries', 'A serverless SQL query engine that runs queries directly on files stored in S3 without a dedicated cluster', 'A managed relational database service that hosts MySQL, PostgreSQL, Oracle, and SQL Server engines'], ans: 1 },
+    { q: 'Amazon DynamoDB is:',
+      opts: ['A fully managed NoSQL key-value and document database delivering single-digit millisecond performance at any scale with no server management — unlike RDS which requires instance provisioning and vertical scaling', 'A managed relational database that supports complex multi-table joins and full ACID transactions', 'A columnar data warehouse optimised for analytical queries over years of historical data', 'An in-memory caching service placed in front of RDS to absorb read-heavy query loads'], ans: 0 },
+    { q: 'A Data Lake architecture on AWS typically centres on:',
+      opts: ['Amazon Redshift as the primary storage for all raw, semi-structured, and unstructured data', 'Amazon S3 as the central storage layer holding raw, processed, and curated data zones — combined with AWS Glue for cataloging and ETL, Amazon Athena for ad-hoc querying, and EMR or SageMaker for analytics and ML workloads', 'Amazon RDS because relational databases support structured, semi-structured, and unstructured data natively', 'Amazon DynamoDB as the central store with Lambda functions as the sole ETL mechanism'], ans: 1 },
+    { q: 'Enabling S3 Versioning on a bucket means:',
+      opts: ['Objects are automatically tiered to cheaper storage classes as they age past 30 days', 'Every PUT creates a new object version; a DELETE creates a delete marker rather than destroying the data — allowing full recovery from accidental overwrites or deletions by restoring a previous version', 'Objects are automatically replicated to a second AWS Region for disaster recovery', 'All objects are encrypted using a customer-managed KMS key on every upload'], ans: 1 },
+  ],
+  'aws-w3-quiz': [
+    { q: 'AWS Glue Crawlers are used to:',
+      opts: ['Automatically scan data sources (S3, RDS, DynamoDB) and populate the AWS Glue Data Catalog with discovered table definitions, inferred schemas, data types, and partition information — eliminating manual schema registration', 'Execute distributed PySpark ETL jobs on a managed serverless cluster without server provisioning', 'Monitor data quality rules and quarantine records that fail defined validation checks', 'Replicate on-premises database tables to Amazon S3 using Change Data Capture (CDC)'], ans: 0 },
+    { q: 'Amazon Athena pricing is based on:',
+      opts: ['A fixed monthly fee per query endpoint regardless of data scanned or query count', 'The volume of data scanned per query — you pay only for bytes read from S3, making columnar formats (Parquet, ORC) and partition pruning critical for cost reduction (typically 90%+ less data scanned vs CSV)', 'The number of EC2 instances provisioned to run the Athena distributed query engine', 'Separate storage costs for a dedicated Athena data store distinct from your S3 buckets'], ans: 1 },
+    { q: 'Amazon EMR is most appropriate when:',
+      opts: ['You need to run simple ad-hoc SQL queries on CSV files in S3 without managing any infrastructure', 'You need large-scale distributed data processing using Apache Spark, Hadoop, Hive, or Presto — processing datasets too large for a single machine, running complex ML algorithms, or requiring a fully customisable distributed compute cluster', 'You want short-running, event-driven Python functions that transform small data batches triggered by S3 events', 'You need a fully managed Apache Kafka cluster for high-throughput real-time data ingestion'], ans: 1 },
+    { q: 'AWS Lambda is best suited for data tasks that are:',
+      opts: ['Long-running, stateful computations lasting hours with 100+ GB memory requirements and persistent disk I/O', 'Event-driven, short-duration (up to 15 minutes), and stateless — such as validating a file when it arrives in S3, transforming small batches of records from a DynamoDB stream, or invoking a SageMaker endpoint on incoming data', 'Multi-terabyte distributed Spark processing jobs requiring a coordinated cluster of dozens of nodes', 'Persistent database connection pools serving hundreds of concurrent SQL query requests'], ans: 1 },
+    { q: 'AWS Glue DataBrew differs from AWS Glue ETL jobs in that:',
+      opts: ['DataBrew requires writing PySpark code; Glue ETL is the visual no-code interface for non-programmers', 'DataBrew is a visual, no-code/low-code data preparation tool for analysts and data scientists to profile, clean, and normalise data through a UI — Glue ETL is a code-based (Python/Scala Spark) service for repeatable, complex enterprise-scale ETL pipelines', 'DataBrew only connects to S3 data sources; Glue ETL supports 20+ source connectors including JDBC databases', 'DataBrew bills per DPU-hour of cluster compute; Glue ETL bills per recipe job run minute'], ans: 1 },
+  ],
+  'aws-w4-quiz': [
+    { q: 'Amazon SageMaker Studio is:',
+      opts: ['A managed single Jupyter notebook instance with no additional ML tooling beyond standard Python kernels', 'A fully integrated web-based IDE for the complete ML lifecycle — data exploration, feature engineering, experiment tracking, distributed training, debugging, model registry, deployment, and monitoring — built on JupyterLab with native SageMaker SDK integrations', 'A drag-and-drop AutoML tool that trains and deploys models entirely without writing any code', 'A visual pipeline builder exclusively for deploying pre-trained models from the AWS Marketplace'], ans: 1 },
+    { q: 'SageMaker Training Jobs run training code:',
+      opts: ['Inside SageMaker Studio on the Studio server CPU — sharing compute with notebook sessions', 'On fully managed EC2 instances provisioned automatically for the job duration — training code runs in a Docker container, input data is read from S3, and the trained model artifact is written back to S3; the instance is terminated when training completes', 'On the user\'s local machine using a SageMaker SDK that streams gradients to AWS for aggregation', 'Exclusively on AWS Trainium chips — other instance types are not supported for training jobs'], ans: 1 },
+    { q: 'A SageMaker Real-Time Endpoint provides:',
+      opts: ['Batch predictions on large S3 datasets processed asynchronously overnight', 'A persistent HTTPS endpoint that accepts synchronous inference requests and returns predictions — backed by auto-scaling EC2 instances with health checks, A/B testing (production variants), and CloudWatch metrics for latency and error rate monitoring', 'A serverless function that cold-starts on each request, runs prediction code, and shuts down with no idle cost', 'A streaming pipeline that reads records from Kinesis and writes predictions to DynamoDB in real time'], ans: 1 },
+    { q: 'SageMaker Feature Store is designed to:',
+      opts: ['Store trained model artifacts and Docker inference containers for versioned deployment', 'Centralise, reuse, and share ML features across teams and models — providing an online store (low-latency reads for real-time inference) and an offline store (S3-backed Parquet for training dataset creation), ensuring feature consistency between training and serving', 'Monitor deployed model predictions and trigger automated retraining when performance degrades', 'Track and compare experiment runs including hyperparameters, metrics, and training artifacts'], ans: 1 },
+    { q: 'SageMaker Experiments is primarily used to:',
+      opts: ['Deploy multiple model versions simultaneously for A/B traffic splitting in production endpoints', 'Organise and compare training runs — recording hyperparameters, metrics (accuracy, loss, AUC), and output artifacts for each run so data scientists can identify the best model configuration without manual spreadsheet tracking', 'Automatically search for optimal hyperparameters using Bayesian optimisation across parallel training jobs', 'Manage human labelling workflows for creating ground-truth datasets for supervised learning'], ans: 1 },
+  ],
+  'aws-w5-quiz': [
+    { q: 'Amazon Kinesis Data Streams is designed for:',
+      opts: ['Batch-loading large files from S3 into Amazon Redshift on a nightly schedule', 'Real-time ingestion and processing of high-throughput streaming data — multiple producers write records to shards; consumers (Lambda, KCL applications, Kinesis Data Analytics) process records within a configurable retention window of 24 hours to 7 days', 'Managed Apache Kafka with full Kafka API compatibility for existing producer/consumer applications', 'Synchronising on-premises database changes to S3 using Change Data Capture'], ans: 1 },
+    { q: 'AWS Step Functions orchestrates ML workflows by:',
+      opts: ['Replacing SageMaker as the training engine for multi-framework deep learning pipelines', 'Defining workflows as visual state machines — coordinating AWS services (Lambda, Glue, SageMaker training/evaluation/deployment) with built-in error handling, automatic retries, parallel execution branches, and full audit history via CloudWatch Logs', 'Monitoring deployed endpoints and automatically triggering rollback when latency exceeds a threshold', 'Providing a drag-and-drop visual interface for building and deploying Spark ETL jobs on EMR'], ans: 1 },
+    { q: 'Amazon MWAA (Managed Workflows for Apache Airflow) is preferred over self-hosted Airflow because:',
+      opts: ['It provides a proprietary DAG language more expressive than standard Airflow Python DAGs', 'It eliminates the operational burden of provisioning, patching, scaling, and monitoring Airflow infrastructure — data engineers write standard Python Airflow DAGs which MWAA executes on managed infrastructure with native AWS operator integrations (S3, Glue, SageMaker, EMR)', 'It is the only AWS service capable of scheduling SageMaker and Glue jobs in the same workflow graph', 'It provides sub-second real-time streaming workflow execution unlike standard Airflow batch scheduling'], ans: 1 },
+    { q: 'Amazon Kinesis Data Firehose differs from Kinesis Data Streams in that:',
+      opts: ['Firehose requires you to manage shard counts and build consumer applications; Data Streams is fully serverless', 'Firehose is a fully managed delivery service that buffers, optionally transforms (via Lambda), and loads streaming data to destinations (S3, Redshift, OpenSearch, Splunk) automatically — no consumer code required; Data Streams requires building and managing consumer applications to read and process records', 'Firehose delivers data with sub-second latency; Data Streams has a minimum 60-second end-to-end delay', 'Firehose is only available in us-east-1 and eu-west-1; Data Streams is available in all AWS Regions'], ans: 1 },
+    { q: 'AWS Batch is most suitable for:',
+      opts: ['Millisecond-latency microservice APIs that process individual records synchronously on demand', 'Large-scale, long-running batch computing jobs — genomics pipelines, financial risk modelling, ML training — that require many EC2 or Fargate instances managed automatically in a queue without provisioning a persistent cluster; AWS Batch handles scheduling, retries, and cost optimisation', 'Real-time stream processing of clickstream or IoT sensor data from thousands of devices per second', 'Serverless event-driven functions triggered by S3 uploads that complete in under 15 minutes'], ans: 1 },
+  ],
+  'aws-w6-quiz': [
+    { q: 'SageMaker Pipelines provides:',
+      opts: ['A real-time dashboard for monitoring deployed endpoint latency, throughput, and error rates', 'A native ML CI/CD service for defining, automating, and versioning end-to-end ML workflows as DAGs — steps include data processing, training, evaluation, conditional approval gates, and model registration; integrated with CodePipeline for GitOps-triggered retraining', 'A managed feature store for sharing engineered features and their metadata across multiple ML projects', 'An automatic hyperparameter tuning service that runs parallel training jobs with Bayesian optimisation'], ans: 1 },
+    { q: 'SageMaker Model Monitor automatically detects:',
+      opts: ['Syntax errors and memory leaks in SageMaker training job scripts before job submission', 'Data quality drift (statistical shifts in input feature distributions vs baseline) and model quality drift (degradation in prediction accuracy vs ground truth labels) on live endpoints — publishing violation metrics to CloudWatch and triggering alerts when thresholds are exceeded', 'Unauthorised access attempts to SageMaker endpoints from external IP addresses', 'Unexpected cost spikes when SageMaker training jobs exceed the defined GPU budget'], ans: 1 },
+    { q: 'Amazon QuickSight differentiates from Power BI and Tableau primarily by:',
+      opts: ['Supporting only CSV and Excel as data sources while Power BI and Tableau support live database connections', 'Being cloud-native with native connectors to Redshift, Athena, S3, RDS, and other AWS services — using SPICE (in-memory calculation engine) for performance; it scales automatically per user count, integrates with IAM and Active Directory, and requires no desktop software installation', 'Requiring users to install and license a desktop authoring application before publishing reports to the web', 'Limiting report sharing to 10 concurrent named users regardless of subscription tier'], ans: 1 },
+    { q: 'AWS CloudWatch serves ML workflows by:',
+      opts: ['Storing and versioning trained model artifacts alongside hyperparameters and evaluation metrics', 'Collecting logs, metrics, and events from AWS services and custom applications — in ML contexts it tracks SageMaker endpoint invocation latency, error rates, CPU/GPU utilisation, and model monitor violation counts; alarms trigger SNS notifications, Auto Scaling, or Lambda remediation actions', 'Automatically initiating model retraining when prediction accuracy drops below a configured threshold', 'Managing IAM role assignments and permission boundaries for SageMaker training and inference resources'], ans: 1 },
+    { q: 'The AWS Well-Architected cost optimisation pillar advises ML teams to:',
+      opts: ['Always use the most powerful GPU instance (p4d.24xlarge) for every training job to minimise wall-clock time', 'Right-size training instances to workload requirements, use Spot Instances for fault-tolerant training (up to 90% savings), delete idle endpoints, apply S3 lifecycle policies to move model artifacts to Glacier, and use Savings Plans for predictable inference workloads', 'Store all data permanently in S3 Standard to avoid the overhead of managing lifecycle transitions', 'Deploy all inference endpoints in us-east-1 regardless of user location to benefit from the lowest regional pricing'], ans: 1 },
+  ],
+};
+
+function log(msg, cls=''){
+  const area = document.getElementById('status-area');
+  area.innerHTML += `<div style="color:${cls==='ok'?'var(--teal)':cls==='err'?'#f66':cls==='head'?'var(--cream)':'var(--fog2)'}">${msg}</div>`;
+  area.scrollTop = area.scrollHeight;
+}
+function toast(m,t='success'){
+  const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;
+  document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);
+}
+
+document.addEventListener('portal:ready', async () => {
+  const {data: courses, error} = await supa.from('courses').select('id,title').order('title');
+  const sel = document.getElementById('course-sel');
+  if (error || !courses?.length) { sel.innerHTML = '<option value="">No courses found</option>'; return; }
+  sel.innerHTML = '<option value="">— pick a course —</option>';
+  courses.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id; opt.textContent = c.title;
+    if (/aws/i.test(c.title)) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  document.getElementById('btn-seed').disabled = false;
+});
+
+function preview(){
+  const card = document.getElementById('preview-card');
+  card.style.display = 'block';
+  let totalMins = 0;
+  let html = `<table style="width:100%;border-collapse:collapse;font-family:var(--fb);font-size:.8rem;">
+    <thead><tr style="background:var(--fog2);color:var(--ink);">
+      <th style="padding:.4rem .6rem;text-align:left;">Slug</th>
+      <th style="padding:.4rem .6rem;text-align:left;">Title</th>
+      <th style="padding:.4rem .6rem;text-align:center;">Type</th>
+      <th style="padding:.4rem .6rem;text-align:right;">Mins</th>
+    </tr></thead><tbody>`;
+  MODULES.forEach((mod, mi) => {
+    html += `<tr><td colspan="4" style="padding:.5rem .6rem;background:var(--fog);color:var(--cream);font-weight:600;">${mod.title}</td></tr>`;
+    mod.lessons.forEach(([slug, title, mins, type]) => {
+      totalMins += mins;
+      const typeColor = type === 'quiz' ? 'var(--champ2)' : 'var(--teal)';
+      html += `<tr><td style="padding:.35rem .6rem;color:var(--teal);font-family:monospace;">${slug}</td>
+        <td style="padding:.35rem .6rem;color:var(--fog2);">${title}</td>
+        <td style="padding:.35rem .6rem;text-align:center;color:${typeColor};">${type}</td>
+        <td style="padding:.35rem .6rem;text-align:right;color:var(--fog2);">${mins}</td></tr>`;
+    });
+    const quizSlug = `aws-w${mi+1}-quiz`;
+    const qCount = QUIZ_QUESTIONS[quizSlug]?.length || 0;
+    if (qCount) html += `<tr><td colspan="4" style="padding:.25rem .6rem .5rem 2rem;color:var(--champ2);font-size:.75rem;">📝 ${qCount} quiz questions for ${quizSlug}</td></tr>`;
+  });
+  html += `</tbody><tfoot><tr style="border-top:1px solid var(--border);">
+    <td colspan="3" style="padding:.5rem .6rem;color:var(--cream);font-weight:600;">Total (6 modules, 36 lessons, 30 quiz questions)</td>
+    <td style="padding:.5rem .6rem;text-align:right;color:var(--cream);font-weight:600;">${totalMins} min</td>
+  </tr></tfoot></table>`;
+  document.getElementById('preview-body').innerHTML = html;
+  card.scrollIntoView({ behavior: 'smooth' });
+}
+
+async function runSeed(){
+  const courseId = document.getElementById('course-sel').value;
+  if (!courseId){ toast('Pick a course first','error'); return; }
+  const btn = document.getElementById('btn-seed');
+  btn.disabled = true; btn.textContent = 'Running…';
+  document.getElementById('status-area').innerHTML = '';
+  try {
+    log('=== AWS FOR DATA SCIENCE COURSE SEEDER ===', 'head');
+    log(`Course ID: ${courseId}`);
+
+    log('Step 1 — Removing existing modules, lessons & quiz questions…');
+    const {data: existingMods} = await supa.from('modules').select('id').eq('course_id', courseId);
+    if (existingMods?.length) {
+      const modIds = existingMods.map(m => m.id);
+      const {data: existingLessons} = await supa.from('lessons').select('id').in('module_id', modIds);
+      if (existingLessons?.length) {
+        const lessonIds = existingLessons.map(l => l.id);
+        await supa.from('quiz_questions').delete().in('lesson_id', lessonIds);
+        await supa.from('lessons').delete().in('module_id', modIds);
+      }
+      await supa.from('modules').delete().eq('course_id', courseId);
+      log(`  Removed ${existingMods.length} module(s).`);
+    } else { log('  Clean slate.'); }
+
+    log('Step 2 — Inserting 6 modules, 36 lessons & 30 quiz questions…', 'head');
+    let totalLessons = 0, totalQuestions = 0;
+
+    for (let mi = 0; mi < MODULES.length; mi++) {
+      const mod = MODULES[mi];
+      const {data: modRow, error: modErr} = await supa.from('modules')
+        .insert({ course_id: courseId, title: mod.title, order_index: mi })
+        .select().single();
+      if (modErr) throw new Error(`Module insert failed: ${modErr.message}`);
+      log(`  [${mi+1}/6] Module "${mod.title}" → id ${modRow.id}`);
+
+      for (let li = 0; li < mod.lessons.length; li++) {
+        const [slug, title, mins, type] = mod.lessons[li];
+        const {data: lessonRow, error: lesErr} = await supa.from('lessons')
+          .insert({ module_id: modRow.id, title, type, content_url: slug, duration_mins: mins, order_index: li })
+          .select().single();
+        if (lesErr) throw new Error(`Lesson insert failed for "${title}": ${lesErr.message}`);
+        totalLessons++;
+        if (type === 'quiz') {
+          const questions = QUIZ_QUESTIONS[slug] || [];
+          if (questions.length) {
+            const qRows = questions.map((q, qi) => ({
+              lesson_id: lessonRow.id, question: q.q, options: q.opts,
+              correct_index: q.ans, order_index: qi,
+            }));
+            const {error: qErr} = await supa.from('quiz_questions').insert(qRows);
+            if (qErr) throw new Error(`Quiz insert failed for "${slug}": ${qErr.message}`);
+            log(`    📝 ${questions.length} quiz questions inserted for ${slug}`, 'ok');
+            totalQuestions += questions.length;
+          }
+        }
+      }
+    }
+
+    log(`Step 3 — Done! ${totalLessons} lessons and ${totalQuestions} quiz questions inserted.`, 'ok');
+    log('✓ AWS for Data Science course seeded successfully.', 'ok');
+    toast('AWS course seeded!');
+  } catch(e) {
+    log(`ERROR: ${e.message}`, 'err');
+    toast(e.message, 'error');
+  }
+  btn.disabled = false; btn.textContent = 'Seed 36 lessons';
+}
+</script>
+</body></html>
