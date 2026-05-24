@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seed Generative AI Course — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Account</div>
+    <a href="profile.html"><span class="nav-icon">👤</span> My Profile</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
+      <div class="portal-page-title">Seed Generative AI Course</div>
+      <div class="portal-page-sub">8 modules × 48 lessons (40 text + 8 quizzes) with 40 quiz questions</div>
+    </div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Status</div>
+    <div id="status-area" style="font-family:var(--fb);font-size:.85rem;color:var(--fog2);line-height:1.8;">Waiting to run…</div>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Target Course</div>
+    <p style="font-family:var(--fb);font-size:.83rem;color:var(--fog2);margin-bottom:1rem;">
+      Select the Generative AI course to seed into. If it doesn't appear, create it first in the Course Editor.
+    </p>
+    <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field-group" style="margin-bottom:0;flex:1;min-width:220px;">
+        <label class="field-label">Course</label>
+        <select class="fi" id="course-select"><option value="">Loading courses…</option></select>
+      </div>
+      <button class="portal-btn" onclick="runSeed()">⚡ Seed Course</button>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Lesson Preview</div>
+    <div id="preview-table" style="overflow-x:auto;"></div>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+function toast(m,t='success'){const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);}
+function log(msg,type=''){const area=document.getElementById('status-area');const line=document.createElement('div');line.style.color=type==='error'?'#f66':type==='ok'?'var(--teal)':'var(--fog2)';line.textContent=msg;area.appendChild(line);area.scrollTop=area.scrollHeight;}
+
+const MODULES = [
+  { title:'Generative AI Foundations', order_index:0, lessons:[
+    {title:'Discriminative vs Generative Models',order_index:0,type:'text',content_url:'genai-w1-l1',duration_mins:20},
+    {title:'Probability Density Estimation & Latent Spaces',order_index:1,type:'text',content_url:'genai-w1-l2',duration_mins:18},
+    {title:'Generative Model Families — A Landscape',order_index:2,type:'text',content_url:'genai-w1-l3',duration_mins:20},
+    {title:'Evaluating Generative Models — FID, IS & CLIP Score',order_index:3,type:'text',content_url:'genai-w1-l4',duration_mins:18},
+    {title:'The 2024 Generative AI Landscape',order_index:4,type:'text',content_url:'genai-w1-l5',duration_mins:16},
+    {title:'Module 1 Quiz',order_index:5,type:'quiz',content_url:'genai-w1-quiz',duration_mins:10},
+  ]},
+  { title:'Autoencoders & Variational Autoencoders', order_index:1, lessons:[
+    {title:'Autoencoders — Architecture & Reconstruction Loss',order_index:0,type:'text',content_url:'genai-w2-l1',duration_mins:20},
+    {title:'Denoising & Sparse Autoencoders',order_index:1,type:'text',content_url:'genai-w2-l2',duration_mins:18},
+    {title:'Variational Autoencoders — ELBO & Reparameterisation',order_index:2,type:'text',content_url:'genai-w2-l3',duration_mins:22},
+    {title:'Latent Space Interpolation & Arithmetic',order_index:3,type:'text',content_url:'genai-w2-l4',duration_mins:18},
+    {title:'Conditional VAE & VQ-VAE',order_index:4,type:'text',content_url:'genai-w2-l5',duration_mins:20},
+    {title:'Module 2 Quiz',order_index:5,type:'quiz',content_url:'genai-w2-quiz',duration_mins:10},
+  ]},
+  { title:'Generative Adversarial Networks', order_index:2, lessons:[
+    {title:'GAN Architecture — Generator & Discriminator',order_index:0,type:'text',content_url:'genai-w3-l1',duration_mins:20},
+    {title:'GAN Loss Functions & Training Dynamics',order_index:1,type:'text',content_url:'genai-w3-l2',duration_mins:22},
+    {title:'DCGAN — Deep Convolutional GANs',order_index:2,type:'text',content_url:'genai-w3-l3',duration_mins:18},
+    {title:'Wasserstein GAN & WGAN-GP',order_index:3,type:'text',content_url:'genai-w3-l4',duration_mins:22},
+    {title:'GAN Failure Modes & Stabilisation Techniques',order_index:4,type:'text',content_url:'genai-w3-l5',duration_mins:18},
+    {title:'Module 3 Quiz',order_index:5,type:'quiz',content_url:'genai-w3-quiz',duration_mins:10},
+  ]},
+  { title:'Conditional GANs & Image Translation', order_index:3, lessons:[
+    {title:'Conditional GAN — Class and Label Conditioning',order_index:0,type:'text',content_url:'genai-w4-l1',duration_mins:20},
+    {title:'Pix2Pix & PatchGAN Discriminator',order_index:1,type:'text',content_url:'genai-w4-l2',duration_mins:20},
+    {title:'CycleGAN — Unpaired Image-to-Image Translation',order_index:2,type:'text',content_url:'genai-w4-l3',duration_mins:20},
+    {title:'StyleGAN — Style-Based Generator Architecture',order_index:3,type:'text',content_url:'genai-w4-l4',duration_mins:22},
+    {title:'Super-Resolution — SRGAN, ESRGAN & Real-ESRGAN',order_index:4,type:'text',content_url:'genai-w4-l5',duration_mins:20},
+    {title:'Module 4 Quiz',order_index:5,type:'quiz',content_url:'genai-w4-quiz',duration_mins:10},
+  ]},
+  { title:'Diffusion Models', order_index:4, lessons:[
+    {title:'The Forward Process — Adding Noise (DDPM)',order_index:0,type:'text',content_url:'genai-w5-l1',duration_mins:22},
+    {title:'The Reverse Process & U-Net Architecture',order_index:1,type:'text',content_url:'genai-w5-l2',duration_mins:25},
+    {title:'Score Matching & NCSN',order_index:2,type:'text',content_url:'genai-w5-l3',duration_mins:20},
+    {title:'DDIM & Fast Sampling',order_index:3,type:'text',content_url:'genai-w5-l4',duration_mins:18},
+    {title:'Classifier-Free Guidance',order_index:4,type:'text',content_url:'genai-w5-l5',duration_mins:22},
+    {title:'Module 5 Quiz',order_index:5,type:'quiz',content_url:'genai-w5-quiz',duration_mins:10},
+  ]},
+  { title:'Stable Diffusion & ControlNet', order_index:5, lessons:[
+    {title:'Latent Diffusion Models',order_index:0,type:'text',content_url:'genai-w6-l1',duration_mins:20},
+    {title:'Stable Diffusion Architecture — VAE, CLIP & U-Net',order_index:1,type:'text',content_url:'genai-w6-l2',duration_mins:25},
+    {title:'DreamBooth Fine-Tuning',order_index:2,type:'text',content_url:'genai-w6-l3',duration_mins:18},
+    {title:'LoRA for Image Style Adaptation',order_index:3,type:'text',content_url:'genai-w6-l4',duration_mins:18},
+    {title:'ControlNet — Spatial Conditioning',order_index:4,type:'text',content_url:'genai-w6-l5',duration_mins:22},
+    {title:'Module 6 Quiz',order_index:5,type:'quiz',content_url:'genai-w6-quiz',duration_mins:10},
+  ]},
+  { title:'Multimodal AI & Audio Generation', order_index:6, lessons:[
+    {title:'Text-to-Image APIs — DALL-E 3, SDXL & Stability AI',order_index:0,type:'text',content_url:'genai-w7-l1',duration_mins:20},
+    {title:'ComfyUI — Node-Based Workflows',order_index:1,type:'text',content_url:'genai-w7-l2',duration_mins:18},
+    {title:'CLIP — Contrastive Language-Image Pre-training',order_index:2,type:'text',content_url:'genai-w7-l3',duration_mins:20},
+    {title:'Vision-Language Models — BLIP-2, GPT-4V & Gemini',order_index:3,type:'text',content_url:'genai-w7-l4',duration_mins:20},
+    {title:'Audio Generation — TTS, MusicGen & AudioCraft',order_index:4,type:'text',content_url:'genai-w7-l5',duration_mins:22},
+    {title:'Module 7 Quiz',order_index:5,type:'quiz',content_url:'genai-w7-quiz',duration_mins:10},
+  ]},
+  { title:'Building & Deploying GenAI Applications', order_index:7, lessons:[
+    {title:'Building a Gradio Image Generation App',order_index:0,type:'text',content_url:'genai-w8-l1',duration_mins:22},
+    {title:'Multimodal Document Processing Pipeline',order_index:1,type:'text',content_url:'genai-w8-l2',duration_mins:22},
+    {title:'Responsible AI — Watermarking & C2PA',order_index:2,type:'text',content_url:'genai-w8-l3',duration_mins:18},
+    {title:'Production Serving for GenAI Models',order_index:3,type:'text',content_url:'genai-w8-l4',duration_mins:20},
+    {title:'Capstone Project — Full GenAI Application',order_index:4,type:'text',content_url:'genai-w8-l5',duration_mins:25},
+    {title:'Module 8 Quiz',order_index:5,type:'quiz',content_url:'genai-w8-quiz',duration_mins:10},
+  ]},
+];
+
+const QUIZ_QUESTIONS = {
+  'genai-w1-quiz':[
+    {question:'What does a generative model learn, compared to a discriminative model?',options:['P(y|x) — the conditional label distribution','P(x) or P(x,y) — the data distribution itself','Only the decision boundary','The loss function gradient'],correct_index:1,order_index:0},
+    {question:'What is the Fréchet Inception Distance (FID) primarily measuring?',options:['Pixel-level difference between generated and real images','How similar the distribution of generated images is to real images in feature space','The speed of the generator network','The discriminator accuracy'],correct_index:1,order_index:1},
+    {question:'What is a latent space?',options:['The output probability distribution of the model','A compressed, lower-dimensional representation capturing the data\'s underlying factors','The pixel space of generated images','A type of loss function'],correct_index:1,order_index:2},
+    {question:'What is mode collapse in generative models?',options:['The model fails to converge','The generator produces only a narrow subset of the data distribution','The discriminator becomes too strong','The learning rate is too high'],correct_index:1,order_index:3},
+    {question:'Which metric uses a pre-trained classifier to measure sample quality AND diversity?',options:['FID only measures diversity','IS (Inception Score) measures both quality and diversity','CLIP score','SSIM'],correct_index:1,order_index:4},
+  ],
+  'genai-w2-quiz':[
+    {question:'What is the ELBO (Evidence Lower BOund) used for in VAE training?',options:['To maximise the log-likelihood directly','As a tractable lower bound on the intractable log-likelihood','To compute the discriminator loss','To regularise only the decoder'],correct_index:1,order_index:0},
+    {question:'What is the reparameterisation trick in VAEs?',options:['Replacing the encoder with a deterministic network','Sampling ε ~ N(0,I) and computing z = μ + σε so gradients flow through z','Removing the KL divergence term','Using a discrete rather than continuous latent space'],correct_index:1,order_index:1},
+    {question:'What does a denoising autoencoder learn?',options:['To compress images to smaller sizes','To reconstruct clean input from corrupted input','To generate images from random noise','To classify images'],correct_index:1,order_index:2},
+    {question:'What is the role of KL divergence in the VAE loss?',options:['Measures reconstruction quality','Regularises the latent distribution toward a standard Gaussian prior','Prevents mode collapse','Controls the learning rate'],correct_index:1,order_index:3},
+    {question:'What is VQ-VAE\'s key difference from a standard VAE?',options:['It uses a GAN discriminator','It quantises latents to a discrete codebook instead of a continuous distribution','It removes the encoder','It uses pixel-wise loss only'],correct_index:1,order_index:4},
+  ],
+  'genai-w3-quiz':[
+    {question:'In a standard GAN, what is the generator\'s objective?',options:['Minimise reconstruction loss','Fool the discriminator into classifying fake images as real','Maximise the discriminator\'s accuracy','Predict the noise added to images'],correct_index:1,order_index:0},
+    {question:'What does the Wasserstein distance measure that Jensen-Shannon divergence cannot handle?',options:['Image quality','Meaningful distance between distributions even when they have non-overlapping support','Discriminator confidence','Generator diversity'],correct_index:1,order_index:1},
+    {question:'What does WGAN-GP add to the original Wasserstein GAN?',options:['A second discriminator','Gradient penalty to enforce the Lipschitz constraint instead of weight clipping','Spectral normalisation','A variational encoder'],correct_index:1,order_index:2},
+    {question:'What is spectral normalisation used for in GANs?',options:['Normalise pixel values','Constrain the discriminator\'s Lipschitz constant for training stability','Speed up the generator','Reduce model size'],correct_index:1,order_index:3},
+    {question:'In DCGAN, what architectural change from standard GANs was critical for stability?',options:['Adding batch normalisation and removing pooling layers in favour of strided convolutions','Using ReLU in the discriminator','Adding residual connections','Using a 1D discriminator'],correct_index:0,order_index:4},
+  ],
+  'genai-w4-quiz':[
+    {question:'What is the key addition that makes a GAN "conditional"?',options:['A second generator','Conditioning both generator and discriminator on auxiliary information (e.g. class label)','A variational encoder','A larger training dataset'],correct_index:1,order_index:0},
+    {question:'What is the PatchGAN discriminator\'s key architectural innovation?',options:['It classifies the entire image as real or fake','It classifies overlapping patches independently and averages the result','It uses self-attention across patches','It operates in the frequency domain'],correct_index:1,order_index:1},
+    {question:'What loss does CycleGAN add beyond the adversarial loss?',options:['Perceptual loss','Cycle consistency loss — G(F(y)) ≈ y and F(G(x)) ≈ x','Style loss only','L2 pixel loss'],correct_index:1,order_index:2},
+    {question:'What is AdaIN (Adaptive Instance Normalisation) used for in StyleGAN?',options:['To normalise gradients during training','To inject style information into feature maps at each resolution level','To replace batch normalisation','To control the noise schedule'],correct_index:1,order_index:3},
+    {question:'What is the main advantage of Real-ESRGAN over SRGAN?',options:['Higher resolution output','Trained with a complex degradation pipeline to handle real-world noise/compression','Uses a better discriminator','Smaller model size'],correct_index:1,order_index:4},
+  ],
+  'genai-w5-quiz':[
+    {question:'In DDPM, what does the "nice property" of the forward process enable?',options:['Faster training by skipping steps','Jumping directly to any noised x_t from x_0 without iterating','Reducing the noise schedule length','Using a smaller U-Net'],correct_index:1,order_index:0},
+    {question:'What is the simplified DDPM training objective?',options:['KL divergence between predicted and true noise','MSE between predicted noise ε_θ and actual noise ε added to x_0','Cross-entropy on denoised samples','Contrastive loss between clean and noisy images'],correct_index:1,order_index:1},
+    {question:'How does DDIM achieve faster sampling without retraining?',options:['Uses a smaller U-Net','Derives a deterministic non-Markovian reverse process that allows arbitrary step skipping','Reduces the noise schedule','Uses a lookup table for noise predictions'],correct_index:1,order_index:2},
+    {question:'What is the guidance scale γ in classifier-free guidance?',options:['The learning rate for the null token','Controls the tradeoff between prompt fidelity and diversity','The number of denoising steps','The VAE compression factor'],correct_index:1,order_index:3},
+    {question:'What is the score function in the score matching framework?',options:['A metric for generated image quality','The gradient of the log-probability density with respect to x: ∇_x log p(x)','The discriminator output in GANs','The encoder output in VAEs'],correct_index:1,order_index:4},
+  ],
+  'genai-w6-quiz':[
+    {question:'Why does Latent Diffusion operate in latent space rather than pixel space?',options:['Latent space images have higher quality','Compressing to latent space (e.g. 64×64 vs 512×512) dramatically reduces diffusion compute cost','Pixel-space diffusion is unstable','Latent space models are smaller'],correct_index:1,order_index:0},
+    {question:'How does the text prompt steer image generation in Stable Diffusion?',options:['Via the VAE encoder','Through cross-attention between spatial U-Net features and CLIP text token embeddings','Via the noise schedule','Through the CFG scale directly modifying pixels'],correct_index:1,order_index:1},
+    {question:'What is the purpose of prior preservation loss in DreamBooth?',options:['To make the model generate higher quality images','To prevent catastrophic forgetting of the general class while learning a specific subject','To speed up training','To regularise the LoRA weights'],correct_index:1,order_index:2},
+    {question:'In LoRA, why is the B matrix initialised to zero?',options:['To make training faster','So that ΔW = AB = 0 at the start, preserving the original model\'s behaviour','To prevent gradient explosion','To enforce low-rank structure'],correct_index:1,order_index:3},
+    {question:'What is the purpose of "zero convolution" layers in ControlNet?',options:['To reduce parameter count','To initialise ControlNet\'s output as zero, so training starts from the pre-trained SD distribution','To enforce spatial conditioning','To normalise feature maps'],correct_index:1,order_index:4},
+  ],
+  'genai-w7-quiz':[
+    {question:'What key capability did DALL-E 3 introduce compared to previous text-to-image models?',options:['Higher resolution output','Dramatically improved prompt adherence via automatic prompt rewriting','Faster inference','Open-source weights'],correct_index:1,order_index:0},
+    {question:'What is CLIP trained to do?',options:['Generate images from text','Align image and text representations so matching pairs have high cosine similarity','Classify images into 1000 categories','Transcribe audio to text'],correct_index:1,order_index:1},
+    {question:'What is the Q-Former in BLIP-2?',options:['A cross-attention module in the image encoder','A lightweight Transformer that bridges a frozen image encoder and frozen LLM via learned query tokens','The visual question answering head','The text decoder'],correct_index:1,order_index:2},
+    {question:'What does MusicGen\'s melody conditioning allow?',options:['Generating music in any key','Steering the generated music to follow a reference audio melody while applying text-described style','Removing vocals from music','Converting music to sheet notation'],correct_index:1,order_index:3},
+    {question:'What is ComfyUI\'s primary advantage over single-page SD interfaces like AUTOMATIC1111?',options:['Faster image generation','Modular node-based workflows that are inspectable, composable, and shareable as JSON','Better default prompt understanding','Built-in LoRA training'],correct_index:1,order_index:4},
+  ],
+  'genai-w8-quiz':[
+    {question:'What is the key advantage of running the diffusion model in latent space for a Gradio app?',options:['Simpler code','Significantly lower VRAM and compute requirements — 8× smaller feature maps','Better image quality','Faster model loading'],correct_index:1,order_index:0},
+    {question:'Why is async/queue-based architecture needed for production image generation?',options:['It is required by all cloud providers','GPU inference takes seconds — synchronous requests would timeout or freeze the UI','It reduces API costs','It improves image quality'],correct_index:1,order_index:1},
+    {question:'What is C2PA (Coalition for Content Provenance and Authenticity)?',options:['A watermarking algorithm','An open standard for cryptographically signed content credentials that record provenance and creation method','A GAN architecture','A content moderation API'],correct_index:1,order_index:2},
+    {question:'In a tiered document processing pipeline, why use a smaller model for page extraction and a larger one for synthesis?',options:['Smaller models have better OCR','Reduces cost by 10-20× while maintaining final output quality — extraction is simpler than synthesis','Larger models cannot read PDFs','Reduces API rate limit issues'],correct_index:1,order_index:3},
+    {question:'What is invisible watermarking designed to survive?',options:['Complete image replacement','JPEG compression, resizing, and minor image editing while remaining undetectable to human eyes','Only format changes','Only lossless operations'],correct_index:1,order_index:4},
+  ],
+};
+
+document.addEventListener('portal:ready', async()=>{
+  const {data:courses,error}=await supa.from('courses').select('id,title').order('title');
+  if(error){toast(error.message,'error');return;}
+  const sel=document.getElementById('course-select');
+  sel.innerHTML=courses.map(c=>`<option value="${c.id}"${/generative.?ai/i.test(c.title)?' selected':''}>${c.title}</option>`).join('');
+
+  // Preview table
+  const rows=MODULES.flatMap(m=>m.lessons.map(l=>`<tr><td style="padding:.4rem .75rem;color:var(--fog2);font-size:.75rem;">${m.title}</td><td style="padding:.4rem .75rem;font-size:.8rem;color:var(--cream);">${l.title}</td><td style="padding:.4rem .75rem;font-size:.75rem;color:var(--fog2);">${l.type}</td><td style="padding:.4rem .75rem;font-size:.75rem;color:var(--fog2);">${l.duration_mins}min</td></tr>`));
+  document.getElementById('preview-table').innerHTML=`<table style="width:100%;border-collapse:collapse;"><thead><tr style="background:rgba(255,255,255,.04)"><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Module</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Lesson</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Type</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Duration</th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
+});
+
+async function runSeed(){
+  const courseId=document.getElementById('course-select').value;
+  if(!courseId){toast('Select a course first','error');return;}
+  const btn=document.querySelector('.portal-btn');
+  btn.disabled=true;btn.textContent='Seeding…';
+  document.getElementById('status-area').innerHTML='';
+  log('Starting seed…');
+
+  try{
+    // Delete existing modules (cascades to lessons and quiz_questions)
+    const {data:existingMods}=await supa.from('modules').select('id').eq('course_id',courseId);
+    if(existingMods?.length){
+      log(`Removing ${existingMods.length} existing module(s)…`);
+      const modIds=existingMods.map(m=>m.id);
+      const {data:existingLessons}=await supa.from('lessons').select('id').in('module_id',modIds);
+      if(existingLessons?.length){
+        await supa.from('quiz_questions').delete().in('lesson_id',existingLessons.map(l=>l.id));
+      }
+      await supa.from('lessons').delete().in('module_id',modIds);
+      await supa.from('modules').delete().eq('course_id',courseId);
+    }
+
+    let totalLessons=0,totalQuestions=0;
+    for(const mod of MODULES){
+      log(`Inserting module: ${mod.title}…`);
+      const {data:modRow,error:modErr}=await supa.from('modules').insert({
+        course_id:courseId,title:mod.title,order_index:mod.order_index
+      }).select().single();
+      if(modErr)throw modErr;
+
+      for(const lesson of mod.lessons){
+        const {data:lessonRow,error:lessonErr}=await supa.from('lessons').insert({
+          module_id:modRow.id,title:lesson.title,order_index:lesson.order_index,
+          type:lesson.type,content_url:lesson.content_url,duration_mins:lesson.duration_mins
+        }).select().single();
+        if(lessonErr)throw lessonErr;
+        totalLessons++;
+
+        const qs=QUIZ_QUESTIONS[lesson.content_url];
+        if(qs?.length){
+          const {error:qErr}=await supa.from('quiz_questions').insert(
+            qs.map(q=>({...q,lesson_id:lessonRow.id}))
+          );
+          if(qErr)throw qErr;
+          totalQuestions+=qs.length;
+        }
+      }
+      log(`  ✓ ${mod.lessons.length} lessons inserted`,'ok');
+    }
+
+    log(`Done! ${MODULES.length} modules, ${totalLessons} lessons, ${totalQuestions} quiz questions.`,'ok');
+    toast('Generative AI course seeded successfully ✓');
+  }catch(e){
+    log('Error: '+e.message,'error');
+    toast(e.message,'error');
+  }
+  btn.disabled=false;btn.textContent='⚡ Seed Course';
+}
+</script>
+</body></html>
