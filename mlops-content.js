@@ -1960,7 +1960,7 @@ L['mlops-w6-l5'] = { duration_mins: 18, sections: [
 # main.tf (HCL)
 #
 # resource "aws_sagemaker_endpoint_configuration" "fraud_model" {
-#   name = "fraud-model-${var.environment}-${var.model_version}"
+#   name = "fraud-model-\${var.environment}-\${var.model_version}"
 #   production_variants {
 #     variant_name           = "primary"
 #     model_name             = var.model_name
@@ -1978,12 +1978,12 @@ L['mlops-w6-l5'] = { duration_mins: 18, sections: [
 #   data_capture_config {
 #     enable_capture              = true
 #     initial_sampling_percentage = 20
-#     destination_s3_uri          = "s3://${aws_s3_bucket.ml_artifacts.bucket}/data-capture/"
+#     destination_s3_uri          = "s3://\${aws_s3_bucket.ml_artifacts.bucket}/data-capture/"
 #   }
 # }
 #
 # resource "aws_sagemaker_endpoint" "fraud_prod" {
-#   name                 = "fraud-detection-${var.environment}"
+#   name                 = "fraud-detection-\${var.environment}"
 #   endpoint_config_name = aws_sagemaker_endpoint_configuration.fraud_model.name
 #   tags = { Environment = var.environment, Team = "mlops" }
 # }
@@ -1991,7 +1991,7 @@ L['mlops-w6-l5'] = { duration_mins: 18, sections: [
 # resource "aws_appautoscaling_target" "endpoint_scaling" {
 #   max_capacity       = 20
 #   min_capacity       = var.min_instances
-#   resource_id        = "endpoint/${aws_sagemaker_endpoint.fraud_prod.name}/variant/primary"
+#   resource_id        = "endpoint/\${aws_sagemaker_endpoint.fraud_prod.name}/variant/primary"
 #   scalable_dimension = "sagemaker:variant:DesiredInstanceCount"
 #   service_namespace  = "sagemaker"
 # }
