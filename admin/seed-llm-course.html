@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seed Large Language Models Course — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Account</div>
+    <a href="profile.html"><span class="nav-icon">👤</span> My Profile</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
+      <div class="portal-page-title">Seed Large Language Models Course</div>
+      <div class="portal-page-sub">8 modules × 48 lessons (40 text + 8 quizzes) with 40 quiz questions</div>
+    </div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Status</div>
+    <div id="status-area" style="font-family:var(--fb);font-size:.85rem;color:var(--fog2);line-height:1.8;">Waiting to run…</div>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Target Course</div>
+    <p style="font-family:var(--fb);font-size:.83rem;color:var(--fog2);margin-bottom:1rem;">
+      Select the Large Language Models course to seed into. If it doesn't appear, create it first in the Course Editor.
+    </p>
+    <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field-group" style="margin-bottom:0;flex:1;min-width:220px;">
+        <label class="field-label">Course</label>
+        <select class="fi" id="course-select"><option value="">Loading courses…</option></select>
+      </div>
+      <button class="portal-btn" onclick="runSeed()">⚡ Seed Course</button>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Lesson Preview</div>
+    <div id="preview-table" style="overflow-x:auto;"></div>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+function toast(m,t='success'){const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);}
+function log(msg,type=''){const area=document.getElementById('status-area');const line=document.createElement('div');line.style.color=type==='error'?'#f66':type==='ok'?'var(--teal)':'var(--fog2)';line.textContent=msg;area.appendChild(line);area.scrollTop=area.scrollHeight;}
+
+const MODULES = [
+  { title:'Transformer Architecture Deep Dive', order_index:0, lessons:[
+    {title:'Attention Mechanism — Query, Key, Value from First Principles',order_index:0,type:'text',content_url:'llm-w1-l1',duration_mins:22},
+    {title:'Multi-Head Attention & Positional Encoding',order_index:1,type:'text',content_url:'llm-w1-l2',duration_mins:20},
+    {title:'Feed-Forward Sublayer, LayerNorm & Residual Connections',order_index:2,type:'text',content_url:'llm-w1-l3',duration_mins:18},
+    {title:'Autoregressive Language Models & Tokenization',order_index:3,type:'text',content_url:'llm-w1-l4',duration_mins:20},
+    {title:'Encoder vs Decoder vs Encoder-Decoder Architectures',order_index:4,type:'text',content_url:'llm-w1-l5',duration_mins:18},
+    {title:'Module 1 Quiz',order_index:5,type:'quiz',content_url:'llm-w1-quiz',duration_mins:10},
+  ]},
+  { title:'LLM Families — GPT & Autoregressive Models', order_index:1, lessons:[
+    {title:'GPT Family — Scaling Laws & Emergent Abilities',order_index:0,type:'text',content_url:'llm-w2-l1',duration_mins:22},
+    {title:'OpenAI API — Chat Completions, Streaming & Function Calling',order_index:1,type:'text',content_url:'llm-w2-l2',duration_mins:18},
+    {title:'Sampling Strategies — Temperature, Top-k, Top-p & Beam Search',order_index:2,type:'text',content_url:'llm-w2-l3',duration_mins:20},
+    {title:'Open-Source LLMs — LLaMA 3, Mistral & Ollama',order_index:3,type:'text',content_url:'llm-w2-l4',duration_mins:20},
+    {title:'Context Window, KV-Cache & Long-Context Models',order_index:4,type:'text',content_url:'llm-w2-l5',duration_mins:18},
+    {title:'Module 2 Quiz',order_index:5,type:'quiz',content_url:'llm-w2-quiz',duration_mins:10},
+  ]},
+  { title:'BERT & Encoder-Based Models', order_index:2, lessons:[
+    {title:'BERT Pre-training — Masked LM & Next Sentence Prediction',order_index:0,type:'text',content_url:'llm-w3-l1',duration_mins:20},
+    {title:'Fine-Tuning BERT for Downstream Tasks',order_index:1,type:'text',content_url:'llm-w3-l2',duration_mins:22},
+    {title:'RoBERTa, ALBERT & DeBERTa — BERT Variants',order_index:2,type:'text',content_url:'llm-w3-l3',duration_mins:18},
+    {title:'DistilBERT & Knowledge Distillation',order_index:3,type:'text',content_url:'llm-w3-l4',duration_mins:18},
+    {title:'Sentence-BERT & Semantic Embeddings',order_index:4,type:'text',content_url:'llm-w3-l5',duration_mins:20},
+    {title:'Module 3 Quiz',order_index:5,type:'quiz',content_url:'llm-w3-quiz',duration_mins:10},
+  ]},
+  { title:'Open-Source LLMs & Local Inference', order_index:3, lessons:[
+    {title:'Quantisation — GGUF, GPTQ & AWQ',order_index:0,type:'text',content_url:'llm-w4-l1',duration_mins:20},
+    {title:'Ollama — Running LLMs Locally',order_index:1,type:'text',content_url:'llm-w4-l2',duration_mins:18},
+    {title:'HuggingFace Transformers — Loading & Running Models',order_index:2,type:'text',content_url:'llm-w4-l3',duration_mins:22},
+    {title:'Small Language Models — Phi, Gemma & Qwen',order_index:3,type:'text',content_url:'llm-w4-l4',duration_mins:18},
+    {title:'LLM Benchmarks — Evaluating Open-Source Models',order_index:4,type:'text',content_url:'llm-w4-l5',duration_mins:20},
+    {title:'Module 4 Quiz',order_index:5,type:'quiz',content_url:'llm-w4-quiz',duration_mins:10},
+  ]},
+  { title:'Prompt Engineering', order_index:4, lessons:[
+    {title:'Zero-Shot, One-Shot & Few-Shot Prompting',order_index:0,type:'text',content_url:'llm-w5-l1',duration_mins:20},
+    {title:'Chain-of-Thought Prompting',order_index:1,type:'text',content_url:'llm-w5-l2',duration_mins:20},
+    {title:'Self-Consistency, Tree of Thoughts & ReAct',order_index:2,type:'text',content_url:'llm-w5-l3',duration_mins:18},
+    {title:'System Prompts, Structured Output & JSON Mode',order_index:3,type:'text',content_url:'llm-w5-l4',duration_mins:18},
+    {title:'Prompt Injection & Defence Strategies',order_index:4,type:'text',content_url:'llm-w5-l5',duration_mins:18},
+    {title:'Module 5 Quiz',order_index:5,type:'quiz',content_url:'llm-w5-quiz',duration_mins:10},
+  ]},
+  { title:'Fine-Tuning LLMs', order_index:5, lessons:[
+    {title:'When to Fine-Tune vs Prompt Engineer vs RAG',order_index:0,type:'text',content_url:'llm-w6-l1',duration_mins:20},
+    {title:'Supervised Fine-Tuning — Data & Training Pipeline',order_index:1,type:'text',content_url:'llm-w6-l2',duration_mins:20},
+    {title:'LoRA — Low-Rank Adaptation',order_index:2,type:'text',content_url:'llm-w6-l3',duration_mins:22},
+    {title:'QLoRA — 4-Bit Fine-Tuning on Consumer Hardware',order_index:3,type:'text',content_url:'llm-w6-l4',duration_mins:22},
+    {title:'Building an Instruction Dataset & Training with Unsloth',order_index:4,type:'text',content_url:'llm-w6-l5',duration_mins:22},
+    {title:'Module 6 Quiz',order_index:5,type:'quiz',content_url:'llm-w6-quiz',duration_mins:10},
+  ]},
+  { title:'RAG & Vector Databases', order_index:6, lessons:[
+    {title:'RAG Architecture — Indexing, Retrieval & Generation',order_index:0,type:'text',content_url:'llm-w7-l1',duration_mins:22},
+    {title:'Vector Databases — ChromaDB, Pinecone & Qdrant',order_index:1,type:'text',content_url:'llm-w7-l2',duration_mins:20},
+    {title:'Advanced RAG — HyDE, Reranking & Self-RAG',order_index:2,type:'text',content_url:'llm-w7-l3',duration_mins:20},
+    {title:'LangChain — Chains, Memory & Agents',order_index:3,type:'text',content_url:'llm-w7-l4',duration_mins:20},
+    {title:'LlamaIndex — Query Engines & Multi-Document QA',order_index:4,type:'text',content_url:'llm-w7-l5',duration_mins:20},
+    {title:'Module 7 Quiz',order_index:5,type:'quiz',content_url:'llm-w7-quiz',duration_mins:10},
+  ]},
+  { title:'Evaluation, Safety & Production', order_index:7, lessons:[
+    {title:'LLM Evaluation — Metrics & LLM-as-Judge',order_index:0,type:'text',content_url:'llm-w8-l1',duration_mins:20},
+    {title:'Hallucination, Bias & Red-Teaming',order_index:1,type:'text',content_url:'llm-w8-l2',duration_mins:20},
+    {title:'RLHF & Constitutional AI — Aligning LLMs',order_index:2,type:'text',content_url:'llm-w8-l3',duration_mins:20},
+    {title:'Production LLM Systems — Streaming, Caching & Cost Control',order_index:3,type:'text',content_url:'llm-w8-l4',duration_mins:22},
+    {title:'Monitoring, Observability & Capstone Project',order_index:4,type:'text',content_url:'llm-w8-l5',duration_mins:22},
+    {title:'Module 8 Quiz',order_index:5,type:'quiz',content_url:'llm-w8-quiz',duration_mins:10},
+  ]},
+];
+
+const QUIZ_QUESTIONS = {
+  'llm-w1-quiz':[
+    {question:'What does the division by √d_k in scaled dot-product attention prevent?',options:['Negative attention scores','Softmax saturation from large dot products','Gradient explosion in the value matrix','Positional encoding interference'],correct_index:1,order_index:0},
+    {question:'Which architecture uses causal (unidirectional) attention?',options:['BERT','RoBERTa','GPT family','T5 encoder'],correct_index:2,order_index:1},
+    {question:'What is the primary purpose of positional encoding?',options:['Reduce model size','Give the model a sense of token order','Normalise attention weights','Increase vocabulary size'],correct_index:1,order_index:2},
+    {question:'What does pre-norm mean in modern Transformers?',options:['LayerNorm applied before the sublayer','LayerNorm applied after the sublayer','BatchNorm before training','Gradient clipping before backprop'],correct_index:0,order_index:3},
+    {question:'What does the KV-cache store during autoregressive inference?',options:['The full attention weight matrix','Key and value tensors from all previous tokens','The model\'s gradient history','Output logits for each step'],correct_index:1,order_index:4},
+  ],
+  'llm-w2-quiz':[
+    {question:'What did the Chinchilla paper show about GPT-3?',options:['It was trained on too much data','It was compute-suboptimal — needed more training tokens','It used too many attention heads','Its architecture was flawed'],correct_index:1,order_index:0},
+    {question:'What temperature value approaches greedy decoding?',options:['T = 2','T = 1','T = 0','T = 0.5'],correct_index:2,order_index:1},
+    {question:'What is the advantage of top-p (nucleus) over top-k sampling?',options:['Always faster','Adapts dynamically to the model\'s confidence','Uses fewer tokens','More deterministic'],correct_index:1,order_index:2},
+    {question:'What architectural innovation allows Mistral 7B to use a smaller KV-cache?',options:['Sinusoidal positional encoding','Sparse attention','Grouped Query Attention (GQA)','Flash Attention 2'],correct_index:2,order_index:3},
+    {question:'What is an emergent ability in LLMs?',options:['A bug fixed in GPT-4','A capability absent in small models that appears at larger scale','A feature explicitly trained for','A benchmark metric'],correct_index:1,order_index:4},
+  ],
+  'llm-w3-quiz':[
+    {question:'What percentage of tokens does BERT mask during MLM pre-training?',options:['5%','10%','15%','25%'],correct_index:2,order_index:0},
+    {question:'What did RoBERTa find about NSP (Next Sentence Prediction)?',options:['It was essential for BERT\'s performance','Removing it consistently improved performance','It should be replaced with MLM','It required more training data'],correct_index:1,order_index:1},
+    {question:'What is knowledge distillation?',options:['Removing layers from a model','Training a student model to mimic a teacher\'s output distribution','Quantising model weights','Fine-tuning on a small dataset'],correct_index:1,order_index:2},
+    {question:'Why is Sentence-BERT needed instead of using BERT directly for similarity?',options:['BERT is too large','BERT cross-encoder is O(n²) at inference for all pairs','BERT doesn\'t support sentence inputs','BERT produces no embeddings'],correct_index:1,order_index:3},
+    {question:'What is DeBERTa\'s key architectural improvement?',options:['Removing positional encoding entirely','Disentangled attention for content and position separately','Using sparse attention','Double the number of attention heads'],correct_index:1,order_index:4},
+  ],
+  'llm-w4-quiz':[
+    {question:'What is the "sweet spot" GGUF quantisation level that balances size and quality?',options:['Q8_0','Q4_K_M','Q2_K','F16'],correct_index:1,order_index:0},
+    {question:'How does AWQ differ from GPTQ in its approach?',options:['AWQ uses calibration data; GPTQ does not','AWQ protects channels with large activation magnitudes before quantising','AWQ is slower to run','AWQ requires more VRAM at inference'],correct_index:1,order_index:1},
+    {question:'On Apple Silicon Macs, why is local LLM inference efficient?',options:['They use special LLM chips','Unified memory means RAM and VRAM are the same pool','They run GGUF natively','They have more CPU cores'],correct_index:1,order_index:2},
+    {question:'What does HumanEval benchmark measure?',options:['LLM safety and alignment','Functional correctness of generated Python code','Commonsense reasoning','Mathematical word problems'],correct_index:1,order_index:3},
+    {question:'What is the key claim behind Microsoft\'s Phi model family?',options:['Largest open-source model','Trained entirely on code','High-quality synthetic data enables small models to punch above their weight','Fastest inference speed'],correct_index:1,order_index:4},
+  ],
+  'llm-w5-quiz':[
+    {question:'What is "Zero-Shot CoT"?',options:['Using no examples and no reasoning','Adding "Let\'s think step by step." without any examples','Providing full reasoning chains for each example','Using beam search for CoT'],correct_index:1,order_index:0},
+    {question:'How does self-consistency improve over single chain-of-thought?',options:['Uses a better model','Samples multiple reasoning chains and takes majority vote','Adds retrieval to CoT','Uses structured output format'],correct_index:1,order_index:1},
+    {question:'In a ReAct loop, what comes after a Thought?',options:['Another Thought','Observation','Action','Answer'],correct_index:2,order_index:2},
+    {question:'What is indirect prompt injection?',options:['User directly overrides system prompt','Malicious instructions embedded in retrieved external content','A jailbreak through role-playing','SQL injection analogue in prompts'],correct_index:1,order_index:3},
+    {question:'What is the primary advantage of JSON mode with the OpenAI API?',options:['Faster response time','Guaranteed valid JSON output — no parsing errors','Lower cost per token','Longer context window'],correct_index:1,order_index:4},
+  ],
+  'llm-w6-quiz':[
+    {question:'In LoRA, what does rank r control?',options:['The learning rate','The expressiveness and size of the weight update matrices','The dropout rate','The number of target modules'],correct_index:1,order_index:0},
+    {question:'What is the key innovation of QLoRA over standard LoRA?',options:['Fewer trainable parameters','Quantise the base model to 4-bit before adding LoRA adapters','Using DPO instead of SFT','Removing the base model entirely'],correct_index:1,order_index:1},
+    {question:'When is fine-tuning clearly better than RAG?',options:['When you need up-to-date information','When knowledge is static and needs to be deeply internalised in weights','When you have no labelled data','When the model is already good at the task'],correct_index:1,order_index:2},
+    {question:'Why should the loss be computed only on assistant tokens during SFT?',options:['User tokens are always correct','System prompts are too long','The model should learn to generate responses, not repeat prompts','Reduces training time'],correct_index:2,order_index:3},
+    {question:'What does NF4 (Normal Float 4-bit) improve over standard INT4?',options:['Faster computation','Places more representable values near zero, matching the weight distribution','Requires less memory','Supports higher rank LoRA'],correct_index:1,order_index:4},
+  ],
+  'llm-w7-quiz':[
+    {question:'In a RAG pipeline, what is typically the biggest bottleneck for answer quality?',options:['The LLM\'s generation ability','Retrieval quality — wrong chunks lead to wrong answers','The chunking strategy','The embedding model\'s dimension'],correct_index:1,order_index:0},
+    {question:'What does HyDE (Hypothetical Document Embeddings) do?',options:['Generates fake documents to confuse retrievers','Embeds a hypothetical answer rather than the raw query for better retrieval','Reduces embedding dimension','Uses multiple queries simultaneously'],correct_index:1,order_index:1},
+    {question:'What is the role of a cross-encoder in a two-stage RAG retrieval pipeline?',options:['Stage 1 broad retrieval using ANN','Stage 2 precision reranking of candidate chunks','Embedding documents for storage','Generating the final answer'],correct_index:1,order_index:2},
+    {question:'What does ChromaDB use as its backend storage?',options:['PostgreSQL','Redis','SQLite and FAISS','Pinecone'],correct_index:2,order_index:3},
+    {question:'What is LangChain\'s LCEL (LangChain Expression Language) pipe (|) operator used for?',options:['Parallel execution of chains','Composing chain components in a Unix-pipe-like fashion','Database queries','Model comparison'],correct_index:1,order_index:4},
+  ],
+  'llm-w8-quiz':[
+    {question:'Why does BERTScore correlate better with human judgement than BLEU?',options:['It is faster to compute','It uses contextual embeddings to capture semantic similarity','It requires no reference','It penalises long responses'],correct_index:1,order_index:0},
+    {question:'What is "faithfulness hallucination" in RAG?',options:['The model making up facts not in its training data','The model generating claims not supported by the retrieved source documents','The retriever returning wrong documents','The model refusing to answer'],correct_index:1,order_index:1},
+    {question:'How does DPO differ from PPO-based RLHF?',options:['DPO requires more compute','DPO directly optimises preference from (chosen, rejected) pairs — no reward model or RL loop','DPO uses BERT instead of a decoder LLM','DPO only works with GPT models'],correct_index:1,order_index:2},
+    {question:'What is semantic caching?',options:['Caching only the system prompt','Finding similar past queries by embedding and returning cached responses','Storing model weights in cache','Caching token probabilities'],correct_index:1,order_index:3},
+    {question:'What does vLLM\'s PagedAttention improve?',options:['Model accuracy','KV-cache memory management, enabling higher throughput','Quantisation quality','Fine-tuning speed'],correct_index:1,order_index:4},
+  ],
+};
+
+document.addEventListener('portal:ready', async()=>{
+  const {data:courses,error}=await supa.from('courses').select('id,title').order('title');
+  if(error){toast(error.message,'error');return;}
+  const sel=document.getElementById('course-select');
+  sel.innerHTML=courses.map(c=>`<option value="${c.id}"${/large language|llm/i.test(c.title)?' selected':''}>${c.title}</option>`).join('');
+
+  // Preview table
+  const rows=MODULES.flatMap(m=>m.lessons.map(l=>`<tr><td style="padding:.4rem .75rem;color:var(--fog2);font-size:.75rem;">${m.title}</td><td style="padding:.4rem .75rem;font-size:.8rem;color:var(--cream);">${l.title}</td><td style="padding:.4rem .75rem;font-size:.75rem;color:var(--fog2);">${l.type}</td><td style="padding:.4rem .75rem;font-size:.75rem;color:var(--fog2);">${l.duration_mins}min</td></tr>`));
+  document.getElementById('preview-table').innerHTML=`<table style="width:100%;border-collapse:collapse;"><thead><tr style="background:rgba(255,255,255,.04)"><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Module</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Lesson</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Type</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Duration</th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
+});
+
+async function runSeed(){
+  const courseId=document.getElementById('course-select').value;
+  if(!courseId){toast('Select a course first','error');return;}
+  const btn=document.querySelector('.portal-btn');
+  btn.disabled=true;btn.textContent='Seeding…';
+  document.getElementById('status-area').innerHTML='';
+  log('Starting seed…');
+
+  try{
+    // Delete existing modules (cascades to lessons and quiz_questions)
+    const {data:existingMods}=await supa.from('modules').select('id').eq('course_id',courseId);
+    if(existingMods?.length){
+      log(`Removing ${existingMods.length} existing module(s)…`);
+      const modIds=existingMods.map(m=>m.id);
+      const {data:existingLessons}=await supa.from('lessons').select('id').in('module_id',modIds);
+      if(existingLessons?.length){
+        await supa.from('quiz_questions').delete().in('lesson_id',existingLessons.map(l=>l.id));
+      }
+      await supa.from('lessons').delete().in('module_id',modIds);
+      await supa.from('modules').delete().eq('course_id',courseId);
+    }
+
+    let totalLessons=0,totalQuestions=0;
+    for(const mod of MODULES){
+      log(`Inserting module: ${mod.title}…`);
+      const {data:modRow,error:modErr}=await supa.from('modules').insert({
+        course_id:courseId,title:mod.title,order_index:mod.order_index
+      }).select().single();
+      if(modErr)throw modErr;
+
+      for(const lesson of mod.lessons){
+        const {data:lessonRow,error:lessonErr}=await supa.from('lessons').insert({
+          module_id:modRow.id,title:lesson.title,order_index:lesson.order_index,
+          type:lesson.type,content_url:lesson.content_url,duration_mins:lesson.duration_mins
+        }).select().single();
+        if(lessonErr)throw lessonErr;
+        totalLessons++;
+
+        const qs=QUIZ_QUESTIONS[lesson.content_url];
+        if(qs?.length){
+          const {error:qErr}=await supa.from('quiz_questions').insert(
+            qs.map(q=>({...q,lesson_id:lessonRow.id}))
+          );
+          if(qErr)throw qErr;
+          totalQuestions+=qs.length;
+        }
+      }
+      log(`  ✓ ${mod.lessons.length} lessons inserted`,'ok');
+    }
+
+    log(`Done! ${MODULES.length} modules, ${totalLessons} lessons, ${totalQuestions} quiz questions.`,'ok');
+    toast('LLM course seeded successfully ✓');
+  }catch(e){
+    log('Error: '+e.message,'error');
+    toast(e.message,'error');
+  }
+  btn.disabled=false;btn.textContent='⚡ Seed Course';
+}
+</script>
+</body></html>
