@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seed MLOps & Model Deployment Course — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Account</div>
+    <a href="profile.html"><span class="nav-icon">👤</span> My Profile</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
+      <div class="portal-page-title">Seed MLOps & Model Deployment Course</div>
+      <div class="portal-page-sub">8 modules × 48 lessons (40 text + 8 quizzes) with 40 quiz questions</div>
+    </div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Status</div>
+    <div id="status-area" style="font-family:var(--fb);font-size:.85rem;color:var(--fog2);line-height:1.8;">Waiting to run…</div>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Target Course</div>
+    <p style="font-family:var(--fb);font-size:.83rem;color:var(--fog2);margin-bottom:1rem;">
+      Select the MLOps & Model Deployment course to seed into. If it doesn't appear, create it first in the Course Editor.
+    </p>
+    <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field-group" style="margin-bottom:0;flex:1;min-width:220px;">
+        <label class="field-label">Course</label>
+        <select class="fi" id="course-select"><option value="">Loading courses…</option></select>
+      </div>
+      <button class="portal-btn" onclick="runSeed()">⚡ Seed Course</button>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Lesson Preview</div>
+    <div id="preview-table" style="overflow-x:auto;"></div>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+function toast(m,t='success'){const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);}
+function log(msg,type=''){const area=document.getElementById('status-area');const line=document.createElement('div');line.style.color=type==='error'?'#f66':type==='ok'?'var(--teal)':'var(--fog2)';line.textContent=msg;area.appendChild(line);area.scrollTop=area.scrollHeight;}
+
+const MODULES = [
+  { title:'MLOps Foundations', order_index:0, lessons:[
+    {title:'What is MLOps? The ML Lifecycle',order_index:0,type:'text',content_url:'mlops-w1-l1',duration_mins:20},
+    {title:'Experiment Tracking with MLflow',order_index:1,type:'text',content_url:'mlops-w1-l2',duration_mins:22},
+    {title:'Data Versioning with DVC',order_index:2,type:'text',content_url:'mlops-w1-l3',duration_mins:20},
+    {title:'Reproducibility & Project Structure',order_index:3,type:'text',content_url:'mlops-w1-l4',duration_mins:18},
+    {title:'MLOps Maturity Model — L0 to L2',order_index:4,type:'text',content_url:'mlops-w1-l5',duration_mins:18},
+    {title:'Module 1 Quiz',order_index:5,type:'quiz',content_url:'mlops-w1-quiz',duration_mins:10},
+  ]},
+  { title:'Model Packaging & Serving', order_index:1, lessons:[
+    {title:'Model Serialisation — pickle, joblib, ONNX',order_index:0,type:'text',content_url:'mlops-w2-l1',duration_mins:20},
+    {title:'Containerising ML Models with Docker',order_index:1,type:'text',content_url:'mlops-w2-l2',duration_mins:22},
+    {title:'Building ML APIs with FastAPI',order_index:2,type:'text',content_url:'mlops-w2-l3',duration_mins:22},
+    {title:'Batch vs Online Inference',order_index:3,type:'text',content_url:'mlops-w2-l4',duration_mins:18},
+    {title:'REST API Design Best Practices for ML',order_index:4,type:'text',content_url:'mlops-w2-l5',duration_mins:18},
+    {title:'Module 2 Quiz',order_index:5,type:'quiz',content_url:'mlops-w2-quiz',duration_mins:10},
+  ]},
+  { title:'CI/CD for ML', order_index:2, lessons:[
+    {title:'GitHub Actions for ML Pipelines',order_index:0,type:'text',content_url:'mlops-w3-l1',duration_mins:22},
+    {title:'Testing ML Systems — Unit, Data & Model Tests',order_index:1,type:'text',content_url:'mlops-w3-l2',duration_mins:20},
+    {title:'Model Validation Gates',order_index:2,type:'text',content_url:'mlops-w3-l3',duration_mins:18},
+    {title:'Pre-Commit Hooks & Code Quality',order_index:3,type:'text',content_url:'mlops-w3-l4',duration_mins:18},
+    {title:'Continuous Training with Prefect',order_index:4,type:'text',content_url:'mlops-w3-l5',duration_mins:20},
+    {title:'Module 3 Quiz',order_index:5,type:'quiz',content_url:'mlops-w3-quiz',duration_mins:10},
+  ]},
+  { title:'Model Monitoring & Observability', order_index:3, lessons:[
+    {title:'Drift Detection — KS Test, Chi-Square & PSI',order_index:0,type:'text',content_url:'mlops-w4-l1',duration_mins:20},
+    {title:'Production Model Monitoring',order_index:1,type:'text',content_url:'mlops-w4-l2',duration_mins:20},
+    {title:'Prometheus & Grafana for ML',order_index:2,type:'text',content_url:'mlops-w4-l3',duration_mins:20},
+    {title:'A/B Testing & Canary Deployments',order_index:3,type:'text',content_url:'mlops-w4-l4',duration_mins:20},
+    {title:'Feedback Loops & Automated Retraining Triggers',order_index:4,type:'text',content_url:'mlops-w4-l5',duration_mins:20},
+    {title:'Module 4 Quiz',order_index:5,type:'quiz',content_url:'mlops-w4-quiz',duration_mins:10},
+  ]},
+  { title:'Feature Stores & Data Pipelines', order_index:4, lessons:[
+    {title:'Feature Stores — Architecture & Feast',order_index:0,type:'text',content_url:'mlops-w5-l1',duration_mins:20},
+    {title:'Apache Airflow for ML Orchestration',order_index:1,type:'text',content_url:'mlops-w5-l2',duration_mins:22},
+    {title:'Data Quality with Great Expectations',order_index:2,type:'text',content_url:'mlops-w5-l3',duration_mins:18},
+    {title:'Streaming Features with Apache Kafka',order_index:3,type:'text',content_url:'mlops-w5-l4',duration_mins:20},
+    {title:'Real-Time vs Batch Feature Engineering',order_index:4,type:'text',content_url:'mlops-w5-l5',duration_mins:18},
+    {title:'Module 5 Quiz',order_index:5,type:'quiz',content_url:'mlops-w5-quiz',duration_mins:10},
+  ]},
+  { title:'Cloud ML Platforms', order_index:5, lessons:[
+    {title:'AWS SageMaker — Training, Registry & Pipelines',order_index:0,type:'text',content_url:'mlops-w6-l1',duration_mins:22},
+    {title:'Google Vertex AI & Azure ML',order_index:1,type:'text',content_url:'mlops-w6-l2',duration_mins:18},
+    {title:'Kubernetes & KServe for ML Serving',order_index:2,type:'text',content_url:'mlops-w6-l3',duration_mins:20},
+    {title:'Cloud Cost Optimisation for ML Workloads',order_index:3,type:'text',content_url:'mlops-w6-l4',duration_mins:18},
+    {title:'Infrastructure as Code for ML Systems',order_index:4,type:'text',content_url:'mlops-w6-l5',duration_mins:18},
+    {title:'Module 6 Quiz',order_index:5,type:'quiz',content_url:'mlops-w6-quiz',duration_mins:10},
+  ]},
+  { title:'LLM Deployment & Serving', order_index:6, lessons:[
+    {title:'High-Throughput LLM Serving — vLLM & TGI',order_index:0,type:'text',content_url:'mlops-w7-l1',duration_mins:22},
+    {title:'Model Quantisation — GGUF, GPTQ & AWQ',order_index:1,type:'text',content_url:'mlops-w7-l2',duration_mins:20},
+    {title:'Prompt Caching & Semantic Caching',order_index:2,type:'text',content_url:'mlops-w7-l3',duration_mins:18},
+    {title:'LLM Observability — Costs, Latency & Quality',order_index:3,type:'text',content_url:'mlops-w7-l4',duration_mins:18},
+    {title:'Building LLM-Powered Microservices',order_index:4,type:'text',content_url:'mlops-w7-l5',duration_mins:18},
+    {title:'Module 7 Quiz',order_index:5,type:'quiz',content_url:'mlops-w7-quiz',duration_mins:10},
+  ]},
+  { title:'Production ML Best Practices', order_index:7, lessons:[
+    {title:'ML System Design Patterns',order_index:0,type:'text',content_url:'mlops-w8-l1',duration_mins:22},
+    {title:'Model Versioning & Rollback Strategies',order_index:1,type:'text',content_url:'mlops-w8-l2',duration_mins:18},
+    {title:'Model Cards & ML Documentation',order_index:2,type:'text',content_url:'mlops-w8-l3',duration_mins:18},
+    {title:'ML Security — Adversarial Attacks & Data Poisoning',order_index:3,type:'text',content_url:'mlops-w8-l4',duration_mins:18},
+    {title:'Capstone — Building a Complete MLOps Pipeline',order_index:4,type:'text',content_url:'mlops-w8-l5',duration_mins:25},
+    {title:'Module 8 Quiz',order_index:5,type:'quiz',content_url:'mlops-w8-quiz',duration_mins:10},
+  ]},
+];
+
+const QUIZ_QUESTIONS = {
+  'mlops-w1-quiz':[
+    {question:'What percentage of ML projects typically fail to reach production?',options:['25-30%','50-60%','85-90%','Less than 10%'],correct_index:2,order_index:0},
+    {question:'According to the ML technical debt paper, approximately what percentage of a real-world ML system is model code?',options:['50%','25%','~5%','80%'],correct_index:2,order_index:1},
+    {question:'In MLflow, what does mlflow.log_model() do?',options:['Saves hyperparameters to the run','Serialises and stores the trained model as a run artifact with metadata for later loading','Registers the model in the Model Registry','Evaluates the model on a test set'],correct_index:1,order_index:2},
+    {question:'What is the primary benefit of DVC for ML projects?',options:['Faster model training','Version control for large data files and models — git-like tracking without storing binaries in git','Automatic hyperparameter tuning','Built-in experiment comparison UI'],correct_index:1,order_index:3},
+    {question:'What distinguishes an MLOps Level 2 system from Level 1?',options:['Level 2 uses more compute','Level 2 has fully automated CI/CD pipelines for model retraining and deployment — triggered by code, data, or concept drift','Level 2 uses cloud infrastructure','Level 2 has more features in the model'],correct_index:1,order_index:4},
+  ],
+  'mlops-w2-quiz':[
+    {question:'What advantage does ONNX offer over pickle for model serialisation?',options:['ONNX files are smaller','ONNX models are framework-agnostic — a model trained in scikit-learn can be deployed with ONNX Runtime without the training library','ONNX is faster to serialise','ONNX supports more model types'],correct_index:1,order_index:0},
+    {question:'What is the purpose of a multi-stage Docker build for ML models?',options:['To run multiple models in parallel','To separate the build environment (with heavy training dependencies) from the lean runtime image — reducing final image size by 60-80%','To support multiple Python versions','To enable GPU and CPU builds simultaneously'],correct_index:1,order_index:1},
+    {question:'In FastAPI, what is the lifespan context manager used for in ML APIs?',options:['To set the API\'s timeout','To load the model once at startup (not per-request) and clean up resources on shutdown','To handle authentication','To rate-limit incoming requests'],correct_index:1,order_index:2},
+    {question:'What is the key trade-off between batch and online inference?',options:['Cost vs accuracy','Latency vs throughput — batch processes many samples efficiently but adds delay; online serves individual requests immediately','Memory vs speed','Accuracy vs interpretability'],correct_index:1,order_index:3},
+    {question:'What does idempotency mean for a REST ML API endpoint?',options:['The endpoint always returns the same prediction','Making the same request multiple times produces the same result without side effects — important for retries and fault tolerance','The endpoint is stateless','The endpoint caches all results'],correct_index:1,order_index:4},
+  ],
+  'mlops-w3-quiz':[
+    {question:'In a GitHub Actions ML pipeline, why should training only run on merges to main (not every PR)?',options:['Training takes too long for PRs','Training jobs consume expensive compute — run fast tests on every PR, expensive training only after code review passes','GitHub Actions doesn\'t support training','PRs don\'t have access to data'],correct_index:1,order_index:0},
+    {question:'What is a model invariance test?',options:['A test that verifies the model\'s accuracy on the test set','A test that verifies model behaviour is consistent under transformations that should not change the prediction (e.g., changing irrelevant features)','A test that checks model latency','A test for data schema correctness'],correct_index:1,order_index:1},
+    {question:'What does a model validation gate check before deployment?',options:['That the model file is valid JSON','That the new model meets performance, latency, and fairness thresholds — and doesn\'t regress versus the current production model','That the Docker image builds correctly','That all tests pass'],correct_index:1,order_index:2},
+    {question:'What is the purpose of nbstripout in a pre-commit hook for ML projects?',options:['To run notebook cells automatically','To strip output cells from Jupyter notebooks before committing — preventing large binary diffs and sensitive data leakage','To convert notebooks to Python scripts','To validate notebook syntax'],correct_index:1,order_index:3},
+    {question:'In Prefect, what is a flow?',options:['A data stream from Kafka','A Python function decorated with @flow that orchestrates a workflow — tracking state, retries, and dependencies between tasks','A type of data pipeline connection','A monitoring dashboard'],correct_index:1,order_index:4},
+  ],
+  'mlops-w4-quiz':[
+    {question:'What does the Kolmogorov-Smirnov (KS) test measure in drift detection?',options:['The correlation between two features','The maximum absolute difference between two empirical CDFs — measuring distributional shift for continuous features','The proportion of missing values','The statistical significance of model performance change'],correct_index:1,order_index:0},
+    {question:'What is "concept drift" as distinct from "data drift"?',options:['Data drift affects inputs; concept drift affects outputs only','Concept drift is a change in the relationship between features and labels (P(y|x) changes) even if the input distribution is stable','Concept drift only affects classification models','Concept drift is always faster than data drift'],correct_index:1,order_index:1},
+    {question:'What is a Prometheus Counter metric and when should you use one?',options:['A metric that can go up and down — use for temperature readings','A monotonically increasing metric — use for totals like request counts, error counts, and bytes processed','A metric that snapshots the current value — use for queue sizes','A metric that tracks timing distributions'],correct_index:1,order_index:2},
+    {question:'What makes hash-based traffic splitting in A/B testing preferable to random splitting?',options:['Hash-based is more statistically rigorous','Hash-based routing is deterministic — the same user_id always routes to the same model variant, preventing a user from seeing inconsistent results across requests','Hash-based is easier to implement','Random splitting requires more data'],correct_index:1,order_index:3},
+    {question:'What is the "feedback loop poisoning" problem in production ML?',options:['Users gaming the model with adversarial inputs','When model predictions influence future training data — e.g., a fraud model that declines suspicious transactions never sees those as completed fraud, depriving future training of positive examples','When monitoring data is incorrect','When the retraining schedule is too frequent'],correct_index:1,order_index:4},
+  ],
+  'mlops-w5-quiz':[
+    {question:'What is "training-serving skew" and how does a feature store prevent it?',options:['Different model versions in training vs serving','Features computed differently in training (batch) vs serving (real-time) — a feature store centralises computation so both use identical feature definitions','Skew in the distribution of training labels','Latency differences between training and serving'],correct_index:1,order_index:0},
+    {question:'What is a point-in-time correct join?',options:['A join that executes at a specific time of day','Joining historical training labels to feature values that existed at the time each label was generated — preventing future data leakage','A join that uses timestamps as primary keys','A real-time database join'],correct_index:1,order_index:1},
+    {question:'In Airflow, what makes a DAG task idempotent?',options:['Using the PythonOperator','Writing outputs to versioned paths (e.g., including execution_date) rather than fixed paths — so re-running the same DAG run produces identical results','Using sensors for input detection','Using XCom for data passing'],correct_index:1,order_index:2},
+    {question:'What is the risk of enabling catchup=True in Airflow after a long pause?',options:['The DAG will delete historical data','Airflow will enqueue all missed DAG runs simultaneously — potentially overwhelming infrastructure and incurring large unexpected costs','The DAG will skip historical runs','The schedule will reset'],correct_index:1,order_index:3},
+    {question:'What guarantees does "exactly-once" processing in Kafka provide?',options:['Each message is delivered at most once','Each message is processed exactly once — neither lost nor duplicated — critical for financial feature aggregations','Each message is processed at least once','Messages arrive in strict time order'],correct_index:1,order_index:4},
+  ],
+  'mlops-w6-quiz':[
+    {question:'What is SageMaker\'s Model Registry "PendingManualApproval" status used for?',options:['A bug in the registration process','A governance gate that requires a human to approve a model version before it can be deployed to production','A temporary state during model upload','Indicating the model failed validation'],correct_index:1,order_index:0},
+    {question:'What is the key advantage of Vertex AI Pipelines over SageMaker Pipelines?',options:['Vertex Pipelines is faster','Vertex Pipelines is based on Kubeflow Pipelines (KFP) — an open standard that can also run on-premises, reducing vendor lock-in','Vertex Pipelines has better UI','Vertex Pipelines is cheaper'],correct_index:1,order_index:1},
+    {question:'What does KServe\'s ModelMesh provide over standard single-model serving?',options:['Faster inference for individual models','Dynamic loading of multiple models across shared GPU pods — dramatically improving GPU utilisation when serving many models','Better auto-scaling','Lower latency per request'],correct_index:1,order_index:2},
+    {question:'When are Spot/preemptible instances appropriate for ML workloads?',options:['Always — they are always cheaper','For training jobs with checkpointing enabled — never for inference endpoints that need guaranteed availability','Only for CPU workloads','Only when training takes less than 1 hour'],correct_index:1,order_index:3},
+    {question:'What is the primary risk of committing to Reserved Instance pricing too early?',options:['Reserved instances have worse performance','Locking into the wrong instance type before load patterns stabilise — if usage is lower or the workload changes, you pay for idle capacity','Reserved instances expire quickly','Reserved instances don\'t support auto-scaling'],correct_index:1,order_index:4},
+  ],
+  'mlops-w7-quiz':[
+    {question:'What is PagedAttention in vLLM and what problem does it solve?',options:['A faster attention mechanism for long contexts','Memory management for KV-cache — storing cache in non-contiguous "pages" like OS virtual memory, reducing waste from <4% vs 60-80% in naive serving','A method to reduce model size','A way to batch multiple requests together'],correct_index:1,order_index:0},
+    {question:'What is the key quality advantage of AWQ over GPTQ at the same bit width?',options:['AWQ is faster to quantise','AWQ identifies and protects "salient" weights with large activations from quantisation error — resulting in better task performance at 4-bit','AWQ produces smaller files','AWQ requires no calibration data'],correct_index:1,order_index:1},
+    {question:'What is speculative decoding and when does it improve throughput?',options:['Skipping tokens to speed up generation','A draft model proposes multiple tokens; the target model verifies them in parallel — improves throughput when acceptance rate is high (predictable outputs like code)','Running multiple model copies in parallel','A caching technique for common prompts'],correct_index:1,order_index:2},
+    {question:'How does Anthropic\'s prompt caching (cache_control: ephemeral) reduce costs?',options:['It stores the full response for reuse','The KV-cache for the marked prefix is stored for 5 minutes — subsequent requests that share that prefix pay 90% less for those cached tokens','It compresses the prompt before sending','It batches multiple requests together'],correct_index:1,order_index:3},
+    {question:'In a RAG pipeline, why is a cross-encoder reranker used after the initial ANN retrieval?',options:['It is faster than ANN search','Cross-encoders jointly encode the query and each candidate document — producing more accurate relevance scores than the cosine similarity used in ANN retrieval','It reduces the number of API calls','It handles multilingual queries better'],correct_index:1,order_index:4},
+  ],
+  'mlops-w8-quiz':[
+    {question:'What is the shadow mode deployment pattern?',options:['Deploying a model without monitoring','Running a new model on real production inputs in parallel with the current model — logging outputs but not serving them to users, enabling risk-free comparison','Deploying to a private staging environment','Running the model at reduced capacity'],correct_index:1,order_index:0},
+    {question:'In semantic model versioning (e.g., fraud-detection-2.3.1), what does a major version bump indicate?',options:['More training data was used','An architecture change or input/output schema change that is incompatible with the previous version\'s feature pipeline','A hyperparameter change','A bug fix in post-processing'],correct_index:1,order_index:1},
+    {question:'What is the primary audience for the "Ethical Considerations" section of a model card?',options:['Only ML engineers on the team','Regulators, auditors, and business stakeholders who need to understand risks, known biases, limitations, and human oversight requirements','Only the model\'s original developers','Data scientists training the next version'],correct_index:1,order_index:2},
+    {question:'What is a data poisoning attack in ML?',options:['Corrupting production data at inference time','Injecting malicious training examples to degrade model performance or insert backdoors — exploiting the fact that model behaviour is determined by training data','Overloading the training pipeline with requests','Stealing training data from the model'],correct_index:1,order_index:3},
+    {question:'What is the recommended first step when assessing MLOps maturity gaps to close?',options:['Implement the full L2 pipeline immediately','Prioritise monitoring — you cannot improve what you cannot measure; monitoring enables data-driven decisions about retraining, drift, and deployment safety','Start with the feature store — it eliminates training-serving skew','Automate deployment first — it unblocks the team'],correct_index:1,order_index:4},
+  ],
+};
+
+document.addEventListener('portal:ready', async()=>{
+  const {data:courses,error}=await supa.from('courses').select('id,title').order('title');
+  if(error){toast(error.message,'error');return;}
+  const sel=document.getElementById('course-select');
+  sel.innerHTML=courses.map(c=>`<option value="${c.id}"${/mlops|ml.?ops|model.?deploy/i.test(c.title)?' selected':''}>${c.title}</option>`).join('');
+
+  const rows=MODULES.flatMap(m=>m.lessons.map(l=>`<tr><td style="padding:.4rem .75rem;color:var(--fog2);font-size:.75rem;">${m.title}</td><td style="padding:.4rem .75rem;font-size:.8rem;color:var(--cream);">${l.title}</td><td style="padding:.4rem .75rem;font-size:.75rem;color:var(--fog2);">${l.type}</td><td style="padding:.4rem .75rem;font-size:.75rem;color:var(--fog2);">${l.duration_mins}min</td></tr>`));
+  document.getElementById('preview-table').innerHTML=`<table style="width:100%;border-collapse:collapse;"><thead><tr style="background:rgba(255,255,255,.04)"><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Module</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Lesson</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Type</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Duration</th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
+});
+
+async function runSeed(){
+  const courseId=document.getElementById('course-select').value;
+  if(!courseId){toast('Select a course first','error');return;}
+  const btn=document.querySelector('.portal-btn');
+  btn.disabled=true;btn.textContent='Seeding…';
+  document.getElementById('status-area').innerHTML='';
+  log('Starting seed…');
+
+  try{
+    const {data:existingMods}=await supa.from('modules').select('id').eq('course_id',courseId);
+    if(existingMods?.length){
+      log(`Removing ${existingMods.length} existing module(s)…`);
+      const modIds=existingMods.map(m=>m.id);
+      const {data:existingLessons}=await supa.from('lessons').select('id').in('module_id',modIds);
+      if(existingLessons?.length){
+        await supa.from('quiz_questions').delete().in('lesson_id',existingLessons.map(l=>l.id));
+      }
+      await supa.from('lessons').delete().in('module_id',modIds);
+      await supa.from('modules').delete().eq('course_id',courseId);
+    }
+
+    let totalLessons=0,totalQuestions=0;
+    for(const mod of MODULES){
+      log(`Inserting module: ${mod.title}…`);
+      const {data:modRow,error:modErr}=await supa.from('modules').insert({
+        course_id:courseId,title:mod.title,order_index:mod.order_index
+      }).select().single();
+      if(modErr)throw modErr;
+
+      for(const lesson of mod.lessons){
+        const {data:lessonRow,error:lessonErr}=await supa.from('lessons').insert({
+          module_id:modRow.id,title:lesson.title,order_index:lesson.order_index,
+          type:lesson.type,content_url:lesson.content_url,duration_mins:lesson.duration_mins
+        }).select().single();
+        if(lessonErr)throw lessonErr;
+        totalLessons++;
+
+        const qs=QUIZ_QUESTIONS[lesson.content_url];
+        if(qs?.length){
+          const {error:qErr}=await supa.from('quiz_questions').insert(
+            qs.map(q=>({...q,lesson_id:lessonRow.id}))
+          );
+          if(qErr)throw qErr;
+          totalQuestions+=qs.length;
+        }
+      }
+      log(`  ✓ ${mod.lessons.length} lessons inserted`,'ok');
+    }
+
+    log(`Done! ${MODULES.length} modules, ${totalLessons} lessons, ${totalQuestions} quiz questions.`,'ok');
+    toast('MLOps & Model Deployment course seeded successfully ✓');
+  }catch(e){
+    log('Error: '+e.message,'error');
+    toast(e.message,'error');
+  }
+  btn.disabled=false;btn.textContent='⚡ Seed Course';
+}
+</script>
+</body></html>
