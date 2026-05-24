@@ -286,9 +286,11 @@ html, body { height: 100%; overflow: hidden; }
 <script src="../azure-content.js"></script>
 <script src="../dataviz-content.js"></script>
 <script>
-const params   = new URLSearchParams(location.search);
-const lessonId = params.get('id');
-const courseId = params.get('course');
+const params    = new URLSearchParams(location.search);
+const lessonId  = params.get('id');
+const courseId  = params.get('course');
+const isPreview = params.has('preview');
+const previewSuffix = isPreview ? '&preview=1' : '';
 const LT = {video:{icon:'🎬',cls:'lt-video'},pdf:{icon:'📄',cls:'lt-pdf'},quiz:{icon:'📝',cls:'lt-quiz'},live:{icon:'🔴',cls:'lt-live'},text:{icon:'📖',cls:'lt-text'}};
 let allLessons=[], currentIdx=0;
 
@@ -393,7 +395,7 @@ document.addEventListener('portal:ready', async()=>{
     supa.from('progress').select('lesson_id').eq('user_id',window._user.id)
   ]);
 
-  document.getElementById('back-link').href=`course.html?id=${courseId}`;
+  document.getElementById('back-link').href=`course.html?id=${courseId}${previewSuffix}`;
   const done = new Set((progress||[]).map(p=>p.lesson_id));
   const mods = (course?.modules||[]).sort((a,b)=>a.order_index-b.order_index);
   allLessons = mods.flatMap(m=>(m.lessons||[]).sort((a,b)=>a.order_index-b.order_index).map(l=>({...l,_module:m.title})));
@@ -412,7 +414,7 @@ document.addEventListener('portal:ready', async()=>{
         </div>
         <div class="lsb-module-body">
           ${(m.lessons||[]).sort((a,b)=>a.order_index-b.order_index).map(l=>`
-            <a href="lesson.html?id=${l.id}&course=${courseId}"
+            <a href="lesson.html?id=${l.id}&course=${courseId}${previewSuffix}"
                class="lsb-lesson ${l.id===lessonId?'active':''} ${done.has(l.id)?'done':''}">
               <div class="lt-icon ${LT[l.type]?.cls||'lt-video'}">${done.has(l.id)?'✅':LT[l.type]?.icon||'🎬'}</div>
               <span class="lsb-lesson-title">${l.title}</span>
@@ -439,8 +441,8 @@ function loadLesson(idx, done){
   else{doneBtn.textContent='✓ Mark Complete';doneBtn.style.opacity='1';doneBtn.disabled=false;}
   document.getElementById('prev-btn').disabled = idx===0;
   document.getElementById('next-btn').disabled = idx===allLessons.length-1;
-  document.getElementById('next-btn').onclick = ()=>{ location.href=`lesson.html?id=${allLessons[idx+1].id}&course=${courseId}`; };
-  document.getElementById('prev-btn').onclick = ()=>{ location.href=`lesson.html?id=${allLessons[idx-1].id}&course=${courseId}`; };
+  document.getElementById('next-btn').onclick = ()=>{ location.href=`lesson.html?id=${allLessons[idx+1].id}&course=${courseId}${previewSuffix}`; };
+  document.getElementById('prev-btn').onclick = ()=>{ location.href=`lesson.html?id=${allLessons[idx-1].id}&course=${courseId}${previewSuffix}`; };
 }
 
 async function markDone(){
@@ -450,7 +452,7 @@ async function markDone(){
   toast('Lesson marked as complete ✅');
   const btn=document.getElementById('done-btn');
   btn.textContent='✅ Completed';btn.style.opacity='.6';btn.disabled=true;
-  const sideLink=document.querySelector(`.lsb-lesson[href="lesson.html?id=${l.id}&course=${courseId}"] .lt-icon`);
+  const sideLink=document.querySelector(`.lsb-lesson[href="lesson.html?id=${l.id}&course=${courseId}${previewSuffix}"] .lt-icon`);
   if(sideLink)sideLink.textContent='✅';
 
   const {data:prog}=await supa.from('progress').select('lesson_id').eq('user_id',window._user.id);
@@ -462,7 +464,7 @@ async function markDone(){
     return;
   }
   if(currentIdx<allLessons.length-1){
-    setTimeout(()=>{ location.href=`lesson.html?id=${allLessons[currentIdx+1].id}&course=${courseId}`; },1200);
+    setTimeout(()=>{ location.href=`lesson.html?id=${allLessons[currentIdx+1].id}&course=${courseId}${previewSuffix}`; },1200);
   }
 }
 

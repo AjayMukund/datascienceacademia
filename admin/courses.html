@@ -86,7 +86,7 @@ document.addEventListener('portal:ready',async()=>{
         </div>
       </div>
       <div class="course-footer">
-        <a href="../student/course.html?id=${c.id}&preview=1" class="portal-btn-ghost" style="font-size:.72rem;padding:7px 14px;" target="_blank">👁 View</a>
+        <a href="../student/course.html?id=${c.id}&preview=1" class="portal-btn-ghost" style="font-size:.72rem;padding:7px 14px;">👁 View</a>
         <a href="course-editor.html?id=${c.id}" class="portal-btn-ghost" style="font-size:.72rem;padding:7px 14px;">✏️ Edit</a>
         <button class="icon-btn danger" onclick="del('${c.id}','${c.title.replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">🗑</button>
       </div>
