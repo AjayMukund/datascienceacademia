@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seed Power BI Course — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Account</div>
+    <a href="profile.html"><span class="nav-icon">👤</span> My Profile</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
+      <div class="portal-page-title">Seed Power BI Course</div>
+      <div class="portal-page-sub">6 modules × 36 lessons (30 text + 6 quizzes) with 30 quiz questions</div>
+    </div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Status</div>
+    <div id="status-area" style="font-family:var(--fb);font-size:.85rem;color:var(--fog2);line-height:1.8;">Waiting to run…</div>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Target Course</div>
+    <p style="font-family:var(--fb);font-size:.83rem;color:var(--fog2);margin-bottom:1rem;">
+      Select the Power BI course to seed into. If it doesn't appear, create it first in the Course Editor.
+    </p>
+    <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field-group" style="margin-bottom:0;flex:1;min-width:220px;">
+        <label class="flbl">Course</label>
+        <select class="fi" id="course-sel"><option value="">Loading courses…</option></select>
+      </div>
+      <div>
+        <label class="flbl">Action</label>
+        <div style="display:flex;gap:.5rem;">
+          <button class="portal-btn-ghost" id="btn-preview" onclick="preview()" style="font-size:.82rem;">Preview plan</button>
+          <button class="portal-btn" id="btn-seed" onclick="runSeed()" disabled>Seed 36 lessons</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-wrap" id="preview-card" style="display:none;">
+    <div class="chart-title">Lesson Plan (36 lessons)</div>
+    <div id="preview-body" style="overflow-x:auto;"></div>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+const MODULES = [
+  {
+    title: 'Module 1 — Getting Started with Power BI',
+    lessons: [
+      ['powerbi-w1-l1', 'The Power BI Ecosystem — Desktop, Service, Mobile & Report Server',   35, 'text'],
+      ['powerbi-w1-l2', 'The Power BI Desktop Interface — Report, Data & Model Views',          35, 'text'],
+      ['powerbi-w1-l3', 'Connecting to Data Sources — Excel, CSV, SQL & Web',                  40, 'text'],
+      ['powerbi-w1-l4', 'Power Query Basics — Loading & Shaping Your First Dataset',           40, 'text'],
+      ['powerbi-w1-l5', 'Building Your First Report — A Simple Sales Dashboard',               45, 'text'],
+      ['powerbi-w1-quiz', 'Module 1 Quiz — Getting Started with Power BI',                     15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Module 2 — Data Transformation with Power Query',
+    lessons: [
+      ['powerbi-w2-l1', 'Power Query Editor Deep Dive — Toolbar & Applied Steps',              40, 'text'],
+      ['powerbi-w2-l2', 'Column Operations — Split, Merge, Rename & Change Type',              40, 'text'],
+      ['powerbi-w2-l3', 'Filtering, Sorting & Grouping Rows',                                  35, 'text'],
+      ['powerbi-w2-l4', 'Merging and Appending Queries',                                       40, 'text'],
+      ['powerbi-w2-l5', 'Custom Columns, Conditional Columns & the M Language',                45, 'text'],
+      ['powerbi-w2-quiz', 'Module 2 Quiz — Data Transformation with Power Query',              15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Module 3 — Data Modeling',
+    lessons: [
+      ['powerbi-w3-l1', 'Star Schema & Snowflake Schema — Data Modeling Fundamentals',         45, 'text'],
+      ['powerbi-w3-l2', 'Relationships — Cardinality, Direction & Managing Ambiguity',         45, 'text'],
+      ['powerbi-w3-l3', 'Calculated Columns vs Measures — When to Use Each',                   40, 'text'],
+      ['powerbi-w3-l4', 'Introduction to DAX — SUM, COUNT, AVERAGE & DISTINCTCOUNT',          45, 'text'],
+      ['powerbi-w3-l5', 'CALCULATE & FILTER — The Heart of DAX',                              50, 'text'],
+      ['powerbi-w3-quiz', 'Module 3 Quiz — Data Modeling',                                    15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Module 4 — DAX Deep Dive',
+    lessons: [
+      ['powerbi-w4-l1', 'Row Context vs Filter Context',                                       45, 'text'],
+      ['powerbi-w4-l2', 'Time Intelligence — TOTALYTD, SAMEPERIODLASTYEAR & DATEADD',         50, 'text'],
+      ['powerbi-w4-l3', 'Ranking & Conditional Logic — RANKX, TOPN, SWITCH & SELECTEDVALUE',  45, 'text'],
+      ['powerbi-w4-l4', 'Variables in DAX — VAR/RETURN Pattern',                              40, 'text'],
+      ['powerbi-w4-l5', 'Advanced DAX Patterns — Rolling Averages, Pareto & YoY%',            50, 'text'],
+      ['powerbi-w4-quiz', 'Module 4 Quiz — DAX Deep Dive',                                    15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Module 5 — Visualisations & Reports',
+    lessons: [
+      ['powerbi-w5-l1', 'Core Chart Types — Bar, Line, Scatter, Pie & Map',                   40, 'text'],
+      ['powerbi-w5-l2', 'Slicers, Cards & KPI Visuals',                                       40, 'text'],
+      ['powerbi-w5-l3', 'Conditional Formatting & Data Bars',                                  35, 'text'],
+      ['powerbi-w5-l4', 'Drill-Through, Drill-Down & Cross-Report Drill-Through',             40, 'text'],
+      ['powerbi-w5-l5', 'Bookmarks, Buttons & Report Navigation',                             40, 'text'],
+      ['powerbi-w5-quiz', 'Module 5 Quiz — Visualisations & Reports',                         15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Module 6 — Publishing, Security & Capstone',
+    lessons: [
+      ['powerbi-w6-l1', 'Power BI Service — Workspaces, Dashboards vs Reports',               40, 'text'],
+      ['powerbi-w6-l2', 'Row-Level Security — Static & Dynamic RLS',                          45, 'text'],
+      ['powerbi-w6-l3', 'Scheduled Refresh & On-Premises Data Gateway',                       40, 'text'],
+      ['powerbi-w6-l4', 'Performance Optimisation — Star Schema, Aggregations & Best Practices', 40, 'text'],
+      ['powerbi-w6-l5', 'Capstone — End-to-End Sales Analytics Report',                       90, 'text'],
+      ['powerbi-w6-quiz', 'Module 6 Quiz — Publishing, Security & Capstone',                  15, 'quiz'],
+    ]
+  },
+];
+
+const QUIZ_QUESTIONS = {
+  'powerbi-w1-quiz': [
+    { q: 'What is the primary tool used to build and author Power BI reports?',
+      opts: ['Power BI Service (browser-based)', 'Power BI Desktop (Windows application)', 'Power BI Mobile (iOS/Android app)', 'Power BI Report Builder (paginated reports)'], ans: 1 },
+    { q: 'Which view in Power BI Desktop lets you inspect and manage relationships between tables?',
+      opts: ['Report view — the canvas where visuals are placed', 'Data view — shows the data in each table row by row', 'Model view — displays all tables, relationships, and cardinalities as a diagram', 'Query view — shows the M code for each Power Query step'], ans: 2 },
+    { q: 'What file extension does Power BI Desktop use to save workbook files?',
+      opts: ['.pbit (Power BI Template)', '.pbix (Power BI file — contains data model, queries, and report)', '.pbids (Power BI Data Source connection shortcut)', '.xlsx (Excel workbook compatible format)'], ans: 1 },
+    { q: 'Power Query in Power BI is primarily used for:',
+      opts: ['Writing DAX measures and calculated columns', 'Publishing reports to Power BI Service', 'Transforming, shaping, and cleaning data before it loads into the data model', 'Building dashboard tiles and pinning visuals to a workspace dashboard'], ans: 2 },
+    { q: 'What is Power BI Service?',
+      opts: ['A paid Microsoft technical support subscription for enterprise customers', 'The cloud-based platform for sharing, collaborating on, and consuming Power BI reports via a web browser', 'A local on-premises server you install and maintain for hosting Power BI reports internally', 'A Python package that provides programmatic access to Power BI datasets'], ans: 1 },
+  ],
+  'powerbi-w2-quiz': [
+    { q: 'In Power Query, the "Applied Steps" pane records:',
+      opts: ['Every DAX formula and measure added to the data model', 'Every transformation step applied to a query in sequential order, stored as M language code that can be edited or reordered', 'Every visual added to the report canvas and its configuration', 'Every data source connected to the workbook and its refresh schedule'], ans: 1 },
+    { q: 'The "Merge Queries" operation in Power Query:',
+      opts: ['Combines two queries by stacking their rows on top of each other (like SQL UNION)', 'Joins two tables side by side based on matching key columns — similar to a SQL JOIN, adding columns from the second table to the first', 'Removes duplicate rows that appear in both queries', 'Splits one query into multiple queries based on a column value'], ans: 1 },
+    { q: 'The "Append Queries" operation in Power Query:',
+      opts: ['Joins two tables side by side based on a matching key column', 'Adds rows from one query to the bottom of another query — similar to SQL UNION ALL, combining datasets with the same column structure', 'Adds new calculated columns to an existing query using M expressions', 'Merges metadata and schema definitions from two separate data sources'], ans: 1 },
+    { q: 'What language does Power Query use internally to represent transformation steps?',
+      opts: ['DAX (Data Analysis Expressions)', 'SQL (Structured Query Language)', 'M (Power Query Formula Language, also called Mashup Language)', 'Python (executed via a Python connector)'], ans: 2 },
+    { q: 'A "Conditional Column" in Power Query:',
+      opts: ['Filters rows based on a condition, removing rows where the condition is false', 'Adds a new column whose value is determined by if/else rules applied to existing column values — similar to a nested IF in Excel, but configured via a UI dialog', 'Creates a calculated DAX measure using conditional logic', 'Applies a data type validation rule that flags values not matching the expected format'], ans: 1 },
+  ],
+  'powerbi-w3-quiz': [
+    { q: 'In a star schema, the central table that stores transactional or event data is called:',
+      opts: ['The dimension table — containing descriptive attributes', 'The lookup table — containing reference data for joins', 'The fact table — containing measurable, numeric data (sales amounts, quantities, dates)', 'The bridge table — connecting many-to-many relationships'], ans: 2 },
+    { q: 'A Many-to-One relationship between a fact table and a dimension table in Power BI means:',
+      opts: ['Each dimension row links to exactly one fact row — a one-to-one pairing', 'Each fact row links to one dimension row, but each dimension row can match many fact rows — the standard fact-to-dimension relationship in a star schema', 'Both tables must have the same number of rows for the relationship to be valid', 'The relationship must be defined manually using the DAX RELATED() function rather than in Model view'], ans: 1 },
+    { q: 'A Calculated Column in Power BI is evaluated in:',
+      opts: ['Filter context — it respects all active slicers and filters at query time', 'Row context — it is computed row by row when the model is refreshed and stored physically in the model, consuming memory', 'Query context — it runs during report rendering and is discarded afterward', 'Aggregation context — it applies across all rows simultaneously at the table level'], ans: 1 },
+    { q: 'A Measure in Power BI is evaluated in:',
+      opts: ['Row context at model refresh time — stored in the model like a calculated column', 'Filter context at query time — it recalculates dynamically on every interaction based on the filters active in the current visual and report context', 'Column context per table at data load time', 'Static context that is computed once at publish time and cached until the next refresh'], ans: 1 },
+    { q: 'The CALCULATE function in DAX is primarily used to:',
+      opts: ['Perform arithmetic on multiple columns and return the result as a scalar value', 'Evaluate an expression in a modified filter context — it can add, remove, or replace filters before computing the inner expression, making it the most powerful function in DAX', 'Calculate cumulative running totals along a sorted dimension column', 'Execute aggregations equivalent to GROUP BY SQL queries on fact tables'], ans: 1 },
+  ],
+  'powerbi-w4-quiz': [
+    { q: 'Row context in DAX refers to:',
+      opts: ['The set of active filters applied by slicers and report visuals at the page level', 'The context that exists when iterating over a table row by row — it applies inside calculated columns and iterator functions like SUMX, AVERAGEX, and FILTER, giving access to each row\'s individual column values', 'The context established by a CALCULATE function that wraps an expression', 'The context determined by the cross-filter direction set on a relationship between two tables'], ans: 1 },
+    { q: 'TOTALYTD in DAX calculates:',
+      opts: ['The total value from the same period in the prior year for year-over-year comparison', 'The cumulative year-to-date total of a measure from January 1st to the latest date in the current filter context — commonly used with a date table', 'The total value divided by the number of complete years in the dataset', 'The percentage growth from the prior year to the current year expressed as a decimal'], ans: 1 },
+    { q: 'The VAR keyword in DAX is used to:',
+      opts: ['Declare a variable that stores an intermediate result evaluated once in the current context — improving readability and performance by avoiding repeated computation of the same subexpression', 'Create a virtual table that replaces a physical fact table in the model for a single calculation', 'Define a user-facing parameter control that appears as a slicer on the report canvas', 'Set a filter variable that applies globally to all measures across the entire report'], ans: 0 },
+    { q: 'RANKX in DAX returns:',
+      opts: ['A filtered table containing only the top-N rows by the specified expression', 'The rank of a value within a table based on a specified expression — rank 1 is the highest by default, and ties are handled via the TIE argument', 'The percentage rank of a value between 0 and 1 normalised across the table', 'A sorted copy of the input table with row numbers added as a new column'], ans: 1 },
+    { q: 'SELECTEDVALUE in DAX returns:',
+      opts: ['All values currently visible in a multi-select slicer as a comma-separated string', 'The single value of a column when exactly one value is present in the filter context — returns a specified alternate result (default: BLANK) if multiple or no values are in context', 'The most frequently occurring value across all user sessions in the published report', 'The sum of all numeric values currently selected in a slicer visual'], ans: 1 },
+  ],
+  'powerbi-w5-quiz': [
+    { q: 'A Slicer in Power BI:',
+      opts: ['Removes rows permanently from the data model for the duration of the current session', 'Provides an on-canvas interactive filter control that lets viewers filter all visuals on the page (or selected visuals) by clicking, selecting, or sliding values — without writing any DAX', 'Creates a calculated segment that groups rows into custom buckets defined by an expression', 'Restricts access to specific report pages based on the viewer\'s security role'], ans: 1 },
+    { q: 'Drill-through in Power BI allows:',
+      opts: ['Expanding a hierarchy in a matrix visual by clicking the expand (+) button on a parent row', 'Right-clicking a data point and navigating to a separate detail page that is automatically filtered to that specific context — e.g. right-clicking a product name to see its detail report', 'Opening the underlying table in Power Query Editor to inspect individual rows', 'Drilling into a nested JSON or record column to expand its fields into separate columns'], ans: 1 },
+    { q: 'Conditional Formatting in Power BI can be applied based on:',
+      opts: ['Only static colour rules defined at report design time — not dynamic field values', 'Field values, colour scales, rules (greater than / less than thresholds), or a separate measure — applicable to background colour, font colour, data bars, icons, and web URLs in table and matrix visuals', 'Only numeric columns in bar and column charts', 'Only dashboard tiles published to Power BI Service — not report visuals in Desktop'], ans: 1 },
+    { q: 'A Bookmark in Power BI:',
+      opts: ['Saves the browser URL of the published report for easy sharing via a permalink', 'Captures the current state of a report page — including filter context, slicer selections, and visual visibility — so it can be restored later via a button, navigation action, or bookmark panel', 'Creates a hyperlink anchor to an external web page embedded within a report visual', 'Marks a specific data point for inclusion in a scheduled export to Excel or PDF'], ans: 1 },
+    { q: 'KPI visuals in Power BI are best used for:',
+      opts: ['Comparing multiple measures side by side in a tabular grid with colour coding', 'Showing a single measure\'s current value against a target, with trend direction — providing an instant at-a-glance status of whether performance is on track, ahead, or behind', 'Displaying the geographic distribution of a measure across regions on a map', 'Breaking a total measure into its additive and subtractive components in a waterfall chart'], ans: 1 },
+  ],
+  'powerbi-w6-quiz': [
+    { q: 'In Power BI Service, the key difference between a Dashboard and a Report is:',
+      opts: ['Dashboards support multiple pages with drill-through; reports are limited to a single-page summary view', 'Reports are multi-page authored documents built in Power BI Desktop; dashboards are single-page collections of pinned tiles assembled from multiple reports and datasets — dashboards also support real-time streaming data tiles', 'Dashboards can contain interactive slicers; reports cannot have any interactive filtering elements', 'Reports are only accessible on the Power BI Mobile app; dashboards are browser-only in Power BI Service'], ans: 1 },
+    { q: 'Row-Level Security (RLS) in Power BI is used to:',
+      opts: ['Encrypt the .pbix file so only users with the decryption key can open the data model', 'Restrict which rows of data each user sees within the same report — a sales rep sees only their own region\'s data while a manager sees all regions, using DAX filter expressions on roles', 'Limit how many rows a single DAX query can return to prevent performance degradation', 'Prevent viewers from modifying slicer selections or cross-filtering in published reports'], ans: 1 },
+    { q: 'An On-Premises Data Gateway is required when:',
+      opts: ['Publishing a Power BI report that contains more than 1 million rows of data', 'A Power BI Service dataset needs to refresh data stored inside a corporate network (on-premises SQL Server, Oracle, SharePoint on-prem, etc.) — the gateway acts as a secure bridge between the cloud service and local data sources', 'Using Python or R visuals inside Power BI Desktop for statistical visualisations', 'Enabling scheduled refresh for file-based data sources stored in SharePoint Online or OneDrive for Business'], ans: 1 },
+    { q: 'The single most impactful data modeling practice for Power BI performance is:',
+      opts: ['Using calculated columns instead of measures wherever possible to pre-compute values at refresh time', 'Designing a proper star schema with separate fact and dimension tables — minimising wide flat tables, reducing column count, removing unused columns, and avoiding bi-directional relationships unless necessary', 'Enabling cross-filter direction in both directions on all table relationships to improve slicer responsiveness', 'Splitting large .pbix files into multiple smaller files and connecting them via composite model live connections'], ans: 1 },
+    { q: 'Scheduled Refresh in Power BI Service allows:',
+      opts: ['Refreshing a single visual or tile on a dashboard at user-defined intervals without updating the full underlying dataset', 'Automatically updating an imported dataset on a recurring schedule — keeping reports current with the latest source data without manual intervention; requires a gateway for on-premises sources', 'Scheduling the publication and version control of new report iterations to a workspace', 'Automatically applying incremental data micro-updates to a real-time streaming dashboard tile'], ans: 1 },
+  ],
+};
+
+function log(msg, cls=''){
+  const area = document.getElementById('status-area');
+  area.innerHTML += `<div style="color:${cls==='ok'?'var(--teal)':cls==='err'?'#f66':cls==='head'?'var(--cream)':'var(--fog2)'}">${msg}</div>`;
+  area.scrollTop = area.scrollHeight;
+}
+function toast(m,t='success'){
+  const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;
+  document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);
+}
+
+document.addEventListener('portal:ready', async () => {
+  const {data: courses, error} = await supa.from('courses').select('id,title').order('title');
+  const sel = document.getElementById('course-sel');
+  if (error || !courses?.length) { sel.innerHTML = '<option value="">No courses found</option>'; return; }
+  sel.innerHTML = '<option value="">— pick a course —</option>';
+  courses.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id; opt.textContent = c.title;
+    if (/power.?bi/i.test(c.title)) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  document.getElementById('btn-seed').disabled = false;
+});
+
+function preview(){
+  const card = document.getElementById('preview-card');
+  card.style.display = 'block';
+  let totalMins = 0;
+  let html = `<table style="width:100%;border-collapse:collapse;font-family:var(--fb);font-size:.8rem;">
+    <thead><tr style="background:var(--fog2);color:var(--ink);">
+      <th style="padding:.4rem .6rem;text-align:left;">Slug</th>
+      <th style="padding:.4rem .6rem;text-align:left;">Title</th>
+      <th style="padding:.4rem .6rem;text-align:center;">Type</th>
+      <th style="padding:.4rem .6rem;text-align:right;">Mins</th>
+    </tr></thead><tbody>`;
+  MODULES.forEach((mod, mi) => {
+    html += `<tr><td colspan="4" style="padding:.5rem .6rem;background:var(--fog);color:var(--cream);font-weight:600;">${mod.title}</td></tr>`;
+    mod.lessons.forEach(([slug, title, mins, type]) => {
+      totalMins += mins;
+      const typeColor = type === 'quiz' ? 'var(--champ2)' : 'var(--teal)';
+      html += `<tr><td style="padding:.35rem .6rem;color:var(--teal);font-family:monospace;">${slug}</td>
+        <td style="padding:.35rem .6rem;color:var(--fog2);">${title}</td>
+        <td style="padding:.35rem .6rem;text-align:center;color:${typeColor};">${type}</td>
+        <td style="padding:.35rem .6rem;text-align:right;color:var(--fog2);">${mins}</td></tr>`;
+    });
+    const quizSlug = `powerbi-w${mi+1}-quiz`;
+    const qCount = QUIZ_QUESTIONS[quizSlug]?.length || 0;
+    if (qCount) html += `<tr><td colspan="4" style="padding:.25rem .6rem .5rem 2rem;color:var(--champ2);font-size:.75rem;">📝 ${qCount} quiz questions for ${quizSlug}</td></tr>`;
+  });
+  html += `</tbody><tfoot><tr style="border-top:1px solid var(--border);">
+    <td colspan="3" style="padding:.5rem .6rem;color:var(--cream);font-weight:600;">Total (6 modules, 36 lessons, 30 quiz questions)</td>
+    <td style="padding:.5rem .6rem;text-align:right;color:var(--cream);font-weight:600;">${totalMins} min</td>
+  </tr></tfoot></table>`;
+  document.getElementById('preview-body').innerHTML = html;
+  card.scrollIntoView({ behavior: 'smooth' });
+}
+
+async function runSeed(){
+  const courseId = document.getElementById('course-sel').value;
+  if (!courseId){ toast('Pick a course first','error'); return; }
+  const btn = document.getElementById('btn-seed');
+  btn.disabled = true; btn.textContent = 'Running…';
+  document.getElementById('status-area').innerHTML = '';
+  try {
+    log('=== POWER BI COURSE SEEDER ===', 'head');
+    log(`Course ID: ${courseId}`);
+
+    log('Step 1 — Removing existing modules, lessons & quiz questions…');
+    const {data: existingMods} = await supa.from('modules').select('id').eq('course_id', courseId);
+    if (existingMods?.length) {
+      const modIds = existingMods.map(m => m.id);
+      const {data: existingLessons} = await supa.from('lessons').select('id').in('module_id', modIds);
+      if (existingLessons?.length) {
+        const lessonIds = existingLessons.map(l => l.id);
+        await supa.from('quiz_questions').delete().in('lesson_id', lessonIds);
+        await supa.from('lessons').delete().in('module_id', modIds);
+      }
+      await supa.from('modules').delete().eq('course_id', courseId);
+      log(`  Removed ${existingMods.length} module(s).`);
+    } else { log('  Clean slate.'); }
+
+    log('Step 2 — Inserting 6 modules, 36 lessons & 30 quiz questions…', 'head');
+    let totalLessons = 0, totalQuestions = 0;
+
+    for (let mi = 0; mi < MODULES.length; mi++) {
+      const mod = MODULES[mi];
+      const {data: modRow, error: modErr} = await supa.from('modules')
+        .insert({ course_id: courseId, title: mod.title, order_index: mi })
+        .select().single();
+      if (modErr) throw new Error(`Module insert failed: ${modErr.message}`);
+      log(`  [${mi+1}/6] Module "${mod.title}" → id ${modRow.id}`);
+
+      for (let li = 0; li < mod.lessons.length; li++) {
+        const [slug, title, mins, type] = mod.lessons[li];
+        const {data: lessonRow, error: lesErr} = await supa.from('lessons')
+          .insert({ module_id: modRow.id, title, type, content_url: slug, duration_mins: mins, order_index: li })
+          .select().single();
+        if (lesErr) throw new Error(`Lesson insert failed for "${title}": ${lesErr.message}`);
+        totalLessons++;
+        if (type === 'quiz') {
+          const questions = QUIZ_QUESTIONS[slug] || [];
+          if (questions.length) {
+            const qRows = questions.map((q, qi) => ({
+              lesson_id: lessonRow.id, question: q.q, options: q.opts,
+              correct_index: q.ans, order_index: qi,
+            }));
+            const {error: qErr} = await supa.from('quiz_questions').insert(qRows);
+            if (qErr) throw new Error(`Quiz question insert failed for "${slug}": ${qErr.message}`);
+            log(`    📝 ${questions.length} quiz questions inserted for ${slug}`, 'ok');
+            totalQuestions += questions.length;
+          }
+        }
+      }
+    }
+
+    log(`Step 3 — Done! ${totalLessons} lessons and ${totalQuestions} quiz questions inserted.`, 'ok');
+    log('✓ Power BI course seeded successfully.', 'ok');
+    toast('Power BI course seeded!');
+  } catch(e) {
+    log(`ERROR: ${e.message}`, 'err');
+    toast(e.message, 'error');
+  }
+  btn.disabled = false; btn.textContent = 'Seed 36 lessons';
+}
+</script>
+</body></html>
