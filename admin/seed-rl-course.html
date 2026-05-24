@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seed Reinforcement Learning Course — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Account</div>
+    <a href="profile.html"><span class="nav-icon">👤</span> My Profile</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
+      <div class="portal-page-title">Seed Reinforcement Learning Course</div>
+      <div class="portal-page-sub">8 modules × 48 lessons (40 text + 8 quizzes) with 40 quiz questions</div>
+    </div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Status</div>
+    <div id="status-area" style="font-family:var(--fb);font-size:.85rem;color:var(--fog2);line-height:1.8;">Waiting to run…</div>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Target Course</div>
+    <p style="font-family:var(--fb);font-size:.83rem;color:var(--fog2);margin-bottom:1rem;">
+      Select the Reinforcement Learning course to seed into. If it doesn't appear, create it first in the Course Editor.
+    </p>
+    <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field-group" style="margin-bottom:0;flex:1;min-width:220px;">
+        <label class="field-label">Course</label>
+        <select class="fi" id="course-select"><option value="">Loading courses…</option></select>
+      </div>
+      <button class="portal-btn" onclick="runSeed()">⚡ Seed Course</button>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Lesson Preview</div>
+    <div id="preview-table" style="overflow-x:auto;"></div>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+function toast(m,t='success'){const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);}
+function log(msg,type=''){const area=document.getElementById('status-area');const line=document.createElement('div');line.style.color=type==='error'?'#f66':type==='ok'?'var(--teal)':'var(--fog2)';line.textContent=msg;area.appendChild(line);area.scrollTop=area.scrollHeight;}
+
+const MODULES = [
+  { title:'RL Foundations', order_index:0, lessons:[
+    {title:'The RL Framework — Agent, Environment, State, Action, Reward',order_index:0,type:'text',content_url:'rl-w1-l1',duration_mins:20},
+    {title:'Markov Decision Processes (MDPs)',order_index:1,type:'text',content_url:'rl-w1-l2',duration_mins:22},
+    {title:'Policies, Value Functions & the Bellman Equation',order_index:2,type:'text',content_url:'rl-w1-l3',duration_mins:22},
+    {title:'Exploration vs Exploitation — ε-Greedy & UCB',order_index:3,type:'text',content_url:'rl-w1-l4',duration_mins:18},
+    {title:'OpenAI Gymnasium — Setting Up Your RL Environment',order_index:4,type:'text',content_url:'rl-w1-l5',duration_mins:18},
+    {title:'Module 1 Quiz',order_index:5,type:'quiz',content_url:'rl-w1-quiz',duration_mins:10},
+  ]},
+  { title:'Dynamic Programming', order_index:1, lessons:[
+    {title:'Policy Evaluation — Computing V^π',order_index:0,type:'text',content_url:'rl-w2-l1',duration_mins:20},
+    {title:'Policy Improvement & Policy Iteration',order_index:1,type:'text',content_url:'rl-w2-l2',duration_mins:20},
+    {title:'Value Iteration',order_index:2,type:'text',content_url:'rl-w2-l3',duration_mins:18},
+    {title:'Generalised Policy Iteration (GPI)',order_index:3,type:'text',content_url:'rl-w2-l4',duration_mins:18},
+    {title:'Model-Based vs Model-Free RL',order_index:4,type:'text',content_url:'rl-w2-l5',duration_mins:18},
+    {title:'Module 2 Quiz',order_index:5,type:'quiz',content_url:'rl-w2-quiz',duration_mins:10},
+  ]},
+  { title:'Monte Carlo Methods', order_index:2, lessons:[
+    {title:'Monte Carlo Prediction',order_index:0,type:'text',content_url:'rl-w3-l1',duration_mins:20},
+    {title:'Monte Carlo Control',order_index:1,type:'text',content_url:'rl-w3-l2',duration_mins:18},
+    {title:'Off-Policy MC with Importance Sampling',order_index:2,type:'text',content_url:'rl-w3-l3',duration_mins:20},
+    {title:'TD(0) — Temporal Difference Learning Introduction',order_index:3,type:'text',content_url:'rl-w3-l4',duration_mins:20},
+    {title:'TD vs MC vs DP — A Comparison',order_index:4,type:'text',content_url:'rl-w3-l5',duration_mins:18},
+    {title:'Module 3 Quiz',order_index:5,type:'quiz',content_url:'rl-w3-quiz',duration_mins:10},
+  ]},
+  { title:'Temporal Difference Learning', order_index:3, lessons:[
+    {title:'SARSA — On-Policy TD Control',order_index:0,type:'text',content_url:'rl-w4-l1',duration_mins:20},
+    {title:'Q-Learning — Off-Policy TD Control',order_index:1,type:'text',content_url:'rl-w4-l2',duration_mins:20},
+    {title:'Expected SARSA & Double Q-Learning',order_index:2,type:'text',content_url:'rl-w4-l3',duration_mins:18},
+    {title:'n-Step TD Methods',order_index:3,type:'text',content_url:'rl-w4-l4',duration_mins:18},
+    {title:'TD(λ) & Eligibility Traces',order_index:4,type:'text',content_url:'rl-w4-l5',duration_mins:20},
+    {title:'Module 4 Quiz',order_index:5,type:'quiz',content_url:'rl-w4-quiz',duration_mins:10},
+  ]},
+  { title:'Deep Q-Networks', order_index:4, lessons:[
+    {title:'Function Approximation in RL',order_index:0,type:'text',content_url:'rl-w5-l1',duration_mins:20},
+    {title:'DQN Architecture & Experience Replay',order_index:1,type:'text',content_url:'rl-w5-l2',duration_mins:25},
+    {title:'Target Networks & Double DQN',order_index:2,type:'text',content_url:'rl-w5-l3',duration_mins:22},
+    {title:'Dueling DQN & Prioritized Experience Replay',order_index:3,type:'text',content_url:'rl-w5-l4',duration_mins:20},
+    {title:'DQN for Atari — Results & Lessons',order_index:4,type:'text',content_url:'rl-w5-l5',duration_mins:20},
+    {title:'Module 5 Quiz',order_index:5,type:'quiz',content_url:'rl-w5-quiz',duration_mins:10},
+  ]},
+  { title:'Policy Gradient Methods', order_index:5, lessons:[
+    {title:'Policy Gradient Theorem & REINFORCE',order_index:0,type:'text',content_url:'rl-w6-l1',duration_mins:22},
+    {title:'Actor-Critic Methods — A2C & A3C',order_index:1,type:'text',content_url:'rl-w6-l2',duration_mins:22},
+    {title:'Proximal Policy Optimization (PPO)',order_index:2,type:'text',content_url:'rl-w6-l3',duration_mins:25},
+    {title:'Trust Region Policy Optimization (TRPO)',order_index:3,type:'text',content_url:'rl-w6-l4',duration_mins:20},
+    {title:'Soft Actor-Critic (SAC) & Maximum Entropy RL',order_index:4,type:'text',content_url:'rl-w6-l5',duration_mins:22},
+    {title:'Module 6 Quiz',order_index:5,type:'quiz',content_url:'rl-w6-quiz',duration_mins:10},
+  ]},
+  { title:'Advanced RL', order_index:6, lessons:[
+    {title:'Model-Based RL & World Models',order_index:0,type:'text',content_url:'rl-w7-l1',duration_mins:22},
+    {title:'Multi-Agent Reinforcement Learning (MARL)',order_index:1,type:'text',content_url:'rl-w7-l2',duration_mins:20},
+    {title:'Hierarchical Reinforcement Learning',order_index:2,type:'text',content_url:'rl-w7-l3',duration_mins:18},
+    {title:'Reward Shaping & Inverse RL',order_index:3,type:'text',content_url:'rl-w7-l4',duration_mins:18},
+    {title:'RL from Human Feedback (RLHF)',order_index:4,type:'text',content_url:'rl-w7-l5',duration_mins:22},
+    {title:'Module 7 Quiz',order_index:5,type:'quiz',content_url:'rl-w7-quiz',duration_mins:10},
+  ]},
+  { title:'RL in Practice', order_index:7, lessons:[
+    {title:'AlphaGo, AlphaZero & MuZero',order_index:0,type:'text',content_url:'rl-w8-l1',duration_mins:22},
+    {title:'RL for Robotics & Continuous Control',order_index:1,type:'text',content_url:'rl-w8-l2',duration_mins:22},
+    {title:'RL for Recommendations & Business Optimisation',order_index:2,type:'text',content_url:'rl-w8-l3',duration_mins:18},
+    {title:'Debugging & Evaluating RL Agents',order_index:3,type:'text',content_url:'rl-w8-l4',duration_mins:20},
+    {title:'Capstone — Training a PPO Agent',order_index:4,type:'text',content_url:'rl-w8-l5',duration_mins:25},
+    {title:'Module 8 Quiz',order_index:5,type:'quiz',content_url:'rl-w8-quiz',duration_mins:10},
+  ]},
+];
+
+const QUIZ_QUESTIONS = {
+  'rl-w1-quiz':[
+    {question:'In the RL framework, what is the agent\'s primary goal?',options:['Maximise immediate reward at each step','Maximise cumulative future discounted return','Learn a model of the environment','Minimise the TD error'],correct_index:1,order_index:0},
+    {question:'What does the Markov property state?',options:['Future rewards are independent of past states','The future depends only on the current state, not the full history','All states have equal transition probabilities','The discount factor must be less than 1'],correct_index:1,order_index:1},
+    {question:'What is the primary advantage of UCB over ε-greedy exploration?',options:['UCB is simpler to implement','UCB explores systematically — actions tried less often get higher confidence bonuses','UCB uses less memory','UCB requires no hyperparameter tuning'],correct_index:1,order_index:2},
+    {question:'What does a discount factor γ close to 0 imply about the agent\'s behaviour?',options:['The agent values future rewards equally','The agent is myopic — focuses almost entirely on immediate reward','The agent will explore more','The agent ignores rewards entirely'],correct_index:1,order_index:3},
+    {question:'In Gymnasium, what does the step() function return?',options:['Only the next observation and reward','Observation, reward, terminated, truncated, and info','Only the next observation','The Q-value of the action taken'],correct_index:1,order_index:4},
+  ],
+  'rl-w2-quiz':[
+    {question:'What does iterative policy evaluation compute?',options:['The optimal policy π*','V^π — the value function for a fixed policy π','Q*(s,a) directly','The transition model P(s\'|s,a)'],correct_index:1,order_index:0},
+    {question:'What is the policy improvement theorem?',options:['Any policy can be improved by random exploration','A greedy policy with respect to V^π is always at least as good as π','Policy iteration always converges in exactly |S| steps','The optimal policy is always deterministic'],correct_index:1,order_index:1},
+    {question:'How does value iteration differ from policy iteration?',options:['Value iteration requires a model; policy iteration does not','Value iteration applies the Bellman optimality equation directly — combining evaluation and improvement in one step','Value iteration is slower to converge','Value iteration requires a known reward function'],correct_index:1,order_index:2},
+    {question:'What is the GPI (Generalised Policy Iteration) framework?',options:['A specific algorithm for solving MDPs','The meta-framework of interleaved evaluation and improvement that underlies virtually all RL algorithms','A method requiring exact DP','The process of running random rollouts'],correct_index:1,order_index:3},
+    {question:'Why is model-based RL more sample-efficient than model-free RL?',options:['Model-based methods use simpler algorithms','The model can simulate future trajectories — generating synthetic experience from one real interaction','Model-free methods require more memory','Model-based methods use better reward functions'],correct_index:1,order_index:4},
+  ],
+  'rl-w3-quiz':[
+    {question:'What is the key difference between first-visit and every-visit Monte Carlo?',options:['First-visit is off-policy; every-visit is on-policy','First-visit only updates V(s) on the first visit to s per episode; every-visit updates on every visit','First-visit has lower bias','Every-visit requires a model'],correct_index:1,order_index:0},
+    {question:'Why do Monte Carlo methods require complete episodes?',options:['They use a replay buffer','They need the actual return G_t which is only known at episode termination','They use bootstrapping','They cannot handle stochastic environments'],correct_index:1,order_index:1},
+    {question:'What is the purpose of importance sampling in off-policy MC?',options:['To reduce the variance of the value estimate','To reweight returns from the behaviour policy to look as if they came from the target policy','To eliminate the need for exploration','To speed up convergence'],correct_index:1,order_index:2},
+    {question:'What is the TD error δ_t in TD(0)?',options:['The squared difference between predicted and actual return','r_{t+1} + γV(s_{t+1}) − V(s_t) — the difference between the TD target and current estimate','The gradient of the value function','The KL divergence between old and new policy'],correct_index:1,order_index:3},
+    {question:'Which of the following does NOT require bootstrapping?',options:['TD(0)','Dynamic Programming','Q-Learning','Monte Carlo'],correct_index:3,order_index:4},
+  ],
+  'rl-w4-quiz':[
+    {question:'How does SARSA differ from Q-Learning in its update rule?',options:['SARSA uses a replay buffer; Q-learning does not','SARSA uses the actual next action a_{t+1} taken by the behaviour policy; Q-learning uses max_a Q(s\',a)','SARSA is off-policy; Q-learning is on-policy','SARSA uses a neural network; Q-learning uses a table'],correct_index:1,order_index:0},
+    {question:'Why is Q-learning considered off-policy?',options:['It uses a replay buffer','The update target uses max_a Q(s\',a) — the greedy policy — regardless of what action the behaviour policy took','It updates every episode','It uses importance sampling'],correct_index:1,order_index:1},
+    {question:'What does double Q-learning specifically address?',options:['Slow convergence of Q-learning','Maximisation bias — the systematic overestimation of Q values caused by taking the max in the update target','Memory efficiency of the Q-table','The exploration-exploitation tradeoff'],correct_index:1,order_index:2},
+    {question:'What is an eligibility trace in TD(λ)?',options:['A record of all past actions','A decaying vector that tracks recently visited states and assigns credit for recent rewards','The gradient of the value function','The policy\'s log-probabilities'],correct_index:1,order_index:3},
+    {question:'In n-step TD, what happens as n → ∞?',options:['The method becomes equivalent to DP','The method becomes equivalent to Monte Carlo — using the full episode return','The update variance approaches zero','The method requires a model'],correct_index:1,order_index:4},
+  ],
+  'rl-w5-quiz':[
+    {question:'What is the "deadly triad" in RL stability?',options:['High learning rate, low discount, poor exploration','Function approximation + bootstrapping + off-policy learning — when combined, can cause divergence','Large replay buffer + target network + gradient clipping','Sparse rewards + continuous actions + long episodes'],correct_index:1,order_index:0},
+    {question:'What problem does experience replay in DQN primarily solve?',options:['Slow training speed','Temporal correlations between consecutive updates — random sampling from the buffer produces near-i.i.d. batches','Sparse reward signal','Memory constraints'],correct_index:1,order_index:1},
+    {question:'What is the purpose of the target network in DQN?',options:['To explore more efficiently','To stabilise training by providing a fixed update target that doesn\'t change every step','To reduce memory usage','To implement double Q-learning'],correct_index:1,order_index:2},
+    {question:'In Dueling DQN, what are the two streams and what do they compute?',options:['Actor and critic — policy and value','Value stream V(s) and advantage stream A(s,a) — separated to allow efficient learning of state values independent of action','Encoder and decoder — state representation and action','Q-network and target — online and offline values'],correct_index:1,order_index:3},
+    {question:'Why does DQN use Huber loss (smooth_l1) instead of MSE?',options:['Huber loss is computationally faster','Huber loss is less sensitive to large TD errors (outliers), providing more stable gradients early in training','Huber loss is differentiable everywhere unlike MSE','Huber loss gives higher final performance'],correct_index:1,order_index:4},
+  ],
+  'rl-w6-quiz':[
+    {question:'What does the policy gradient theorem provide?',options:['A closed-form solution for the optimal policy','An expression for ∇J(θ) that can be estimated from sampled trajectories without differentiating the state distribution','The convergence rate of policy gradient methods','A model-free version of dynamic programming'],correct_index:1,order_index:0},
+    {question:'What is a baseline in REINFORCE and why is it used?',options:['An initial guess for the optimal policy','A function subtracted from the return to reduce gradient variance without introducing bias','The minimum reward in the environment','The learning rate schedule'],correct_index:1,order_index:1},
+    {question:'What does the PPO clipping mechanism specifically prevent?',options:['Gradient explosion','The policy from moving too far from the old policy in a single update — limiting the probability ratio r_t to [1-ε, 1+ε]','The value function from overestimating','The actor from ignoring the critic'],correct_index:1,order_index:2},
+    {question:'What is GAE (Generalised Advantage Estimation) used for in PPO?',options:['Estimating the transition model','Computing a low-variance, low-bias advantage estimate as an exponentially weighted average of n-step TD advantages','Selecting actions during rollout','Training the critic network'],correct_index:1,order_index:3},
+    {question:'What makes SAC a "maximum entropy" RL algorithm?',options:['It maximises the entropy of the replay buffer','It adds an entropy bonus to the reward — incentivising the policy to remain as random as possible while being rewarded','It uses entropy to measure exploration progress','It removes the reward function and replaces it with entropy'],correct_index:1,order_index:4},
+  ],
+  'rl-w7-quiz':[
+    {question:'What is the key tradeoff in model-based RL?',options:['Speed vs accuracy','Sample efficiency (can simulate many rollouts) vs model accuracy (errors compound over long horizons)','Memory vs computation','Exploration vs exploitation'],correct_index:1,order_index:0},
+    {question:'What is the CTDE (Centralised Training, Decentralised Execution) paradigm in MARL?',options:['All agents share a single policy','Train agents with access to global state/actions (centralised critic); deploy with only local observations (decentralised actors)','Only one agent is trained; others copy its policy','All communication is centralised including at deployment'],correct_index:1,order_index:1},
+    {question:'In hierarchical RL, what is an "option"?',options:['A discrete action','A temporally extended action with an initiation set, intra-option policy, and termination condition','A reward shaping function','A type of exploration bonus'],correct_index:1,order_index:2},
+    {question:'What is potential-based reward shaping and why is it safe?',options:['Adding random noise to rewards to encourage exploration','F(s,a,s\') = γΦ(s\') − Φ(s) for any function Φ — mathematically guaranteed to not change the set of optimal policies','Shaping rewards based on domain knowledge','Using expert demonstrations to define rewards'],correct_index:1,order_index:3},
+    {question:'What is the role of the KL penalty in the RLHF PPO objective?',options:['To speed up training','To prevent the RL policy from drifting too far from the SFT model — preserving fluency and avoiding reward hacking','To enforce that rewards are always positive','To regularise the reward model'],correct_index:1,order_index:4},
+  ],
+  'rl-w8-quiz':[
+    {question:'What is the key loop that makes AlphaZero improve from nothing?',options:['Supervised learning from human games','Self-play generates training data → neural network improves → better MCTS → better self-play data (iterative improvement)','Random search over neural network architectures','Online learning from human feedback'],correct_index:1,order_index:0},
+    {question:'What is domain randomisation in sim-to-real transfer?',options:['Training on multiple different simulators','Randomising physics parameters (friction, mass, damping) during training so the policy generalises to the real world\'s parameter variations','Generating random rewards during training','Using random seeds for reproducibility'],correct_index:1,order_index:1},
+    {question:'What is offline RL and why is it needed?',options:['RL trained without a GPU','Learning a policy purely from historical logged data without environment interaction — needed when real exploration is unsafe or expensive','RL without a neural network','A faster variant of Q-learning'],correct_index:1,order_index:2},
+    {question:'What does it mean when V(s_0) oscillates wildly during DQN training?',options:['The environment is too hard','Training instability — likely causes: learning rate too high, insufficient target network lag, or poor reward scaling','Normal training behaviour','The replay buffer is too small'],correct_index:1,order_index:3},
+    {question:'In MuZero, what key capability does it add over AlphaZero?',options:['Faster MCTS simulations','Learns a latent dynamics model — can do MCTS planning without access to the true environment rules','Trains on human demonstrations','Uses continuous action spaces'],correct_index:1,order_index:4},
+  ],
+};
+
+document.addEventListener('portal:ready', async()=>{
+  const {data:courses,error}=await supa.from('courses').select('id,title').order('title');
+  if(error){toast(error.message,'error');return;}
+  const sel=document.getElementById('course-select');
+  sel.innerHTML=courses.map(c=>`<option value="${c.id}"${/reinforcement.?learning|\brl\b/i.test(c.title)?' selected':''}>${c.title}</option>`).join('');
+
+  const rows=MODULES.flatMap(m=>m.lessons.map(l=>`<tr><td style="padding:.4rem .75rem;color:var(--fog2);font-size:.75rem;">${m.title}</td><td style="padding:.4rem .75rem;font-size:.8rem;color:var(--cream);">${l.title}</td><td style="padding:.4rem .75rem;font-size:.75rem;color:var(--fog2);">${l.type}</td><td style="padding:.4rem .75rem;font-size:.75rem;color:var(--fog2);">${l.duration_mins}min</td></tr>`));
+  document.getElementById('preview-table').innerHTML=`<table style="width:100%;border-collapse:collapse;"><thead><tr style="background:rgba(255,255,255,.04)"><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Module</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Lesson</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Type</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Duration</th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
+});
+
+async function runSeed(){
+  const courseId=document.getElementById('course-select').value;
+  if(!courseId){toast('Select a course first','error');return;}
+  const btn=document.querySelector('.portal-btn');
+  btn.disabled=true;btn.textContent='Seeding…';
+  document.getElementById('status-area').innerHTML='';
+  log('Starting seed…');
+
+  try{
+    const {data:existingMods}=await supa.from('modules').select('id').eq('course_id',courseId);
+    if(existingMods?.length){
+      log(`Removing ${existingMods.length} existing module(s)…`);
+      const modIds=existingMods.map(m=>m.id);
+      const {data:existingLessons}=await supa.from('lessons').select('id').in('module_id',modIds);
+      if(existingLessons?.length){
+        await supa.from('quiz_questions').delete().in('lesson_id',existingLessons.map(l=>l.id));
+      }
+      await supa.from('lessons').delete().in('module_id',modIds);
+      await supa.from('modules').delete().eq('course_id',courseId);
+    }
+
+    let totalLessons=0,totalQuestions=0;
+    for(const mod of MODULES){
+      log(`Inserting module: ${mod.title}…`);
+      const {data:modRow,error:modErr}=await supa.from('modules').insert({
+        course_id:courseId,title:mod.title,order_index:mod.order_index
+      }).select().single();
+      if(modErr)throw modErr;
+
+      for(const lesson of mod.lessons){
+        const {data:lessonRow,error:lessonErr}=await supa.from('lessons').insert({
+          module_id:modRow.id,title:lesson.title,order_index:lesson.order_index,
+          type:lesson.type,content_url:lesson.content_url,duration_mins:lesson.duration_mins
+        }).select().single();
+        if(lessonErr)throw lessonErr;
+        totalLessons++;
+
+        const qs=QUIZ_QUESTIONS[lesson.content_url];
+        if(qs?.length){
+          const {error:qErr}=await supa.from('quiz_questions').insert(
+            qs.map(q=>({...q,lesson_id:lessonRow.id}))
+          );
+          if(qErr)throw qErr;
+          totalQuestions+=qs.length;
+        }
+      }
+      log(`  ✓ ${mod.lessons.length} lessons inserted`,'ok');
+    }
+
+    log(`Done! ${MODULES.length} modules, ${totalLessons} lessons, ${totalQuestions} quiz questions.`,'ok');
+    toast('Reinforcement Learning course seeded successfully ✓');
+  }catch(e){
+    log('Error: '+e.message,'error');
+    toast(e.message,'error');
+  }
+  btn.disabled=false;btn.textContent='⚡ Seed Course';
+}
+</script>
+</body></html>
