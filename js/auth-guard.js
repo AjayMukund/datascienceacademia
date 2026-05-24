@@ -52,8 +52,10 @@
   }
 
   if (location.pathname.includes('/student/') && profile.role === 'admin') {
-    window.location.href = '../admin/dashboard.html';
-    return;
+    if (!new URLSearchParams(location.search).has('preview')) {
+      window.location.href = '../admin/dashboard.html';
+      return;
+    }
   }
 
   window._user   = session.user;

@@ -29,6 +29,9 @@
 </aside>
 
 <main class="portal-main">
+  <div id="admin-preview-bar" style="display:none;background:rgba(200,169,110,.12);border:1px solid rgba(200,169,110,.3);border-radius:8px;padding:8px 14px;margin-bottom:1rem;font-family:var(--fb);font-size:.78rem;color:var(--champ2);display:flex;align-items:center;gap:1rem;">
+    <span>👁 Admin preview — <a href="../admin/courses.html" style="color:var(--champ);text-decoration:underline;">← Back to Admin</a></span>
+  </div>
   <div class="portal-topbar" style="margin-bottom:1rem;">
     <div>
       <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← My Courses</a>
@@ -57,13 +60,20 @@ const courseId = new URLSearchParams(location.search).get('id');
 const LT = {video:{icon:'🎬',cls:'lt-video'},pdf:{icon:'📄',cls:'lt-pdf'},quiz:{icon:'📝',cls:'lt-quiz'},live:{icon:'🔴',cls:'lt-live'},text:{icon:'📖',cls:'lt-text'}};
 
 document.addEventListener('portal:ready', async()=>{
-  const [{data:enr},{data:course},{data:progress}] = await Promise.all([
-    supa.from('enrollments').select('id').eq('user_id',window._user.id).eq('course_id',courseId).single(),
+  const isAdmin = window._profile?.role === 'admin';
+  if (isAdmin) document.getElementById('admin-preview-bar').style.display = 'flex';
+
+  const queries = [
     supa.from('courses').select('*,modules(*,lessons(*))').eq('id',courseId).single(),
     supa.from('progress').select('lesson_id').eq('user_id',window._user.id)
-  ]);
+  ];
+  if (!isAdmin) queries.unshift(supa.from('enrollments').select('id').eq('user_id',window._user.id).eq('course_id',courseId).single());
 
-  if(!enr){document.getElementById('course-header').innerHTML='<div class="empty-state"><div class="empty-icon">🔒</div><div class="empty-title">Access Restricted</div><div class="empty-sub">You are not enrolled in this course.</div></div>';return;}
+  const results = await Promise.all(queries);
+  const enr   = isAdmin ? {data:{id:'admin'}} : results.shift();
+  const [{data:course},{data:progress}] = results;
+
+  if(!isAdmin && !enr.data){document.getElementById('course-header').innerHTML='<div class="empty-state"><div class="empty-icon">🔒</div><div class="empty-title">Access Restricted</div><div class="empty-sub">You are not enrolled in this course.</div></div>';return;}
 
   const done = new Set((progress||[]).map(p=>p.lesson_id));
   document.title = `${course.title} — Data Science Academia`;
@@ -89,7 +99,7 @@ document.addEventListener('portal:ready', async()=>{
       <div style="font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--cream);margin-bottom:1rem;">${m.title}</div>
       ${lessons.map(l=>{
         const isDone=done.has(l.id);
-        return `<a href="lesson.html?id=${l.id}&course=${courseId}" class="lesson-row" style="text-decoration:none;">
+        return `<a href="lesson.html?id=${l.id}&course=${courseId}${isAdmin?'&preview=1':''}" class="lesson-row" style="text-decoration:none;">
           <div class="lt-icon ${LT[l.type]?.cls||'lt-video'}">${isDone?'✅':LT[l.type]?.icon||'🎬'}</div>
           <span class="lesson-row-title" style="${isDone?'color:var(--fog2);text-decoration:line-through;':''}">${l.title}</span>
           ${l.duration_mins?`<span class="lesson-row-dur">${l.duration_mins}min</span>`:''}

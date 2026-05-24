@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seed Microsoft Azure Course — Admin — Data Science Academia</title>
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
+<div class="portal-body">
+
+<aside class="portal-sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="../index.html"><div class="sidebar-brand-name">Data Science Academia</div><div class="sidebar-brand-sub">Admin Panel</div></a></div>
+  <nav class="portal-nav">
+    <div class="portal-nav-section">Overview</div>
+    <a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
+    <a href="analytics.html"><span class="nav-icon">📊</span> Analytics</a>
+    <div class="portal-nav-section">Management</div>
+    <a href="students.html"><span class="nav-icon">👥</span> Students</a>
+    <a href="courses.html" class="active"><span class="nav-icon">📚</span> Courses</a>
+    <a href="batches.html"><span class="nav-icon">🗂️</span> Batches</a>
+    <a href="content.html"><span class="nav-icon">⬆</span> Upload Content</a>
+    <div class="portal-nav-section">Communication</div>
+    <a href="announcements.html"><span class="nav-icon">📢</span> Announcements</a>
+    <a href="certificates.html"><span class="nav-icon">🏅</span> Certificates</a>
+    <div class="portal-nav-section">Account</div>
+    <a href="profile.html"><span class="nav-icon">👤</span> My Profile</a>
+    <div class="portal-nav-section">Site</div>
+    <a href="../index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="sidebar-user-info"><div class="sidebar-avatar portal-avatar">A</div><div><div class="sidebar-user-name portal-username">Loading…</div><div class="sidebar-user-role portal-role">Administrator</div></div></div>
+    <button class="portal-logout">→ Sign Out</button>
+  </div>
+</aside>
+
+<main class="portal-main">
+  <div class="portal-topbar">
+    <div>
+      <a href="courses.html" style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--champ2)'" onmouseout="this.style.color='var(--fog2)'">← Back to Courses</a>
+      <div class="portal-page-title">Seed Microsoft Azure Course</div>
+      <div class="portal-page-sub">6 modules × 36 lessons (30 text + 6 quizzes) with 30 quiz questions</div>
+    </div>
+    <button class="portal-mob-tog" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Status</div>
+    <div id="status-area" style="font-family:var(--fb);font-size:.85rem;color:var(--fog2);line-height:1.8;">Waiting to run…</div>
+  </div>
+
+  <div class="chart-wrap" style="margin-bottom:1.5rem;">
+    <div class="chart-title">Target Course</div>
+    <p style="font-family:var(--fb);font-size:.83rem;color:var(--fog2);margin-bottom:1rem;">
+      Select the Azure course to seed into. If it doesn't appear, create it first in the Course Editor.
+    </p>
+    <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field-group" style="margin-bottom:0;flex:1;min-width:220px;">
+        <label class="flbl">Course</label>
+        <select class="fi" id="course-sel"><option value="">Loading courses…</option></select>
+      </div>
+      <div>
+        <label class="flbl">Action</label>
+        <div style="display:flex;gap:.5rem;">
+          <button class="portal-btn-ghost" id="btn-preview" onclick="preview()" style="font-size:.82rem;">Preview plan</button>
+          <button class="portal-btn" id="btn-seed" onclick="runSeed()" disabled>Seed 36 lessons</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-wrap" id="preview-card" style="display:none;">
+    <div class="chart-title">Lesson Plan (36 lessons)</div>
+    <div id="preview-body" style="overflow-x:auto;"></div>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/portal.js"></script>
+<script src="../script.js"></script>
+<script>
+const MODULES = [
+  {
+    title: 'Module 1 — Azure Fundamentals & Cloud Essentials',
+    lessons: [
+      ['azure-w1-l1', 'The Azure Cloud — Regions, Availability Zones & Global Infrastructure',  35, 'text'],
+      ['azure-w1-l2', 'Azure Portal, CLI & SDKs — Three Ways to Interact with Azure',            40, 'text'],
+      ['azure-w1-l3', 'Microsoft Entra ID & RBAC — Identity and Access Management',              40, 'text'],
+      ['azure-w1-l4', 'Azure Virtual Machines — IaaS Compute for Data Science',                  40, 'text'],
+      ['azure-w1-l5', 'Azure Blob Storage — Object Storage Fundamentals',                        35, 'text'],
+      ['azure-w1-quiz', 'Module 1 Quiz — Azure Fundamentals & Cloud Essentials',                 15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Module 2 — Data Storage on Azure',
+    lessons: [
+      ['azure-w2-l1', 'Azure Blob Storage Deep Dive — Tiers, SAS Tokens & Lifecycle',           45, 'text'],
+      ['azure-w2-l2', 'Azure SQL Database & Azure Database for PostgreSQL',                      40, 'text'],
+      ['azure-w2-l3', 'Azure Cosmos DB — Multi-Model NoSQL at Global Scale',                     40, 'text'],
+      ['azure-w2-l4', 'Azure Synapse Analytics — Unified Analytics Platform',                    45, 'text'],
+      ['azure-w2-l5', 'ADLS Gen2 & Delta Lake — The Azure Data Lakehouse',                       40, 'text'],
+      ['azure-w2-quiz', 'Module 2 Quiz — Data Storage on Azure',                                 15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Module 3 — Data Processing & ETL',
+    lessons: [
+      ['azure-w3-l1', 'Azure Data Factory — Orchestrating Data Pipelines',                      45, 'text'],
+      ['azure-w3-l2', 'Azure Databricks — Apache Spark on Azure',                                45, 'text'],
+      ['azure-w3-l3', 'Azure Stream Analytics — Real-Time Event Processing',                     40, 'text'],
+      ['azure-w3-l4', 'Azure Functions — Serverless Compute for Data Pipelines',                 40, 'text'],
+      ['azure-w3-l5', 'Azure HDInsight — Managed Hadoop & Spark Clusters',                       35, 'text'],
+      ['azure-w3-quiz', 'Module 3 Quiz — Data Processing & ETL',                                 15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Module 4 — Machine Learning with Azure ML',
+    lessons: [
+      ['azure-w4-l1', 'Azure Machine Learning Workspace & Studio',                               40, 'text'],
+      ['azure-w4-l2', 'AutoML & Azure ML Designer — No-Code ML',                                 40, 'text'],
+      ['azure-w4-l3', 'Compute Clusters, Environments & Training Jobs',                           45, 'text'],
+      ['azure-w4-l4', 'Model Registry & Managed Online Endpoints',                                45, 'text'],
+      ['azure-w4-l5', 'Azure ML Pipelines — Reproducible ML Workflows',                          40, 'text'],
+      ['azure-w4-quiz', 'Module 4 Quiz — Machine Learning with Azure ML',                        15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Module 5 — AI Services & Cognitive APIs',
+    lessons: [
+      ['azure-w5-l1', 'Azure AI Services — The Cognitive Services Portfolio',                    40, 'text'],
+      ['azure-w5-l2', 'Azure OpenAI Service — GPT, Embeddings & DALL-E on Azure',                45, 'text'],
+      ['azure-w5-l3', 'Azure AI Search — Vector, Semantic & Hybrid Search',                      40, 'text'],
+      ['azure-w5-l4', 'Azure AI Document Intelligence & Applied AI Services',                     40, 'text'],
+      ['azure-w5-l5', 'Responsible AI — Principles, Tools & Governance on Azure',                35, 'text'],
+      ['azure-w5-quiz', 'Module 5 Quiz — AI Services & Cognitive APIs',                          15, 'quiz'],
+    ]
+  },
+  {
+    title: 'Module 6 — MLOps, Monitoring & Capstone',
+    lessons: [
+      ['azure-w6-l1', 'Azure DevOps & GitHub Actions for ML CI/CD',                              45, 'text'],
+      ['azure-w6-l2', 'Azure Monitor, Application Insights & ML Logging',                        40, 'text'],
+      ['azure-w6-l3', 'Microsoft Purview — Data Governance & Cataloguing',                       40, 'text'],
+      ['azure-w6-l4', 'Azure Cost Management & FinOps for ML Workloads',                         35, 'text'],
+      ['azure-w6-l5', 'Capstone — End-to-End ML Pipeline on Azure',                              90, 'text'],
+      ['azure-w6-quiz', 'Module 6 Quiz — MLOps, Monitoring & Capstone',                          15, 'quiz'],
+    ]
+  },
+];
+
+const QUIZ_QUESTIONS = {
+  'azure-w1-quiz': [
+    { q: 'What is an Azure Region?',
+      opts: ['A geographic area containing one or more data centres where Azure services are hosted — choosing the right region reduces latency for end users and helps meet data residency and compliance requirements such as GDPR', 'A single shared data centre used by all Azure customers worldwide, physically located in Redmond, Washington', 'A billing construct that groups related Azure subscriptions under one management hierarchy', 'A virtual network boundary that isolates resources belonging to different Azure tenants from one another'], ans: 0 },
+    { q: 'An Azure Availability Zone is:',
+      opts: ['A geographic region with a separate instance of the Azure management control plane and billing', 'A physically separate data centre within an Azure Region with independent power, cooling, and networking — deploying across at least two zones provides 99.99% VM uptime SLA and protects against single data-centre failures', 'A logical grouping of related Azure services that scales together as a unit', 'A DNS zone hosted in Azure that maps custom domain names to Azure resource public IP addresses'], ans: 1 },
+    { q: 'Microsoft Entra ID (formerly Azure Active Directory) is primarily used for:',
+      opts: ['Hosting Windows Active Directory domain controllers in the cloud for on-premises LDAP queries', 'Identity and access management — authenticating users and workloads (service principals, managed identities) and authorising access to Azure resources through role assignments and conditional access policies', 'Encrypting data at rest in Azure Storage accounts using customer-managed keys', 'Managing virtual network routing tables and firewall rules for Azure resources'], ans: 1 },
+    { q: 'In Azure RBAC, a Role Assignment consists of:',
+      opts: ['A username, password, and a list of allowed Azure services the user may create', 'A security principal (user, group, service principal, or managed identity) + a role definition (set of permissions) + a scope (management group, subscription, resource group, or individual resource) — the combination grants specific access at a specific level', 'A JSON policy document attached to a subscription that lists deny rules before allow rules', 'An Azure AD group and the virtual network it is permitted to access via private endpoint'], ans: 1 },
+    { q: 'The Azure CLI command to create a new resource group is:',
+      opts: ['az group new --name myRG --location eastus', 'az group create --name myRG --location eastus', 'az resource-group create --name myRG --region eastus', 'az create group --resource-group myRG --location eastus'], ans: 1 },
+  ],
+  'azure-w2-quiz': [
+    { q: 'An Azure Blob Storage SAS (Shared Access Signature) token provides:',
+      opts: ['Permanent full administrative access to an entire storage account regardless of expiry settings', 'Delegated, time-limited, permission-scoped access to storage resources (containers, blobs) without sharing account keys — the SAS URI embeds the permissions, start time, expiry time, and resource scope, so access automatically revokes at expiry', 'A symmetric encryption key used to encrypt data at rest within a specific blob container', 'A VPN tunnel from a client machine to the Azure Storage service without traversing the public internet'], ans: 1 },
+    { q: 'Azure Blob Storage access tiers are designed to:',
+      opts: ['Control the geographic redundancy level (LRS/GRS/ZRS) of stored data', 'Optimise storage cost by matching pricing to access frequency — Hot for frequently accessed data, Cool for infrequent access (stored 30+ days), Cold for rarely accessed (90+ days), Archive for long-term retention with retrieval latency of hours', 'Limit the maximum blob size and concurrent upload threads per storage account', 'Define the encryption algorithm (AES-128, AES-256) applied to blobs at rest'], ans: 1 },
+    { q: 'Azure Cosmos DB is best described as:',
+      opts: ['A fully managed relational database supporting complex multi-table joins with ACID transactions', 'A globally distributed, multi-model NoSQL database offering single-digit millisecond latency at any scale — supports multiple APIs (Core SQL, MongoDB, Cassandra, Gremlin, Table) with turnkey global replication and configurable consistency levels', 'A columnar analytical database optimised for OLAP queries over petabytes of historical business data', 'A managed in-memory cache service based on Redis, placed in front of Azure SQL for read acceleration'], ans: 1 },
+    { q: 'Azure Synapse Analytics differs from Azure SQL Database in that:',
+      opts: ['Synapse only supports NoSQL document APIs; Azure SQL Database supports standard T-SQL queries', 'Synapse is a unified analytics platform combining a massively parallel processing (MPP) data warehouse (Dedicated SQL Pool), serverless on-demand SQL queries over Data Lake files (Serverless SQL Pool), and Apache Spark for big data — Azure SQL Database is an OLTP-optimised single-node relational database', 'Synapse requires writing ETL pipelines in Java; Azure SQL Database supports Python stored procedures', 'Synapse is region-locked to North America; Azure SQL Database is available globally'], ans: 1 },
+    { q: 'Delta Lake on ADLS Gen2 adds to standard Parquet files:',
+      opts: ['Built-in REST API access so BI tools can query files without Spark or SQL engines', 'ACID transactions, schema enforcement, time travel (query historical versions), and DML operations (UPDATE, DELETE, MERGE) on top of Parquet files stored in Azure Data Lake Storage — enabling a reliable lakehouse architecture without moving data to a separate warehouse', 'Automatic columnar compression that reduces file size by 95% compared to uncompressed Parquet', 'A proprietary binary format that is 10× faster to read than Apache Parquet in all workloads'], ans: 1 },
+  ],
+  'azure-w3-quiz': [
+    { q: 'In Azure Data Factory, a Linked Service is:',
+      opts: ['A reusable module of transformation logic shared across multiple pipeline activities', 'A named connection definition to an external data source or destination — it stores the connection string, credentials, and service endpoint so pipeline activities can reference the connection by name without embedding credentials in activity code', 'A trigger that fires a pipeline run when a new file arrives in a specific blob container path', 'A monitoring dashboard that shows pipeline run history, duration, and per-activity error details'], ans: 1 },
+    { q: 'Azure Databricks uses Apache Spark for:',
+      opts: ['Hosting containerised microservices behind an Azure API Management gateway', 'Distributed data processing — Databricks provides an optimised Spark runtime with Delta Lake integration, collaborative notebooks (Python/Scala/R/SQL), auto-scaling clusters, and native connectors to ADLS, Synapse, Cosmos DB, and Event Hubs; it is the primary big-data ETL and ML training platform on Azure', 'Running serverless SQL queries on Blob Storage without provisioning compute clusters', 'Providing a message bus for asynchronous event-driven communication between microservices'], ans: 1 },
+    { q: 'Azure Stream Analytics is best suited for:',
+      opts: ['Running nightly batch ETL jobs that load data warehouse tables from data lake files', 'Real-time, serverless stream processing — it ingests events from Event Hubs, IoT Hub, or Blob Storage, applies SQL-like query logic (windowing, joins, aggregations) on live streams, and writes results to outputs (Power BI, Cosmos DB, SQL, ADLS) with sub-second latency and no cluster management', 'Orchestrating multi-step data pipeline workflows across ADF, Databricks, and Synapse', 'Providing full-text search and faceted filtering over large document collections'], ans: 1 },
+    { q: 'Azure Data Factory Trigger types include:',
+      opts: ['Only manual triggers — ADF does not support automated scheduled pipeline execution', 'Schedule triggers (cron-based time schedule), Tumbling Window triggers (fixed non-overlapping intervals with dependency support), Storage Event triggers (fire on blob create/delete), and Custom Event triggers (via Event Grid) — covering time-based, data-arrival, and event-driven pipeline scheduling', 'Only blob arrival triggers using Azure Storage change feed events', 'HTTP webhook triggers only, requiring an external orchestrator to call the ADF REST API'], ans: 1 },
+    { q: 'Azure Functions differ from Azure Databricks for data tasks in that:',
+      opts: ['Azure Functions runs PySpark jobs on a managed cluster; Databricks runs event-driven Python code', 'Azure Functions is serverless, event-driven, and suited for short-duration tasks (max 10 minutes for Consumption plan) triggered by HTTP, queues, blobs, or timers — Databricks is for long-running distributed Spark jobs at scale; both serve different points in a data pipeline', 'Azure Functions requires a dedicated App Service Plan costing a fixed monthly fee regardless of invocation count', 'Azure Functions only supports JavaScript; Databricks supports Python, Scala, R, and SQL'], ans: 1 },
+  ],
+  'azure-w4-quiz': [
+    { q: 'The Azure Machine Learning Workspace is:',
+      opts: ['A standalone Jupyter notebook hosted on a fixed Azure VM instance with local disk storage', 'The central hub for all Azure ML resources — it manages experiments, datasets, compute targets, environments, models, and endpoints; every training job, pipeline run, and deployment belongs to a workspace and inherits its associated storage account, Key Vault, Container Registry, and Application Insights', 'A visual drag-and-drop canvas where business analysts build ML models without writing code', 'A cost management tool that tracks and alerts on Azure ML spending across subscriptions'], ans: 1 },
+    { q: 'Azure ML AutoML automatically:',
+      opts: ['Deploys the best model directly to a production endpoint without human review', 'Tries multiple algorithms (e.g. LightGBM, XGBoost, Random Forest, linear models) and hyperparameter combinations for a given task (classification, regression, forecasting), evaluates them via cross-validation, generates an ensemble of top models, and presents a ranked leaderboard — reducing days of manual experimentation to hours', 'Labels raw training data using active learning before model training begins', 'Provisions and manages Kubernetes clusters for large-scale distributed training jobs'], ans: 1 },
+    { q: 'An Azure ML Compute Cluster differs from a Compute Instance in that:',
+      opts: ['Compute Instances support GPU workloads; Compute Clusters only support CPU-based training', 'A Compute Cluster is a scalable multi-node pool (0 to N nodes, min 0 nodes at rest) for batch training jobs and pipeline steps — it spins up when a job is submitted and scales back to 0 when idle; a Compute Instance is a single persistent VM for individual interactive notebook development', 'Compute Clusters run on Azure Kubernetes Service; Compute Instances run on Azure Virtual Machines', 'Compute Clusters are billed monthly; Compute Instances are billed per training job submission'], ans: 1 },
+    { q: 'Registering a model in the Azure ML Model Registry allows:',
+      opts: ['Automatically training a new model version on a weekly schedule without pipeline code', 'Versioning and managing trained model artifacts with associated metadata (training metrics, datasets used, responsible AI metrics) — each registered version can be deployed to endpoints; the registry provides lineage tracking and a governed approval workflow before production deployment', 'Sharing model weights publicly on the Azure Marketplace for other organisations to use', 'Running inference jobs directly within the registry without deploying to a separate endpoint'], ans: 1 },
+    { q: 'An Azure ML Pipeline step is defined as:',
+      opts: ['A SQL query that transforms data in a Synapse Dedicated SQL Pool during training', 'A reusable, parameterised component (Python function decorated with @command_component or a CommandComponent YAML) that performs a single task (preprocessing, training, evaluation) — steps are connected into a directed acyclic graph, share data via named outputs, and run on any specified compute target', 'A Docker container pulled from Docker Hub that runs a fixed training script with no parameterisation', 'An ADF pipeline that orchestrates Databricks jobs and Synapse SQL scripts together'], ans: 1 },
+  ],
+  'azure-w5-quiz': [
+    { q: 'Azure OpenAI Service differs from using OpenAI\'s API directly in that:',
+      opts: ['Azure OpenAI only supports older GPT-3 models; direct OpenAI API provides GPT-4 and newer', 'Azure OpenAI deploys OpenAI models (GPT-4, GPT-4o, Embeddings, DALL-E) within Microsoft\'s Azure infrastructure — providing data privacy (prompts and completions are not used for training), regional data residency, Azure AD authentication, private networking (VNet integration), and enterprise SLAs; direct OpenAI API routes data through OpenAI\'s infrastructure', 'Azure OpenAI is free for all Azure subscribers; the OpenAI API charges per token consumed', 'Azure OpenAI only supports batch inference; the OpenAI API supports both real-time and batch modes'], ans: 1 },
+    { q: 'Azure AI Search (formerly Cognitive Search) supports:',
+      opts: ['Only keyword-based full-text search using inverted indexes over structured JSON documents', 'Keyword search, semantic ranking (cross-encoder reranking using language models), and vector search (approximate nearest neighbour over embedding vectors) — plus hybrid search combining all three; it is the retrieval layer in RAG (Retrieval-Augmented Generation) architectures with Azure OpenAI', 'Only vector similarity search using cosine distance over fixed-dimension float32 arrays', 'SQL queries over relational tables stored in Azure Blob Storage as CSV or Parquet files'], ans: 1 },
+    { q: 'Azure AI Document Intelligence (formerly Form Recognizer) is used to:',
+      opts: ['Convert audio recordings to text transcripts using a speech-to-text transformer model', 'Extract structured data from documents — invoices, receipts, contracts, ID cards, tax forms — using pre-built and custom-trained models; it returns field-level key-value pairs, tables, signatures, and bounding box coordinates, enabling downstream processing without manual data entry', 'Detect objects and people in images using a pre-trained computer vision model', 'Translate documents between 100 languages while preserving the original document layout'], ans: 1 },
+    { q: 'Microsoft\'s Responsible AI principles include:',
+      opts: ['Maximising model accuracy above all other considerations including fairness and privacy', 'Fairness (equitable treatment across demographic groups), Reliability & Safety (robust and safe behaviour), Privacy & Security (data protection), Inclusiveness (accessible and representative), Transparency (understandable decisions), and Accountability (human oversight) — operationalised through tools like Fairlearn, InterpretML, and the Responsible AI Dashboard in Azure ML', 'Using only open-source models to ensure transparency of weights and training data', 'Restricting AI use to internal Microsoft products until external safety audits are completed'], ans: 1 },
+    { q: 'Retrieval-Augmented Generation (RAG) with Azure OpenAI typically involves:',
+      opts: ['Fine-tuning a GPT model on domain-specific data and deploying it as a standalone chatbot', 'Embedding user queries and documents into vectors, storing documents in Azure AI Search, retrieving the most relevant chunks at query time, and passing them as context to the GPT model — so the model answers from your private data without retraining, reducing hallucinations and keeping knowledge current', 'Generating synthetic training data with GPT-4 and using it to train a smaller task-specific model', 'Using DALL-E to generate data visualisation images from structured tabular data'], ans: 1 },
+  ],
+  'azure-w6-quiz': [
+    { q: 'In Azure ML CI/CD with GitHub Actions, the typical MLOps trigger is:',
+      opts: ['A weekly cron job that retrains every model in the workspace regardless of data changes', 'A push or pull request to the main branch (code change) or a scheduled event or data drift alert — the workflow runs linting, unit tests, then triggers an Azure ML Pipeline for training; on success it registers the model and optionally deploys to a staging endpoint for validation before production', 'A manual button click in the Azure Portal that submits a training job and deploys the result', 'A Cosmos DB change feed that fires when new customer records exceed a threshold count'], ans: 1 },
+    { q: 'Azure Monitor collects data from Azure ML in the form of:',
+      opts: ['Only billing and cost data — technical logs are handled exclusively by Application Insights', 'Metrics (numerical time-series: endpoint latency, invocations, CPU utilisation), Logs (structured event records from training jobs, endpoint requests, pipeline runs stored in Log Analytics workspace), and Alerts (rules that trigger actions — email, webhook, auto-scaling — when a metric or log query condition is met)', 'Static configuration snapshots of resource settings taken once per day at midnight UTC', 'Network packet captures from the VNet hosting Azure ML compute clusters'], ans: 1 },
+    { q: 'Microsoft Purview is used in Azure data platforms to:',
+      opts: ['Replace Azure Data Factory as the ETL orchestration service for enterprise data pipelines', 'Provide unified data governance — automated data discovery and scanning (Blob, ADLS, Synapse, SQL, Power BI), a searchable business data catalogue with technical and business metadata, data lineage visualisation (which pipeline produced which dataset), and sensitivity label classification for PII and confidential data', 'Monitor deployed Azure ML models for data drift and trigger automated retraining pipelines', 'Manage Azure AD group memberships and role assignments across all subscriptions'], ans: 1 },
+    { q: 'The most effective way to reduce Azure ML training costs is:',
+      opts: ['Always choosing the most powerful GPU VM (NC96ads A100) to finish training faster', 'Using low-priority (spot) Compute Cluster VMs (up to 80% discount vs dedicated), setting min_nodes=0 so clusters scale to zero when idle, choosing the smallest VM that meets memory requirements, and enabling early stopping rules in hyperparameter sweeps to terminate unpromising runs early', 'Running all training on a Compute Instance left running 24/7 to avoid cluster spin-up delay', 'Storing training data in Azure SQL Database instead of ADLS to reduce data access latency costs'], ans: 1 },
+    { q: 'MLflow integration in Azure ML allows:',
+      opts: ['Replacing the Azure ML SDK entirely — MLflow calls are the only way to submit jobs in Azure ML v2', 'Logging parameters, metrics, and artifacts from training scripts using standard MLflow APIs (mlflow.log_param, mlflow.log_metric, mlflow.log_artifact) — Azure ML auto-captures these into the run record in the workspace; models logged with mlflow.sklearn.log_model are auto-registered in the Azure ML Model Registry', 'Running MLflow Model Registry as a standalone microservice outside of Azure ML workspace', 'Scheduling MLflow pipeline runs using Azure Data Factory triggers instead of Azure ML Pipeline'], ans: 1 },
+  ],
+};
+
+function log(msg, cls=''){
+  const area = document.getElementById('status-area');
+  area.innerHTML += `<div style="color:${cls==='ok'?'var(--teal)':cls==='err'?'#f66':cls==='head'?'var(--cream)':'var(--fog2)'}">${msg}</div>`;
+  area.scrollTop = area.scrollHeight;
+}
+function toast(m,t='success'){
+  const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;
+  document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);
+}
+
+document.addEventListener('portal:ready', async () => {
+  const {data: courses, error} = await supa.from('courses').select('id,title').order('title');
+  const sel = document.getElementById('course-sel');
+  if (error || !courses?.length) { sel.innerHTML = '<option value="">No courses found</option>'; return; }
+  sel.innerHTML = '<option value="">— pick a course —</option>';
+  courses.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id; opt.textContent = c.title;
+    if (/azure/i.test(c.title)) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  document.getElementById('btn-seed').disabled = false;
+});
+
+function preview(){
+  const card = document.getElementById('preview-card');
+  card.style.display = 'block';
+  let totalMins = 0;
+  let html = `<table style="width:100%;border-collapse:collapse;font-family:var(--fb);font-size:.8rem;">
+    <thead><tr style="background:var(--fog2);color:var(--ink);">
+      <th style="padding:.4rem .6rem;text-align:left;">Slug</th>
+      <th style="padding:.4rem .6rem;text-align:left;">Title</th>
+      <th style="padding:.4rem .6rem;text-align:center;">Type</th>
+      <th style="padding:.4rem .6rem;text-align:right;">Mins</th>
+    </tr></thead><tbody>`;
+  MODULES.forEach((mod, mi) => {
+    html += `<tr><td colspan="4" style="padding:.5rem .6rem;background:var(--fog);color:var(--cream);font-weight:600;">${mod.title}</td></tr>`;
+    mod.lessons.forEach(([slug, title, mins, type]) => {
+      totalMins += mins;
+      const typeColor = type === 'quiz' ? 'var(--champ2)' : 'var(--teal)';
+      html += `<tr><td style="padding:.35rem .6rem;color:var(--teal);font-family:monospace;">${slug}</td>
+        <td style="padding:.35rem .6rem;color:var(--fog2);">${title}</td>
+        <td style="padding:.35rem .6rem;text-align:center;color:${typeColor};">${type}</td>
+        <td style="padding:.35rem .6rem;text-align:right;color:var(--fog2);">${mins}</td></tr>`;
+    });
+    const quizSlug = `azure-w${mi+1}-quiz`;
+    const qCount = QUIZ_QUESTIONS[quizSlug]?.length || 0;
+    if (qCount) html += `<tr><td colspan="4" style="padding:.25rem .6rem .5rem 2rem;color:var(--champ2);font-size:.75rem;">📝 ${qCount} quiz questions for ${quizSlug}</td></tr>`;
+  });
+  html += `</tbody><tfoot><tr style="border-top:1px solid var(--border);">
+    <td colspan="3" style="padding:.5rem .6rem;color:var(--cream);font-weight:600;">Total (6 modules, 36 lessons, 30 quiz questions)</td>
+    <td style="padding:.5rem .6rem;text-align:right;color:var(--cream);font-weight:600;">${totalMins} min</td>
+  </tr></tfoot></table>`;
+  document.getElementById('preview-body').innerHTML = html;
+  card.scrollIntoView({ behavior: 'smooth' });
+}
+
+async function runSeed(){
+  const courseId = document.getElementById('course-sel').value;
+  if (!courseId){ toast('Pick a course first','error'); return; }
+  const btn = document.getElementById('btn-seed');
+  btn.disabled = true; btn.textContent = 'Running…';
+  document.getElementById('status-area').innerHTML = '';
+  try {
+    log('=== MICROSOFT AZURE COURSE SEEDER ===', 'head');
+    log(`Course ID: ${courseId}`);
+
+    log('Step 1 — Removing existing modules, lessons & quiz questions…');
+    const {data: existingMods} = await supa.from('modules').select('id').eq('course_id', courseId);
+    if (existingMods?.length) {
+      const modIds = existingMods.map(m => m.id);
+      const {data: existingLessons} = await supa.from('lessons').select('id').in('module_id', modIds);
+      if (existingLessons?.length) {
+        const lessonIds = existingLessons.map(l => l.id);
+        await supa.from('quiz_questions').delete().in('lesson_id', lessonIds);
+        await supa.from('lessons').delete().in('module_id', modIds);
+      }
+      await supa.from('modules').delete().eq('course_id', courseId);
+      log(`  Removed ${existingMods.length} module(s).`);
+    } else { log('  Clean slate.'); }
+
+    log('Step 2 — Inserting 6 modules, 36 lessons & 30 quiz questions…', 'head');
+    let totalLessons = 0, totalQuestions = 0;
+
+    for (let mi = 0; mi < MODULES.length; mi++) {
+      const mod = MODULES[mi];
+      const {data: modRow, error: modErr} = await supa.from('modules')
+        .insert({ course_id: courseId, title: mod.title, order_index: mi })
+        .select().single();
+      if (modErr) throw new Error(`Module insert failed: ${modErr.message}`);
+      log(`  [${mi+1}/6] Module "${mod.title}" → id ${modRow.id}`);
+
+      for (let li = 0; li < mod.lessons.length; li++) {
+        const [slug, title, mins, type] = mod.lessons[li];
+        const {data: lessonRow, error: lesErr} = await supa.from('lessons')
+          .insert({ module_id: modRow.id, title, type, content_url: slug, duration_mins: mins, order_index: li })
+          .select().single();
+        if (lesErr) throw new Error(`Lesson insert failed for "${title}": ${lesErr.message}`);
+        totalLessons++;
+        if (type === 'quiz') {
+          const questions = QUIZ_QUESTIONS[slug] || [];
+          if (questions.length) {
+            const qRows = questions.map((q, qi) => ({
+              lesson_id: lessonRow.id, question: q.q, options: q.opts,
+              correct_index: q.ans, order_index: qi,
+            }));
+            const {error: qErr} = await supa.from('quiz_questions').insert(qRows);
+            if (qErr) throw new Error(`Quiz insert failed for "${slug}": ${qErr.message}`);
+            log(`    📝 ${questions.length} quiz questions inserted for ${slug}`, 'ok');
+            totalQuestions += questions.length;
+          }
+        }
+      }
+    }
+
+    log(`Step 3 — Done! ${totalLessons} lessons and ${totalQuestions} quiz questions inserted.`, 'ok');
+    log('✓ Microsoft Azure course seeded successfully.', 'ok');
+    toast('Azure course seeded!');
+  } catch(e) {
+    log(`ERROR: ${e.message}`, 'err');
+    toast(e.message, 'error');
+  }
+  btn.disabled = false; btn.textContent = 'Seed 36 lessons';
+}
+</script>
+</body></html>

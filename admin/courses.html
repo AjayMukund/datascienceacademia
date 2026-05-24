@@ -86,6 +86,7 @@ document.addEventListener('portal:ready',async()=>{
         </div>
       </div>
       <div class="course-footer">
+        <a href="../student/course.html?id=${c.id}&preview=1" class="portal-btn-ghost" style="font-size:.72rem;padding:7px 14px;" target="_blank">👁 View</a>
         <a href="course-editor.html?id=${c.id}" class="portal-btn-ghost" style="font-size:.72rem;padding:7px 14px;">✏️ Edit</a>
         <button class="icon-btn danger" onclick="del('${c.id}','${c.title.replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">🗑</button>
       </div>
@@ -123,6 +124,8 @@ const SEED_DEFS=[
    content:{file:'powerbi-content.js',prefix:'powerbi'}},
   {label:'AWS',href:'seed-aws-course.html',expected:36,match:/aws/i,
    content:{file:'aws-content.js',prefix:'aws'}},
+  {label:'Azure',href:'seed-azure-course.html',expected:36,match:/azure/i,
+   content:{file:'azure-content.js',prefix:'azure'}},
 ];
 
 function toggleGear(){
