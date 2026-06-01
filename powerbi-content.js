@@ -1774,5 +1774,30 @@ Open the App as a Viewer → confirm RLS filters correctly, drill-through works,
   ]
 };
 
+
+L['powerbi-w1-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 1 Quiz — Getting Started with Power BI</h2><p>Test your knowledge of the Power BI ecosystem (Desktop, Service, Mobile), the three views (Report, Data, Model), connecting to data sources, and building your first report and visualisation.</p>` }
+]};
+
+L['powerbi-w2-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 2 Quiz — Data Transformation with Power Query</h2><p>Test your knowledge of the Power Query Editor, M language fundamentals, common transformations (split, merge, pivot, unpivot), data type conversion, and combining queries with Append and Merge.</p>` }
+]};
+
+L['powerbi-w3-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 3 Quiz — Data Modeling</h2><p>Test your knowledge of star and snowflake schema design, creating relationships (cardinality, cross-filter direction), calculated columns vs measures, and best practices for an efficient Power BI data model.</p>` }
+]};
+
+L['powerbi-w4-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 4 Quiz — DAX Deep Dive</h2><p>Test your knowledge of CALCULATE, FILTER, ALL/ALLEXCEPT, time intelligence functions (TOTALYTD, SAMEPERIODLASTYEAR), iterator functions (SUMX, AVERAGEX), and writing efficient DAX measures.</p>` }
+]};
+
+L['powerbi-w5-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 5 Quiz — Visualisations &amp; Reports</h2><p>Test your knowledge of Power BI chart types, bookmarks and buttons for navigation, drill-through and drill-down, tooltips, custom visuals from AppSource, and report design best practices.</p>` }
+]};
+
+L['powerbi-w6-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 6 Quiz — Publishing, Security &amp; Capstone</h2><p>Test your knowledge of publishing to Power BI Service, workspaces and apps, row-level security (RLS) setup, scheduled refresh, sharing and embedding reports, and the end-to-end capstone dashboard.</p>` }
+]};
+
 })();
 

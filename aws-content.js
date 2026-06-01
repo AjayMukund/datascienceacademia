@@ -2868,5 +2868,30 @@ print("Current model:", resp['ProductionVariants'][0]['DeployedImages'])` }
   ]
 };
 
+
+L['aws-w1-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 1 Quiz — AWS Foundations &amp; Cloud Essentials</h2><p>Test your knowledge of cloud computing concepts (IaaS/PaaS/SaaS), AWS global infrastructure (regions, AZs), IAM (users, roles, policies, least-privilege), EC2 instance types, and the AWS Free Tier.</p>` }
+]};
+
+L['aws-w2-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 2 Quiz — Data Storage on AWS</h2><p>Test your knowledge of Amazon S3 (buckets, objects, versioning, storage classes, lifecycle policies), Amazon RDS (engines, read replicas, Multi-AZ), DynamoDB, Amazon Glacier, and selecting the right storage service for a use case.</p>` }
+]};
+
+L['aws-w3-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 3 Quiz — Data Processing &amp; ETL</h2><p>Test your knowledge of AWS Glue (crawlers, data catalog, ETL jobs), Amazon Athena (querying S3 with SQL), Amazon EMR (Spark on AWS), AWS Lambda (serverless compute triggers), and building serverless ETL pipelines.</p>` }
+]};
+
+L['aws-w4-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 4 Quiz — Machine Learning with Amazon SageMaker</h2><p>Test your knowledge of SageMaker Studio, training jobs (built-in algorithms, custom containers), SageMaker Feature Store, model hosting (real-time and batch endpoints), SageMaker Pipelines, and Model Registry.</p>` }
+]};
+
+L['aws-w5-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 5 Quiz — Data Pipelines &amp; Streaming</h2><p>Test your knowledge of Amazon Kinesis (Data Streams, Firehose, Analytics), AWS Step Functions for workflow orchestration, Amazon MWAA (managed Airflow), and designing event-driven data pipeline architectures on AWS.</p>` }
+]};
+
+L['aws-w6-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 6 Quiz — MLOps, Monitoring &amp; Capstone</h2><p>Test your knowledge of AWS CodePipeline and CodeBuild for ML CI/CD, Amazon CloudWatch for logging and alerting, SageMaker Model Monitor for drift detection, and the end-to-end capstone ML deployment on AWS.</p>` }
+]};
+
 })();
 

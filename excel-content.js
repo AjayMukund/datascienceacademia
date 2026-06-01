@@ -1415,4 +1415,29 @@ Margin %:        =TEXT(SUM(SalesData[Margin])/SUM(SalesData[Revenue]),"0.0%")</p
   ]
 };
 
+
+L['excel-w1-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Week 1 Quiz — Excel Fundamentals</h2><p>Test your knowledge of Excel data types, cell referencing (relative, absolute, mixed), the core formula set (SUM, COUNT, AVERAGE, MIN, MAX, IF), and text functions (LEFT, RIGHT, MID, CONCATENATE, TRIM).</p>` }
+]};
+
+L['excel-w2-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Week 2 Quiz — Lookup &amp; Data Cleaning</h2><p>Test your knowledge of VLOOKUP, HLOOKUP, XLOOKUP, INDEX/MATCH, removing duplicates, data validation, Flash Fill, and text-to-columns for data cleaning workflows.</p>` }
+]};
+
+L['excel-w3-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Week 3 Quiz — Advanced Formulas</h2><p>Test your knowledge of nested IF, AND/OR logic, SUMIF/SUMIFS, COUNTIF/COUNTIFS, AVERAGEIF, array formulas, named ranges, and dynamic array functions (FILTER, SORT, UNIQUE).</p>` }
+]};
+
+L['excel-w4-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Week 4 Quiz — Data Visualisation</h2><p>Test your knowledge of chart types and when to use each (bar, line, scatter, pie, combo), sparklines, conditional formatting rules, and building interactive dashboard layouts in Excel.</p>` }
+]};
+
+L['excel-w5-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Week 5 Quiz — Pivot Tables &amp; Pivot Charts</h2><p>Test your knowledge of creating and configuring PivotTables, calculated fields and items, PivotCharts, slicers, timelines, and grouping data by date or custom criteria.</p>` }
+]};
+
+L['excel-w6-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Week 6 Quiz — Automation &amp; Capstone</h2><p>Test your knowledge of Power Query for data import and transformation, recording and editing basic macros, VBA fundamentals, and the end-to-end business reporting capstone workflow.</p>` }
+]};
+
 })();

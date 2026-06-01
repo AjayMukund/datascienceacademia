@@ -3499,5 +3499,30 @@ print("Capstone complete — Azure ML pipeline is live")` }
   ]
 };
 
+
+L['azure-w1-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 1 Quiz — Azure Fundamentals &amp; Cloud Essentials</h2><p>Test your knowledge of Azure global infrastructure (regions, availability zones), Microsoft Entra ID (Azure AD), resource groups and subscriptions, Azure Virtual Machines, the Azure portal and CLI, and AZ-900 core concepts.</p>` }
+]};
+
+L['azure-w2-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 2 Quiz — Data Storage on Azure</h2><p>Test your knowledge of Azure Blob Storage (access tiers, lifecycle management), Azure Data Lake Storage Gen2, Azure Cosmos DB, Azure SQL Database vs Azure Synapse Analytics, and choosing the right storage service for analytics workloads.</p>` }
+]};
+
+L['azure-w3-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 3 Quiz — Data Processing &amp; ETL</h2><p>Test your knowledge of Azure Data Factory (pipelines, linked services, datasets, triggers), Azure Databricks (Spark clusters, notebooks, Delta Lake), Azure Synapse Analytics (dedicated SQL pools, Spark pools), and building end-to-end ETL workflows on Azure.</p>` }
+]};
+
+L['azure-w4-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 4 Quiz — Machine Learning with Azure ML</h2><p>Test your knowledge of the Azure Machine Learning workspace, compute clusters and instances, experiment tracking, model training (AutoML, custom scripts), model registration, managed online endpoints, and Azure ML Pipelines.</p>` }
+]};
+
+L['azure-w5-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 5 Quiz — AI Services &amp; Cognitive APIs</h2><p>Test your knowledge of Azure OpenAI Service (GPT deployment, prompt engineering), Azure Cognitive Services (Vision, Speech, Language, Translator), Azure Bot Service, and integrating AI APIs into data science applications.</p>` }
+]};
+
+L['azure-w6-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 6 Quiz — MLOps, Monitoring &amp; Capstone</h2><p>Test your knowledge of Azure DevOps pipelines for ML CI/CD, Azure Monitor and Application Insights, responsible AI principles and the Azure Fairness toolkit, Microsoft Purview for data governance, and the end-to-end Azure ML capstone.</p>` }
+]};
+
 })();
 

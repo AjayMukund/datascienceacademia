@@ -3125,4 +3125,29 @@ print(f"Test RMSE: {rmse:.4f}  (target scale: {y.min():.1f}–{y.max():.1f})")` 
   ]
 };
 
+
+L['fe-w1-quiz'] = { duration_mins: 10, sections: [
+  { type:'text', body:`<h2>Week 1 Quiz — Missing Data &amp; Data Quality</h2><p>Test your knowledge of MCAR, MAR, and MNAR missing-data mechanisms, simple imputation strategies (mean, median, mode, constant), advanced imputation (KNN, MICE), missing indicators, and the data quality audit framework.</p>` }
+]};
+
+L['fe-w2-quiz'] = { duration_mins: 10, sections: [
+  { type:'text', body:`<h2>Week 2 Quiz — Categorical Encoding</h2><p>Test your knowledge of label encoding, ordinal encoding, one-hot encoding, target encoding, frequency encoding, and strategies for handling high-cardinality categorical features.</p>` }
+]};
+
+L['fe-w3-quiz'] = { duration_mins: 10, sections: [
+  { type:'text', body:`<h2>Week 3 Quiz — Numerical Transformations</h2><p>Test your knowledge of standardisation, min-max scaling, robust scaling, log and power transforms (Box-Cox, Yeo-Johnson), discretisation and binning, and outlier detection and treatment.</p>` }
+]};
+
+L['fe-w4-quiz'] = { duration_mins: 10, sections: [
+  { type:'text', body:`<h2>Week 4 Quiz — Feature Creation &amp; Domain Engineering</h2><p>Test your knowledge of polynomial and interaction features, date/time feature extraction, aggregation and ratio features, and applying domain knowledge to engineer predictive signals.</p>` }
+]};
+
+L['fe-w5-quiz'] = { duration_mins: 10, sections: [
+  { type:'text', body:`<h2>Week 5 Quiz — Feature Selection</h2><p>Test your knowledge of filter methods (correlation, mutual information, chi-squared), wrapper methods (RFE, forward/backward selection), embedded methods (Lasso, tree importance), and SHAP-based feature selection.</p>` }
+]};
+
+L['fe-w6-quiz'] = { duration_mins: 10, sections: [
+  { type:'text', body:`<h2>Week 6 Quiz — Hyperparameter Optimisation &amp; Model Selection</h2><p>Test your knowledge of GridSearchCV, RandomizedSearchCV, Bayesian optimisation with Optuna, cross-validation strategies, scikit-learn Pipelines, and end-to-end model selection workflows.</p>` }
+]};
+
 })();
