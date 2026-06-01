@@ -3359,4 +3359,29 @@ cat("R-squared:", round(summary(model)$r.squared, 3), "\\n")` }
   ]
 };
 
+
+L['r-w1-quiz'] = { duration_mins: 10, sections: [
+  { type:'text', body:`<h2>Week 1 Quiz — R Basics &amp; RStudio</h2><p>Test your knowledge of the RStudio interface, vectors, factors, core data types, control flow (if/else, loops, functions), and string manipulation in R.</p>` }
+]};
+
+L['r-w2-quiz'] = { duration_mins: 10, sections: [
+  { type:'text', body:`<h2>Week 2 Quiz — R Data Structures</h2><p>Test your knowledge of matrices, arrays, lists, data frames, tibbles, importing data from CSV/Excel/RDS, and inspecting and cleaning raw data.</p>` }
+]};
+
+L['r-w3-quiz'] = { duration_mins: 10, sections: [
+  { type:'text', body:`<h2>Week 3 Quiz — Data Wrangling</h2><p>Test your knowledge of the pipe operator, dplyr verbs (filter, select, mutate, arrange), group_by and summarise, reshaping with tidyr (pivot_longer/pivot_wider), and joining data frames.</p>` }
+]};
+
+L['r-w4-quiz'] = { duration_mins: 10, sections: [
+  { type:'text', body:`<h2>Week 4 Quiz — Data Visualisation</h2><p>Test your knowledge of the grammar of graphics, ggplot2 layers (geom_bar, geom_line, geom_histogram, geom_boxplot, geom_violin), faceting, themes, scales, and exporting publication-ready charts with ggsave.</p>` }
+]};
+
+L['r-w5-quiz'] = { duration_mins: 10, sections: [
+  { type:'text', body:`<h2>Week 5 Quiz — Statistical Analysis</h2><p>Test your knowledge of descriptive statistics, probability distributions (dnorm, pnorm, qnorm, rnorm), hypothesis testing (t-test, chi-squared, ANOVA), correlation analysis (Pearson, Spearman), and linear regression in R.</p>` }
+]};
+
+L['r-w6-quiz'] = { duration_mins: 10, sections: [
+  { type:'text', body:`<h2>Week 6 Quiz — R Markdown &amp; Capstone</h2><p>Test your knowledge of R Markdown document structure, output formats (HTML, PDF, Word), Quarto, building interactive Shiny applications, and the end-to-end EDA capstone workflow.</p>` }
+]};
+
 })();
