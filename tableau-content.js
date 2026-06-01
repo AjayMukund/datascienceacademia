@@ -1184,4 +1184,25 @@ Step 7 — Publish:
   ]
 };
 
+
+L['tableau-w1-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 1 Quiz — Getting Started with Tableau</h2><p>Test your knowledge of the Tableau interface, data connections, core chart types (bar, line, pie), filters, sorting, the Marks card, and tooltip customisation.</p>` }
+]};
+
+L['tableau-w2-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 2 Quiz — Core Chart Types &amp; Visual Analytics</h2><p>Test your knowledge of time series with trend lines and forecasting, geographic maps, scatter plots with clustering, dual-axis charts, histograms, and box plots.</p>` }
+]};
+
+L['tableau-w3-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 3 Quiz — Calculations &amp; LOD Expressions</h2><p>Test your knowledge of calculated fields, string/date/number functions, logical functions (IF, CASE, ZN), table calculations (running total, rank, percent of total), LOD expressions (FIXED, INCLUDE, EXCLUDE), and parameters.</p>` }
+]};
+
+L['tableau-w4-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 4 Quiz — Dashboards &amp; Interactivity</h2><p>Test your knowledge of dashboard layout (tiled vs floating, containers), dashboard actions (filter, highlight, URL, navigate), sets and set actions, story points, and mobile device layouts.</p>` }
+]};
+
+L['tableau-w5-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Module 5 Quiz — Publishing, Performance &amp; Best Practices</h2><p>Test your knowledge of data extracts vs live connections, publishing to Tableau Public and Server, performance optimisation, dashboard design principles, and the end-to-end capstone workflow.</p>` }
+]};
+
 })();
