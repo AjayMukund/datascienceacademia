@@ -3446,6 +3446,34 @@ L['ml-w8-l5'] = {
   ]
 };
 
+L['ml-w1-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Week 1 Quiz — ML Foundations</h2><p>Test your knowledge of supervised vs unsupervised learning, the ML workflow, train/validation/test splits, data preprocessing, sklearn Pipelines, and evaluation metrics (accuracy, precision, recall, F1, RMSE, R²).</p>` }
+]};
+
+L['ml-w2-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Week 2 Quiz — Linear Models</h2><p>Test your knowledge of simple and multiple linear regression, the OLS cost function, Ridge (L2) and Lasso (L1) regularisation, ElasticNet, binary and multiclass logistic regression, and the sigmoid function.</p>` }
+]};
+
+L['ml-w3-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Week 3 Quiz — Tree-Based Models</h2><p>Test your knowledge of decision tree splitting criteria (Gini, entropy), overfitting and pruning, Random Forest (bagging, feature subsampling), Gradient Boosting, XGBoost, and LightGBM.</p>` }
+]};
+
+L['ml-w4-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Week 4 Quiz — SVM &amp; KNN</h2><p>Test your knowledge of the maximal margin classifier, support vectors, the kernel trick (RBF, polynomial, linear), KNN classification and regression, the effect of k, distance metrics, and model comparison frameworks.</p>` }
+]};
+
+L['ml-w5-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Week 5 Quiz — Unsupervised Learning</h2><p>Test your knowledge of K-Means (inertia, elbow method), hierarchical clustering (dendrograms, linkage), DBSCAN (eps, min_samples, noise points), PCA (explained variance, components), and t-SNE and UMAP for dimensionality reduction.</p>` }
+]};
+
+L['ml-w6-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Week 6 Quiz — Evaluation &amp; Tuning</h2><p>Test your knowledge of k-fold and stratified cross-validation, GridSearchCV, RandomizedSearchCV, bias-variance tradeoff, learning curves, diagnosing underfitting/overfitting, and filter vs wrapper vs embedded feature selection.</p>` }
+]};
+
+L['ml-w7-quiz'] = { duration_mins: 15, sections: [
+  { type:'text', body:`<h2>Week 7 Quiz — Ensemble Methods</h2><p>Test your knowledge of bagging, Random Forest feature importance, AdaBoost (sample weighting), Gradient Boosting theory, XGBoost and LightGBM production configurations, and stacking and voting ensemble architectures.</p>` }
+]};
+
 L['ml-w8-quiz'] = {
   duration_mins: 15,
   sections: [
