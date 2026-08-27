@@ -1,72 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <!-- Core pages -->
-  <url>
-    <loc>https://ajaymukund.github.io/datascienceacademia/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://ajaymukund.github.io/datascienceacademia/about.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://ajaymukund.github.io/datascienceacademia/courses.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://ajaymukund.github.io/datascienceacademia/programmes.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://ajaymukund.github.io/datascienceacademia/projects.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ajaymukund.github.io/datascienceacademia/codechamps.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ajaymukund.github.io/datascienceacademia/contact.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- Auth / user-facing -->
-  <url>
-    <loc>https://ajaymukund.github.io/datascienceacademia/register.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://ajaymukund.github.io/datascienceacademia/login.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://ajaymukund.github.io/datascienceacademia/testimonials.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://ajaymukund.github.io/datascienceacademia/blog.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Certificate verification (public utility) -->
-  <url>
-    <loc>https://ajaymukund.github.io/datascienceacademia/verify.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/about.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/blog.html</loc><lastmod>2026-08-27</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/codechamps.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/contact.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses.html</loc><lastmod>2026-08-27</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/</loc><lastmod>2026-08-27</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/programmes.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/projects.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/testimonials.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/python.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/sql.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/r-programming.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/machine-learning.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/nlp.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/feature-engineering.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/deep-learning.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/computer-vision.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/llm.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/generative-ai.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/reinforcement-learning.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/mlops.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/data-visualization.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/excel.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/tableau.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/power-bi.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/azure.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/courses/aws.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/programmes/internship.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/programmes/microsoft-certification.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/programmes/fdp.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/programmes/exam-coaching.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/programmes/research-assistance.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/programmes/code-champs.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/programmes/language-communication.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/programmes/ai-mastery.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/blog/statistics-still-matters-deep-learning.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/blog/feature-engineering-craft.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/blog/llms-every-data-scientist-needs-to-know.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/blog/data-science-career-india-2025.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/blog/bias-variance-tradeoff.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/blog/python-data-science-roadmap.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/codechamps/explorers.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/codechamps/builders.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/codechamps/innovators.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/codechamps/pioneers.html</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ajaymukund.github.io/datascienceacademia/verify.html</loc><lastmod>2026-08-27</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
 </urlset>

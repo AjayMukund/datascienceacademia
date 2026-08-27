@@ -1,0 +1,295 @@
+{% extends "base.html" %}
+{% block title %}AI & Data Science Courses in Chennai | Data Science Academia{% endblock %}
+{% block description %}Browse all 18 Data Science & AI courses in Chennai — Python, SQL, Machine Learning, Deep Learning, LLMs, Power BI, Azure and AWS. Live and online, Ph.D.-led.{% endblock %}
+{% block og_title %}18 Data Science & AI Courses in Chennai — Data Science Academia{% endblock %}
+{% block og_image %}{{ og_for('page','courses') }}{% endblock %}
+{% block og_image_alt %}The 18 Data Science and AI courses taught at Data Science Academia, Chennai{% endblock %}
+{% block body_class %}page-courses{% endblock %}
+
+{# ── Derived figures (computed from the course data, never hard-coded) ── #}
+{% set ns = namespace(hours=0) %}
+{% for c in courses_list %}{% set ns.hours = ns.hours + (c.hours.split(' ')[0] | int) %}{% endfor %}
+{% set total_hours = ns.hours %}
+{% set n_courses = courses_list | length %}
+
+{# ── Recommended learning paths: (id, tone, icon, audience, title, text, course ids) ── #}
+{% set paths = [
+  ('beginner', 'teal', '🌱', 'For absolute beginners', 'Zero to Machine Learning',
+   'No coding background needed. Learn Python from first principles, add the SQL every data role expects, then train and evaluate your first models on real datasets.',
+   ['python', 'sql', 'machine-learning']),
+  ('analyst', 'blue', '📊', 'For business analysts', 'Spreadsheets to enterprise BI',
+   'No programming required. Turn Excel into a reporting engine, build enterprise Power BI dashboards with DAX and PL-300 prep, then publish interactive Tableau stories.',
+   ['excel', 'power-bi', 'tableau']),
+  ('engineer', 'violet', '⚙️', 'For engineers &amp; developers', 'Machine Learning to production AI',
+   'Already comfortable with Python? Go from classical ML through neural networks and Transformers to fine-tuned LLMs, RAG pipelines and models shipped to production.',
+   ['machine-learning', 'deep-learning', 'llm', 'mlops']),
+] %}
+
+{% block head_extra %}
+<style>
+.courses-banner{margin-top:2.5rem}
+.courses-banner img{width:100%;height:auto;display:block}
+.filter-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem 2rem;margin-bottom:2rem}
+.filter-bar .filter-tabs{margin-bottom:0}
+.ftab .n{font-family:var(--fm);font-size:.62rem;opacity:.7;margin-left:.3rem}
+.filter-note{font-family:var(--fm);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fog2)}
+.empty-note{margin-top:1.25rem;padding:2.5rem 1.5rem;text-align:center;border:1px dashed var(--border2);border-radius:var(--r-lg);color:var(--fog)}
+.cat-anchor{scroll-margin-top:calc(var(--nav-h) + 1rem)}
+.path-head{display:flex;align-items:center;gap:.9rem}
+.path-for{font-family:var(--fm);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fog2)}
+.path-for.teal{color:var(--teal)}.path-for.blue{color:var(--blue)}.path-for.violet{color:var(--violet)}
+.path-steps{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin:1.1rem 0 .25rem}
+.path-steps li{display:flex;align-items:center;gap:.65rem;font-size:.86rem;line-height:1.3}
+.ps-n{width:24px;height:24px;border-radius:50%;border:1px solid var(--border2);background:rgba(200,169,110,.06);display:inline-flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.62rem;color:var(--champ2);flex-shrink:0}
+.path-steps a{font-weight:600;color:var(--cream);transition:color .25s}
+.path-steps a:hover{color:var(--champ2)}
+.ps-d{margin-left:auto;font-family:var(--fm);font-size:.64rem;color:var(--fog2);white-space:nowrap;padding-left:.5rem}
+.path-meta{font-family:var(--fm);font-size:.68rem;color:var(--fog2);margin-top:.9rem;padding-top:.75rem;border-top:1px dashed var(--border)}
+.path-meta strong{color:var(--champ2);font-weight:500}
+.path-alt{font-size:.8rem;color:var(--fog);line-height:1.6;margin-top:auto;padding-top:.9rem;border-top:1px solid var(--border)}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.how-grid .feature{gap:1rem}
+@media (max-width:1024px){.how-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.how-grid{grid-template-columns:1fr}.courses-banner{margin-top:2rem}.courses-banner img{height:200px;object-fit:cover;object-position:center}}
+</style>
+{% endblock %}
+
+{% block jsonld %}
+{{ jsonld(breadcrumb_ld([('Home',''),('Courses',None)])) }}
+{% set ld = namespace(items=[]) %}
+{% for c in courses_list %}
+{% set ld.items = ld.items + [{
+  "@type": "ListItem",
+  "position": loop.index,
+  "item": {
+    "@type": "Course",
+    "name": c.title,
+    "url": absolute(c.url),
+    "description": c.overview | meta_desc(158),
+    "image": absolute(img_url(c.image, 960)),
+    "courseCode": "DSA-" ~ (c.id | upper),
+    "educationalLevel": c.level,
+    "provider": {"@id": site.url ~ "/#organization"}
+  }
+}] %}
+{% endfor %}
+{{ jsonld({
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": canonical ~ "#courses",
+  "name": "Data Science & AI courses at Data Science Academia, Chennai",
+  "description": "All " ~ n_courses ~ " specialised Data Science and AI courses taught live in Chennai and online by Data Science Academia.",
+  "numberOfItems": n_courses,
+  "itemListOrder": "https://schema.org/ItemListOrderAscending",
+  "itemListElement": ld.items
+}) }}
+{{ jsonld({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What are the course fees?","acceptedAnswer":{"@type":"Answer","text":"Fees vary by course and programme. Call or WhatsApp +91 91764 98814 or email info@datascienceacademia.in for current pricing and batch details — we respond within one business day."}},
+    {"@type":"Question","name":"Are the courses online, offline or hybrid?","acceptedAnswer":{"@type":"Answer","text":"All three. Live online sessions are recorded for replay; offline workshops and bootcamps run at our centre in West Tambaram, Chennai; hybrid combines online sessions with offline workshops. Tell us your preference when you enquire."}},
+    {"@type":"Question","name":"Do I receive a certificate?","acceptedAnswer":{"@type":"Answer","text":"Yes. Complete the course and its capstone project to receive a Data Science Academia certificate of completion. Internships add a DSA Internship Certificate and offer letter, and the Microsoft Certification Program prepares you for AI-900, DP-900, PL-300 and AZ-900."}},
+    {"@type":"Question","name":"What are the prerequisites?","acceptedAnswer":{"@type":"Answer","text":"Python, SQL, R and Excel need no programming experience — basic computer literacy is enough. Tableau and Power BI need no programming either. Intermediate courses such as Machine Learning, NLP and Data Visualization assume Python; advanced courses such as Deep Learning, Computer Vision, LLMs and Generative AI assume Machine Learning. Exact prerequisites are listed on every course page."}},
+    {"@type":"Question","name":"When does the next batch start?","acceptedAnswer":{"@type":"Answer","text":"Batch dates depend on the course and delivery mode; internship cohorts start every month. Contact us at +91 91764 98814 or info@datascienceacademia.in for the current schedule — we reply within one business day."}}
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+<!-- ═══ PAGE HERO ═══ -->
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="page-hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumbs">
+        <li><a href="{{ rel }}index.html">Home</a></li>
+        <li aria-current="page">Courses</li>
+      </ol>
+    </nav>
+    <div class="eyebrow" data-r>What we teach</div>
+    <h1 class="sh sh-lg" id="page-title" data-r="1">{{ n_courses }} Data Science &amp; AI Courses in <em>Chennai</em></h1>
+    <p class="page-hero-sub" data-r="2">From Python and SQL to Deep Learning, Large Language Models and MLOps — every course is taught live by a practising AI engineer with Ph.D.-level depth from Anna University, recorded for replay and built around hands-on projects on real datasets. Learn at our centre in West Tambaram, Chennai, or online from anywhere in India.</p>
+    <div class="hero-badges" data-r="3">
+      <span class="badge badge-teal">Ph.D.-led faculty</span>
+      <span class="badge">Live + recorded sessions</span>
+      <span class="badge badge-cream">{{ total_hours }} contact hours</span>
+      <span class="badge badge-blue">Chennai &amp; online</span>
+    </div>
+    <div class="img-frame courses-banner" data-r="4">
+      {{ img('courses-page-hero-banner', 'Icons for the 18 course topics at Data Science Academia — Python, SQL, statistics, machine learning, NLP, deep learning, computer vision, generative AI, reinforcement learning, MLOps, data visualisation, Excel, Tableau, Power BI, Azure and AWS', sizes='(max-width:1280px) 100vw, 1240px', loading='eager', fetchpriority='high') }}
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CATALOGUE ═══ -->
+<section class="section section-sm cat-anchor" id="catalogue" aria-labelledby="catalogue-title">
+  <div class="container">
+    <div class="split-head">
+      <div>
+        <div class="eyebrow" data-r>The full catalogue</div>
+        <h2 class="sh" id="catalogue-title" data-r="1">Browse all {{ n_courses }} courses <em>by category</em></h2>
+      </div>
+      <a class="link-arrow" href="{{ rel }}programmes/ai-mastery.html" data-r="2">Want them in one guided year? AI Mastery Track <span class="arr">&rarr;</span></a>
+    </div>
+
+    <div class="filter-bar" data-r>
+      <div class="filter-tabs" data-filter-group="cat" data-filter-target="#course-grid" role="group" aria-label="Filter courses by category">
+        <button class="ftab on" type="button" data-filter="all">All courses<span class="n">{{ n_courses }}</span></button>
+        {% for cat in categories %}
+        <button class="ftab" type="button" data-filter="{{ cat.slug }}">{{ cat.name }}<span class="n">{{ cat.courses | length }}</span></button>
+        {% endfor %}
+      </div>
+      <p class="filter-note" aria-live="polite">Showing <span data-filter-count="#course-grid">{{ n_courses }}</span> of {{ n_courses }} courses</p>
+    </div>
+
+    <div class="grid grid-3" id="course-grid">
+      {% set k = namespace(i=0) %}
+      {% for cat in categories %}
+      {% for c in cat.courses %}
+      <a class="card" href="{{ rel }}{{ c.url }}" data-filter-item data-cat="{{ c.cat_slug }}" data-r="{{ k.i % 3 }}">
+        <div class="card-img">
+          {{ img(c.image, c.title ~ ' course — ' ~ c.level ~ ' level, ' ~ c.duration ~ ' at Data Science Academia, Chennai', sizes='(max-width:640px) 100vw, (max-width:1024px) 50vw, 400px') }}
+          <span class="badge {{ c.badge }}">{{ c.level }}</span>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">{{ c.category }}</div>
+          <h3 class="card-title">{{ c.title }}</h3>
+          <p class="card-text">{{ c.overview | meta_desc(120) }}</p>
+          <div class="card-foot"><span>⏱ {{ c.duration }} &middot; {{ c.hours }}</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+        </div>
+      </a>
+      {% set k.i = k.i + 1 %}
+      {% endfor %}
+      {% endfor %}
+    </div>
+    <p class="empty-note hidden" data-filter-empty="#course-grid">No courses match this filter yet — choose another category or <a href="{{ rel }}contact.html">ask us about custom training</a>.</p>
+  </div>
+</section>
+
+<!-- ═══ LEARNING PATHS ═══ -->
+<section class="section section-tint" aria-labelledby="paths-title">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow center" data-r>Not sure where to start?</div>
+      <h2 class="sh" id="paths-title" data-r="1">Three recommended <em>learning paths</em></h2>
+      <p class="lead" data-r="2">Pick the route that matches where you are today. Each step is a complete course, and each course lists exactly what the next one assumes — so you never sit through material you already know.</p>
+    </div>
+    <div class="grid grid-3">
+      {% for pid, tone, icon, audience, title, text, ids in paths %}
+      {% set pw = namespace(weeks=0, hours=0) %}
+      {% for cid in ids %}{% set pw.weeks = pw.weeks + (courses[cid].duration.split(' ')[0] | int) %}{% set pw.hours = pw.hours + (courses[cid].hours.split(' ')[0] | int) %}{% endfor %}
+      <article class="feature col" data-r="{{ loop.index0 }}">
+        <div class="path-head">
+          <span class="icon-box {{ tone }}" aria-hidden="true">{{ icon }}</span>
+          <span class="path-for {{ tone }}">{{ audience | safe }}</span>
+        </div>
+        <div>
+          <h3 class="feature-title">{{ title }}</h3>
+          <p class="feature-text">{{ text }}</p>
+          <ol class="path-steps" aria-label="Courses in this path, in order">
+            {% for cid in ids %}
+            <li><span class="ps-n" aria-hidden="true">{{ loop.index }}</span><a href="{{ rel }}{{ courses[cid].url }}">{{ courses[cid].title }}</a><span class="ps-d">{{ courses[cid].duration }}</span></li>
+            {% endfor %}
+          </ol>
+          <p class="path-meta">{{ ids | length }} courses &middot; <strong>{{ pw.weeks }} weeks</strong> &middot; {{ pw.hours }} contact hours</p>
+        </div>
+        {% if pid == 'beginner' %}
+        <p class="path-alt">Prefer one structured year with a mentor? The <a href="{{ rel }}programmes/ai-mastery.html">12-Month AI Mastery Track</a> covers this path and much more, with four capstones and an internship certificate.</p>
+        {% elif pid == 'analyst' %}
+        <p class="path-alt">Add <a href="{{ rel }}courses/sql.html">SQL for Data Science</a> to query databases directly, or the <a href="{{ rel }}programmes/microsoft-certification.html">Microsoft Certification Program</a> for PL-300 and DP-900.</p>
+        {% else %}
+        <p class="path-alt">Specialise further with <a href="{{ rel }}courses/computer-vision.html">Computer Vision</a>, <a href="{{ rel }}courses/generative-ai.html">Generative AI</a> or <a href="{{ rel }}courses/reinforcement-learning.html">Reinforcement Learning</a>.</p>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW EVERY COURSE WORKS ═══ -->
+<section class="section" aria-labelledby="how-title">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" data-r>The DSA method</div>
+      <h2 class="sh" id="how-title" data-r="1">How every course <em>works</em></h2>
+      <p class="lead" data-r="2">Whichever course you choose, the format is the same: live teaching by a practitioner, real data in every session, and a clear route from the classroom to an internship or a job.</p>
+    </div>
+    <div class="how-grid">
+      <div class="feature col" data-r>
+        <span class="icon-box teal" aria-hidden="true">🎥</span>
+        <div><h3 class="feature-title">Live sessions, recorded for replay</h3><p class="feature-text">Every session is taught live — at our Chennai centre or online — and the recording is available to enrolled students to replay at their own pace.</p></div>
+      </div>
+      <div class="feature col" data-r="1">
+        <span class="icon-box blue" aria-hidden="true">📊</span>
+        <div><h3 class="feature-title">Hands-on projects on real datasets</h3><p class="feature-text">Each course ends in a capstone built on real-world data — an end-to-end EDA pipeline, an analytics report on an e-commerce dataset, a deployed model or a production LLM application.</p></div>
+      </div>
+      <div class="feature col" data-r="2">
+        <span class="icon-box" aria-hidden="true">🎓</span>
+        <div><h3 class="feature-title">Ph.D.-led, practitioner-taught</h3><p class="feature-text">Your instructor is a practising AI engineer and Ph.D. scholar at Anna University, so every concept is taught the way it is actually used in production.</p></div>
+      </div>
+      <div class="feature col" data-r>
+        <span class="icon-box yellow" aria-hidden="true">📜</span>
+        <div><h3 class="feature-title">Certificate on completion</h3><p class="feature-text">Complete the course and its capstone to receive a Data Science Academia certificate. Employers and institutions can <a href="{{ rel }}verify.html">verify a certificate</a> online.</p></div>
+      </div>
+      <div class="feature col" data-r="1">
+        <span class="icon-box green" aria-hidden="true">🧭</span>
+        <div><h3 class="feature-title">Internship pathways</h3><p class="feature-text">Move from a course into a 1–2 month <a href="{{ rel }}programmes/internship.html">NEP- and AICTE-aligned internship</a> with a formal offer letter, real project work and a DSA Internship Certificate. Cohorts start monthly.</p></div>
+      </div>
+      <div class="feature col" data-r="2">
+        <span class="icon-box violet" aria-hidden="true">🤝</span>
+        <div><h3 class="feature-title">Mentoring and career support</h3><p class="feature-text">Internship projects run under Ph.D.-qualified mentors, and the <a href="{{ rel }}programmes/ai-mastery.html">AI Mastery Track</a> adds weekly one-on-one check-ins, mock interviews and placement assistance.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="section section-flush" aria-labelledby="faq-title">
+  <div class="container container-narrow">
+    <div class="section-head center">
+      <div class="eyebrow center" data-r>Questions</div>
+      <h2 class="sh" id="faq-title" data-r="1">Frequently asked <em>questions</em></h2>
+    </div>
+    <div data-r>
+      <details class="faq" open><summary>What are the course fees?</summary><div class="faq-a">Fees vary by course and programme. Call or <a href="{{ site.whatsapp_msg }}" target="_blank" rel="noopener">WhatsApp {{ site.phone }}</a> or email <a href="mailto:{{ site.email }}">{{ site.email }}</a> for current pricing and batch details — we respond within one business day.</div></details>
+      <details class="faq"><summary>Are the courses online, offline or hybrid?</summary><div class="faq-a">All three. Live online sessions are recorded for replay; offline workshops and bootcamps run at our centre in West Tambaram, Chennai; hybrid combines online sessions with offline workshops. Tell us your preference when you <a href="{{ rel }}contact.html">enquire</a>.</div></details>
+      <details class="faq"><summary>Do I receive a certificate?</summary><div class="faq-a">Yes. Complete the course and its capstone project to receive a Data Science Academia certificate of completion. Internships add a <a href="{{ rel }}programmes/internship.html">DSA Internship Certificate and offer letter</a>, and the <a href="{{ rel }}programmes/microsoft-certification.html">Microsoft Certification Program</a> prepares you for AI-900, DP-900, PL-300 and AZ-900.</div></details>
+      <details class="faq"><summary>What are the prerequisites?</summary><div class="faq-a"><a href="{{ rel }}courses/python.html">Python</a>, <a href="{{ rel }}courses/sql.html">SQL</a>, <a href="{{ rel }}courses/r-programming.html">R</a> and <a href="{{ rel }}courses/excel.html">Excel</a> need no programming experience — basic computer literacy is enough. <a href="{{ rel }}courses/tableau.html">Tableau</a> and <a href="{{ rel }}courses/power-bi.html">Power BI</a> need no programming either. Intermediate courses such as Machine Learning, NLP and Data Visualization assume Python; advanced courses such as Deep Learning, Computer Vision, LLMs and Generative AI assume Machine Learning. Exact prerequisites are listed on every course page.</div></details>
+      <details class="faq"><summary>When does the next batch start?</summary><div class="faq-a">Batch dates depend on the course and delivery mode; internship cohorts start every month. <a href="{{ rel }}contact.html">Contact us</a> for the current schedule — we reply within one business day.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="section" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-banner" data-r>
+      <div class="eyebrow center">Still deciding?</div>
+      <h2 class="cta-title" id="cta-title">Tell us your goal — we'll recommend <em>the right course</em></h2>
+      <p class="cta-text">Share your background and what you want to do next. We'll suggest a course or path, confirm prerequisites and send current batch details within one business day.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn-lg" href="{{ rel }}contact.html">Enquire now <span class="arr">&rarr;</span></a>
+        <a class="btn btn-wa btn-lg" href="{{ site.whatsapp_msg }}" target="_blank" rel="noopener">Chat on WhatsApp</a>
+      </div>
+      <p class="cta-note">{{ site.phone }} &middot; {{ site.email }} &middot; {{ site.hours }}</p>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+/* Keep ?filter= in the address bar in sync with the active tab so a filtered view can be shared. Filtering itself is handled by script.js. */
+(function () {
+  var tabs = document.querySelector('.filter-tabs[data-filter-target="#course-grid"]');
+  if (!tabs || !window.URL || !window.history || !history.replaceState) return;
+  tabs.addEventListener('click', function (e) {
+    var b = e.target.closest('.ftab'); if (!b) return;
+    var u = new URL(location.href), f = b.getAttribute('data-filter');
+    if (f === 'all') u.searchParams.delete('filter'); else u.searchParams.set('filter', f);
+    history.replaceState(null, '', u.toString());
+  });
+})();
+</script>
+{% endblock %}

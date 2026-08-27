@@ -1,0 +1,307 @@
+{% extends "base.html" %}
+{# ── Derived values (context: course, related) ───────────────────────────── #}
+{% set hours_n = course.hours.split(' ')[0] %}
+{% set _s = course.overview.split('. ') %}
+{% set _first = _s[0] if _s[0].endswith('.') else _s[0] ~ '.' %}
+{% set _second = (_s[1] ~ ('' if _s[1].endswith('.') else '.')) if _s|length > 1 else '' %}
+{% set pitch = (_first ~ ' ' ~ _second) if (_first|length < 70 and _second and (_first|length + _second|length) < 230) else _first %}
+{% set tone = {'Beginner': 'teal', 'Intermediate': '', 'Advanced': 'violet'}.get(course.level, '') %}
+{% set ricons = {'docs': '📄', 'tutorial': '📖', 'video': '▶', 'course': '🎓', 'book': '📚'} %}
+{% set tn = namespace(topics=0, resources=0) %}
+{% for m in course.modules %}{% set tn.topics = tn.topics + (m.topics|length) %}{% set tn.resources = tn.resources + ((m.get('resources') or [])|length) %}{% endfor %}
+{% set enquire_url = rel ~ 'contact.html?course=' ~ (course.title|urlencode) %}
+{% set wa_url = site.whatsapp ~ '?text=' ~ ("Hello DSA, I'd like to know more about the " ~ course.title ~ " course.")|urlencode %}
+
+{% block title %}{% set cands = [course.title ~ ' Course in Chennai | Data Science Academia', course.title ~ ' Course | Data Science Academia', course.title ~ ' | Data Science Academia', course.title ~ ' | DSA Chennai'] %}{% set ns = namespace(t=cands[-1]) %}{% for c in cands|reverse %}{% if c|length <= 60 %}{% set ns.t = c %}{% endif %}{% endfor %}{{ ns.t }}{% endblock %}
+{% block description %}{{ (course.title ~ ' course in Chennai — ' ~ course.duration ~ ', ' ~ course.hours ~ '. ' ~ course.overview) | meta_desc(155) }}{% endblock %}
+{% block og_image %}{{ og_for('course', course.id) }}{% endblock %}
+{% block og_image_alt %}{{ course.title }} course — Data Science Academia, Chennai{% endblock %}
+{% block body_class %}page-course{% endblock %}
+
+{% block head_extra %}
+<style>
+.course-hero .row{margin-top:1.75rem}
+.course-banner{margin-bottom:3.5rem}
+.block-head{display:flex;align-items:center;justify-content:space-between;gap:.75rem 1.25rem;flex-wrap:wrap;margin-bottom:1.1rem}
+.block-head .section-label{margin-bottom:0}
+.block-tools{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap}
+.block-meta{font-family:var(--fm);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fog2)}
+.module h3.module-title{font-family:var(--fb);letter-spacing:0;text-wrap:pretty}
+.module summary{scroll-margin-top:calc(var(--nav-h) + 1rem)}
+.res-link .ri{font-size:.78rem;line-height:1}
+.tools-lead{font-size:.92rem;color:var(--fog);margin-bottom:.9rem}
+.prereq{display:flex;gap:1rem;align-items:flex-start;padding:1.25rem 1.4rem;border:1px solid var(--border2);border-radius:var(--r);background:linear-gradient(135deg,rgba(200,169,110,.09),rgba(255,255,255,.015) 60%)}
+.prereq .info-note{font-size:.95rem;color:var(--cream)}
+.prereq-hint{display:block;font-size:.78rem;color:var(--fog2);margin-top:.35rem}
+.prereq-hint a{color:var(--champ2);text-decoration:underline;text-underline-offset:3px}
+.info-card .icon-box{margin-bottom:.25rem}
+.info-card .info-note{margin-bottom:.25rem}
+.info-actions{display:flex;flex-direction:column;gap:.6rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.info-actions .btn{white-space:normal}
+.detail-side .sticky{max-height:calc(100vh - var(--nav-h) - 2rem);overflow-y:auto;overscroll-behavior:contain}
+.related-grid .card-title{font-size:1.1rem}
+.related-grid .card-foot{font-size:.72rem}
+@media (max-width:960px){.detail-side .sticky{max-height:none;overflow:visible}}
+@media (max-width:640px){.course-banner{margin-bottom:2.5rem}.block-head{align-items:flex-start;flex-direction:column}.prereq{padding:1.1rem 1.15rem}}
+</style>
+{% endblock %}
+
+{% block jsonld %}
+{{ jsonld(breadcrumb_ld([('Home', ''), ('Courses', 'courses.html'), (course.title, None)])) }}
+{{ jsonld({
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "@id": absolute(course.url) ~ "#course",
+  "name": course.title,
+  "description": course.overview,
+  "url": absolute(course.url),
+  "image": absolute(img_url(course.image, 1600)[(rel|length):]),
+  "courseCode": course.id,
+  "educationalLevel": course.level,
+  "teaches": course.outcomes,
+  "coursePrerequisites": course.prereqs,
+  "timeRequired": "PT" ~ hours_n ~ "H",
+  "inLanguage": "en",
+  "provider": {"@id": site.url ~ "/#organization"},
+  "hasCourseInstance": [{
+    "@type": "CourseInstance",
+    "courseMode": ["online", "onsite"],
+    "courseWorkload": "PT" ~ hours_n ~ "H",
+    "location": {
+      "@type": "Place",
+      "name": site.name ~ ", West Tambaram",
+      "address": {"@type": "PostalAddress", "streetAddress": site.address.street, "addressLocality": site.address.locality, "addressRegion": site.address.region, "postalCode": site.address.postal, "addressCountry": site.address.country}
+    }
+  }],
+  "offers": {"@type": "Offer", "availability": "https://schema.org/InStock", "priceCurrency": "INR", "url": absolute('contact.html')}
+}) }}
+{% endblock %}
+
+{% block content %}
+<!-- ═══ PAGE HERO ═══ -->
+<section class="page-hero course-hero" aria-labelledby="course-title">
+  <div class="page-hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumbs">
+        <li><a href="{{ rel }}index.html">Home</a></li>
+        <li><a href="{{ rel }}courses.html">Courses</a></li>
+        <li aria-current="page">{{ course.title }}</li>
+      </ol>
+    </nav>
+    <div class="eyebrow">{{ course.category }}</div>
+    <h1 class="sh sh-lg" id="course-title">{{ course.title }}</h1>
+    <p class="page-hero-sub">{{ pitch }}</p>
+    <div class="hero-badges" aria-label="Course format">
+      <span class="badge {{ course.badge }}">{{ course.level }}</span>
+      <span class="badge badge-cream">{{ course.duration }}</span>
+      <span class="badge badge-cream">{{ course.hours }}</span>
+      <span class="badge badge-cream">Live + recorded</span>
+    </div>
+    <div class="row">
+      <a class="btn btn-primary" href="{{ enquire_url }}">Enrol / enquire <span class="arr">&rarr;</span></a>
+      <a class="btn btn-ghost" href="#syllabus">View the week-by-week syllabus</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ COURSE IMAGE ═══ -->
+<div class="container course-banner" data-r>
+  <figure class="img-frame">
+    {{ img(course.image, course.title ~ ' course at Data Science Academia, Chennai — course banner', sizes='(max-width:1240px) 100vw, 1176px', loading='eager', fetchpriority='high') }}
+  </figure>
+</div>
+
+<!-- ═══ DETAIL LAYOUT ═══ -->
+<div class="container">
+  <div class="detail-layout">
+
+    <article class="detail-main">
+      <!-- Overview -->
+      <section class="block" id="overview" aria-labelledby="overview-title" data-r>
+        <h2 class="section-label" id="overview-title">Overview</h2>
+        <div class="prose">
+          <p>{{ course.overview }}</p>
+          <p>The course runs for {{ course.duration }} with {{ course.hours }} of live, instructor-led sessions — in our Chennai classroom at West Tambaram or online across India. Every session is recorded for enrolled students, every module is taught by a practising AI engineer, and you receive a Data Science Academia certificate on completion.</p>
+        </div>
+      </section>
+
+      <!-- Outcomes -->
+      <section class="block" id="outcomes" aria-labelledby="learn-title" data-r>
+        <div class="block-head">
+          <h2 class="section-label" id="learn-title">What you'll learn</h2>
+          <span class="block-meta">{{ course.outcomes|length }} learning outcomes</span>
+        </div>
+        <ul class="outcomes">
+          {% for o in course.outcomes %}
+          <li class="outcome">{{ o }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <!-- Syllabus -->
+      <section class="block" id="syllabus" aria-labelledby="syllabus-title" data-r>
+        <div class="block-head">
+          <h2 class="section-label" id="syllabus-title">Week-by-week syllabus</h2>
+          <div class="block-tools">
+            <span class="block-meta">{{ course.modules|length }} weeks &middot; {{ tn.topics }} topics{% if tn.resources %} &middot; {{ tn.resources }} free resources{% endif %}</span>
+            <button type="button" class="btn btn-outline btn-sm hidden" id="toggle-all" aria-controls="modules" aria-expanded="false">Expand all</button>
+          </div>
+        </div>
+        <div id="modules">
+          {% for m in course.modules %}
+          <details class="module" id="week-{{ m.week }}"{% if loop.first %} open{% endif %}>
+            <summary>
+              <span class="module-week">Week {{ m.week }}</span>
+              <h3 class="module-title">{{ m.title }}</h3>
+            </summary>
+            <div class="module-body">
+              <ul class="module-topics">
+                {% for t in m.topics %}
+                <li>{{ t }}</li>
+                {% endfor %}
+              </ul>
+              {% if m.resources %}
+              <div class="res">
+                <div class="res-label">Free resources</div>
+                <div class="res-links">
+                  {% for r in m.resources %}
+                  <a class="res-link {{ r.type }}" href="{{ r.url }}" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">{{ ricons.get(r.type, '🔗') }}</span>{{ r.title }}</a>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </details>
+          {% endfor %}
+        </div>
+      </section>
+
+      <!-- Tools -->
+      <section class="block" id="tools" aria-labelledby="tools-title" data-r>
+        <h2 class="section-label" id="tools-title">Tools &amp; technologies</h2>
+        <p class="tools-lead">You work hands-on with the same stack used in industry:</p>
+        <ul class="tag-list">
+          {% for t in course.tools %}
+          <li class="tag">{{ t }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <!-- Prerequisites -->
+      <section class="block" id="prerequisites" aria-labelledby="prereq-title" data-r>
+        <h2 class="section-label" id="prereq-title">Prerequisites</h2>
+        <div class="prereq">
+          <span class="icon-box sm {{ tone }}" aria-hidden="true">📋</span>
+          <div>
+            <p class="info-note">{{ course.prereqs }}</p>
+            <span class="prereq-hint">Not sure whether this is the right starting point? <a href="{{ rel }}contact.html">Ask us</a> — we'll recommend the right course for your background.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Related -->
+      <section class="block" id="related" aria-labelledby="related-title" data-r>
+        <div class="block-head">
+          <h2 class="section-label" id="related-title">Related courses</h2>
+          <a class="link-arrow" href="{{ rel }}courses.html">All 18 courses <span class="arr">&rarr;</span></a>
+        </div>
+        <div class="grid grid-3 related-grid">
+          {% for c in related %}
+          <a class="card card-sm" href="{{ rel }}{{ c.url }}">
+            <div class="card-img">
+              {{ img(c.image, c.title ~ ' course', sizes='(max-width:640px) 100vw, (max-width:1024px) 50vw, 260px') }}
+              <span class="badge {{ c.badge }}">{{ c.level }}</span>
+            </div>
+            <div class="card-body">
+              <div class="card-cat">{{ c.category }}</div>
+              <h3 class="card-title">{{ c.title }}</h3>
+              <div class="card-foot"><span>{{ c.duration }} &middot; {{ c.hours }}</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </section>
+    </article>
+
+    <!-- Sidebar -->
+    <aside class="detail-side" aria-label="Course summary">
+      <div class="info-card sticky" data-r="1">
+        <span class="icon-box lg {{ tone }}" aria-hidden="true">{{ course.icon }}</span>
+        <div class="info-title">{{ course.title }}</div>
+        <div class="info-cat">{{ course.category }}</div>
+        <div class="info-rows">
+          <div class="info-row"><span class="info-row-label">Level</span><span class="info-row-val">{{ course.level }}</span></div>
+          <div class="info-row"><span class="info-row-label">Duration</span><span class="info-row-val">{{ course.duration }}</span></div>
+          <div class="info-row"><span class="info-row-label">Contact hours</span><span class="info-row-val">{{ hours_n }} hours</span></div>
+          <div class="info-row"><span class="info-row-label">Format</span><span class="info-row-val">Live + recorded</span></div>
+          <div class="info-row"><span class="info-row-label">Mode</span><span class="info-row-val">Chennai classroom &amp; online</span></div>
+          <div class="info-row"><span class="info-row-label">Certificate</span><span class="info-row-val">Yes, on completion</span></div>
+        </div>
+        <span class="info-label">Tools &amp; technologies</span>
+        <ul class="tag-list">
+          {% for t in course.tools %}
+          <li class="tag">{{ t }}</li>
+          {% endfor %}
+        </ul>
+        <span class="info-label">Prerequisites</span>
+        <p class="info-note">{{ course.prereqs }}</p>
+        <div class="info-actions">
+          <a class="btn btn-primary btn-block" href="{{ enquire_url }}">Enrol / enquire <span class="arr">&rarr;</span></a>
+          <a class="btn btn-wa btn-block" href="{{ wa_url }}" target="_blank" rel="noopener">Chat on WhatsApp</a>
+          <a class="btn btn-outline btn-block" href="{{ rel }}courses.html">&larr; All courses</a>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<!-- ═══ CTA ═══ -->
+<section class="section section-sm" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-banner" data-r>
+      <div class="eyebrow center">Enrol now</div>
+      <h2 class="cta-title" id="cta-title">Start <em>{{ course.title }}</em> with Data Science Academia</h2>
+      <p class="cta-text">Tell us about your background and goals and we'll confirm batch timings, fees and the right starting point — in Chennai or online. Book a free, no-commitment trial session; we reply within one business day.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn-lg" href="{{ enquire_url }}">Enrol / enquire <span class="arr">&rarr;</span></a>
+        <a class="btn btn-wa btn-lg" href="{{ wa_url }}" target="_blank" rel="noopener">Chat on WhatsApp</a>
+      </div>
+      <p class="cta-note">{{ site.phone }} &middot; {{ site.email }} &middot; {{ site.hours }}</p>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  var btn = document.getElementById('toggle-all'), wrap = document.getElementById('modules');
+  if (!btn || !wrap) return;
+  var mods = Array.prototype.slice.call(wrap.querySelectorAll('details.module'));
+  if (!mods.length) return;
+  btn.classList.remove('hidden');
+  function allOpen() { return mods.every(function (d) { return d.open; }); }
+  function sync() {
+    var all = allOpen();
+    btn.textContent = all ? 'Collapse all' : 'Expand all';
+    btn.setAttribute('aria-expanded', all ? 'true' : 'false');
+  }
+  btn.addEventListener('click', function () {
+    var open = !allOpen();
+    mods.forEach(function (d) { d.open = open; });
+    sync();
+  });
+  wrap.addEventListener('toggle', sync, true);
+  // Deep links such as #week-3 open the matching module.
+  function openHash() {
+    var t = location.hash && document.getElementById(location.hash.slice(1));
+    if (t && t.tagName === 'DETAILS') { t.open = true; sync(); }
+  }
+  window.addEventListener('hashchange', openHash);
+  openHash();
+  sync();
+})();
+</script>
+{% endblock %}

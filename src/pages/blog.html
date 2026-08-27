@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+{# ── Derived values ──────────────────────────────────────────────────────── #}
+{% set n_posts = posts | length %}
+{% set featured = posts[0] %}
+{% set cats = [('tutorial', 'Tutorials'), ('career', 'Career'), ('industry', 'Industry'), ('research', 'Research')] %}
+{% set cat_badge = {'tutorial': 'badge-teal', 'career': 'badge-gold', 'industry': 'badge-blue', 'research': 'badge-violet'} %}
+{% set author_job = 'AI Engineer and Ph.D. Scholar, Anna University' %}
+
+{% block title %}Data Science & AI Blog | Data Science Academia{% endblock %}
+{% block description %}Machine learning tutorials, data science career guides, industry analysis and research from Data Science Academia, Chennai — by a practising AI engineer.{% endblock %}
+{% block og_title %}Data Science & AI Blog — Tutorials, Careers & Research | Data Science Academia{% endblock %}
+{% block og_image %}{{ og_for('page', 'blog') }}{% endblock %}
+{% block og_image_alt %}The Data Science Academia blog — machine learning tutorials, career guides and research insights{% endblock %}
+{% block body_class %}page-blog{% endblock %}
+
+{% block head_extra %}
+<style>
+.author-strip{display:flex;align-items:center;gap:1.4rem;padding:1.5rem 1.75rem;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--card);margin-bottom:2.75rem}
+.author-strip .avatar{width:58px;height:58px;font-size:1.3rem}
+.as-name{font-family:var(--fd);font-size:1.3rem;font-weight:600;color:var(--cream);line-height:1.2}
+.as-role{font-size:.8rem;color:var(--fog);margin-top:.25rem;line-height:1.5}
+.as-tags{margin-top:.7rem}
+.as-link{margin-left:auto;flex-shrink:0}
+.filter-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem 2rem;margin-bottom:2rem}
+.filter-bar .filter-tabs{margin-bottom:0}
+.ftab .n{font-family:var(--fm);font-size:.62rem;opacity:.7;margin-left:.3rem}
+.filter-note{font-family:var(--fm);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fog2)}
+.featured{display:grid;grid-template-columns:1.05fr .95fr;margin-bottom:1.25rem}
+.featured .card-img{aspect-ratio:auto;min-height:360px;border-bottom:0;border-right:1px solid var(--border)}
+.featured .card-body{padding:2.5rem;gap:.85rem;justify-content:center}
+.featured .card-title{font-size:clamp(1.65rem,2.6vw,2.25rem);text-wrap:pretty}
+.featured .card-text{font-size:.95rem;line-height:1.8}
+.featured .card-foot{margin-top:.75rem}
+.feat-by{display:flex;align-items:center;gap:.7rem}
+.feat-by .avatar{width:36px;height:36px;font-size:.85rem}
+.feat-name{display:block;font-size:.82rem;font-weight:600;color:var(--cream);line-height:1.2}
+.feat-meta{display:block;font-family:var(--fm);font-size:.66rem;color:var(--fog2);margin-top:.15rem}
+.feat-read{display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;font-weight:600;color:var(--champ2);white-space:nowrap}
+.post-card .card-text{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.empty-note{margin-top:1.25rem;padding:2.5rem 1.5rem;text-align:center;border:1px dashed var(--border2);border-radius:var(--r-lg);color:var(--fog)}
+.empty-note a{color:var(--champ2);text-decoration:underline;text-underline-offset:3px}
+.next-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.next-links{list-style:none;display:flex;flex-direction:column;gap:.35rem;margin-top:.75rem;font-size:.84rem}
+.next-links a{color:var(--cream);font-weight:500;transition:color .25s}
+.next-links a:hover{color:var(--champ2)}
+@media (max-width:1024px){.next-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:900px){.featured{grid-template-columns:1fr}.featured .card-img{aspect-ratio:16/9;min-height:0;border-right:0;border-bottom:1px solid var(--border)}.featured .card-body{padding:1.75rem}}
+@media (max-width:640px){.author-strip{flex-direction:column;align-items:flex-start;gap:1rem;padding:1.4rem}.as-link{margin-left:0}.next-grid{grid-template-columns:1fr}.featured .card-foot{flex-wrap:wrap}}
+</style>
+{% endblock %}
+
+{% block jsonld %}
+{{ jsonld(breadcrumb_ld([('Home', ''), ('Blog', None)])) }}
+{% set ld = namespace(items=[]) %}
+{% for p in posts %}
+{% set ld.items = ld.items + [{
+  "@type": "BlogPosting",
+  "@id": absolute(p.url) ~ "#article",
+  "headline": p.title,
+  "url": absolute(p.url),
+  "mainEntityOfPage": absolute(p.url),
+  "description": p.excerpt | meta_desc(158),
+  "datePublished": p.date,
+  "dateModified": p.date,
+  "author": {"@type": "Person", "name": site.author.name, "jobTitle": author_job},
+  "publisher": {"@id": site.url ~ "/#organization"},
+  "image": absolute(img_url(p.cover, 1600)),
+  "articleSection": p.catLabel,
+  "wordCount": p.body | strip_html | wordcount,
+  "inLanguage": "en-IN"
+}] %}
+{% endfor %}
+{{ jsonld({
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "@id": canonical ~ "#blog",
+  "name": "Data Science Academia Blog",
+  "url": canonical,
+  "description": "Machine learning tutorials, data science career guides, industry analysis and research insights written by a practising AI engineer at Data Science Academia, Chennai.",
+  "inLanguage": "en-IN",
+  "publisher": {"@id": site.url ~ "/#organization"},
+  "author": {"@type": "Person", "name": site.author.name, "jobTitle": author_job},
+  "blogPost": ld.items
+}) }}
+{% endblock %}
+
+{% block content %}
+<!-- ═══ PAGE HERO ═══ -->
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="page-hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumbs">
+        <li><a href="{{ rel }}index.html">Home</a></li>
+        <li aria-current="page">Blog</li>
+      </ol>
+    </nav>
+    <div class="eyebrow" data-r>Insights &amp; ideas</div>
+    <h1 class="sh sh-lg" id="page-title" data-r="1">Data Science &amp; AI Blog — tutorials, careers <em>&amp; research</em></h1>
+    <p class="page-hero-sub" data-r="2">Practical machine learning tutorials, honest career guidance for data scientists in India, industry analysis and research insights — written by {{ site.author.name }}, a practising AI engineer and Ph.D. scholar at Anna University who teaches at Data Science Academia in Chennai. Working code, clear reasoning and no fluff.</p>
+    <div class="hero-badges" data-r="3">
+      <span class="badge badge-teal">{{ n_posts }} articles</span>
+      <span class="badge">{{ cats | length }} topics</span>
+      <span class="badge badge-cream">Written by a practising AI engineer</span>
+      <span class="badge badge-blue">Free to read</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ARTICLES ═══ -->
+<section class="section section-sm" aria-labelledby="articles-title">
+  <div class="container">
+
+    <!-- Author -->
+    <div class="author-strip" data-r>
+      <span class="avatar" aria-hidden="true">{{ site.author.name | initials }}</span>
+      <div>
+        <div class="as-name">{{ site.author.name }}</div>
+        <div class="as-role">{{ site.author.role }}</div>
+        <ul class="tag-list as-tags" aria-label="Topics covered">
+          {% for t in ['Machine Learning', 'Deep Learning', 'Python', 'Career', 'Research'] %}
+          <li class="tag">{{ t }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <a class="btn btn-outline btn-sm as-link" href="{{ rel }}about.html">About the academy <span class="arr">&rarr;</span></a>
+    </div>
+
+    <div class="split-head">
+      <div>
+        <div class="eyebrow" data-r>The DSA blog</div>
+        <h2 class="sh" id="articles-title" data-r="1">Browse every article <em>by topic</em></h2>
+      </div>
+      <a class="link-arrow" href="{{ rel }}contact.html" data-r="2">Suggest a topic <span class="arr">&rarr;</span></a>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-bar" data-r>
+      <div class="filter-tabs" data-filter-group="cat" data-filter-target="#post-list" role="group" aria-label="Filter articles by topic">
+        <button class="ftab on" type="button" data-filter="all">All articles<span class="n">{{ n_posts }}</span></button>
+        {% for slug, label in cats %}
+        <button class="ftab" type="button" data-filter="{{ slug }}">{{ label }}<span class="n">{{ posts | selectattr('category', 'equalto', slug) | list | length }}</span></button>
+        {% endfor %}
+      </div>
+      <p class="filter-note" aria-live="polite">Showing <span data-filter-count="#post-list">{{ n_posts }}</span> of {{ n_posts }} articles</p>
+    </div>
+
+    <div id="post-list">
+      <!-- Featured (latest) post -->
+      <a class="card featured" href="{{ rel }}{{ featured.url }}" data-filter-item data-cat="{{ featured.category }}" data-r>
+        <div class="card-img">
+          {{ img(featured.cover, 'Cover illustration for the article “' ~ featured.title ~ '”', sizes='(max-width:900px) 100vw, 620px', loading='eager', fetchpriority='high') }}
+          <span class="badge badge-gold">Latest article</span>
+        </div>
+        <div class="card-body">
+          <div class="card-cat"><span class="badge {{ cat_badge.get(featured.category, '') }}">{{ featured.catLabel }}</span> &nbsp;&middot;&nbsp; {{ featured.readTime }}</div>
+          <h3 class="card-title">{{ featured.title }}</h3>
+          <p class="card-text">{{ featured.excerpt }}</p>
+          <div class="card-foot">
+            <span class="feat-by">
+              <span class="avatar" aria-hidden="true">{{ site.author.name | initials }}</span>
+              <span><span class="feat-name">{{ site.author.name }}</span><span class="feat-meta"><time datetime="{{ featured.date }}">{{ featured.dateDisplay }}</time></span></span>
+            </span>
+            <span class="feat-read">Read the article <span class="arr" aria-hidden="true">&rarr;</span></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Remaining posts -->
+      <div class="grid grid-3">
+        {% for p in posts[1:] %}
+        <a class="card post-card" href="{{ rel }}{{ p.url }}" data-filter-item data-cat="{{ p.category }}" data-r="{{ loop.index0 % 3 }}">
+          <div class="card-img">
+            {{ img(p.cover, 'Cover illustration for the article “' ~ p.title ~ '”', sizes='(max-width:640px) 100vw, (max-width:1024px) 50vw, 400px') }}
+          </div>
+          <div class="card-body">
+            <div class="card-cat">{{ p.catLabel }} &middot; {{ p.readTime }}</div>
+            <h3 class="card-title">{{ p.title }}</h3>
+            <p class="card-text">{{ p.excerpt | meta_desc(130) }}</p>
+            <div class="card-foot"><time datetime="{{ p.date }}">{{ p.dateDisplay }}</time><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    <p class="empty-note hidden" data-filter-empty="#post-list">No articles in this topic yet — choose another topic or <a href="{{ rel }}contact.html">tell us what you would like covered</a>.</p>
+  </div>
+</section>
+
+<!-- ═══ FROM READING TO DOING ═══ -->
+<section class="section section-tint" aria-labelledby="next-title">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" data-r>From reading to doing</div>
+      <h2 class="sh" id="next-title" data-r="1">Turn an article into <em>a skill</em></h2>
+      <p class="lead" data-r="2">Every post on this blog grows out of what we teach. When a topic clicks, the matching course or programme takes you from understanding it to building with it — live in Chennai or online, taught by the same practitioner who wrote the article.</p>
+    </div>
+    <div class="next-grid">
+      <article class="feature col" data-r>
+        <span class="icon-box teal" aria-hidden="true">🐍</span>
+        <div>
+          <h3 class="feature-title">Tutorials &rarr; hands-on courses</h3>
+          <p class="feature-text">Python, feature engineering and the bias–variance tradeoff are taught week by week, on real datasets, in these courses.</p>
+          <ul class="next-links">
+            <li><a href="{{ rel }}{{ courses['python'].url }}">{{ courses['python'].title }}&nbsp;&rarr;</a></li>
+            <li><a href="{{ rel }}{{ courses['machine-learning'].url }}">{{ courses['machine-learning'].title }}&nbsp;&rarr;</a></li>
+            <li><a href="{{ rel }}{{ courses['feature-engineering'].url }}">{{ courses['feature-engineering'].title }}&nbsp;&rarr;</a></li>
+          </ul>
+        </div>
+      </article>
+      <article class="feature col" data-r="1">
+        <span class="icon-box" aria-hidden="true">🧭</span>
+        <div>
+          <h3 class="feature-title">Career guides &rarr; structured programmes</h3>
+          <p class="feature-text">A mentor-guided year from beginner to job-ready, AICTE-aligned internships with an offer letter, and Microsoft certification preparation.</p>
+          <ul class="next-links">
+            <li><a href="{{ rel }}{{ programmes['ai-mastery'].url }}">{{ programmes['ai-mastery'].title }}&nbsp;&rarr;</a></li>
+            <li><a href="{{ rel }}{{ programmes['internship'].url }}">{{ programmes['internship'].title }}&nbsp;&rarr;</a></li>
+            <li><a href="{{ rel }}{{ programmes['microsoft-certification'].url }}">{{ programmes['microsoft-certification'].title }}&nbsp;&rarr;</a></li>
+          </ul>
+        </div>
+      </article>
+      <article class="feature col" data-r="2">
+        <span class="icon-box violet" aria-hidden="true">🔬</span>
+        <div>
+          <h3 class="feature-title">Industry &amp; research &rarr; advanced AI</h3>
+          <p class="feature-text">Large language models, deep learning and research methodology — from Transformers and RAG pipelines to journal-ready statistical analysis.</p>
+          <ul class="next-links">
+            <li><a href="{{ rel }}{{ courses['llm'].url }}">{{ courses['llm'].title }}&nbsp;&rarr;</a></li>
+            <li><a href="{{ rel }}{{ courses['deep-learning'].url }}">{{ courses['deep-learning'].title }}&nbsp;&rarr;</a></li>
+            <li><a href="{{ rel }}{{ programmes['research-assistance'].url }}">{{ programmes['research-assistance'].title }}&nbsp;&rarr;</a></li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="section" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-banner" data-r>
+      <div class="eyebrow center">Learn it live</div>
+      <h2 class="cta-title" id="cta-title">Prefer learning from <em>the author in person?</em></h2>
+      <p class="cta-text">Every one of our 18 courses is taught live — in West Tambaram, Chennai, or online across India — and recorded for replay. Book a free, no-commitment trial session or ask us which course fits your background.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn-lg" href="{{ rel }}courses.html">Explore the courses <span class="arr">&rarr;</span></a>
+        <a class="btn btn-wa btn-lg" href="{{ site.whatsapp_msg }}" target="_blank" rel="noopener">Chat on WhatsApp</a>
+      </div>
+      <p class="cta-note">{{ site.phone }} &middot; {{ site.email }} &middot; {{ site.hours }}</p>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+/* Keep ?filter= in the address bar in sync with the active tab so a filtered view can be shared. Filtering itself is handled by script.js. */
+(function () {
+  var tabs = document.querySelector('.filter-tabs[data-filter-target="#post-list"]');
+  if (!tabs || !window.URL || !window.history || !history.replaceState) return;
+  tabs.addEventListener('click', function (e) {
+    var b = e.target.closest('.ftab'); if (!b) return;
+    var u = new URL(location.href), f = b.getAttribute('data-filter');
+    if (f === 'all') u.searchParams.delete('filter'); else u.searchParams.set('filter', f);
+    history.replaceState(null, '', u.toString());
+  });
+})();
+</script>
+{% endblock %}

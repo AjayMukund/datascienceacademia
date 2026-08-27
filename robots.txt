@@ -1,10 +1,22 @@
 User-agent: *
 Allow: /
 
-# Block portal pages — no indexing value
+# Portal, auth and non-website folders — no indexing value
 Disallow: /admin/
 Disallow: /student/
+Disallow: /login.html
+Disallow: /register.html
 Disallow: /reset-password.html
 Disallow: /forgot-password.html
+Disallow: /course.html
+Disallow: /programme.html
+Disallow: /blog-post.html
+Disallow: /cc-level.html
+Disallow: /src/
+Disallow: /tools/
+Disallow: /_legacy/
+Disallow: /dsa_app/
+Disallow: /social-automation/
+Disallow: /pwa_icon_bundle/
 
 Sitemap: https://ajaymukund.github.io/datascienceacademia/sitemap.xml

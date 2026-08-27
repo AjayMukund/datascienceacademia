@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+{% block title %}Intern Testimonials & Reviews | Data Science Academia{% endblock %}
+{% block description %}15 verbatim five-star reviews from interns of Data Science Academia's machine learning internship in Chennai — real feedback from students across India.{% endblock %}
+{% block og_title %}What Our Interns Say — 15 Five-Star Reviews of Data Science Academia{% endblock %}
+{% block og_image %}{{ og_for('page','testimonials') }}{% endblock %}
+{% block og_image_alt %}Intern testimonials for Data Science Academia, Chennai — 15 five-star reviews{% endblock %}
+{% block body_class %}page-testimonials{% endblock %}
+
+{# ── Derived values (never hard-coded where the data can supply them) ── #}
+{% set n = testimonials | length %}
+{% set intern = programmes['internship'] %}
+{% set apply_url = rel ~ 'contact.html?course=' ~ (intern.get('ctaParam', 'Student Internship Programme') | urlencode) %}
+
+{% block head_extra %}
+<style>
+.t-stats{margin-top:2.5rem}
+.hint{display:none;font-family:var(--fm);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fog2);white-space:nowrap}
+.js .hint{display:inline}
+.split-head .lead{margin-top:.75rem}
+.quote-card .quote-text{font-size:1.06rem}
+/* Masonry gallery of the original cards (CSS columns — no JS needed to lay out) */
+.masonry{columns:3;column-gap:1.25rem}
+.mcard{display:block;width:100%;break-inside:avoid;-webkit-column-break-inside:avoid;margin:0 0 1.25rem;padding:0;position:relative;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;background:var(--ink3);cursor:zoom-in;text-align:left;color:inherit;font:inherit;transition:border-color .3s,box-shadow .4s}
+.mcard:hover,.mcard:focus-visible{border-color:var(--border3);box-shadow:var(--sd)}
+.mcard:focus-visible{outline:2px solid var(--champ2);outline-offset:3px}
+.mcard img{display:block;width:100%;height:auto;transition:transform .6s var(--ease)}
+.mcard:hover img{transform:scale(1.03)}
+.mcard-zoom{position:absolute;top:.85rem;right:.85rem;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--champ2);background:rgba(11,12,14,.72);border:1px solid var(--border2);backdrop-filter:blur(4px)}
+.mcard-cap{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;gap:.15rem;padding:2.5rem 1.1rem 1rem;background:linear-gradient(transparent,rgba(11,12,14,.94) 60%);transform:translateY(100%);transition:transform .4s var(--ease)}
+.mcard:hover .mcard-cap,.mcard:focus-visible .mcard-cap{transform:none}
+.mcard-name{font-family:var(--fd);font-size:1.1rem;font-weight:600;color:var(--cream);line-height:1.2}
+.mcard-info{font-size:.7rem;color:var(--fog);line-height:1.4}
+/* Lightbox */
+dialog.lb-dialog{max-width:min(860px,94vw)}
+.lb-dialog .dialog-body{padding:1.25rem 1.25rem 1.4rem}
+.lb-fig{margin:0}
+.lb-img{display:block;width:auto;height:auto;max-width:100%;max-height:min(64vh,720px);margin:0 auto;border-radius:var(--r);border:1px solid var(--border);background:var(--ink3)}
+.lb-meta{display:flex;align-items:center;justify-content:space-between;gap:1rem 1.5rem;flex-wrap:wrap;margin-top:1.1rem}
+.lb-name{font-family:var(--fd);font-size:1.35rem;font-weight:600;color:var(--cream);line-height:1.2}
+.lb-info{font-size:.78rem;color:var(--fog);margin-top:.2rem}
+.lb-nav{display:flex;align-items:center;gap:.5rem}
+.lb-count{font-family:var(--fm);font-size:.66rem;letter-spacing:.1em;color:var(--fog2);min-width:5ch;text-align:center}
+/* Internship section */
+.intern-visual{position:relative}
+.intern-visual .float-badge{bottom:-1rem;left:1rem}
+.intern-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3.5rem}
+@media (max-width:1024px){.masonry{columns:2}}
+@media (max-width:900px){.intern-facts{grid-template-columns:1fr}}
+@media (max-width:600px){.masonry{columns:1}.lb-meta{flex-direction:column;align-items:flex-start}.js .hint{display:none}}
+</style>
+{% endblock %}
+
+{% block jsonld %}
+{% set bc = breadcrumb_ld([('Home',''),('Testimonials',None)]) %}
+{% set ld = namespace(items=[]) %}
+{% for t in testimonials %}
+{% set ld.items = ld.items + [{
+  "@type": "Review",
+  "@id": canonical ~ "#review-" ~ loop.index,
+  "name": "Intern testimonial — " ~ t.name,
+  "author": {"@type": "Person", "name": t.name, "description": t.info},
+  "reviewBody": t.quote,
+  "reviewRating": {"@type": "Rating", "ratingValue": 5, "bestRating": 5, "worstRating": 1},
+  "itemReviewed": {"@id": site.url ~ "/#organization"},
+  "inLanguage": "en"
+}] %}
+{% endfor %}
+{{ jsonld({
+  "@context": "https://schema.org",
+  "@graph": [{"@type": "BreadcrumbList", "itemListElement": bc.itemListElement}] + ld.items
+}) }}
+{% endblock %}
+
+{% block content %}
+<!-- ═══ PAGE HERO ═══ -->
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="page-hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumbs">
+        <li><a href="{{ rel }}index.html">Home</a></li>
+        <li aria-current="page">Testimonials</li>
+      </ol>
+    </nav>
+    <div class="eyebrow" data-r>Intern reviews</div>
+    <h1 class="sh sh-lg" id="page-title" data-r="1">What Our Interns Say About <em>Data Science Academia</em></h1>
+    <p class="page-hero-sub" data-r="2">{{ n }} unprompted, unedited testimonials from students who completed the virtual Machine Learning internship under {{ site.author.name }} — engineering and science students from colleges across India. Every quote is reproduced word for word, and the original cards are further down the page.</p>
+    <div class="hero-badges" data-r="3">
+      <span class="badge badge-teal">5.0 average rating</span>
+      <span class="badge">{{ n }} verbatim quotes</span>
+      <span class="badge badge-cream">Original cards included</span>
+      <span class="badge badge-blue">Machine Learning internship</span>
+    </div>
+    <div class="stats t-stats" data-r="4" role="group" aria-label="Testimonial figures">
+      <div class="stat"><div class="stat-n">{{ n }}</div><div class="stat-l">Testimonials</div></div>
+      <div class="stat"><div class="stat-n">5.0</div><div class="stat-l">Average rating ★</div></div>
+      <div class="stat"><div class="stat-n">10+</div><div class="stat-l">Colleges represented</div></div>
+      <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Would recommend</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ALL REVIEWS ═══ -->
+<section class="section" id="reviews" aria-labelledby="reviews-title">
+  <div class="container">
+    <div class="split-head">
+      <div>
+        <div class="eyebrow" data-r>All {{ n }} reviews</div>
+        <h2 class="sh" id="reviews-title" data-r="1">Every testimonial, <em>word for word</em></h2>
+        <p class="lead" data-r="2">Each quote is transcribed exactly as the intern wrote it on their card — nothing shortened, nothing polished. Names and colleges are as the interns gave them.</p>
+      </div>
+      <a class="link-arrow" href="#gallery" data-r="2">See the original cards <span class="arr">&rarr;</span></a>
+    </div>
+    <div class="grid grid-3">
+      {% for t in testimonials %}
+      <blockquote class="quote-card" id="review-{{ loop.index }}" data-r="{{ loop.index0 % 3 }}">
+        <div class="stars" role="img" aria-label="Rated 5 out of 5 stars">★★★★★</div>
+        <p class="quote-text">{{ t.quote }}</p>
+        <footer class="quote-author">
+          <span class="avatar" aria-hidden="true">{{ t.name | initials }}</span>
+          <div><div class="quote-name">{{ t.name }}</div><div class="quote-info">{{ t.info }}</div></div>
+        </footer>
+      </blockquote>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ORIGINAL CARDS GALLERY ═══ -->
+<section class="section section-flush" id="gallery" aria-labelledby="gallery-title">
+  <div class="container">
+    <div class="split-head">
+      <div>
+        <div class="eyebrow" data-r>The gallery</div>
+        <h2 class="sh" id="gallery-title" data-r="1">The original <em>testimonial cards</em></h2>
+        <p class="lead" data-r="2">These are the cards exactly as the interns shared them with us. Select any card to view it at full size, then use the arrow keys or the buttons to move between cards.</p>
+      </div>
+      <span class="hint" data-r="2">Select a card to enlarge &nbsp;⤢</span>
+    </div>
+    <div class="masonry" id="cards">
+      {% for t in testimonials %}
+      <button class="mcard" type="button" data-full="{{ img_url(t.img, 960) }}" data-name="{{ t.name }}" data-info="{{ t.info }}" data-r="{{ loop.index0 % 3 }}" aria-label="View the testimonial card from {{ t.name }} ({{ t.info }}) at full size">
+        {{ img(t.img, 'Testimonial card from ' ~ t.name ~ ', ' ~ t.info ~ ' — photo of the intern with their written review of the Data Science Academia machine learning internship', sizes='(max-width:600px) 100vw, (max-width:1024px) 50vw, 33vw') }}
+        <span class="mcard-zoom" aria-hidden="true">⤢</span>
+        <span class="mcard-cap" aria-hidden="true"><span class="mcard-name">{{ t.name }}</span><span class="mcard-info">{{ t.info }}</span></span>
+      </button>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LIGHTBOX (hidden until opened by JS; the cards above are fully visible without it) ═══ -->
+<dialog class="dsa-dialog lb-dialog" id="lightbox" aria-labelledby="lb-name" aria-describedby="lb-info">
+  <div class="dialog-body">
+    <button class="dialog-close" type="button" id="lb-close" aria-label="Close">✕</button>
+    <figure class="lb-fig">
+      {{ img(testimonials[0].img, 'Testimonial card from ' ~ testimonials[0].name ~ ', ' ~ testimonials[0].info, sizes='(max-width:900px) 94vw, 810px', cls='lb-img') }}
+      <figcaption class="lb-meta">
+        <div>
+          <div class="lb-name" id="lb-name">{{ testimonials[0].name }}</div>
+          <div class="lb-info" id="lb-info">{{ testimonials[0].info }}</div>
+        </div>
+        <div class="lb-nav">
+          <button class="btn btn-ghost btn-sm" type="button" id="lb-prev" aria-label="Previous card">&larr; Prev</button>
+          <span class="lb-count" id="lb-count" aria-live="polite">1 / {{ n }}</span>
+          <button class="btn btn-ghost btn-sm" type="button" id="lb-next" aria-label="Next card">Next &rarr;</button>
+        </div>
+      </figcaption>
+    </figure>
+  </div>
+</dialog>
+
+<!-- ═══ THE INTERNSHIP PROGRAMME ═══ -->
+<section class="section section-tint" aria-labelledby="intern-title">
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <div class="eyebrow teal" data-r>The programme behind the reviews</div>
+        <h2 class="sh" id="intern-title" data-r="1">NEP- and AICTE-aligned internships on <em>real projects</em></h2>
+        <p class="lead" data-r="2">{{ intern.overview }}</p>
+        <ul class="check-list mt-2" data-r="3">
+          {% for o in intern.outcomes %}
+          <li>{{ o }}</li>
+          {% endfor %}
+        </ul>
+        <div class="row mt-3" data-r="4">
+          <a class="btn btn-primary" href="{{ rel }}{{ intern.url }}">Internship details <span class="arr">&rarr;</span></a>
+          <a class="btn btn-ghost" href="{{ apply_url }}">{{ intern.get('cta', 'Apply for Internship') }}</a>
+        </div>
+      </div>
+      <div class="intern-visual" data-r="2">
+        <div class="img-frame">{{ img('internship-programme', 'Illustration of a glowing internship certificate and graduation cap rising from a laptop — the Data Science Academia NEP and AICTE-aligned internship programme', sizes='(max-width:900px) 100vw, 45vw') }}</div>
+        <div class="float-badge"><span class="fb-icon" aria-hidden="true">🗓️</span><div><div class="fb-v">{{ intern.duration }}</div><div class="fb-l">Rolling monthly cohorts</div></div></div>
+      </div>
+    </div>
+    <div class="intern-facts">
+      <div class="feature" data-r>
+        <span class="icon-box teal" aria-hidden="true">⏱</span>
+        <div><h3 class="feature-title">Duration</h3><p class="feature-text">Choose a 1-month or a 2-month track. Both include weekly mentorship sessions and progress reviews, a mid-internship milestone presentation and a final project demonstration.</p></div>
+      </div>
+      <div class="feature" data-r="1">
+        <span class="icon-box blue" aria-hidden="true">💻</span>
+        <div><h3 class="feature-title">Delivery</h3><p class="feature-text">Online, with live sessions recorded for replay, or hybrid with offline workshops. Domains include Machine Learning, Data Analytics, Computer Vision, NLP &amp; Generative AI, Software Tools and Research Assistance.</p></div>
+      </div>
+      <div class="feature" data-r="2">
+        <span class="icon-box" aria-hidden="true">📜</span>
+        <div><h3 class="feature-title">Credential</h3><p class="feature-text">{{ intern.certificate }}. Where your institution is AICTE accredited the internship is AICTE aligned; employers can <a href="{{ rel }}verify.html">verify a certificate</a> online.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="section" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-banner" data-r>
+      <div class="eyebrow center">Join the next cohort</div>
+      <h2 class="cta-title" id="cta-title">Ready to write your own <em>success story?</em></h2>
+      <p class="cta-text">Internship cohorts start every month. Tell us your domain of interest — machine learning, analytics, computer vision, NLP or research — and we'll send the next start date and the application steps within one business day.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn-lg" href="{{ apply_url }}">Apply for an internship <span class="arr">&rarr;</span></a>
+        <a class="btn btn-wa btn-lg" href="{{ site.whatsapp_msg }}" target="_blank" rel="noopener">Chat on WhatsApp</a>
+      </div>
+      <p class="cta-note">{{ site.phone }} &middot; {{ site.email }} &middot; {{ site.hours }}</p>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+/* Lightbox for the original testimonial cards — progressive enhancement: every card is a normal <img>
+   in the page; JS only adds the enlarge-on-click dialog, prev/next and keyboard navigation. */
+(function () {
+  var dlg = document.getElementById('lightbox');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.mcard'));
+  if (!dlg || !cards.length) return;
+  var img = dlg.querySelector('.lb-img'), name = document.getElementById('lb-name'), info = document.getElementById('lb-info'),
+      count = document.getElementById('lb-count'), i = 0;
+  function preload(n) { var p = new Image(); p.src = cards[(n + cards.length) % cards.length].getAttribute('data-full'); }
+  function show(n) {
+    i = (n + cards.length) % cards.length;
+    var c = cards[i], th = c.querySelector('img');
+    img.removeAttribute('srcset'); img.removeAttribute('sizes');
+    img.src = c.getAttribute('data-full');
+    if (th) { img.alt = th.alt; img.width = th.getAttribute('width'); img.height = th.getAttribute('height'); }
+    name.textContent = c.getAttribute('data-name');
+    info.textContent = c.getAttribute('data-info');
+    count.textContent = (i + 1) + ' / ' + cards.length;
+    preload(i + 1); preload(i - 1);
+  }
+  function open(n) { show(n); if (dlg.open) return; if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', ''); }
+  function close() { if (dlg.close) dlg.close(); else dlg.removeAttribute('open'); }
+  cards.forEach(function (c, n) { c.addEventListener('click', function () { open(n); }); });
+  document.getElementById('lb-prev').addEventListener('click', function () { show(i - 1); });
+  document.getElementById('lb-next').addEventListener('click', function () { show(i + 1); });
+  document.getElementById('lb-close').addEventListener('click', close);
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });   /* click on the backdrop */
+  dlg.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(i - 1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); show(i + 1); }
+  });
+  /* Deep link: testimonials.html#card-3 opens the third card */
+  var m = /#card-(\d+)$/.exec(location.hash);
+  if (m) { var k = parseInt(m[1], 10) - 1; if (k >= 0 && k < cards.length) open(k); }
+})();
+</script>
+{% endblock %}

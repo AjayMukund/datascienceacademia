@@ -1,0 +1,360 @@
+{% extends "base.html" %}
+{% block title %}Data Science & AI Courses in Chennai | Data Science Academia{% endblock %}
+{% block description %}Ph.D.-led Data Science & AI institute in Chennai: Python, ML, Deep Learning & Power BI courses, AICTE-aligned internships and a 12-month AI Mastery Track.{% endblock %}
+{% block og_title %}Data Science Academia — Ph.D.-led AI & Data Science Education, Chennai{% endblock %}
+{% block body_class %}page-home{% endblock %}
+
+{% block head_extra %}
+<style>
+.paths{display:grid;grid-template-columns:repeat(6,1fr);gap:1.25rem}
+.paths>*:nth-child(-n+3){grid-column:span 2}
+.paths>*:nth-child(n+4){grid-column:span 3}
+.paths>*:nth-child(n+4){aspect-ratio:16/7}
+.prog-mini{display:flex;gap:1.1rem;align-items:flex-start;padding:1.5rem}
+.prog-mini .card-title{font-size:1.2rem}
+.prog-mini .card-text{font-size:.84rem}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
+.mastery-visual{position:relative}
+.mastery-visual .float-badge{bottom:-1rem;left:1rem}
+@media (max-width:1024px){.why-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:900px){.paths{grid-template-columns:1fr 1fr}.paths>*{grid-column:span 1!important;aspect-ratio:4/3!important}}
+@media (max-width:560px){.paths{grid-template-columns:1fr}.why-grid{grid-template-columns:1fr}}
+</style>
+{% endblock %}
+
+{% block jsonld %}
+{{ jsonld({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Where is Data Science Academia located?","acceptedAnswer":{"@type":"Answer","text":"We are at 2nd Floor, Arasan Complex, No. 69, Grand Southern Trunk Road, West Tambaram, Chennai, Tamil Nadu 600045. Courses are delivered live in Chennai and online across India."}},
+    {"@type":"Question","name":"Do I need prior programming experience to join?","acceptedAnswer":{"@type":"Answer","text":"No. The Python Programming course and the 12-month AI Mastery Track are designed for absolute beginners — basic computer literacy and 10–12 hours a week are enough. Intermediate and advanced courses list their prerequisites on each course page."}},
+    {"@type":"Question","name":"Are DSA internships AICTE recognised?","acceptedAnswer":{"@type":"Answer","text":"Internships are aligned with NEP 2020 and AICTE guidelines. Where the student's institution is AICTE accredited the internship is AICTE aligned, and every intern receives a DSA Internship Certificate and Offer Letter."}},
+    {"@type":"Question","name":"Which certifications can I prepare for at DSA?","acceptedAnswer":{"@type":"Answer","text":"Microsoft Azure AI Fundamentals (AI-900), Azure Data Fundamentals (DP-900), Azure Fundamentals (AZ-900), Power BI Data Analyst (PL-300), AWS Cloud Practitioner (CLF-C02), plus UGC NET, GATE CS/IT, TNSET and PG-TRB coaching."}},
+    {"@type":"Question","name":"Are sessions recorded and is there placement support?","acceptedAnswer":{"@type":"Answer","text":"Yes. All live sessions are recorded for enrolled students. The AI Mastery Track includes resume and LinkedIn preparation, technical and HR mock interviews and access to the DSA alumni network."}},
+    {"@type":"Question","name":"What are the course fees?","acceptedAnswer":{"@type":"Answer","text":"Fees vary by course and programme. Call or WhatsApp +91 91764 98814 or email info@datascienceacademia.in for current pricing and batch dates — we respond within one business day."}}
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+<!-- ═══ HERO ═══ -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-pill"><span class="dot" aria-hidden="true"></span><span>Ph.D.-led &middot; AICTE-aligned &middot; MSME registered &middot; Chennai</span></div>
+        <h1 class="hero-title" id="hero-title">Learn Data Science <br>&amp; AI from <em>practitioners,</em> <br>not just professors</h1>
+        <p class="hero-lead">Data Science Academia is a Ph.D.-led AI institute in Chennai. 18 specialised courses, AICTE-aligned internships, Microsoft certification pathways and a 12-month AI Mastery Track — every module taught by a practising AI engineer with Anna University research depth.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary btn-lg" href="courses.html">Explore courses <span class="arr">&rarr;</span></a>
+          <a class="btn btn-outline btn-lg" href="contact.html">Book a free trial session</a>
+        </div>
+        <div class="hero-metrics" aria-label="Key figures">
+          <div class="met"><div class="met-n">18</div><div class="met-l">Specialised courses</div></div>
+          <div class="met"><div class="met-n">500+</div><div class="met-l">Students trained</div></div>
+          <div class="met"><div class="met-n">39</div><div class="met-l">Research projects</div></div>
+          <div class="met"><div class="met-n">2019</div><div class="met-l">Founded</div></div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="term">
+          <div class="t-bar"><span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span><span class="t-title">model_training.py &mdash; DSA Studio</span></div>
+          <div class="t-body">
+            <div class="t-line"><span class="t-ln">1</span><span><span class="tk-kw">import</span> <span class="tk-fn">numpy</span> <span class="tk-kw">as</span> <span class="tk-fn">np</span></span></div>
+            <div class="t-line"><span class="t-ln">2</span><span><span class="tk-kw">from</span> <span class="tk-fn">sklearn.ensemble</span> <span class="tk-kw">import</span> <span class="tk-op">RandomForestClassifier</span></span></div>
+            <div class="t-line"><span class="t-ln">3</span><span> </span></div>
+            <div class="t-line"><span class="t-ln">4</span><span class="tk-cm"># Train on real-world data, not toy datasets</span></div>
+            <div class="t-line"><span class="t-ln">5</span><span><span class="tk-fn">clf</span> <span class="tk-op">=</span> <span class="tk-op">RandomForestClassifier</span>(<span class="tk-fn">n_estimators</span><span class="tk-op">=</span><span class="tk-num">200</span>)</span></div>
+            <div class="t-line"><span class="t-ln">6</span><span><span class="tk-fn">clf</span>.<span class="tk-op">fit</span>(<span class="tk-str">X_train</span>, <span class="tk-str">y_train</span>)</span></div>
+            <div class="t-line"><span class="t-ln">7</span><span><span class="tk-fn">score</span> <span class="tk-op">=</span> <span class="tk-fn">clf</span>.<span class="tk-op">score</span>(<span class="tk-str">X_test</span>, <span class="tk-str">y_test</span>)</span></div>
+            <div class="t-line"><span class="t-ln">8</span><span><span class="tk-op">print</span>(<span class="tk-str">f"Accuracy: {score:.4f}"</span>)</span></div>
+            <div class="t-out">
+              <div class="t-out-label">Output</div>
+              <div class="mbar"><span class="mbar-n">Accuracy</span><span class="mbar-t"><span class="mbar-f" style="width:94%;display:block"></span></span><span class="mbar-v">94.2%</span></div>
+              <div class="mbar"><span class="mbar-n">Precision</span><span class="mbar-t"><span class="mbar-f" style="width:91%;display:block;animation-delay:.15s"></span></span><span class="mbar-v">91.7%</span></div>
+              <div class="mbar"><span class="mbar-n">Recall</span><span class="mbar-t"><span class="mbar-f" style="width:89%;display:block;animation-delay:.3s"></span></span><span class="mbar-v">89.3%</span></div>
+              <div class="mbar"><span class="mbar-n">F1 score</span><span class="mbar-t"><span class="mbar-f" style="width:90%;display:block;animation-delay:.45s"></span></span><span class="mbar-v">90.5%</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="float-badge"><span class="fb-icon">🎓</span><div><div class="fb-v">Ph.D. faculty</div><div class="fb-l">Anna University</div></div></div>
+        <div class="float-badge tr"><span class="fb-icon">★</span><div><div class="fb-v">5.0 intern rating</div><div class="fb-l">15 testimonials</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TICKER ═══ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    {% for pass in range(2) %}
+    {% for item in ['Python Programming','Machine Learning','Deep Learning','LLMs & Generative AI','Power BI','Microsoft Azure','AWS for Data Science','AICTE Internships','Faculty Development','Corporate Training','UGC NET & GATE Coaching','Research Assistance'] %}
+    <span class="ticker-item{% if pass %} dup{% endif %}">{{ item }}</span>
+    {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+
+<!-- ═══ LEARNING PATHS ═══ -->
+<section class="section" aria-labelledby="paths-title">
+  <div class="container">
+    <div class="split-head">
+      <div>
+        <div class="eyebrow" data-r>Five learning paths</div>
+        <h2 class="sh" id="paths-title" data-r="1">From first principles to <em>frontier AI</em></h2>
+      </div>
+      <a class="link-arrow" href="courses.html" data-r="2">Browse all 18 courses <span class="arr">&rarr;</span></a>
+    </div>
+    <div class="paths">
+      {% set tiles = [
+        ('Foundation','foundation-category-banner','Python · SQL · R','Start from zero with the languages every data scientist uses.'),
+        ('Core ML','core-ml-category-banner','Machine Learning · NLP · Feature Engineering','Classical and ensemble learning on real datasets.'),
+        ('Analytics','analytics-category-banner','Data Visualization · Excel · Tableau','Turn raw numbers into dashboards and decisions.'),
+        ('Advanced AI','advanced-ai-category-banner','Deep Learning · Computer Vision · LLMs · GenAI · RL · MLOps','Six advanced courses from neural networks to production deployment.'),
+        ('Cloud & BI','cloud-and-bi-category-banner','Power BI · Microsoft Azure · AWS','Enterprise BI and cloud ML with Microsoft and AWS certification prep.'),
+      ] %}
+      {% for name, key, meta, text in tiles %}
+      {% set cat = categories | selectattr('name','equalto',name) | first %}
+      <a class="cat-tile" href="courses.html?filter={{ cat.slug }}" data-r="{{ loop.index0 % 3 }}">
+        {{ img(key, name ~ ' courses at Data Science Academia', sizes='(max-width:900px) 100vw, 45vw') }}
+        <div class="cat-tile-body">
+          <div class="cat-tile-meta">{{ cat.courses | length }} courses &middot; {{ meta }}</div>
+          <div class="cat-tile-title">{{ name }}</div>
+          <div class="cat-tile-text">{{ text }}</div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURED COURSES ═══ -->
+<section class="section section-flush" aria-labelledby="courses-title">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" data-r>Most popular</div>
+      <h2 class="sh" id="courses-title" data-r="1">Courses that get you <em>hired</em></h2>
+      <p class="lead" data-r="2">Every course is hands-on, project-first and taught live (with recordings) by faculty who ship AI systems for a living. Certificates on completion; internship pathways available.</p>
+    </div>
+    <div class="grid grid-3">
+      {% for id in ['python','machine-learning','deep-learning','llm','power-bi','azure'] %}
+      {% set c = courses[id] %}
+      <a class="card" href="{{ c.url }}" data-r="{{ loop.index0 % 3 }}">
+        <div class="card-img">
+          {{ img(c.image, c.title ~ ' course', sizes='(max-width:640px) 100vw, (max-width:1024px) 50vw, 400px') }}
+          <span class="badge {{ c.badge }}">{{ c.level }}</span>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">{{ c.category }}</div>
+          <h3 class="card-title">{{ c.title }}</h3>
+          <p class="card-text">{{ c.overview | meta_desc(120) }}</p>
+          <div class="card-foot"><span>⏱ {{ c.duration }} &middot; {{ c.hours }}</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    <div class="center mt-3" data-r><a class="btn btn-outline" href="courses.html">View all 18 courses <span class="arr">&rarr;</span></a></div>
+  </div>
+</section>
+
+<!-- ═══ AI MASTERY TRACK ═══ -->
+<section class="section section-tint" aria-labelledby="mastery-title">
+  <div class="container">
+    <div class="two-col" style="margin-bottom:3rem">
+      <div>
+        <div class="eyebrow" data-r>Flagship programme</div>
+        <h2 class="sh" id="mastery-title" data-r="1">The 12-Month <em>AI Mastery Track</em></h2>
+        <p class="lead" data-r="2">One structured, mentor-guided year from absolute beginner to job-ready AI professional: 16 courses across four quarters, four capstone projects, a bundled internship certificate and placement assistance. Live online, recorded for replay, with quarterly bootcamps in Chennai.</p>
+        <ul class="check-list two mt-2" data-r="3">
+          <li>3 live sessions a week, all recorded</li>
+          <li>Weekly 1-on-1 mentor check-ins</li>
+          <li>4 capstones — data to deployed cloud API</li>
+          <li>Internship certificate included</li>
+          <li>Resume, LinkedIn &amp; mock interviews</li>
+          <li>Azure AI-900 / DP-900 guidance</li>
+        </ul>
+        <div class="row mt-3" data-r="4">
+          <a class="btn btn-primary" href="programmes/ai-mastery.html">Explore the Mastery Track <span class="arr">&rarr;</span></a>
+          <a class="btn btn-ghost" href="contact.html?course=AI+Mastery+Track+(12-Month+Programme)">Apply now</a>
+        </div>
+      </div>
+      <div class="mastery-visual" data-r="2">
+        <div class="img-frame">{{ img('ai-mastery-track-visual', '12-Month AI & Data Science Mastery Track at Data Science Academia', sizes='(max-width:900px) 100vw, 45vw') }}</div>
+        <div class="float-badge"><span class="fb-icon">🗓️</span><div><div class="fb-v">4 quarters · 16 courses</div><div class="fb-l">No prior experience required</div></div></div>
+      </div>
+    </div>
+    <div class="roadmap" data-r>
+      <div class="rq q1"><div class="rq-badge">Q1 · Months 1–3</div><div class="rq-title">Foundations</div><div class="rq-sub">Python · SQL · R · Excel</div><ul><li>Python for data science</li><li>SQL for analytics</li><li>Statistics with R</li><li>Business analytics with Excel</li></ul><div class="rq-cap">Capstone: EDA on a real business dataset</div></div>
+      <div class="rq q2"><div class="rq-badge">Q2 · Months 4–6</div><div class="rq-title">Analytics &amp; Engineering</div><div class="rq-sub">Tableau · EDA · Ethics · Engineering</div><ul><li>Visualization with Tableau</li><li>Exploratory data analytics</li><li>Data ethics &amp; privacy</li><li>Data engineering with Python</li></ul><div class="rq-cap">Capstone: analytics dashboard from raw data</div></div>
+      <div class="rq q3"><div class="rq-badge">Q3 · Months 7–9</div><div class="rq-title">Machine Learning &amp; BI</div><div class="rq-sub">Power BI · ML · Time Series</div><ul><li>Power BI enterprise reports</li><li>Supervised &amp; unsupervised ML</li><li>Time-series forecasting</li><li>Portfolio &amp; interview prep</li></ul><div class="rq-cap">Capstone: train, evaluate &amp; deploy a model</div></div>
+      <div class="rq q4"><div class="rq-badge">Q4 · Months 10–12</div><div class="rq-title">Advanced AI &amp; Cloud</div><div class="rq-sub">Deep Learning · NLP · Big Data · Cloud</div><ul><li>Deep learning &amp; Transformers</li><li>NLP with Python &amp; LLMs</li><li>Big data with Hadoop &amp; Spark</li><li>AWS &amp; Azure deployment</li></ul><div class="rq-cap">Capstone: full-stack AI system · Demo Day</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROGRAMMES ═══ -->
+<section class="section" aria-labelledby="prog-title">
+  <div class="container">
+    <div class="split-head">
+      <div>
+        <div class="eyebrow" data-r>Beyond courses</div>
+        <h2 class="sh" id="prog-title" data-r="1">Programmes for students, faculty <em>&amp; enterprises</em></h2>
+      </div>
+      <a class="link-arrow" href="programmes.html" data-r="2">All programmes <span class="arr">&rarr;</span></a>
+    </div>
+    <div class="grid grid-3">
+      {% set minis = [
+        ('internship','teal','🎓','1–2 month AICTE &amp; NEP-aligned internships with real projects, an offer letter and a DSA certificate. Rolling monthly cohorts.'),
+        ('microsoft-certification','blue','🏅','MCT-led preparation for Azure AI-900, DP-900, AZ-900 and Power BI PL-300 — labs, mock exams and exam strategy.'),
+        ('fdp','','🏛️','Faculty Development and corporate training in AI, ML, Power BI and Generative AI — on campus, on site or online.'),
+        ('exam-coaching','green','🏆','UGC NET, GATE CS/IT, TNSET and PG-TRB coaching by faculty who have cleared these exams themselves.'),
+        ('research-assistance','coral','🔬','Topic finalisation to journal submission: literature review, statistical analysis, proofreading and Scopus/WoS targeting.'),
+        ('language-communication','pink','💬','Academic writing, technical interviews, presentations and professional English for engineers and researchers.'),
+      ] %}
+      {% for id, tone, icon, text in minis %}
+      {% set p = programmes[id] %}
+      <a class="card prog-mini" href="{{ p.url }}" data-r="{{ loop.index0 % 3 }}">
+        <span class="icon-box {{ tone }}" aria-hidden="true">{{ icon }}</span>
+        <div>
+          <div class="card-cat">{{ p.tag }}</div>
+          <h3 class="card-title">{{ p.title }}</h3>
+          <p class="card-text">{{ text | safe }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    <div class="callout mt-3" data-r>
+      <div class="callout-icon" aria-hidden="true">🤖</div>
+      <div class="callout-body">
+        <div class="eyebrow violet" style="margin-bottom:.25rem">School outreach wing</div>
+        <h3 class="callout-title">DSA Code Champs — <em>AI &amp; coding for Grades 3 to 12</em></h3>
+        <p class="callout-text">Four progressive levels — Scratch, Python, machine learning and computer vision — delivered in schools across Chennai and online. NEP 2020-aligned, activity-first, with a special focus on girls in STEM.</p>
+      </div>
+      <a class="btn btn-violet" href="codechamps.html">Explore Code Champs <span class="arr">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHY DSA ═══ -->
+<section class="section section-flush" aria-labelledby="why-title">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow center" data-r>Why Data Science Academia</div>
+      <h2 class="sh" id="why-title" data-r="1">Academic rigour meets <em>real-world AI engineering</em></h2>
+    </div>
+    <div class="why-grid">
+      <div class="feature col" data-r>
+        <span class="icon-box" aria-hidden="true">🎓</span>
+        <div><h3 class="feature-title">Doctoral academic depth</h3><p class="feature-text">Curriculum anchored in Anna University research standards — rigorous, methodical and intellectually honest about what works and why.</p></div>
+      </div>
+      <div class="feature col" data-r="1">
+        <span class="icon-box teal" aria-hidden="true">⚙️</span>
+        <div><h3 class="feature-title">Taught by a practising AI engineer</h3><p class="feature-text">Every module is delivered by faculty who build production AI systems — real datasets, real failure modes, real deployment.</p></div>
+      </div>
+      <div class="feature col" data-r="2">
+        <span class="icon-box blue" aria-hidden="true">🏛️</span>
+        <div><h3 class="feature-title">AICTE &amp; NEP-aligned credentials</h3><p class="feature-text">Internships, FDPs and certificates aligned with AICTE guidelines and NEP 2020 — recognised by institutions across Tamil Nadu.</p></div>
+      </div>
+      <div class="feature col" data-r="3">
+        <span class="icon-box violet" aria-hidden="true">🚀</span>
+        <div><h3 class="feature-title">Project-first, career-focused</h3><p class="feature-text">39 student research projects, capstones every quarter, placement assistance, mock interviews and an alumni network.</p></div>
+      </div>
+    </div>
+    <div class="stats mt-3" data-r>
+      <div class="stat"><div class="stat-n">39</div><div class="stat-l">Research projects</div></div>
+      <div class="stat"><div class="stat-n">100+</div><div class="stat-l">Student contributors</div></div>
+      <div class="stat"><div class="stat-n">7</div><div class="stat-l">Special programmes</div></div>
+      <div class="stat"><div class="stat-n">5.0</div><div class="stat-l">Intern rating ★</div></div>
+      <div class="stat"><div class="stat-n">4</div><div class="stat-l">Code Champs levels</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="section section-tint" aria-labelledby="test-title">
+  <div class="container">
+    <div class="split-head">
+      <div>
+        <div class="eyebrow" data-r>Intern testimonials</div>
+        <h2 class="sh" id="test-title" data-r="1">What our students <em>say</em></h2>
+      </div>
+      <a class="link-arrow" href="testimonials.html" data-r="2">Read all 15 reviews <span class="arr">&rarr;</span></a>
+    </div>
+    <div class="grid grid-3">
+      {% for name in ['Praiselin P','Saravana Pandian K','Divya Chougule'] %}
+      {% set t = testimonials | selectattr('name','equalto',name) | first %}
+      <blockquote class="quote-card" data-r="{{ loop.index0 }}">
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p class="quote-text">{{ t.quote | meta_desc(230) }}</p>
+        <footer class="quote-author">
+          <span class="avatar" aria-hidden="true">{{ t.name | initials }}</span>
+          <div><div class="quote-name">{{ t.name }}</div><div class="quote-info">{{ t.info }}</div></div>
+        </footer>
+      </blockquote>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BLOG ═══ -->
+<section class="section" aria-labelledby="blog-title">
+  <div class="container">
+    <div class="split-head">
+      <div>
+        <div class="eyebrow" data-r>From the blog</div>
+        <h2 class="sh" id="blog-title" data-r="1">Insights from a <em>practising</em> AI engineer</h2>
+      </div>
+      <a class="link-arrow" href="blog.html" data-r="2">All articles <span class="arr">&rarr;</span></a>
+    </div>
+    <div class="grid grid-3">
+      {% for post in posts[:3] %}
+      <a class="card card-sm" href="{{ post.url }}" data-r="{{ loop.index0 }}">
+        <div class="card-img">{{ img(post.cover, post.title, sizes='(max-width:640px) 100vw, (max-width:1024px) 50vw, 400px') }}</div>
+        <div class="card-body">
+          <div class="card-cat">{{ post.catLabel }} &middot; {{ post.readTime }}</div>
+          <h3 class="card-title">{{ post.title }}</h3>
+          <p class="card-text">{{ post.excerpt | meta_desc(130) }}</p>
+          <div class="card-foot"><time datetime="{{ post.date }}">{{ post.dateDisplay }}</time><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="section section-flush" aria-labelledby="faq-title">
+  <div class="container container-narrow">
+    <div class="section-head center">
+      <div class="eyebrow center" data-r>Questions</div>
+      <h2 class="sh" id="faq-title" data-r="1">Frequently asked <em>questions</em></h2>
+    </div>
+    <div data-r>
+      <details class="faq" open><summary>Where is Data Science Academia located?</summary><div class="faq-a">2nd Floor, Arasan Complex, No. 69, Grand Southern Trunk Road, West Tambaram, Chennai 600045 — a short walk from Tambaram railway station. Courses are delivered live in Chennai and online across India.</div></details>
+      <details class="faq"><summary>Do I need prior programming experience to join?</summary><div class="faq-a">No. The <a href="courses/python.html">Python Programming</a> course and the <a href="programmes/ai-mastery.html">AI Mastery Track</a> are designed for absolute beginners — basic computer literacy and 10–12 hours a week are enough. Intermediate and advanced courses list their prerequisites on each course page.</div></details>
+      <details class="faq"><summary>Are DSA internships AICTE recognised?</summary><div class="faq-a">Internships are aligned with NEP 2020 and AICTE guidelines. Where your institution is AICTE accredited the internship is AICTE aligned, and every intern receives a DSA Internship Certificate and Offer Letter. <a href="programmes/internship.html">Internship details &rarr;</a></div></details>
+      <details class="faq"><summary>Which certifications can I prepare for at DSA?</summary><div class="faq-a">Microsoft Azure AI-900, DP-900 and AZ-900, Power BI PL-300 and AWS CLF-C02 through our courses and the <a href="programmes/microsoft-certification.html">Microsoft Certification Program</a>; UGC NET, GATE CS/IT, TNSET and PG-TRB through <a href="programmes/exam-coaching.html">Competitive Examination Training</a>.</div></details>
+      <details class="faq"><summary>Are sessions recorded, and is there placement support?</summary><div class="faq-a">Yes — every live session is recorded for enrolled students. The AI Mastery Track adds resume and LinkedIn preparation, technical and HR mock interviews, and alumni-network job alerts.</div></details>
+      <details class="faq"><summary>What are the course fees?</summary><div class="faq-a">Fees vary by course and programme. Call or <a href="{{ site.whatsapp_msg }}" target="_blank" rel="noopener">WhatsApp {{ site.phone }}</a> or email <a href="mailto:{{ site.email }}">{{ site.email }}</a> for current pricing and batch dates — we respond within one business day.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="section" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-banner" data-r>
+      <div class="eyebrow center">Start today</div>
+      <h2 class="cta-title" id="cta-title">Ready to build your <em>AI career?</em></h2>
+      <p class="cta-text">Book a free, no-commitment trial session or talk to us about courses, internships, corporate training or a school partnership. We reply within one business day.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn-lg" href="contact.html">Enquire now <span class="arr">&rarr;</span></a>
+        <a class="btn btn-wa btn-lg" href="{{ site.whatsapp_msg }}" target="_blank" rel="noopener">Chat on WhatsApp</a>
+      </div>
+      <p class="cta-note">{{ site.phone }} &middot; {{ site.email }} &middot; {{ site.hours }}</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

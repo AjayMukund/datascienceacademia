@@ -1,0 +1,2186 @@
+{
+ "courses/aws-for-data-science": {
+  "src": "Website Images/Courses/AWS for Data Science.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/aws-for-data-science-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/aws-for-data-science-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/aws-for-data-science-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/computer-vision": {
+  "src": "Website Images/Courses/Computer Vision.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/computer-vision-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/computer-vision-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/computer-vision-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/data-visualization": {
+  "src": "Website Images/Courses/Data Visualization.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/data-visualization-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/data-visualization-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/data-visualization-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/deep-learning": {
+  "src": "Website Images/Courses/Deep Learning.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/deep-learning-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/deep-learning-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/deep-learning-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/excel-for-data-analysis": {
+  "src": "Website Images/Courses/Excel for Data Analysis.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/excel-for-data-analysis-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/excel-for-data-analysis-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/excel-for-data-analysis-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/feature-engineering-and-model-selection": {
+  "src": "Website Images/Courses/Feature Engineering & Model Selection.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/feature-engineering-and-model-selection-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/feature-engineering-and-model-selection-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/feature-engineering-and-model-selection-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/generative-ai": {
+  "src": "Website Images/Courses/Generative AI.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/generative-ai-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/generative-ai-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/generative-ai-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/large-language-models": {
+  "src": "Website Images/Courses/Large Language Models.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/large-language-models-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/large-language-models-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/large-language-models-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/machine-learning": {
+  "src": "Website Images/Courses/Machine Learning.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/machine-learning-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/machine-learning-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/machine-learning-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/microsoft-azure": {
+  "src": "Website Images/Courses/Microsoft Azure.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/microsoft-azure-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/microsoft-azure-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/microsoft-azure-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/mlops-and-model-deployment": {
+  "src": "Website Images/Courses/MLOps & Model Deployment.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/mlops-and-model-deployment-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/mlops-and-model-deployment-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/mlops-and-model-deployment-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/natural-language-processing": {
+  "src": "Website Images/Courses/Natural Language Processing.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/natural-language-processing-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/natural-language-processing-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/natural-language-processing-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/power-bi": {
+  "src": "Website Images/Courses/Power BI.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/power-bi-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/power-bi-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/power-bi-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/python-programming": {
+  "src": "Website Images/Courses/Python Programming.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/python-programming-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/python-programming-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/python-programming-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/r-programming": {
+  "src": "Website Images/Courses/R Programming.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/r-programming-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/r-programming-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/r-programming-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/reinforcement-learning": {
+  "src": "Website Images/Courses/Reinforcement Learning.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/reinforcement-learning-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/reinforcement-learning-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/reinforcement-learning-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/sql-for-data-science": {
+  "src": "Website Images/Courses/SQL for Data Science.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/sql-for-data-science-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/sql-for-data-science-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/sql-for-data-science-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "courses/tableau": {
+  "src": "Website Images/Courses/Tableau.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses/tableau-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/courses/tableau-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/courses/tableau-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "projects/advanced-sentiment-analysis-and-sarcasm-detection": {
+  "src": "Website Images/Projects/Advanced Sentiment Analysis and Sarcasm Detection.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/advanced-sentiment-analysis-and-sarcasm-detection-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/advanced-sentiment-analysis-and-sarcasm-detection-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/ai-virtual-mouse-using-mediapipe": {
+  "src": "Website Images/Projects/AI Virtual Mouse Using MediaPipe.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/ai-virtual-mouse-using-mediapipe-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/ai-virtual-mouse-using-mediapipe-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/autonomous-driving-aid-with-multilabel-image-classification": {
+  "src": "Website Images/Projects/Autonomous Driving Aid with Multilabel Image Classification.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/autonomous-driving-aid-with-multilabel-image-classification-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/autonomous-driving-aid-with-multilabel-image-classification-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/breast-cancer-prediction": {
+  "src": "Website Images/Projects/Breast Cancer Prediction.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/breast-cancer-prediction-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/breast-cancer-prediction-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/clothing-sales-forecasting": {
+  "src": "Website Images/Projects/Clothing Sales Forecasting.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/clothing-sales-forecasting-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/clothing-sales-forecasting-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/content-based-movie-recommender-system": {
+  "src": "Website Images/Projects/Content Based Movie Recommender System.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/content-based-movie-recommender-system-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/content-based-movie-recommender-system-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/credit-card-fraud-detection": {
+  "src": "Website Images/Projects/Credit Card Fraud Detection.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/credit-card-fraud-detection-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/credit-card-fraud-detection-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/crop-protection-animal-image-classification": {
+  "src": "Website Images/Projects/Crop Protection - Animal Image Classification.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/crop-protection-animal-image-classification-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/crop-protection-animal-image-classification-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/crop-protection-identification-and-recommendation": {
+  "src": "Website Images/Projects/Crop Protection - Identification and Recommendation.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/crop-protection-identification-and-recommendation-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/crop-protection-identification-and-recommendation-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/customer-segmentation-and-market-basket-analysis": {
+  "src": "Website Images/Projects/Customer Segmentation and Market Basket Analysis.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/customer-segmentation-and-market-basket-analysis-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/customer-segmentation-and-market-basket-analysis-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/cyberbullying-tweet-detection": {
+  "src": "Website Images/Projects/Cyberbullying Tweet Detection.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/cyberbullying-tweet-detection-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/cyberbullying-tweet-detection-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/data-cleaning-in-the-perspective-of-ml": {
+  "src": "Website Images/Projects/Data Cleaning in the Perspective of ML.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/data-cleaning-in-the-perspective-of-ml-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/data-cleaning-in-the-perspective-of-ml-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/drowsiness-detection-using-facial-landmarks": {
+  "src": "Website Images/Projects/Drowsiness Detection Using Facial Landmarks.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/drowsiness-detection-using-facial-landmarks-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/drowsiness-detection-using-facial-landmarks-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/electric-vehicle-power-predictor": {
+  "src": "Website Images/Projects/Electric Vehicle Power Predictor.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/electric-vehicle-power-predictor-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/electric-vehicle-power-predictor-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/emotion-detection": {
+  "src": "Website Images/Projects/Emotion Detection (Twitter NLP).jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/emotion-detection-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/emotion-detection-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/emotion-recognition-using-images": {
+  "src": "Website Images/Projects/Emotion Recognition Using Images.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/emotion-recognition-using-images-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/emotion-recognition-using-images-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/face-recognition-attendance-system-with-anti-spoofing": {
+  "src": "Website Images/Projects/Face Recognition Attendance System with Anti-Spoofing.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/face-recognition-attendance-system-with-anti-spoofing-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/face-recognition-attendance-system-with-anti-spoofing-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/fake-news-detection": {
+  "src": "Website Images/Projects/Fake News Detection.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/fake-news-detection-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/fake-news-detection-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/fingerprint-matching": {
+  "src": "Website Images/Projects/Fingerprint Matching.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/fingerprint-matching-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/fingerprint-matching-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/gait-analysis": {
+  "src": "Website Images/Projects/Gait Analysis (Parkinson's FOG Detection).jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/gait-analysis-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/gait-analysis-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/hate-speech-detection": {
+  "src": "Website Images/Projects/Hate Speech Detection.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/hate-speech-detection-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/hate-speech-detection-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/health-support-chatbot": {
+  "src": "Website Images/Projects/Health Support Chatbot.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/health-support-chatbot-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/health-support-chatbot-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/healthcare-project-disease-prediction": {
+  "src": "Website Images/Projects/Healthcare Project - Disease Prediction.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/healthcare-project-disease-prediction-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/healthcare-project-disease-prediction-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/image-captioning": {
+  "src": "Website Images/Projects/Image Captioning.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/image-captioning-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/image-captioning-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/iris-flower-species-identification": {
+  "src": "Website Images/Projects/Iris Flower Species Identification.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/iris-flower-species-identification-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/iris-flower-species-identification-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/mental-health-therapist-chatbot": {
+  "src": "Website Images/Projects/Mental Health Therapist Chatbot.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/mental-health-therapist-chatbot-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/mental-health-therapist-chatbot-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/movie-recommendation-system": {
+  "src": "Website Images/Projects/Movie Recommendation System.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/movie-recommendation-system-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/movie-recommendation-system-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/music-recommender-system": {
+  "src": "Website Images/Projects/Music Recommender System.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/music-recommender-system-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/music-recommender-system-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/neural-style-transfer": {
+  "src": "Website Images/Projects/Neural Style Transfer.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/neural-style-transfer-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/neural-style-transfer-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/rocks-and-mines-prediction": {
+  "src": "Website Images/Projects/Rocks and Mines Prediction.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/rocks-and-mines-prediction-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/rocks-and-mines-prediction-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/smartmcq-using-generative-ai": {
+  "src": "Website Images/Projects/SmartMCQ using Generative AI.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/smartmcq-using-generative-ai-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/smartmcq-using-generative-ai-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/speaker-accent-recognition": {
+  "src": "Website Images/Projects/Speaker Accent Recognition.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/speaker-accent-recognition-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/speaker-accent-recognition-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/speech-emotion-recognition": {
+  "src": "Website Images/Projects/Speech Emotion Recognition.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/speech-emotion-recognition-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/speech-emotion-recognition-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/visualizing-cricketing-data": {
+  "src": "Website Images/Projects/Visualizing Cricketing Data.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/visualizing-cricketing-data-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/visualizing-cricketing-data-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/vocal-aura": {
+  "src": "Website Images/Projects/Vocal Aura.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/vocal-aura-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/vocal-aura-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/water-quality-prediction": {
+  "src": "Website Images/Projects/Water Quality Prediction.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/water-quality-prediction-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/water-quality-prediction-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/weather-forecasting": {
+  "src": "Website Images/Projects/Weather Forecasting.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/weather-forecasting-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/weather-forecasting-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/wine-quality-prediction": {
+  "src": "Website Images/Projects/Wine Quality Prediction.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/wine-quality-prediction-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/wine-quality-prediction-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "projects/winning-price-prediction": {
+  "src": "Website Images/Projects/Winning Price Prediction (Book Pricing).jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/projects/winning-price-prediction-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/projects/winning-price-prediction-960.webp",
+    "w": 960,
+    "h": 717
+   }
+  }
+ },
+ "codechamps/code-builders-project-quiz-game": {
+  "src": "Website Images/Code Champs/Code Builders Project - Quiz Game.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-builders-project-quiz-game-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-builders-project-quiz-game-960.webp",
+    "w": 960,
+    "h": 717
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-builders-project-quiz-game-1600.webp",
+    "w": 1600,
+    "h": 1195
+   }
+  }
+ },
+ "codechamps/code-builders-project-smart-chatbot": {
+  "src": "Website Images/Code Champs/Code Builders Project - Smart Chatbot.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-builders-project-smart-chatbot-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-builders-project-smart-chatbot-960.webp",
+    "w": 960,
+    "h": 717
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-builders-project-smart-chatbot-1600.webp",
+    "w": 1600,
+    "h": 1195
+   }
+  }
+ },
+ "codechamps/code-builders-project-turtle-art-machine": {
+  "src": "Website Images/Code Champs/Code Builders Project - Turtle Art Machine.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-builders-project-turtle-art-machine-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-builders-project-turtle-art-machine-960.webp",
+    "w": 960,
+    "h": 717
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-builders-project-turtle-art-machine-1600.webp",
+    "w": 1600,
+    "h": 1195
+   }
+  }
+ },
+ "codechamps/code-champs-level-1-code-explorers": {
+  "src": "Website Images/Code Champs/Code Champs Level 1 - Code Explorers.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-champs-level-1-code-explorers-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-champs-level-1-code-explorers-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-champs-level-1-code-explorers-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "codechamps/code-champs-level-2-code-builders": {
+  "src": "Website Images/Code Champs/Code Champs Level 2 - Code Builders.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-champs-level-2-code-builders-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-champs-level-2-code-builders-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-champs-level-2-code-builders-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "codechamps/code-champs-level-3-code-innovators": {
+  "src": "Website Images/Code Champs/Code Champs Level 3 - Code Innovators.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-champs-level-3-code-innovators-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-champs-level-3-code-innovators-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-champs-level-3-code-innovators-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "codechamps/code-champs-level-4-code-pioneers": {
+  "src": "Website Images/Code Champs/Code Champs Level 4 - Code Pioneers.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-champs-level-4-code-pioneers-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-champs-level-4-code-pioneers-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-champs-level-4-code-pioneers-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "codechamps/code-explorers-project-animated-story": {
+  "src": "Website Images/Code Champs/Code Explorers Project - Animated Story.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-explorers-project-animated-story-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-explorers-project-animated-story-960.webp",
+    "w": 960,
+    "h": 717
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-explorers-project-animated-story-1600.webp",
+    "w": 1600,
+    "h": 1195
+   }
+  }
+ },
+ "codechamps/code-explorers-project-catch-the-stars": {
+  "src": "Website Images/Code Champs/Code Explorers Project - Catch the Stars.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-explorers-project-catch-the-stars-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-explorers-project-catch-the-stars-960.webp",
+    "w": 960,
+    "h": 717
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-explorers-project-catch-the-stars-1600.webp",
+    "w": 1600,
+    "h": 1195
+   }
+  }
+ },
+ "codechamps/code-explorers-project-code-art-gallery": {
+  "src": "Website Images/Code Champs/Code Explorers Project - Code Art Gallery.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-explorers-project-code-art-gallery-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-explorers-project-code-art-gallery-960.webp",
+    "w": 960,
+    "h": 717
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-explorers-project-code-art-gallery-1600.webp",
+    "w": 1600,
+    "h": 1195
+   }
+  }
+ },
+ "codechamps/code-innovators-project-computer-vision": {
+  "src": "Website Images/Code Champs/Code Innovators Project - Computer Vision.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-innovators-project-computer-vision-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-innovators-project-computer-vision-960.webp",
+    "w": 960,
+    "h": 717
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-innovators-project-computer-vision-1600.webp",
+    "w": 1600,
+    "h": 1195
+   }
+  }
+ },
+ "codechamps/code-innovators-project-data-dashboard": {
+  "src": "Website Images/Code Champs/Code Innovators Project - Data Dashboard.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-innovators-project-data-dashboard-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-innovators-project-data-dashboard-960.webp",
+    "w": 960,
+    "h": 717
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-innovators-project-data-dashboard-1600.webp",
+    "w": 1600,
+    "h": 1195
+   }
+  }
+ },
+ "codechamps/code-innovators-project-image-classifier": {
+  "src": "Website Images/Code Champs/Code Innovators Project - Image Classifier.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-innovators-project-image-classifier-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-innovators-project-image-classifier-960.webp",
+    "w": 960,
+    "h": 717
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-innovators-project-image-classifier-1600.webp",
+    "w": 1600,
+    "h": 1195
+   }
+  }
+ },
+ "codechamps/code-pioneers-project-deep-learning-architecture": {
+  "src": "Website Images/Code Champs/Code Pioneers Project - Deep Learning Architecture.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-pioneers-project-deep-learning-architecture-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-pioneers-project-deep-learning-architecture-960.webp",
+    "w": 960,
+    "h": 717
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-pioneers-project-deep-learning-architecture-1600.webp",
+    "w": 1600,
+    "h": 1195
+   }
+  }
+ },
+ "codechamps/code-pioneers-project-deployed-ai-app": {
+  "src": "Website Images/Code Champs/Code Pioneers Project - Deployed AI App.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-pioneers-project-deployed-ai-app-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-pioneers-project-deployed-ai-app-960.webp",
+    "w": 960,
+    "h": 717
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-pioneers-project-deployed-ai-app-1600.webp",
+    "w": 1600,
+    "h": 1195
+   }
+  }
+ },
+ "codechamps/code-pioneers-project-ml-model-evaluation": {
+  "src": "Website Images/Code Champs/Code Pioneers Project - ML Model Evaluation.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/codechamps/code-pioneers-project-ml-model-evaluation-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/codechamps/code-pioneers-project-ml-model-evaluation-960.webp",
+    "w": 960,
+    "h": 717
+   },
+   "1600": {
+    "file": "assets/img/codechamps/code-pioneers-project-ml-model-evaluation-1600.webp",
+    "w": 1600,
+    "h": 1195
+   }
+  }
+ },
+ "about-page-visual-classroomlab": {
+  "src": "Website Images/About Page Visual - ClassroomLab.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/about-page-visual-classroomlab-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/about-page-visual-classroomlab-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/about-page-visual-classroomlab-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "advanced-ai-category-banner": {
+  "src": "Website Images/Advanced AI Category Banner (Deep Learning \u00b7 CV \u00b7 LLMs \u00b7 GenAI \u00b7 RL \u00b7 MLOps).jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/advanced-ai-category-banner-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/advanced-ai-category-banner-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/advanced-ai-category-banner-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "ai-mastery-track-visual": {
+  "src": "Website Images/AI Mastery Track Visual.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/ai-mastery-track-visual-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/ai-mastery-track-visual-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/ai-mastery-track-visual-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "analytics-category-banner": {
+  "src": "Website Images/Analytics Category Banner (Data Visualization \u00b7 Excel \u00b7 Tableau).jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/analytics-category-banner-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/analytics-category-banner-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/analytics-category-banner-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "blog-bias-variance-tradeoff": {
+  "src": "Website Images/Blog - Bias-Variance Tradeoff.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/blog-bias-variance-tradeoff-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/blog-bias-variance-tradeoff-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/blog-bias-variance-tradeoff-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "blog-data-science-career-in-india-2025": {
+  "src": "Website Images/Blog - Data Science Career in India 2025.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/blog-data-science-career-in-india-2025-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/blog-data-science-career-in-india-2025-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/blog-data-science-career-in-india-2025-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "blog-feature-engineering-mastery": {
+  "src": "Website Images/Blog - Feature Engineering Mastery.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/blog-feature-engineering-mastery-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/blog-feature-engineering-mastery-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/blog-feature-engineering-mastery-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "blog-llms-in-production-2025": {
+  "src": "Website Images/Blog - LLMs in Production 2025.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/blog-llms-in-production-2025-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/blog-llms-in-production-2025-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/blog-llms-in-production-2025-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "blog-python-learning-roadmap-2025": {
+  "src": "Website Images/Blog - Python Learning Roadmap 2025.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/blog-python-learning-roadmap-2025-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/blog-python-learning-roadmap-2025-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/blog-python-learning-roadmap-2025-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "blog-statistics-meets-deep-learning": {
+  "src": "Website Images/Blog - Statistics Meets Deep Learning.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/blog-statistics-meets-deep-learning-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/blog-statistics-meets-deep-learning-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/blog-statistics-meets-deep-learning-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "cloud-and-bi-category-banner": {
+  "src": "Website Images/Cloud and BI Category Banner (Power BI, Azure, AWS).jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/cloud-and-bi-category-banner-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/cloud-and-bi-category-banner-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/cloud-and-bi-category-banner-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "code-champs-hero-illustration": {
+  "src": "Website Images/Code Champs Hero Illustration.jpeg",
+  "w": 2400,
+  "h": 1792,
+  "variants": {
+   "480": {
+    "file": "assets/img/code-champs-hero-illustration-480.webp",
+    "w": 480,
+    "h": 358
+   },
+   "960": {
+    "file": "assets/img/code-champs-hero-illustration-960.webp",
+    "w": 960,
+    "h": 717
+   },
+   "1600": {
+    "file": "assets/img/code-champs-hero-illustration-1600.webp",
+    "w": 1600,
+    "h": 1195
+   }
+  }
+ },
+ "code-champs-sessions-collage": {
+  "src": "Website Images/Code Champs Sessions Collage.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/code-champs-sessions-collage-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/code-champs-sessions-collage-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/code-champs-sessions-collage-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "competitive-examination-training": {
+  "src": "Website Images/Competitive Examination Training.jpeg",
+  "w": 2048,
+  "h": 2048,
+  "variants": {
+   "480": {
+    "file": "assets/img/competitive-examination-training-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/competitive-examination-training-960.webp",
+    "w": 960,
+    "h": 960
+   },
+   "1600": {
+    "file": "assets/img/competitive-examination-training-1600.webp",
+    "w": 1600,
+    "h": 1600
+   }
+  }
+ },
+ "core-ml-category-banner": {
+  "src": "Website Images/Core ML Category Banner (Machine Learning \u00b7 NLP \u00b7 Feature Engineering).jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/core-ml-category-banner-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/core-ml-category-banner-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/core-ml-category-banner-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "corporate-and-faculty-development-programme": {
+  "src": "Website Images/Corporate & Faculty Development Programme.jpeg",
+  "w": 2048,
+  "h": 2048,
+  "variants": {
+   "480": {
+    "file": "assets/img/corporate-and-faculty-development-programme-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/corporate-and-faculty-development-programme-960.webp",
+    "w": 960,
+    "h": 960
+   },
+   "1600": {
+    "file": "assets/img/corporate-and-faculty-development-programme-1600.webp",
+    "w": 1600,
+    "h": 1600
+   }
+  }
+ },
+ "courses-page-hero-banner": {
+  "src": "Website Images/Courses Page Hero Banner.jpeg",
+  "w": 2752,
+  "h": 728,
+  "variants": {
+   "480": {
+    "file": "assets/img/courses-page-hero-banner-480.webp",
+    "w": 480,
+    "h": 127
+   },
+   "960": {
+    "file": "assets/img/courses-page-hero-banner-960.webp",
+    "w": 960,
+    "h": 254
+   },
+   "1600": {
+    "file": "assets/img/courses-page-hero-banner-1600.webp",
+    "w": 1600,
+    "h": 423
+   }
+  }
+ },
+ "foundation-category-banner": {
+  "src": "Website Images/Foundation Category Banner (Python \u00b7 SQL \u00b7 R).jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/foundation-category-banner-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "960": {
+    "file": "assets/img/foundation-category-banner-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/foundation-category-banner-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "internship-programme": {
+  "src": "Website Images/Internship Programme.jpeg",
+  "w": 2048,
+  "h": 2048,
+  "variants": {
+   "480": {
+    "file": "assets/img/internship-programme-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/internship-programme-960.webp",
+    "w": 960,
+    "h": 960
+   },
+   "1600": {
+    "file": "assets/img/internship-programme-1600.webp",
+    "w": 1600,
+    "h": 1600
+   }
+  }
+ },
+ "language-and-communication-programme": {
+  "src": "Website Images/Language & Communication Programme.jpeg",
+  "w": 2048,
+  "h": 2048,
+  "variants": {
+   "480": {
+    "file": "assets/img/language-and-communication-programme-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/language-and-communication-programme-960.webp",
+    "w": 960,
+    "h": 960
+   },
+   "1600": {
+    "file": "assets/img/language-and-communication-programme-1600.webp",
+    "w": 1600,
+    "h": 1600
+   }
+  }
+ },
+ "microsoft-certification-programme": {
+  "src": "Website Images/Microsoft Certification Programme.jpeg",
+  "w": 2048,
+  "h": 2048,
+  "variants": {
+   "480": {
+    "file": "assets/img/microsoft-certification-programme-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/microsoft-certification-programme-960.webp",
+    "w": 960,
+    "h": 960
+   },
+   "1600": {
+    "file": "assets/img/microsoft-certification-programme-1600.webp",
+    "w": 1600,
+    "h": 1600
+   }
+  }
+ },
+ "research-assistance-programme": {
+  "src": "Website Images/Research Assistance Programme.jpeg",
+  "w": 2048,
+  "h": 2048,
+  "variants": {
+   "480": {
+    "file": "assets/img/research-assistance-programme-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/research-assistance-programme-960.webp",
+    "w": 960,
+    "h": 960
+   },
+   "1600": {
+    "file": "assets/img/research-assistance-programme-1600.webp",
+    "w": 1600,
+    "h": 1600
+   }
+  }
+ },
+ "testimonials/divya-chougule": {
+  "src": "Intern Testimonials/Intern Testimonial - Divya Chougule.png",
+  "w": 1080,
+  "h": 1080,
+  "variants": {
+   "480": {
+    "file": "assets/img/testimonials/divya-chougule-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/testimonials/divya-chougule-960.webp",
+    "w": 960,
+    "h": 960
+   }
+  }
+ },
+ "testimonials/gubiligari-sireesha": {
+  "src": "Intern Testimonials/Intern Testimonial - Gubiligari Sireesha.png",
+  "w": 3375,
+  "h": 3375,
+  "variants": {
+   "480": {
+    "file": "assets/img/testimonials/gubiligari-sireesha-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/testimonials/gubiligari-sireesha-960.webp",
+    "w": 960,
+    "h": 960
+   }
+  }
+ },
+ "testimonials/jalakuru-ruthik": {
+  "src": "Intern Testimonials/Intern Testimonial - Jalakuru Ruthik.png",
+  "w": 3750,
+  "h": 3750,
+  "variants": {
+   "480": {
+    "file": "assets/img/testimonials/jalakuru-ruthik-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/testimonials/jalakuru-ruthik-960.webp",
+    "w": 960,
+    "h": 960
+   }
+  }
+ },
+ "testimonials/k-geethanjali": {
+  "src": "Intern Testimonials/Intern Testimonial - K Geethanjali.png",
+  "w": 1080,
+  "h": 1080,
+  "variants": {
+   "480": {
+    "file": "assets/img/testimonials/k-geethanjali-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/testimonials/k-geethanjali-960.webp",
+    "w": 960,
+    "h": 960
+   }
+  }
+ },
+ "testimonials/kanakala-bhoomika": {
+  "src": "Intern Testimonials/Intern Testimonial - Kanakala Bhoomika.png",
+  "w": 3375,
+  "h": 3375,
+  "variants": {
+   "480": {
+    "file": "assets/img/testimonials/kanakala-bhoomika-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/testimonials/kanakala-bhoomika-960.webp",
+    "w": 960,
+    "h": 960
+   }
+  }
+ },
+ "testimonials/kartik-gupta": {
+  "src": "Intern Testimonials/Intern Testimonial - Kartik Gupta.png",
+  "w": 1080,
+  "h": 1920,
+  "variants": {
+   "480": {
+    "file": "assets/img/testimonials/kartik-gupta-480.webp",
+    "w": 480,
+    "h": 853
+   },
+   "960": {
+    "file": "assets/img/testimonials/kartik-gupta-960.webp",
+    "w": 960,
+    "h": 1707
+   }
+  }
+ },
+ "testimonials/praiselin-p": {
+  "src": "Intern Testimonials/Intern Testimonial - Praiselin P.png",
+  "w": 3375,
+  "h": 3375,
+  "variants": {
+   "480": {
+    "file": "assets/img/testimonials/praiselin-p-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/testimonials/praiselin-p-960.webp",
+    "w": 960,
+    "h": 960
+   }
+  }
+ },
+ "testimonials/sai-kiran-pulla": {
+  "src": "Intern Testimonials/Intern Testimonial - Sai Kiran Pulla.png",
+  "w": 3375,
+  "h": 3375,
+  "variants": {
+   "480": {
+    "file": "assets/img/testimonials/sai-kiran-pulla-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/testimonials/sai-kiran-pulla-960.webp",
+    "w": 960,
+    "h": 960
+   }
+  }
+ },
+ "testimonials/sai-soumya-reddy": {
+  "src": "Intern Testimonials/Intern Testimonial - Sai Soumya Reddy.png",
+  "w": 1080,
+  "h": 1080,
+  "variants": {
+   "480": {
+    "file": "assets/img/testimonials/sai-soumya-reddy-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/testimonials/sai-soumya-reddy-960.webp",
+    "w": 960,
+    "h": 960
+   }
+  }
+ },
+ "testimonials/saravana-pandian-k": {
+  "src": "Intern Testimonials/Intern Testimonial - Saravana Pandian K.png",
+  "w": 1080,
+  "h": 1350,
+  "variants": {
+   "480": {
+    "file": "assets/img/testimonials/saravana-pandian-k-480.webp",
+    "w": 480,
+    "h": 600
+   },
+   "960": {
+    "file": "assets/img/testimonials/saravana-pandian-k-960.webp",
+    "w": 960,
+    "h": 1200
+   }
+  }
+ },
+ "testimonials/shaik-shahid": {
+  "src": "Intern Testimonials/Intern Testimonial - Shaik Shahid.png",
+  "w": 3375,
+  "h": 3375,
+  "variants": {
+   "480": {
+    "file": "assets/img/testimonials/shaik-shahid-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/testimonials/shaik-shahid-960.webp",
+    "w": 960,
+    "h": 960
+   }
+  }
+ },
+ "testimonials/shaik-shahul": {
+  "src": "Intern Testimonials/Intern Testimonial - Shaik Shahul.png",
+  "w": 940,
+  "h": 788,
+  "variants": {
+   "480": {
+    "file": "assets/img/testimonials/shaik-shahul-480.webp",
+    "w": 480,
+    "h": 402
+   },
+   "940": {
+    "file": "assets/img/testimonials/shaik-shahul-940.webp",
+    "w": 940,
+    "h": 788
+   }
+  }
+ },
+ "testimonials/vuttaradhi-vyshnavi": {
+  "src": "Intern Testimonials/Intern Testimonial - Vuttaradhi Vyshnavi.png",
+  "w": 1080,
+  "h": 1080,
+  "variants": {
+   "480": {
+    "file": "assets/img/testimonials/vuttaradhi-vyshnavi-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   "960": {
+    "file": "assets/img/testimonials/vuttaradhi-vyshnavi-960.webp",
+    "w": 960,
+    "h": 960
+   }
+  }
+ },
+ "testimonials/botikhyala-krishna-mohan-yadav": {
+  "src": "Intern Testimonials/Intern Testominal - Botikhyala Krishna Mohan Yadav.png",
+  "w": 940,
+  "h": 788,
+  "variants": {
+   "480": {
+    "file": "assets/img/testimonials/botikhyala-krishna-mohan-yadav-480.webp",
+    "w": 480,
+    "h": 402
+   },
+   "940": {
+    "file": "assets/img/testimonials/botikhyala-krishna-mohan-yadav-940.webp",
+    "w": 940,
+    "h": 788
+   }
+  }
+ },
+ "testimonials/priya-r": {
+  "src": "Intern Testimonials/Intern Testominal - Priya R.png",
+  "w": 940,
+  "h": 788,
+  "variants": {
+   "480": {
+    "file": "assets/img/testimonials/priya-r-480.webp",
+    "w": 480,
+    "h": 402
+   },
+   "940": {
+    "file": "assets/img/testimonials/priya-r-940.webp",
+    "w": 940,
+    "h": 788
+   }
+  }
+ },
+ "12-month-ai-mastery-programme-roadmap": {
+  "src": "12 Month AI Mastery Programme Roadmap.png",
+  "w": 3031,
+  "h": 1380,
+  "variants": {
+   "960": {
+    "file": "assets/img/12-month-ai-mastery-programme-roadmap-960.webp",
+    "w": 960,
+    "h": 437
+   },
+   "1600": {
+    "file": "assets/img/12-month-ai-mastery-programme-roadmap-1600.webp",
+    "w": 1600,
+    "h": 728
+   },
+   "2400": {
+    "file": "assets/img/12-month-ai-mastery-programme-roadmap-2400.webp",
+    "w": 2400,
+    "h": 1093
+   }
+  }
+ },
+ "logo-mark": {
+  "src": "icons/icon-512.png",
+  "w": 256,
+  "h": 256,
+  "variants": {
+   "256": {
+    "file": "assets/img/logo-mark-256.png",
+    "w": 256,
+    "h": 256
+   }
+  }
+ }
+}

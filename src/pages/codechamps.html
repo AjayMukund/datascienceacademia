@@ -1,0 +1,417 @@
+{% extends "base.html" %}
+{% block title %}Coding & AI Classes for Kids in Chennai | DSA Code Champs{% endblock %}
+{% block description %}Coding, Python, ML and AI classes for school students in Grades 3–12 across Chennai. Four NEP 2020-aligned levels, in school and online. Book a free trial.{% endblock %}
+{% block og_title %}DSA Code Champs — Coding & AI Classes for Grades 3–12, Chennai{% endblock %}
+{% block og_image %}{{ og_for('page','codechamps') }}{% endblock %}
+{% block body_class %}page-codechamps{% endblock %}
+
+{# ── Per-level presentation data (copy from the previous Code Champs page) ── #}
+{% set cc = {
+  'explorers': {'tone':'c-teal','badge':'badge-teal','tools':'Scratch',
+    'desc':"Introduce your child to the amazing world of coding — creating their own animations, stories, apps and games. This level builds creativity, logic, and a love for technology through fun, visual block-based coding that requires zero prior experience.",
+    'project':"Build and present your own Scratch game",
+    'topics':['Scratch programming','Block coding','Sequences & loops','Animations','Simple games','Computational thinking']},
+  'builders': {'tone':'c-blue','badge':'badge-blue','tools':'Python',
+    'desc':"Ignite your child's interest in real programming. Students transition from visual blocks to text-based Python — building working apps, chatbots, and data tools. Introduction to AI concepts through hands-on mini-projects that feel like play.",
+    'project':"Build a Python chatbot or calculator app",
+    'topics':['Python basics','Turtle graphics','Functions & loops','Simple chatbots','Intro to AI','Mini-games']},
+  'innovators': {'tone':'c-violet','badge':'badge-violet','tools':'Python · ML · OpenCV',
+    'desc':"Students make the leap from coding to creating intelligent systems. Python intermediate, real data science, machine learning concepts, and introductory computer vision — all through projects that solve real-world problems.",
+    'project':"Train a simple image classifier",
+    'topics':['Python intermediate','Data science basics','ML introduction','Computer vision','IoT projects','OOP concepts']},
+  'pioneers': {'tone':'c-gold','badge':'badge-yellow','tools':'TensorFlow · YOLO · Flask',
+    'desc':"The most advanced track — students master Python deeply, build machine learning models, explore deep learning and computer vision, and deploy real AI applications. A launchpad for engineering college and AI research careers.",
+    'project':"Build and deploy a real-world AI application",
+    'topics':['Advanced Python','Machine learning','Deep learning','Computer vision (OpenCV)','NLP basics','AI project deployment']}
+} %}
+{% set trial_url = rel ~ 'contact.html?course=DSA+Code+Champs+(School+Outreach)' %}
+
+{% block head_extra %}
+<style>
+.page-codechamps .page-hero-glow{background:radial-gradient(ellipse at top,rgba(199,146,234,.16),rgba(122,159,255,.06) 45%,transparent 70%)}
+.page-codechamps .sh em,.page-codechamps .cta-title em{color:var(--violet)}
+.cc-hero .two-col{grid-template-columns:1.05fr .95fr;align-items:center}
+.cc-hero h1{font-size:clamp(2.3rem,4.4vw,3.6rem)}
+.cc-hero .hero-visual{position:relative}
+.cc-hero .float-badge{bottom:-1rem;left:1rem}
+.insight{display:flex;gap:.85rem;align-items:center;margin-top:1.75rem;padding:.85rem 1.25rem;border-radius:12px;border:1px solid rgba(199,146,234,.22);background:rgba(199,146,234,.06);font-size:.8rem;color:var(--fog);line-height:1.55;max-width:600px}
+.insight span:first-child{font-size:1.4rem;flex-shrink:0}
+.insight strong{color:var(--violet);font-weight:600}
+.cc-stats .stat-n{background:linear-gradient(135deg,var(--violet),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+.level-card .card-body{gap:.75rem}
+.level-card .card-text{font-size:.86rem}
+.level-lines{display:flex;flex-direction:column;gap:.35rem;font-size:.8rem;color:var(--fog);line-height:1.5}
+.level-lines li{display:flex;gap:.5rem;align-items:flex-start}
+.level-lines strong{color:var(--c);font-weight:600}
+.tech-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:.75rem}
+.tech{display:flex;flex-direction:column;align-items:center;gap:.55rem;padding:1.1rem .6rem;text-align:center;border:1px solid var(--border);border-radius:14px;background:var(--card);font-size:.78rem;font-weight:600;color:var(--cream);line-height:1.3;transition:border-color .3s,transform .35s var(--ease)}
+.tech:hover{border-color:rgba(199,146,234,.4);transform:translateY(-3px)}
+.tech .ic{font-size:1.6rem;line-height:1}
+.collage img{max-height:520px;object-fit:cover;width:100%}
+.proj-list{display:flex;flex-direction:column;gap:.55rem;font-size:.82rem;color:var(--fog);line-height:1.45}
+.proj-list li{display:flex;gap:.55rem;align-items:flex-start}
+.proj-list .t{color:var(--cream);font-weight:500;display:block}
+.proj-list .k{font-family:var(--fm);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--c)}
+.aud-card{padding:2rem}
+.aud-card .card-title{font-size:1.6rem;margin:.4rem 0 .75rem}
+.aud-card .check-list{margin:1.25rem 0 1.5rem}
+.aud-card .btn{align-self:flex-start;margin-top:auto}
+.faq-col .section-label{margin-bottom:.9rem}
+@media (max-width:1024px){.tech-grid{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:900px){.cc-hero .two-col{grid-template-columns:1fr}.cc-hero .hero-visual{max-width:560px}}
+@media (max-width:640px){.tech-grid{grid-template-columns:repeat(3,1fr)}.collage img{max-height:300px}.aud-card{padding:1.5rem}}
+@media (max-width:420px){.tech-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+{% endblock %}
+
+{% block jsonld %}
+{{ jsonld(breadcrumb_ld([('Home',''),('DSA Code Champs',None)])) }}
+{% set ns = namespace(items=[]) %}
+{% for lv in levels_list %}
+{% set p = cc[lv.id] %}
+{% set ns.items = ns.items + [{
+  "@type": "ListItem", "position": lv.level,
+  "item": {
+    "@type": "Course",
+    "name": "DSA Code Champs Level " ~ lv.level ~ ": " ~ lv.name,
+    "description": p.desc,
+    "url": absolute(lv.url),
+    "image": absolute(img_url(lv.image, 960)),
+    "provider": {"@id": site.url ~ "/#organization"},
+    "educationalLevel": lv.grade,
+    "timeRequired": "P" ~ lv.duration.split(' ')[0] ~ "M",
+    "teaches": lv.skills,
+    "audience": {"@type": "EducationalAudience", "educationalRole": "student", "audienceType": "school students", "typicalAgeRange": lv.age | replace('Ages ', '') | replace(' – ', '-')},
+    "hasCourseInstance": [{"@type": "CourseInstance", "courseMode": ["online", "onsite"], "location": {"@type": "Place", "name": "Chennai, Tamil Nadu"}}],
+    "offers": {"@type": "Offer", "url": absolute('contact.html') ~ "?course=DSA+Code+Champs+(School+Outreach)", "availability": "https://schema.org/InStock"}
+  }
+}] %}
+{% endfor %}
+{{ jsonld({
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "DSA Code Champs — four progressive levels (Grades 3–12)",
+  "itemListOrder": "https://schema.org/ItemListOrderAscending",
+  "numberOfItems": levels_list | length,
+  "itemListElement": ns.items
+}) }}
+{{ jsonld({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Why should my child learn AI and coding early?","acceptedAnswer":{"@type":"Answer","text":"Learning AI and coding during school years builds a strong foundation — sharpening problem-solving, creativity, and logical thinking. By the time other students start in college, Code Champs students are already building. This head start can unlock top engineering placements, research opportunities, and entrepreneurship paths."}},
+    {"@type":"Question","name":"Isn't AI too advanced for younger children?","acceptedAnswer":{"@type":"Answer","text":"Not when it's taught the right way. DSA Code Champs breaks down complex concepts using stories, games, and hands-on projects. Students as young as 8 can build AI chatbots and code their own games — because learning is genuinely fun when it is age-appropriate and engaging."}},
+    {"@type":"Question","name":"What if my child doesn't want to become a programmer?","acceptedAnswer":{"@type":"Answer","text":"AI and coding aren't just for tech careers. Today every industry uses AI — from healthcare to fashion to farming. Introducing your child to AI helps them understand the world better and become smarter problem-solvers in any career they choose."}},
+    {"@type":"Question","name":"How do I know my child is actually learning?","acceptedAnswer":{"@type":"Answer","text":"DSA Code Champs emphasises project-based learning where children build real things — games, apps, AI tools — and showcase them. Parents receive progress updates after each session, and students love demonstrating what they've created. It's play with a purpose."}},
+    {"@type":"Question","name":"Is school curriculum enough for the AI era?","acceptedAnswer":{"@type":"Answer","text":"Unfortunately, no. Most school curricula still treat coding as an elective if offered at all. In contrast, industries are moving extremely fast. What your child learns in Code Champs today shapes the future they lead tomorrow — and ensures they are not left behind."}},
+    {"@type":"Question","name":"Why should schools introduce AI from Grade 3?","acceptedAnswer":{"@type":"Answer","text":"Because the world isn't waiting. Starting AI and coding during school years builds long-term capacity in logic, innovation, and digital literacy. Countries like China have embedded AI in education from age 6. India's NEP 2020 specifically calls for computational thinking from early grades."}},
+    {"@type":"Question","name":"Is this too demanding for our teachers or infrastructure?","acceptedAnswer":{"@type":"Answer","text":"Not at all. DSA Code Champs provides the complete solution — curriculum, certified trainers, materials, activity kits, and student performance reports. Our plug-and-play model means your school can offer world-class AI education without overloading your existing staff at all."}},
+    {"@type":"Question","name":"How does this benefit our school's reputation?","acceptedAnswer":{"@type":"Answer","text":"Schools that offer future-ready AI and coding programmes are viewed as progressive, innovative, and student-centric. Integrating Code Champs helps your institution stand out and attracts parents who want more than textbooks for their children's futures."}},
+    {"@type":"Question","name":"Can smaller or rural schools implement this too?","acceptedAnswer":{"@type":"Answer","text":"Absolutely. DSA Code Champs offers both offline (school visit) and online (live interactive) delivery models. Every school — urban or rural — can offer world-class AI and coding education. All it takes is the intent to prepare your students for a better future."}},
+    {"@type":"Question","name":"Do students actually retain what they learn?","acceptedAnswer":{"@type":"Answer","text":"Yes — especially when they build things. Children learn best when they create. Our approach focuses on hands-on, project-based tasks where students retain concepts by applying them. This isn't passive learning — it is active, visible, measurable skill-building."}}
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+<!-- ═══ HERO ═══ -->
+<section class="page-hero cc-hero" aria-labelledby="cc-title">
+  <div class="page-hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs">
+            <li><a href="{{ rel }}index.html">Home</a></li>
+            <li aria-current="page">Code Champs</li>
+          </ol>
+        </nav>
+        <div class="eyebrow violet" data-r>DSA Code Champs &middot; School wing</div>
+        <h1 class="sh" id="cc-title" data-r="1">Coding &amp; AI classes for school students in Chennai, <em>Grades 3 to 12</em></h1>
+        <p class="page-hero-sub" data-r="2">Marks open doors. But future-ready skills build empires. Data Science Academia's dedicated school wing introduces young minds to coding, AI and technology — transforming students from consumers of technology into its creators. Four progressive levels, from Scratch to Python, machine learning and computer vision, delivered in schools across Chennai and live online.</p>
+        <div class="hero-badges" data-r="3">
+          <span class="badge badge-violet">NEP 2020 aligned</span>
+          <span class="badge badge-blue">Grades 3–12 &middot; Ages 8–17</span>
+          <span class="badge badge-teal">In-school &amp; online</span>
+          <span class="badge badge-pink">Girls in STEM focus</span>
+        </div>
+        <div class="row mt-2" data-r="4">
+          <a class="btn btn-violet btn-lg" href="{{ trial_url }}">Book a free trial session <span class="arr">&rarr;</span></a>
+          <a class="btn btn-outline btn-lg" href="#levels">Explore the four levels</a>
+        </div>
+        <div class="insight" data-r="5">
+          <span aria-hidden="true">🔬</span>
+          <span><strong>NASA research insight:</strong> children's creativity peaks between ages 7 and 13. Introducing AI and coding during this golden window shapes innovators, not just students.</span>
+        </div>
+      </div>
+      <div class="hero-visual" data-r="2">
+        <div class="img-frame">{{ img('code-champs-hero-illustration', 'Young students learning coding and AI with DSA Code Champs in Chennai', sizes='(max-width:900px) 100vw, 45vw', loading='eager', fetchpriority='high') }}</div>
+        <div class="float-badge"><span class="fb-icon">🤖</span><div><div class="fb-v">Scratch → Python → ML → AI</div><div class="fb-l">4 levels · 24–48 sessions each</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS ═══ -->
+<section class="section-sm" aria-label="Code Champs at a glance">
+  <div class="container">
+    <div class="stats cc-stats" data-r>
+      <div class="stat"><div class="stat-n">4</div><div class="stat-l">Progressive levels</div></div>
+      <div class="stat"><div class="stat-n">3–12</div><div class="stat-l">Grades covered</div></div>
+      <div class="stat"><div class="stat-n">24–48</div><div class="stat-l">Sessions per level</div></div>
+      <div class="stat"><div class="stat-n">90 min</div><div class="stat-l">Weekly live sessions</div></div>
+      <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Project-based</div></div>
+      <div class="stat"><div class="stat-n">Online</div><div class="stat-l">&amp; in-school, Chennai</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LEVELS ═══ -->
+<section class="section" id="levels" aria-labelledby="levels-title">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow violet" data-r>Learning tracks</div>
+      <h2 class="sh" id="levels-title" data-r="1">Four progressive levels. <em>One complete journey.</em></h2>
+      <p class="lead" data-r="2">Every child starts at the right level and progresses at their own pace — from visual block coding to real Python, machine learning and AI project deployment. Each level ends with a Demo Day, a project portfolio and a DSA certificate.</p>
+    </div>
+    <div class="grid grid-2">
+      {% for lv in levels_list %}
+      {% set p = cc[lv.id] %}
+      <a class="card tinted {{ p.tone }} level-card" href="{{ rel }}{{ lv.url }}" data-r="{{ loop.index0 % 2 }}">
+        <div class="card-img">
+          {{ img(lv.image, lv.name ~ ' — DSA Code Champs Level ' ~ lv.level ~ ' coding and AI course for ' ~ lv.grade ~ ' students', sizes='(max-width:640px) 100vw, (max-width:1024px) 50vw, 600px') }}
+          <span class="badge {{ p.badge }}">{{ lv.badge }} &middot; {{ p.tools }}</span>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">{{ lv.grade }} &middot; {{ lv.age }}</div>
+          <h3 class="card-title">{{ lv.name }}</h3>
+          <p class="card-text">{{ p.desc }}</p>
+          <div class="tag-list">
+            {% for t in p.topics %}<span class="tag">{{ t }}</span>{% endfor %}
+          </div>
+          <ul class="level-lines">
+            <li><span aria-hidden="true">⚡</span><span><strong>Project:</strong> {{ p.project }}</span></li>
+            <li><span aria-hidden="true">🎓</span><span><strong>Certificate:</strong> {{ lv.cert }}{% if lv.level == 4 %} — the highest DSA school-level credential{% endif %}</span></li>
+          </ul>
+          <div class="card-foot"><span>⏱ {{ lv.duration }} &middot; {{ lv.sessions }} &middot; {{ lv.format }}</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══ IN THE CLASSROOM ═══ -->
+<section class="section section-tint" aria-labelledby="build-title">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow violet" data-r>In the classroom</div>
+      <h2 class="sh" id="build-title" data-r="1">What students <em>build</em></h2>
+      <p class="lead" data-r="2">Every session is hands-on, project-driven and filled with the energy of young minds discovering what technology can do. Students do before they are taught theory — and finish every level with three complete, documented projects.</p>
+    </div>
+    <div class="img-frame collage" data-r>{{ img('code-champs-sessions-collage', 'Collage of DSA Code Champs students during hands-on coding and AI sessions', sizes='(max-width:1240px) 100vw, 1112px') }}</div>
+    <div class="grid grid-4 mt-3">
+      {% for lv in levels_list %}
+      {% set p = cc[lv.id] %}
+      <div class="card tinted static card-pad {{ p.tone }}" data-r="{{ loop.index0 }}">
+        <div class="card-cat">{{ lv.badge }} &middot; {{ lv.grade }}</div>
+        <h3 class="card-title" style="margin:.35rem 0 .9rem">{{ lv.name }} projects</h3>
+        <ul class="proj-list">
+          {% for pr in lv.projects %}
+          <li><span aria-hidden="true">{{ pr.icon }}</span><span><span class="t">{{ pr.title }}</span><span class="k">{{ pr.tag }}</span></span></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="card static card-pad mt-3" data-r>
+      <div class="card-cat">Session format &middot; all levels</div>
+      <h3 class="card-title" style="margin:.35rem 0 1rem">How every session runs</h3>
+      <ul class="check-list two">
+        <li>Weekly 90-minute interactive sessions, or a weekend bootcamp format</li>
+        <li>Activity-first approach — students do before being taught theory</li>
+        <li>Team challenges and mini-hackathons</li>
+        <li>Show-and-tell: students present mini-projects each session</li>
+        <li>Fun quizzes and a leaderboard — gamified learning</li>
+        <li>Parents invited to the closing showcase and Demo Day</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TECHNOLOGIES ═══ -->
+<section class="section" aria-labelledby="tech-title">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow violet" data-r>What they'll build with</div>
+      <h2 class="sh" id="tech-title" data-r="1">Endless <em>possibilities</em></h2>
+      <p class="lead" data-r="2">From visual Scratch blocks to professional Python and cloud AI — every technology introduced is age-appropriate, project-driven and genuinely used in the industry.</p>
+    </div>
+    <ul class="tech-grid" aria-label="Technologies and topics covered">
+      {% for icon, name in [('🐱','Scratch'),('🐍','Python'),('🤖','Artificial Intelligence'),('🧠','Machine Learning'),('👁️','Computer Vision'),('💬','Chatbots & NLP'),('⚡','IoT & Robotics'),('🎮','Game Programming'),('📊','Data Science'),('🔐','Cyber Security'),('☁️','Cloud Computing'),('🌐','Web Development')] %}
+      <li class="tech" data-r="{{ loop.index0 % 6 }}"><span class="ic" aria-hidden="true">{{ icon }}</span>{{ name }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<!-- ═══ WHY CODE CHAMPS ═══ -->
+<section class="section section-flush" aria-labelledby="why-title">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow violet" data-r>Why it matters</div>
+      <h2 class="sh" id="why-title" data-r="1">The world doesn't wait — <em>neither should your child</em></h2>
+      <p class="lead" data-r="2">Countries like China, Singapore and the UAE are integrating AI into education from Grade 1. India's NEP 2020 calls for computational thinking from the very start. DSA Code Champs brings world-class AI and coding education to schools across Chennai — making every child a creator, not just a consumer.</p>
+    </div>
+    <div class="grid grid-3">
+      {% set whys = [
+        ('violet','🚀','Future-ready skills','AI, ML, Python and robotics are not the future — they are the present. We give children the skills the 21st-century workforce demands, starting before their peers even begin.'),
+        ('blue','🧠','Sharper problem solvers','Coding builds structured thinking, logical reasoning and creative problem-solving — skills that improve performance across every subject, from mathematics to the sciences.'),
+        ('teal','🎯','100% project-based','Children learn by building — games, apps, AI chatbots and data projects. Every session ends with something real they can show their parents and friends.'),
+        ('yellow','🏫','School-ready programme','Fully managed — DSA brings the trainers, materials and curriculum to your school. No preparation required from teachers. Fits into any school timetable.'),
+        ('green','🌍','NEP 2020 aligned','Our curriculum is designed around NEP 2020 computational thinking competencies and India\'s National Curriculum Framework — giving institutions a compliant, future-forward offering.'),
+        ('coral','🏆','A portfolio before college','Every Code Champs student graduates with a real, documented project portfolio — AI apps, games and data tools they actually built. While peers are learning to code in first year, your child walks into interviews, hackathons and scholarship rounds already proven.'),
+      ] %}
+      {% for tone, icon, title, text in whys %}
+      <div class="feature col" data-r="{{ loop.index0 % 3 }}">
+        <span class="icon-box {{ tone }}" aria-hidden="true">{{ icon }}</span>
+        <div><h3 class="feature-title">{{ title }}</h3><p class="feature-text">{{ text }}</p></div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SCHOOLS & PARENTS ═══ -->
+<section class="section section-tint" aria-labelledby="aud-title">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow violet" data-r>Who we work with</div>
+      <h2 class="sh" id="aud-title" data-r="1">For <em>schools</em> &amp; for <em>parents</em></h2>
+    </div>
+    <div class="grid grid-2">
+      <div class="card tinted static c-violet aud-card" data-r>
+        <span class="icon-box violet" aria-hidden="true">🏫</span>
+        <div class="card-cat mt-1">School partnerships</div>
+        <h3 class="card-title">The schools that teach AI today will lead tomorrow</h3>
+        <p class="card-text">Artificial Intelligence is no longer optional — it is fundamental. Schools that adopt AI aren't just modern — they are prestigious. DSA Code Champs is a complete, plug-and-play solution.</p>
+        <ul class="check-list">
+          <li>AI + coding curriculum for Grade 3 to Grade 12</li>
+          <li>Fully managed — DSA trainers, materials, activity sheets and kits provided</li>
+          <li>DSA visits your school campus — Chennai and nearby areas</li>
+          <li>Custom scheduling to fit the school timetable and academic calendar</li>
+          <li>Student performance reports issued to the school</li>
+          <li>Parents invited to a closing Demo Day and project showcase</li>
+          <li>Aligned with the NEP 2020 computational thinking framework</li>
+          <li>Improve your institution's reputation as a future-ready school</li>
+        </ul>
+        <a class="btn btn-violet" href="{{ trial_url }}">Partner with DSA Code Champs <span class="arr">&rarr;</span></a>
+      </div>
+      <div class="card tinted static c-blue aud-card" data-r="1">
+        <span class="icon-box blue" aria-hidden="true">👨‍👩‍👧</span>
+        <div class="card-cat mt-1">For parents</div>
+        <h3 class="card-title">Give your child the skill that defines the future</h3>
+        <p class="card-text">Today's smartest parents aren't just chasing grades — they're building creators, innovators and leaders. AI and coding aren't optional — they're the new literacy.</p>
+        <ul class="check-list">
+          <li>Live interactive sessions with DSA's expert faculty</li>
+          <li>Weekly 90-minute sessions, with weekend and after-school batch timings</li>
+          <li>Project portfolio showcasing your child's work each month</li>
+          <li>DSA Code Champs certificate on completion of every level</li>
+          <li>Online and offline options available across Chennai</li>
+          <li>Regular progress updates shared with parents after each session</li>
+          <li>Special focus on encouraging girls in STEM and AI</li>
+          <li>Free trial session — see the learning before you commit</li>
+        </ul>
+        <a class="btn btn-teal" href="{{ trial_url }}">Book a free trial session <span class="arr">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section class="section" aria-labelledby="how-title">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow violet center" data-r>Getting started</div>
+      <h2 class="sh" id="how-title" data-r="1">How to get started with your <em>free trial</em></h2>
+    </div>
+    <div class="steps" data-r>
+      <div class="step"><div class="step-num">1</div><div class="step-title">Register</div><p class="step-text">Fill in the enquiry form with your child's grade and preferred level, or your school's contact details.</p></div>
+      <div class="step"><div class="step-num">2</div><div class="step-title">Schedule</div><p class="step-text">A DSA coordinator reaches out to schedule your child's first free session at a convenient time.</p></div>
+      <div class="step"><div class="step-num">3</div><div class="step-title">Free trial</div><p class="step-text">Your child attends a live, interactive coding session — completely free, no commitment required.</p></div>
+      <div class="step"><div class="step-num">4</div><div class="step-title">Enrol &amp; create</div><p class="step-text">Choose the right level and batch; your child starts building their first real project immediately.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="section section-tint" aria-labelledby="test-title">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow violet" data-r>What parents &amp; students say</div>
+      <h2 class="sh" id="test-title" data-r="1">Real results. <em>Inspired young minds.</em></h2>
+    </div>
+    <div class="grid grid-3">
+      {% set quotes = [
+        ('👦','Parent of a Grade 4 student',"My son was so excited when he first coded a program that made a character call out his name. The classes were so practical — we didn't know how an hour melted away so soon. Incredibly practical and engaging."),
+        ('🧒','Parent of a Grade 8 student',"I couldn't believe my Grade 8 child had already completed Python programming and moved to Artificial Intelligence. The trainer kept his coding fire alive and brighter. Strongly recommended for any child curious about technology."),
+        ('👧','Parent of a Grade 5 student',"The teacher was patient, understood my child's mindset perfectly, and made sure he applied every concept in his own way. My son developed stories and games — and now wants to pursue the next level. Highly recommended."),
+      ] %}
+      {% for icon, who, quote in quotes %}
+      <blockquote class="quote-card" data-r="{{ loop.index0 }}">
+        <p class="quote-text">{{ quote }}</p>
+        <footer class="quote-author">
+          <span class="avatar" aria-hidden="true">{{ icon }}</span>
+          <div><div class="quote-name">{{ who }}</div><div class="quote-info">DSA Code Champs &middot; Chennai</div></div>
+        </footer>
+      </blockquote>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="section" aria-labelledby="faq-title">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow violet center" data-r>Questions</div>
+      <h2 class="sh" id="faq-title" data-r="1">Frequently asked <em>questions</em></h2>
+    </div>
+    <div class="grid grid-2" style="align-items:start">
+      <div class="faq-col" data-r>
+        <h3 class="section-label">For parents</h3>
+        <details class="faq" open><summary>Why should my child learn AI and coding early?</summary><div class="faq-a">Learning AI and coding during school years builds a strong foundation — sharpening problem-solving, creativity and logical thinking. By the time other students start in college, Code Champs students are already building. This head start can unlock top engineering placements, research opportunities and entrepreneurship paths.</div></details>
+        <details class="faq"><summary>Isn't AI too advanced for younger children?</summary><div class="faq-a">Not when it's taught the right way. DSA Code Champs breaks down complex concepts using stories, games and hands-on projects. Students as young as 8 can build AI chatbots and code their own games — because learning is genuinely fun when it is age-appropriate and engaging.</div></details>
+        <details class="faq"><summary>What if my child doesn't want to become a programmer?</summary><div class="faq-a">AI and coding aren't just for tech careers. Today every industry uses AI — from healthcare to fashion to farming. Introducing your child to AI helps them understand the world better and become smarter problem-solvers in any career they choose.</div></details>
+        <details class="faq"><summary>How do I know my child is actually learning?</summary><div class="faq-a">DSA Code Champs emphasises project-based learning where children build real things — games, apps, AI tools — and showcase them. Parents receive progress updates after each session, and students love demonstrating what they've created. It's play with a purpose.</div></details>
+        <details class="faq"><summary>Is school curriculum enough for the AI era?</summary><div class="faq-a">Unfortunately, no. Most school curricula still treat coding as an elective, if offered at all. In contrast, industries are moving extremely fast. What your child learns in Code Champs today shapes the future they lead tomorrow — and ensures they are not left behind.</div></details>
+      </div>
+      <div class="faq-col" data-r="1">
+        <h3 class="section-label">For schools</h3>
+        <details class="faq" open><summary>Why should schools introduce AI from Grade 3?</summary><div class="faq-a">Because the world isn't waiting. Starting AI and coding during school years builds long-term capacity in logic, innovation and digital literacy. Countries like China have embedded AI in education from age 6. India's NEP 2020 specifically calls for computational thinking from early grades.</div></details>
+        <details class="faq"><summary>Is this too demanding for our teachers or infrastructure?</summary><div class="faq-a">Not at all. DSA Code Champs provides the complete solution — curriculum, certified trainers, materials, activity kits and student performance reports. Our plug-and-play model means your school can offer world-class AI education without overloading your existing staff at all.</div></details>
+        <details class="faq"><summary>How does this benefit our school's reputation?</summary><div class="faq-a">Schools that offer future-ready AI and coding programmes are viewed as progressive, innovative and student-centric. Integrating Code Champs helps your institution stand out and attracts parents who want more than textbooks for their children's futures.</div></details>
+        <details class="faq"><summary>Can smaller or rural schools implement this too?</summary><div class="faq-a">Absolutely. DSA Code Champs offers both offline (school visit) and online (live interactive) delivery models. Every school — urban or rural — can offer world-class AI and coding education. All it takes is the intent to prepare your students for a better future.</div></details>
+        <details class="faq"><summary>Do students actually retain what they learn?</summary><div class="faq-a">Yes — especially when they build things. Children learn best when they create. Our approach focuses on hands-on, project-based tasks where students retain concepts by applying them. This isn't passive learning — it is active, visible, measurable skill-building.</div></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="section section-flush" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-banner" data-r>
+      <div class="eyebrow violet center">Free trial &middot; no commitment</div>
+      <h2 class="cta-title" id="cta-title">Ready to spark your child's <em>AI journey?</em></h2>
+      <p class="cta-text">Book a free trial session — no commitment, no pressure. Let your child experience DSA Code Champs and discover how exciting technology can be when it is taught the right way. Schools: contact us to schedule a planning meeting.</p>
+      <div class="cta-actions">
+        <a class="btn btn-violet btn-lg" href="{{ trial_url }}">Book a free trial <span class="arr">&rarr;</span></a>
+        <a class="btn btn-outline btn-lg" href="{{ rel }}contact.html">Partner with us (schools)</a>
+        <a class="btn btn-wa btn-lg" href="{{ site.whatsapp_msg }}" target="_blank" rel="noopener">Chat on WhatsApp</a>
+      </div>
+      <p class="cta-note">Chennai &middot; Online &middot; School visits &middot; Offline bootcamps &middot; {{ site.phone }}</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

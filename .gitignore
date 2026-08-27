@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+tools/.fonts-ttf/
+tools/.server.log
+tools/.optimize.log
+tools/.frame-*.html
+.DS_Store
+Thumbs.db

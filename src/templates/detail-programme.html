@@ -1,0 +1,497 @@
+{% extends "base.html" %}
+{# ── Derived values (context: programme, others) ────────────────────────────
+   Programme dicts come from programmes-data.js; optional keys (stats, cards, steps …) are
+   read with .get(). Facts in the hand-written copy below come from programmes-data.js and
+   Company_Info.txt §5–6 only. #}
+{% set pid = programme.id %}
+{% set is_am = pid == 'ai-mastery' %}
+{% set is_cc = pid == 'code-champs' %}
+{% set subtitle = programme.get('subtitle', '') %}
+{% set tag = programme.get('tag', 'Programme') %}
+{% set icon = programme.get('icon', '🎓') %}
+{% set audience = programme.get('audience', []) %}
+{% set delivery = programme.get('delivery', []) %}
+{% set duration = programme.get('duration', 'Flexible') %}
+{% set certificate = programme.get('certificate', 'DSA certificate on completion') %}
+{% set overview = programme.get('overview', '') %}
+{% set outcomes = programme.get('outcomes', []) %}
+{% set sections = programme.get('sections', []) %}
+{% set prereqs = programme.get('prereqs', '') %}
+{% set stats = programme.get('stats') %}
+{% set cards = programme.get('cards') %}
+{% set steps = programme.get('steps') %}
+{% set cta = programme.get('cta', 'Apply / enquire') %}
+{% set cta_param = programme.get('ctaParam', programme.title) %}
+
+{# Short delivery modes for badges / JSON-LD — classified per delivery item #}
+{% set dm = namespace(online=false, offline=false, hybrid=false, chennai=false) %}
+{% for d in delivery %}
+{% set dl = d | lower %}
+{% if dl.startswith('hybrid') %}{% set dm.hybrid = true %}
+{% elif 'offline' in dl or 'bootcamp' in dl or 'crash' in dl or 'visit' in dl %}{% set dm.offline = true %}{% if 'chennai' in dl %}{% set dm.chennai = true %}{% endif %}
+{% elif 'online' in dl or 'zoom' in dl or 'asynchronous' in dl %}{% set dm.online = true %}
+{% endif %}
+{% endfor %}
+{% set has_online = dm.online %}{% set has_offline = dm.offline %}{% set has_hybrid = dm.hybrid %}
+{% set modes = [] %}
+{% if has_online %}{% set modes = modes + ['Online'] %}{% endif %}
+{% if has_offline %}{% set modes = modes + ['Offline in Chennai' if dm.chennai else 'Offline'] %}{% endif %}
+{% if has_hybrid %}{% set modes = modes + ['Hybrid'] %}{% endif %}
+{% set delivery_short = modes | join(' · ') if modes else 'Live + recorded' %}
+{% set cert_short = certificate.split(' + ')[0] %}
+
+{# Sections whose title matches the cards / steps block are merged into one block (no duplicate headings) #}
+{% set sec_titles = sections | map(attribute='title') | map('lower') | map('trim') | list %}
+{% set cards_title = (cards.get('sectionTitle', '') if cards else '') | lower | trim %}
+{% set steps_title = (steps.get('sectionTitle', '') if steps else '') | lower | trim %}
+{% set has_cards = cards and cards.get('items') %}
+{% set has_steps = steps and steps.get('items') %}
+{% set merge_cards = has_cards and cards_title in sec_titles %}
+{% set merge_steps = has_steps and steps_title in sec_titles %}
+
+{# First sentence of the overview for the hero #}
+{% set _s = overview.split('. ') %}
+{% set pitch = _s[0] if _s[0].endswith('.') else _s[0] ~ '.' %}
+{% if is_cc %}{% set pitch = "DSA's school outreach wing brings AI and coding to Grades 3–12 through four progressive levels — Scratch, Python, machine learning and computer vision — in schools across Chennai and online." %}{% endif %}
+
+{# Second overview paragraph — delivery, duration and inclusions per programme (facts from the data file + Company_Info.txt) #}
+{% set para2 = {
+  'internship': 'Internships run in 1-month and 2-month tracks across six project domains — machine learning, data analytics, computer vision, NLP and generative AI, research assistance and software tools — online, or hybrid with offline workshops in Chennai. Admissions are rolling and cohorts start monthly. Where your institution is AICTE accredited the internship is AICTE aligned, and Annexure-1 application forms are available for affiliated colleges.',
+  'microsoft-certification': 'Each certification track takes 4–8 weeks and prepares you for AI-900 (Azure AI Fundamentals), DP-900 (Azure Data Fundamentals) and PL-300 (Power BI Data Analyst), with AZ-900 available as an add-on. Sessions run live online and are recorded for replay, with offline bootcamps in Chennai; you get Azure portal labs, practice question banks, timed mock exams and guidance on vouchers and exam booking.',
+  'fdp': 'Programmes range from a two-day intensive workshop to a four-week structured learning journey and are delivered online, on campus, at your corporate site or in a hybrid format. Every engagement begins with an institution visit or needs-assessment call, after which DSA designs a bespoke curriculum. MOU-based long-term partnerships are available, and all attendees receive an AICTE-aligned certificate of participation.',
+  'exam-coaching': 'Choose a regular batch — 3–6 months of systematic, subject-by-subject coverage — or a crash course of 4–6 weeks of intensive revision and mock series, online with recordings or offline in Chennai. Coverage spans UGC NET and NET JRF, GATE CS, IT and Data Science & AI, TNSET and PG-TRB, with weekly timed tests, full-length mock exams and personalised performance reports.',
+  'research-assistance': 'Support is project-based — from one week to six months — and runs online over Zoom or Teams with asynchronous submission-and-feedback cycles. Services span domain mapping, topic finalisation, literature review, proposal and paper drafting, statistical analysis in SPSS, R and Python, AID VIRTUAL proofreading and journal targeting across Scopus, Web of Science and UGC Care.',
+  'code-champs': 'Code Champs is delivered through fully managed school visits across Chennai and nearby areas, or as online interactive live sessions, with all materials, activity sheets and kits provided by DSA. The programme now runs as four progressive levels — Code Explorers, Builders, Innovators and Pioneers — for Grades 3 to 12, covering Scratch, Python, machine learning and computer vision, aligned with NEP 2020 and with a special focus on girls in STEM.',
+  'language-communication': 'The programme runs 4–8 weeks online — live sessions recorded for replay, plus feedback-driven asynchronous work — across four skill areas: academic writing and research communication, technical interview preparation, professional writing and presentation skills. Every session includes a real writing or speaking exercise, and 1-on-1 recorded mock interviews come with structured trainer feedback.',
+  'ai-mastery': 'The track covers 16 courses across four quarters with three live sessions a week (recorded for replay), a dedicated mentor with weekly 1-on-1 check-ins and quarterly offline bootcamps in Chennai. Each quarter ends with a capstone project. Graduates receive the DSA AI Mastery Certificate, a bundled internship certificate and placement assistance, with optional guidance for the Microsoft Azure AI-900 and DP-900 certifications.'
+}.get(pid, 'The programme runs ' ~ duration ~ ' and is delivered ' ~ (delivery | join(' or ') | lower) ~ '. On completion you receive the ' ~ certificate ~ '.') %}
+
+{# Colour tone per programme #}
+{% set tone = {'internship': 'teal', 'microsoft-certification': 'blue', 'fdp': '', 'exam-coaching': 'green', 'research-assistance': 'coral', 'code-champs': 'violet', 'language-communication': 'pink', 'ai-mastery': 'yellow'} %}
+{% set badge = {'internship': 'badge-teal', 'microsoft-certification': 'badge-blue', 'fdp': 'badge-gold', 'exam-coaching': 'badge-green', 'research-assistance': 'badge-coral', 'code-champs': 'badge-violet', 'language-communication': 'badge-pink', 'ai-mastery': 'badge-yellow'} %}
+{% set my_tone = tone.get(pid, '') %}
+
+{# ISO-8601 durations (upper bound of the published range) for structured data #}
+{% set iso = {'internship': 'P2M', 'microsoft-certification': 'P8W', 'fdp': 'P4W', 'exam-coaching': 'P6M', 'code-champs': 'P4W', 'language-communication': 'P8W', 'ai-mastery': 'P12M'}.get(pid) %}
+{% set is_eop = pid in ['internship', 'fdp', 'exam-coaching'] %}
+
+{% set enquire_url = rel ~ 'contact.html?course=' ~ (cta_param | urlencode) %}
+{% set wa_url = site.whatsapp ~ '?text=' ~ ("Hello DSA, I'd like to know more about the " ~ programme.title ~ " programme.") | urlencode %}
+{% set h1_cls = 'sh' if programme.title | length > 30 else 'sh sh-lg' %}
+{% set jump = ('#roadmap', 'View the 12-month roadmap') if is_am else ('#details', 'Programme details') %}
+{% set img_abs = absolute(img_url(programme.image, 1600)[(rel | length):]) %}
+
+{% macro inforow(label, val) %}
+{% set items = [val] if val is string else (val | list) %}
+{% set long = items | length > 1 or (items[0] | length > 26) %}
+<div class="info-row{% if long %} col{% endif %}"><span class="info-row-label">{{ label }}</span>{% if items | length > 1 %}<ul class="info-row-val info-list">{% for i in items %}<li>{{ i }}</li>{% endfor %}</ul>{% else %}<span class="info-row-val">{{ items[0] }}</span>{% endif %}</div>
+{% endmacro %}
+
+{% macro cards_grid(items, tone) %}
+<div class="grid grid-2 feat-grid">
+  {% for c in items %}
+  <div class="feature">
+    <span class="icon-box sm {{ tone }}" aria-hidden="true">{{ c.get('icon', '•') }}</span>
+    <div><h3 class="feature-title">{{ c.get('name', '') }}</h3><p class="feature-text">{{ c.get('desc', '') }}</p></div>
+  </div>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro steps_list(items) %}
+<ol class="proc">
+  {% for s in items %}
+  <li class="step">
+    <div class="step-num" aria-hidden="true">{{ loop.index }}</div>
+    <div><h3 class="step-title">{{ s.get('title', '') }}</h3><p class="step-text">{{ s.get('desc', '') }}</p></div>
+  </li>
+  {% endfor %}
+</ol>
+{% endmacro %}
+
+{% block title %}{% set cands = [programme.title ~ ' in Chennai | Data Science Academia', programme.title ~ ' | Data Science Academia', programme.title ~ ' | DSA Chennai', programme.title ~ ' | DSA', programme.title] %}{% set ns = namespace(t=cands[-1]) %}{% for c in cands | reverse %}{% if c | length <= 60 %}{% set ns.t = c %}{% endif %}{% endfor %}{{ ns.t }}{% endblock %}
+{% block description %}{{ (programme.title ~ ' at Data Science Academia, Chennai — ' ~ duration ~ '. ' ~ overview) | meta_desc(155) }}{% endblock %}
+{% block og_image %}{{ og_for('programme', pid) }}{% endblock %}
+{% block og_image_alt %}{{ programme.title }} — Data Science Academia, Chennai{% endblock %}
+{% block body_class %}page-programme{% endblock %}
+
+{% block head_extra %}
+<style>
+.prog-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:3.5rem;align-items:center}
+.prog-hero .row{margin-top:1.75rem}
+.hero-kicker{font-family:var(--fm);font-size:.76rem;letter-spacing:.04em;color:var(--champ2);margin:-.25rem 0 .9rem}
+.prog-hero-img{margin:0}
+.prog-banner{margin-bottom:3.5rem}
+.block-head{display:flex;align-items:center;justify-content:space-between;gap:.75rem 1.25rem;flex-wrap:wrap;margin-bottom:1.1rem}
+.block-head .section-label{margin-bottom:0}
+.block-meta{font-family:var(--fm);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fog2)}
+.stats-strip{margin-top:1.75rem}
+.stats-strip .stat{padding:1.3rem .75rem}
+.stats-strip .stat-n{font-size:2rem}
+.sec-block,.sec-block:last-child{margin-bottom:2.5rem}
+.merge-list{margin-top:1.25rem}
+.detail-main .roadmap{grid-template-columns:1fr 1fr}
+.rq h3.rq-title{letter-spacing:0}
+.roadmap-fig{margin-top:1.25rem}
+.roadmap-fig figcaption{display:flex;justify-content:space-between;gap:.5rem 1rem;flex-wrap:wrap;padding:.75rem 1.1rem;border-top:1px solid var(--border);font-size:.74rem;color:var(--fog2)}
+.roadmap-fig figcaption a{color:var(--champ2);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.stack-row{display:grid;grid-template-columns:3rem 1fr;gap:1rem;align-items:center;padding:.85rem 0;border-bottom:1px solid var(--border)}
+.stack-row:first-child{border-top:1px solid var(--border)}
+.stack-q{font-family:var(--fm);font-size:.7rem;font-weight:600;letter-spacing:.1em;color:var(--q)}
+.stack-row .tag{color:var(--cream);border-color:color-mix(in srgb,var(--q) 35%,transparent);background:color-mix(in srgb,var(--q) 7%,transparent)}
+.feat-grid .feature{padding:1.25rem;gap:1rem}
+.feat-grid .feature-title{font-size:.96rem}
+.feat-grid .feature-text{font-size:.82rem}
+.proc .step{display:grid;grid-template-columns:48px 1fr;gap:1.1rem;align-items:start;text-align:left;padding:1rem 0;border-bottom:1px solid var(--border)}
+.proc .step:first-child{border-top:1px solid var(--border)}
+.proc .step-num{width:48px;height:48px;margin:0;font-size:1.2rem}
+.proc .step-title{font-size:.96rem;margin-bottom:.15rem}
+.proc .step-text{font-size:.84rem}
+.prereq{display:flex;gap:1rem;align-items:flex-start;padding:1.25rem 1.4rem;border:1px solid var(--border2);border-radius:var(--r);background:linear-gradient(135deg,rgba(200,169,110,.09),rgba(255,255,255,.015) 60%)}
+.prereq .info-note{font-size:.95rem;color:var(--cream)}
+.prereq-hint{display:block;font-size:.78rem;color:var(--fog2);margin-top:.35rem}
+.prereq-hint a{color:var(--champ2);text-decoration:underline;text-underline-offset:3px}
+.info-card .icon-box{margin-bottom:.25rem}
+.info-row.col{flex-direction:column;align-items:flex-start;gap:.3rem}
+.info-row.col .info-row-val{text-align:left}
+.info-list li{position:relative;padding-left:.85rem;line-height:1.5}
+.info-list li::before{content:'·';position:absolute;left:0;color:var(--champ);font-weight:700}
+.info-actions{display:flex;flex-direction:column;gap:.6rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.info-actions .btn{white-space:normal}
+.detail-side .sticky{max-height:calc(100vh - var(--nav-h) - 2rem);overflow-y:auto;overscroll-behavior:contain}
+.others-grid .card-title{font-size:1.1rem}
+.others-grid .card-foot{font-size:.72rem}
+.cc-callout .btn{margin-left:auto}
+@media (max-width:960px){.detail-side .sticky{max-height:none;overflow:visible}}
+@media (max-width:900px){.prog-hero-grid{grid-template-columns:1fr;gap:2.25rem}.prog-hero-img{max-width:440px}}
+@media (max-width:640px){.prog-banner{margin-bottom:2.5rem}.block-head{align-items:flex-start;flex-direction:column}.prereq{padding:1.1rem 1.15rem}.detail-main .roadmap{grid-template-columns:1fr}.cc-callout .btn{margin-left:0}}
+</style>
+{% endblock %}
+
+{% block jsonld %}
+{{ jsonld(breadcrumb_ld([('Home', ''), ('Programmes', 'programmes.html'), (programme.title, None)])) }}
+{% set ld = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOccupationalProgram" if is_eop else "Course",
+  "@id": absolute(programme.url) ~ "#programme",
+  "name": programme.title,
+  "description": overview,
+  "url": absolute(programme.url),
+  "image": img_abs,
+  "inLanguage": "en",
+  "provider": {"@id": site.url ~ "/#organization"},
+  "audience": {"@type": "Audience", "audienceType": audience},
+  "educationalCredentialAwarded": certificate,
+  "offers": {"@type": "Offer", "availability": "https://schema.org/InStock", "priceCurrency": "INR", "url": absolute('contact.html')}
+} %}
+{% set modes_ld = (['online'] if has_online else []) + (['onsite'] if has_offline else []) + (['blended'] if has_hybrid else []) %}
+{% if is_eop %}
+{% set _ = ld.update({"programPrerequisites": prereqs, "educationalProgramMode": delivery, "occupationalCategory": "Data Science and Artificial Intelligence"}) %}
+{% if iso %}{% set _ = ld.update({"timeToComplete": iso}) %}{% endif %}
+{% else %}
+{% set _ = ld.update({
+  "courseCode": pid,
+  "teaches": outcomes,
+  "coursePrerequisites": prereqs,
+  "hasCourseInstance": [{
+    "@type": "CourseInstance",
+    "courseMode": modes_ld or ["online", "onsite"],
+    "location": {
+      "@type": "Place",
+      "name": site.name ~ ", West Tambaram",
+      "address": {"@type": "PostalAddress", "streetAddress": site.address.street, "addressLocality": site.address.locality, "addressRegion": site.address.region, "postalCode": site.address.postal, "addressCountry": site.address.country}
+    }
+  }]
+}) %}
+{% if iso %}{% set _ = ld.update({"timeRequired": iso}) %}{% endif %}
+{% endif %}
+{{ jsonld(ld) }}
+{% endblock %}
+
+{% block content %}
+<!-- ═══ PAGE HERO ═══ -->
+<section class="page-hero prog-hero" aria-labelledby="prog-title">
+  <div class="page-hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumbs">
+        <li><a href="{{ rel }}index.html">Home</a></li>
+        <li><a href="{{ rel }}programmes.html">Programmes</a></li>
+        <li aria-current="page">{{ programme.title }}</li>
+      </ol>
+    </nav>
+    <div class="prog-hero-grid">
+      <div>
+        <div class="eyebrow">{{ tag }}</div>
+        <h1 class="{{ h1_cls }}" id="prog-title">{{ programme.title }}</h1>
+        {% if subtitle %}<p class="hero-kicker">{{ subtitle }}</p>{% endif %}
+        <p class="page-hero-sub">{{ pitch }}</p>
+        <div class="hero-badges" aria-label="Programme format">
+          <span class="badge badge-cream">{{ duration }}</span>
+          <span class="badge badge-teal">{{ delivery_short }}</span>
+          <span class="badge">{{ cert_short }}</span>
+        </div>
+        <div class="row">
+          <a class="btn btn-primary" href="{{ enquire_url }}">{{ cta }} <span class="arr">&rarr;</span></a>
+          <a class="btn btn-ghost" href="{{ jump[0] }}">{{ jump[1] }}</a>
+        </div>
+      </div>
+      {% if not is_am %}
+      <figure class="img-frame prog-hero-img" data-r="1">
+        {{ img(programme.image, programme.title ~ ' at Data Science Academia, Chennai', sizes='(max-width:900px) 100vw, 380px', loading='eager', fetchpriority='high') }}
+      </figure>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% if is_am %}
+<!-- ═══ WIDE PROGRAMME IMAGE ═══ -->
+<div class="container prog-banner" data-r>
+  <figure class="img-frame">
+    {{ img(programme.image, '12-Month AI and Data Science Mastery Track at Data Science Academia, Chennai — programme banner', sizes='(max-width:1240px) 100vw, 1176px', loading='eager', fetchpriority='high') }}
+  </figure>
+</div>
+{% endif %}
+
+<!-- ═══ DETAIL LAYOUT ═══ -->
+<div class="container">
+  <div class="detail-layout">
+
+    <article class="detail-main">
+      <!-- Overview -->
+      <section class="block" id="overview" aria-labelledby="overview-title" data-r>
+        <h2 class="section-label" id="overview-title">Overview</h2>
+        <div class="prose">
+          <p>{{ overview }}</p>
+          <p>{{ para2 }}</p>
+        </div>
+        {% if is_am %}
+        <div class="stats stats-strip" aria-label="AI Mastery Track at a glance">
+          <div class="stat"><div class="stat-n">16</div><div class="stat-l">Courses</div></div>
+          <div class="stat"><div class="stat-n">4</div><div class="stat-l">Capstone projects</div></div>
+          <div class="stat"><div class="stat-n">12</div><div class="stat-l">Months</div></div>
+          <div class="stat"><div class="stat-n">1</div><div class="stat-l">Complete portfolio</div></div>
+        </div>
+        {% elif stats %}
+        <div class="stats stats-strip" aria-label="{{ programme.title }} at a glance">
+          {% for s in stats %}
+          <div class="stat"><div class="stat-n">{{ s.n }}</div><div class="stat-l">{{ s.label }}</div></div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </section>
+
+      {% if is_cc %}
+      <!-- Code Champs: link to the dedicated section -->
+      <section class="block" aria-label="DSA Code Champs levels" data-r>
+        <div class="callout cc-callout">
+          <div class="callout-icon" aria-hidden="true">🤖</div>
+          <div class="callout-body">
+            <div class="eyebrow violet" style="margin-bottom:.25rem">Four levels · Grades 3–12</div>
+            <h3 class="callout-title">Explore the full <em>Code Champs</em> programme</h3>
+            <p class="callout-text">Level-by-level journeys, projects, session formats and certificates for Code Explorers, Builders, Innovators and Pioneers.</p>
+          </div>
+          <a class="btn btn-violet" href="{{ rel }}codechamps.html">Go to DSA Code Champs <span class="arr">&rarr;</span></a>
+        </div>
+      </section>
+      {% endif %}
+
+      {% if is_am %}
+      <!-- Quarter roadmap (AI Mastery only) -->
+      <section class="block" id="roadmap" aria-labelledby="roadmap-title" data-r>
+        <div class="block-head">
+          <h2 class="section-label" id="roadmap-title">Your 12-month learning journey</h2>
+          <span class="block-meta">4 quarters &middot; 16 courses &middot; 4 capstones</span>
+        </div>
+        <div class="roadmap">
+          <div class="rq q1"><div class="rq-badge">Q1 · Months 1–3</div><h3 class="rq-title">Foundations of Data Science</h3><div class="rq-sub">Python · SQL · R · Excel</div><ul><li>Python for data pipelines</li><li>SQL for business queries</li><li>Statistical analysis with R</li><li>Excel dashboards &amp; reporting</li></ul><div class="rq-cap">Capstone: EDA on a real business dataset</div></div>
+          <div class="rq q2"><div class="rq-badge">Q2 · Months 4–6</div><h3 class="rq-title">Data Engineering &amp; Analytics</h3><div class="rq-sub">Tableau · EDA · Ethics · Engineering</div><ul><li>Tableau interactive dashboards</li><li>Exploratory data analysis</li><li>Data ethics &amp; privacy</li><li>ETL pipelines with Python</li></ul><div class="rq-cap">Capstone: full analytics dashboard from raw data</div></div>
+          <div class="rq q3"><div class="rq-badge">Q3 · Months 7–9</div><h3 class="rq-title">Machine Learning &amp; BI</h3><div class="rq-sub">Power BI · ML · Time Series</div><ul><li>Power BI enterprise reports</li><li>Supervised &amp; unsupervised ML</li><li>Time-series forecasting</li><li>Portfolio &amp; interview prep begins</li></ul><div class="rq-cap">Capstone: train, evaluate &amp; deploy an ML model</div></div>
+          <div class="rq q4"><div class="rq-badge">Q4 · Months 10–12</div><h3 class="rq-title">Advanced AI &amp; Cloud</h3><div class="rq-sub">Deep Learning · NLP · Big Data · Cloud</div><ul><li>Deep learning &amp; Transformers</li><li>NLP with Python &amp; LLMs</li><li>Big data with Spark</li><li>AWS &amp; Azure deployment</li></ul><div class="rq-cap">Capstone: full-stack AI system — data to deployed cloud API · Demo Day</div></div>
+        </div>
+        <figure class="img-frame roadmap-fig">
+          {{ img('12-month-ai-mastery-programme-roadmap', '12-Month AI Mastery Programme roadmap — the Q1 to Q4 course pathway from Python, SQL, R and Excel to deep learning, NLP, big data and cloud', sizes='(max-width:960px) 100vw, 780px') }}
+          <figcaption><span>The complete Q1 → Q4 course pathway of the AI Mastery Track.</span><a href="{{ img_url('12-month-ai-mastery-programme-roadmap', 2400) }}" target="_blank" rel="noopener">Open full-size roadmap</a></figcaption>
+        </figure>
+      </section>
+      {% endif %}
+
+      <!-- Outcomes -->
+      <section class="block" id="outcomes" aria-labelledby="gain-title" data-r>
+        <div class="block-head">
+          <h2 class="section-label" id="gain-title">What you'll gain</h2>
+          <span class="block-meta">{{ outcomes | length }} outcomes</span>
+        </div>
+        <ul class="outcomes">
+          {% for o in outcomes %}
+          <li class="outcome">{{ o }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      {% if has_cards and not merge_cards %}
+      <!-- Domain / topic cards -->
+      <section class="block" id="domains" aria-labelledby="domains-title" data-r>
+        <h2 class="section-label" id="domains-title">{{ cards.get('sectionTitle', 'What you will explore') }}</h2>
+        {{ cards_grid(cards['items'], my_tone) }}
+      </section>
+      {% endif %}
+
+      <!-- Programme sections (a section whose title matches the cards / steps block is merged with it) -->
+      <div id="details">
+        {% for sec in sections %}
+        {% set t = sec.title | lower | trim %}
+        <section class="block sec-block" id="sec-{{ loop.index }}" aria-labelledby="sec-{{ loop.index }}-title" data-r>
+          <h2 class="section-label" id="sec-{{ loop.index }}-title">{{ sec.title }}</h2>
+          {% if merge_cards and t == cards_title %}
+          {{ cards_grid(cards['items'], my_tone) }}
+          <ul class="check-list two merge-list">
+            {% for p in sec.get('points', []) %}
+            <li>{{ p }}</li>
+            {% endfor %}
+          </ul>
+          {% elif merge_steps and t == steps_title %}
+          {{ steps_list(steps['items']) }}
+          {% set ex = namespace(items=[]) %}
+          {% for p in sec.get('points', []) %}{% if not p.startswith('Step ') %}{% set ex.items = ex.items + [p] %}{% endif %}{% endfor %}
+          {% if ex.items %}
+          <ul class="check-list merge-list">
+            {% for p in ex.items %}
+            <li>{{ p }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% else %}
+          <ul class="check-list two">
+            {% for p in sec.get('points', []) %}
+            <li>{{ p }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </section>
+        {% endfor %}
+      </div>
+
+      {% if has_steps and not merge_steps %}
+      <!-- Process steps -->
+      <section class="block" id="process" aria-labelledby="process-title" data-r>
+        <h2 class="section-label" id="process-title">{{ steps.get('sectionTitle', 'How it works') }}</h2>
+        {{ steps_list(steps['items']) }}
+      </section>
+      {% endif %}
+
+      {% if is_am %}
+      <!-- Tech stack (AI Mastery only) -->
+      <section class="block" id="stack" aria-labelledby="stack-title" data-r>
+        <h2 class="section-label" id="stack-title">Technologies you'll master</h2>
+        <div class="tech-stack">
+          {% for q, tools in [('q1', ['Python', 'SQL', 'R', 'Excel', 'Pandas', 'NumPy']), ('q2', ['Tableau', 'Matplotlib', 'Seaborn', 'Plotly', 'REST APIs', 'ETL']), ('q3', ['Power BI', 'Scikit-learn', 'ARIMA', 'Prophet', 'MLflow', 'FastAPI']), ('q4', ['PyTorch', 'Transformers', 'spaCy', 'PySpark', 'AWS SageMaker', 'Azure ML'])] %}
+          <div class="stack-row {{ q }}">
+            <span class="stack-q">{{ q | upper }}</span>
+            <ul class="tag-list">
+              {% for t in tools %}<li class="tag">{{ t }}</li>{% endfor %}
+            </ul>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+
+      <!-- What's included (AI Mastery only) -->
+      <section class="block" id="included" aria-labelledby="included-title" data-r>
+        <h2 class="section-label" id="included-title">What's included</h2>
+        <div class="grid grid-2 feat-grid">
+          {% for ic, t, d in [
+            ('🎥', 'Live + recorded sessions', '3 live classes per week, every one recorded so you can replay any session at your own pace.'),
+            ('🧑‍🏫', 'Dedicated mentor', 'Weekly 1-on-1 check-ins with a Ph.D.-qualified faculty mentor throughout all 12 months.'),
+            ('💼', 'Project portfolio', '4 capstone projects — one per quarter — compiled into a GitHub portfolio reviewed and endorsed by DSA faculty.'),
+            ('🏅', 'Dual certification', 'DSA AI Mastery Certificate plus a bundled Internship Certificate, both issued on successful completion.'),
+            ('🎯', 'Placement assistance', 'Resume review, LinkedIn optimisation, technical and HR mock interviews and access to the referral and alumni network.'),
+            ('🏛️', 'Quarterly bootcamps', 'Offline intensive sessions in Chennai at the end of each quarter — hands-on, immersive and collaborative.')
+          ] %}
+          <div class="feature">
+            <span class="icon-box sm yellow" aria-hidden="true">{{ ic }}</span>
+            <div><h3 class="feature-title">{{ t }}</h3><p class="feature-text">{{ d }}</p></div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
+      <!-- Prerequisites -->
+      <section class="block" id="prerequisites" aria-labelledby="prereq-title" data-r>
+        <h2 class="section-label" id="prereq-title">Eligibility &amp; prerequisites</h2>
+        <div class="prereq">
+          <span class="icon-box sm {{ my_tone }}" aria-hidden="true">📋</span>
+          <div>
+            <p class="info-note">{{ prereqs if prereqs else 'No specific prerequisites — contact us and we will confirm the right starting point for your background.' }}</p>
+            <span class="prereq-hint">Not sure whether you are eligible? <a href="{{ rel }}contact.html">Ask us</a> — we reply within one business day.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Other programmes -->
+      <section class="block" id="others" aria-labelledby="others-title" data-r>
+        <div class="block-head">
+          <h2 class="section-label" id="others-title">Other programmes</h2>
+          <a class="link-arrow" href="{{ rel }}programmes.html">All programmes <span class="arr">&rarr;</span></a>
+        </div>
+        <div class="grid grid-3 others-grid">
+          {% for o in others %}
+          <a class="card card-sm" href="{{ rel }}{{ 'codechamps.html' if o.id == 'code-champs' else o.url }}">
+            <div class="card-img">
+              {{ img(o.image, o.title ~ ' — Data Science Academia programme', sizes='(max-width:640px) 100vw, (max-width:1024px) 50vw, 260px') }}
+              <span class="badge {{ badge.get(o.id, 'badge-gold') }}">{{ o.get('tag', 'Programme') }}</span>
+            </div>
+            <div class="card-body">
+              <div class="card-cat">{{ o.get('subtitle', '') }}</div>
+              <h3 class="card-title">{{ o.title }}</h3>
+              <div class="card-foot"><span>{{ o.get('duration', '') }}</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </section>
+    </article>
+
+    <!-- Sidebar -->
+    <aside class="detail-side" aria-label="Programme summary">
+      <div class="info-card sticky" data-r="1">
+        <span class="icon-box lg {{ my_tone }}" aria-hidden="true">{{ icon }}</span>
+        <div class="info-title">{{ programme.title }}</div>
+        <div class="info-cat">{{ tag }}</div>
+        <div class="info-rows">
+          {{ inforow('Audience', audience if audience else 'Open to all') }}
+          {{ inforow('Delivery', delivery if delivery else 'Live + recorded') }}
+          {{ inforow('Duration', duration) }}
+          {{ inforow('Certificate', certificate) }}
+        </div>
+        <span class="info-label">Prerequisites</span>
+        <p class="info-note">{{ prereqs if prereqs else 'No specific prerequisites.' }}</p>
+        <div class="info-actions">
+          <a class="btn btn-primary btn-block" href="{{ enquire_url }}">{{ cta }} <span class="arr">&rarr;</span></a>
+          <a class="btn btn-wa btn-block" href="{{ wa_url }}" target="_blank" rel="noopener">Chat on WhatsApp</a>
+          <a class="btn btn-outline btn-block" href="{{ rel }}programmes.html">&larr; All programmes</a>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<!-- ═══ CTA ═══ -->
+<section class="section section-sm" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-banner" data-r>
+      <div class="eyebrow center">{{ 'Rolling admissions' if is_am else 'Next step' }}</div>
+      <h2 class="cta-title" id="cta-title">{% if is_am %}Start your <em>AI Mastery</em> journey{% elif is_cc %}Bring <em>Code Champs</em> to your school{% else %}Join <em>{{ programme.title }}</em>{% endif %}</h2>
+      <p class="cta-text">Tell us about your background and goals and we'll confirm batch dates, fees and the right starting point — in Chennai or online. Free consultation, no commitment; we reply within one business day.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn-lg" href="{{ enquire_url }}">{{ cta }} <span class="arr">&rarr;</span></a>
+        <a class="btn btn-wa btn-lg" href="{{ wa_url }}" target="_blank" rel="noopener">Chat on WhatsApp</a>
+      </div>
+      <p class="cta-note">{{ site.phone }} &middot; {{ site.email }} &middot; {{ site.hours }}</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

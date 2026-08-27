@@ -1,0 +1,294 @@
+{% extends "base.html" %}
+{% block title %}About Data Science Academia | AI Institute in Chennai{% endblock %}
+{% block description %}Founded in 2019, Data Science Academia is a Ph.D.-led, MSME-registered AI and data science institute in Chennai offering AICTE-aligned programmes.{% endblock %}
+{% block og_title %}About Data Science Academia — Ph.D.-led AI & Data Science Institute, Chennai{% endblock %}
+{% block og_image %}{{ og_for('page','about') }}{% endblock %}
+{% block body_class %}page-about{% endblock %}
+
+{% block head_extra %}
+<style>
+.story p{color:var(--fog);line-height:1.8;margin-bottom:1.1rem}
+.story p strong{color:var(--cream)}
+.story-visual{position:relative}
+.story-visual .float-badge{bottom:-1rem;left:1rem}
+.lead-top{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.lead-name{font-family:var(--fd);font-size:1.45rem;font-weight:600;line-height:1.2;color:var(--cream);margin:0}
+.lead-role{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--champ);margin-top:.3rem}
+.lead-bio{font-size:.9rem;color:var(--fog);line-height:1.75;margin-bottom:1.1rem}
+.avatar.lg{width:58px;height:58px;font-size:1.25rem}
+.avatar.teal{background:linear-gradient(135deg,var(--teal2),var(--teal))}
+.recog{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 2rem;padding:1.5rem 2rem;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--card)}
+.recog .label{margin:0;flex-shrink:0}
+.recog .pill{font-size:.8rem;padding:.5rem 1.05rem}
+.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;position:relative;padding-top:2rem}
+.timeline::before{content:'';position:absolute;left:8%;right:8%;top:5px;height:1px;background:linear-gradient(90deg,transparent,var(--border3) 15%,var(--border3) 85%,transparent)}
+.tl{position:relative;padding:1.4rem 1.25rem;border:1px solid var(--border);border-radius:var(--r);background:var(--card)}
+.tl::before{content:'';position:absolute;top:-2rem;left:50%;width:11px;height:11px;margin-left:-5px;border-radius:50%;background:var(--champ);box-shadow:0 0 0 4px rgba(200,169,110,.18)}
+.tl.now{border-color:rgba(62,207,178,.3)}
+.tl.now::before{background:var(--teal);box-shadow:0 0 0 4px rgba(62,207,178,.2)}
+.tl-year{font-family:var(--fm);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--champ)}
+.tl.now .tl-year{color:var(--teal)}
+.tl-title{font-family:var(--fd);font-size:1.3rem;font-weight:600;margin:.4rem 0 .45rem;line-height:1.2}
+.tl-text{font-size:.82rem;color:var(--fog);line-height:1.65}
+.serve{display:grid;grid-template-columns:1.25fr .75fr;gap:1.5rem;align-items:start}
+.serve-panel{padding:1.75rem;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--card)}
+.serve-panel .label{margin-bottom:1.1rem}
+.aud-list{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.25rem}
+.aud,.mode{display:flex;gap:.85rem;align-items:flex-start}
+.aud-t{font-weight:600;color:var(--cream);font-size:.92rem;line-height:1.3}
+.aud-s{font-size:.78rem;color:var(--fog2);margin-top:.15rem;line-height:1.5}
+.mode{padding:.85rem 0;border-bottom:1px solid var(--border)}
+.mode:first-of-type{padding-top:0}
+.mode:last-of-type{border-bottom:0;padding-bottom:0}
+@media (max-width:1024px){
+  .timeline{grid-template-columns:1fr;gap:.9rem;padding-top:0;padding-left:1.75rem}
+  .timeline::before{left:5px;right:auto;top:1rem;bottom:1rem;width:1px;height:auto;background:linear-gradient(180deg,var(--border3),var(--border3) 85%,transparent)}
+  .tl::before{top:1.55rem;left:-1.75rem;margin-left:0}
+}
+@media (max-width:900px){.serve{grid-template-columns:1fr}}
+@media (max-width:560px){.aud-list{grid-template-columns:1fr}.recog{padding:1.25rem;gap:.85rem}.serve-panel{padding:1.4rem}}
+</style>
+{% endblock %}
+
+{% block jsonld %}
+{{ jsonld(breadcrumb_ld([('Home',''),('About',None)])) }}
+{{ jsonld({
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "@id": absolute('about.html') ~ "#webpage",
+  "url": absolute('about.html'),
+  "name": "About Data Science Academia",
+  "description": "Founded in 2019, Data Science Academia is a Ph.D.-led, MSME-registered AI and data science institute in Chennai offering AICTE-aligned programmes — Anna University research depth taught by practising AI engineers.",
+  "inLanguage": "en-IN",
+  "isPartOf": {"@id": site.url ~ "/#website"},
+  "about": {"@id": site.url ~ "/#organization"},
+  "mainEntity": {"@id": site.url ~ "/#organization"},
+  "primaryImageOfPage": {"@type": "ImageObject", "url": absolute(img_url('about-page-visual-classroomlab', 1600))}
+}) }}
+{% endblock %}
+
+{% block content %}
+<!-- ═══ PAGE HERO ═══ -->
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="page-hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumbs">
+        <li><a href="{{ rel }}index.html">Home</a></li>
+        <li aria-current="page">About</li>
+      </ol>
+    </nav>
+    <div class="eyebrow" data-r>Our story</div>
+    <h1 class="sh sh-lg" id="page-title" data-r="1">Where Industry <em>Meets Academia</em></h1>
+    <p class="page-hero-sub" data-r="2">Data Science Academia is a Ph.D.-led AI and data science institute in West Tambaram, Chennai. Since 2019 we have combined Anna University research depth with active AI engineering experience — so every concept we teach has been tested in production, not just in textbooks.</p>
+    <div class="hero-badges" data-r="3">
+      <span class="badge badge-cream">Est. {{ site.founded }}</span>
+      <span class="badge badge-teal">MSME registered</span>
+      <span class="badge">AICTE-aligned</span>
+      <span class="badge badge-blue">Chennai · Online · Hybrid</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STORY ═══ -->
+<section class="section-sm" aria-labelledby="story-title">
+  <div class="container">
+    <div class="two-col">
+      <div class="story">
+        <div class="eyebrow" data-r>Founded 2019 · Chennai</div>
+        <h2 class="sh" id="story-title" data-r="1">Built on one <em>conviction</em></h2>
+        <p data-r="2">Data Science Academia was founded in 2019 with one conviction — that the best data science education cannot be detached from real engineering practice. What began as a division under <strong>Sai Chamundeeswari Academy</strong> (MSME Registered) is evolving into <strong>Data Science Academia Private Limited</strong> — incorporation in progress — bringing greater institutional credibility to every learner.</p>
+        <p data-r="3">Our faculty brings together <strong>Ph.D.-level academic depth</strong> from Anna University with active <strong>AI engineering experience</strong> from industry, so every concept you learn has been tested in production, not just in textbooks.</p>
+        <p data-r="4">Today DSA runs <a href="{{ rel }}courses.html">18 specialised courses</a> across five categories, <a href="{{ rel }}programmes.html">seven programmes</a> — from AICTE-aligned internships and Microsoft certification preparation to faculty development and research assistance — and <a href="{{ rel }}codechamps.html">DSA Code Champs</a>, our school outreach wing for Grades 3–12. More than 500 students have trained with us, live in Chennai and online across India.</p>
+        <div class="row mt-2" data-r="5">
+          <a class="btn btn-primary" href="{{ rel }}courses.html">Explore courses <span class="arr">&rarr;</span></a>
+          <a class="btn btn-ghost" href="{{ rel }}contact.html">Visit us in West Tambaram</a>
+        </div>
+      </div>
+      <div class="story-visual" data-r="2">
+        <div class="img-frame">{{ img('about-page-visual-classroomlab', 'Classroom and computer lab visual for Data Science Academia, West Tambaram, Chennai', sizes='(max-width:900px) 100vw, 520px', loading='eager', fetchpriority='high') }}</div>
+        <div class="float-badge"><span class="fb-icon" aria-hidden="true">📍</span><div><div class="fb-v">Since 2019</div><div class="fb-l">West Tambaram, Chennai</div></div></div>
+      </div>
+    </div>
+    <div class="callout gold mt-3" data-r>
+      <div class="callout-icon" aria-hidden="true">🎯</div>
+      <div class="callout-body">
+        <div class="eyebrow" style="margin-bottom:.25rem">Our mission</div>
+        <h3 class="callout-title">Where academic rigour meets <em>real-world AI engineering</em></h3>
+        <p class="callout-text">To bridge the frontier of AI research with structured, accessible curriculum design — so that every learner, from school children to Ph.D. scholars, working professionals and faculty, learns data science and AI that has been tested in production and earns credentials aligned with AICTE guidelines and NEP 2020.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ THREE PILLARS ═══ -->
+<section class="section" aria-labelledby="pillars-title">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow center" data-r>What sets DSA apart</div>
+      <h2 class="sh" id="pillars-title" data-r="1">Three pillars of every <em>DSA programme</em></h2>
+    </div>
+    <div class="grid grid-3">
+      <article class="feature" data-r>
+        <div class="feature-num" aria-hidden="true">01</div>
+        <div><h3 class="feature-title">Doctoral academic depth</h3><p class="feature-text">Curriculum anchored in Anna University research standards — rigorous, methodical and intellectually demanding.</p></div>
+      </article>
+      <article class="feature" data-r="1">
+        <div class="feature-num" aria-hidden="true">02</div>
+        <div><h3 class="feature-title">Live industry experience</h3><p class="feature-text">Every module taught by a practising AI Engineer. Production-grade examples, not toy datasets.</p></div>
+      </article>
+      <article class="feature" data-r="2">
+        <div class="feature-num" aria-hidden="true">03</div>
+        <div><h3 class="feature-title">AICTE institutional alignment</h3><p class="feature-text">Internships and certifications aligned with AICTE guidelines — recognised across Tamil Nadu.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LEADERSHIP ═══ -->
+<section class="section section-tint section-flush" aria-labelledby="lead-title">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" data-r>Leadership</div>
+      <h2 class="sh" id="lead-title" data-r="1">Legal rigour and <em>engineering depth</em> at the top</h2>
+      <p class="lead" data-r="2">DSA is led by a legal professional who runs operations and compliance, and an AI engineer and Ph.D. scholar who designs and teaches the curriculum.</p>
+    </div>
+    <div class="grid grid-2">
+      <article class="card static card-pad" data-r>
+        <div class="lead-top">
+          <span class="avatar lg" aria-hidden="true">AC</span>
+          <div><h3 class="lead-name">Advocate Chamundeeswari</h3><div class="lead-role">Managing Director</div></div>
+        </div>
+        <p class="lead-bio">Legal professional and institutional administrator overseeing all operations, compliance and strategic partnerships. Brings a deep understanding of the legal frameworks critical to an academic Private Limited company.</p>
+        <ul class="tag-list" aria-label="Areas of responsibility">
+          <li class="tag">Advocate</li><li class="tag">Managing Director</li><li class="tag">Legal &amp; Compliance</li><li class="tag">Institutional Operations</li>
+        </ul>
+      </article>
+      <article class="card static card-pad" data-r="1">
+        <div class="lead-top">
+          <span class="avatar lg teal" aria-hidden="true">DS</span>
+          <div><h3 class="lead-name">Director — Academic &amp; Technology</h3><div class="lead-role">Founder · AI Engineer · Ph.D. Scholar</div></div>
+        </div>
+        <p class="lead-bio">Active AI Engineer at Hotfoot Technology Solutions, Ph.D. candidate at Anna University and TN-TRB 2026 Computer Science applicant. Bridges the frontier of AI research with structured, accessible curriculum design.</p>
+        <ul class="tag-list" aria-label="Credentials">
+          <li class="tag">Ph.D. — Anna University</li><li class="tag">AI Engineer</li><li class="tag">TN-TRB 2026</li><li class="tag">MSME Founder</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RECOGNITION ═══ -->
+<section class="section-sm" aria-label="Recognition and registrations">
+  <div class="container">
+    <div class="recog" data-r>
+      <span class="label">Recognition &amp; registrations</span>
+      <ul class="pills">
+        <li class="pill"><span aria-hidden="true">🏷️</span> MSME Registered</li>
+        <li class="pill"><span aria-hidden="true">🏛️</span> AICTE-aligned internships &amp; FDPs</li>
+        <li class="pill"><span aria-hidden="true">📘</span> NEP 2020-aligned programmes</li>
+        <li class="pill"><span aria-hidden="true">🏅</span> Microsoft Certified Trainer collaboration</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TIMELINE ═══ -->
+<section class="section section-flush" aria-labelledby="tl-title">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" data-r>Our journey</div>
+      <h2 class="sh" id="tl-title" data-r="1">From a single academy division to a <em>Private Limited institute</em></h2>
+    </div>
+    <ol class="timeline" aria-label="Milestones">
+      <li class="tl" data-r>
+        <div class="tl-year">2019</div>
+        <h3 class="tl-title">Founded in Chennai</h3>
+        <p class="tl-text">Data Science Academia begins as a division under Sai Chamundeeswari Academy, teaching data science with a practitioner-first approach.</p>
+      </li>
+      <li class="tl" data-r="1">
+        <div class="tl-year">MSME</div>
+        <h3 class="tl-title">MSME registration</h3>
+        <p class="tl-text">Operating under Sai Chamundeeswari Academy's MSME registration — a formally recognised training provider for learners and institutions.</p>
+      </li>
+      <li class="tl" data-r="2">
+        <div class="tl-year">AICTE · NEP 2020</div>
+        <h3 class="tl-title">AICTE-aligned programmes</h3>
+        <p class="tl-text">Internships and Faculty Development Programmes aligned with AICTE guidelines and NEP 2020, recognised by institutions across Tamil Nadu.</p>
+      </li>
+      <li class="tl" data-r="3">
+        <div class="tl-year">Grades 3–12</div>
+        <h3 class="tl-title">Code Champs school wing</h3>
+        <p class="tl-text">DSA Code Champs brings AI and coding to school children across four levels — Scratch to computer vision — in schools across Chennai and online.</p>
+      </li>
+      <li class="tl now" data-r="4">
+        <div class="tl-year">In progress</div>
+        <h3 class="tl-title">Private Limited incorporation</h3>
+        <p class="tl-text">Incorporation of Data Science Academia Private Limited is under way, bringing greater institutional credibility to every learner and partner.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ═══ WHO WE SERVE & DELIVERY ═══ -->
+<section class="section section-tint" aria-labelledby="serve-title">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" data-r>Who we serve</div>
+      <h2 class="sh" id="serve-title" data-r="1">From Grade 3 to <em>Ph.D. scholars</em></h2>
+      <p class="lead" data-r="2">One faculty, six audiences: the same practitioner-first teaching scaled from school coding clubs to doctoral research support, corporate teams and college faculty.</p>
+    </div>
+    <div class="serve">
+      <div class="serve-panel" data-r>
+        <span class="label">Audiences</span>
+        <ul class="aud-list">
+          <li class="aud"><span class="icon-box sm teal" aria-hidden="true">🎓</span><div><div class="aud-t">Students</div><div class="aud-s">UG, PG and research scholars — courses, AICTE-aligned internships and the AI Mastery Track</div></div></li>
+          <li class="aud"><span class="icon-box sm violet" aria-hidden="true">🤖</span><div><div class="aud-t">School children</div><div class="aud-s">Grade 3 to Grade 12 through <a href="{{ rel }}codechamps.html">DSA Code Champs</a></div></div></li>
+          <li class="aud"><span class="icon-box sm blue" aria-hidden="true">💼</span><div><div class="aud-t">Working professionals &amp; career changers</div><div class="aud-s">Live online courses with every session recorded for replay, from Python to the 12-month AI Mastery Track</div></div></li>
+          <li class="aud"><span class="icon-box sm yellow" aria-hidden="true">🏢</span><div><div class="aud-t">Corporate teams &amp; HR / L&amp;D managers</div><div class="aud-s">Management development programmes in Power BI, Generative AI, Python and cloud</div></div></li>
+          <li class="aud"><span class="icon-box sm coral" aria-hidden="true">🏛️</span><div><div class="aud-t">College faculty &amp; research guides</div><div class="aud-s">AICTE-aligned Faculty Development Programmes and research assistance</div></div></li>
+          <li class="aud"><span class="icon-box sm green" aria-hidden="true">⚙️</span><div><div class="aud-t">Industry professionals</div><div class="aud-s">Advanced AI, MLOps and certification pathways for practitioners</div></div></li>
+        </ul>
+      </div>
+      <div class="serve-panel" data-r="1">
+        <span class="label">How we deliver</span>
+        <div class="mode"><span class="icon-box sm" aria-hidden="true">📡</span><div><div class="aud-t">Online</div><div class="aud-s">Live interactive sessions, recorded for replay</div></div></div>
+        <div class="mode"><span class="icon-box sm" aria-hidden="true">🏫</span><div><div class="aud-t">Offline</div><div class="aud-s">Workshops, bootcamps and school visits in Chennai</div></div></div>
+        <div class="mode"><span class="icon-box sm" aria-hidden="true">🔀</span><div><div class="aud-t">Hybrid</div><div class="aud-s">A combination of online and offline sessions</div></div></div>
+        <div class="mode"><span class="icon-box sm" aria-hidden="true">⏯️</span><div><div class="aud-t">Self-paced</div><div class="aud-s">Recorded sessions with assignments (AI Mastery Track)</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS ═══ -->
+<section class="section-sm" aria-label="Data Science Academia in numbers">
+  <div class="container">
+    <div class="stats" data-r>
+      <div class="stat"><div class="stat-n">18</div><div class="stat-l">Specialised courses</div></div>
+      <div class="stat"><div class="stat-n">500+</div><div class="stat-l">Students trained</div></div>
+      <div class="stat"><div class="stat-n">39</div><div class="stat-l">Student research projects</div></div>
+      <div class="stat"><div class="stat-n">7</div><div class="stat-l">Programmes + Code Champs</div></div>
+      <div class="stat"><div class="stat-n">15</div><div class="stat-l">Five-star intern reviews</div></div>
+      <div class="stat"><div class="stat-n">2019</div><div class="stat-l">Founded in Chennai</div></div>
+    </div>
+    <p class="center small muted mt-2" data-r>See the work for yourself: <a href="{{ rel }}projects.html">39 student projects across five cohorts</a> and <a href="{{ rel }}testimonials.html">15 intern testimonials</a>.</p>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="section" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-banner" data-r>
+      <div class="eyebrow center">Get in touch</div>
+      <h2 class="cta-title" id="cta-title">Talk to us — or visit us in <em>West Tambaram</em></h2>
+      <p class="cta-text">Book a free trial session, drop in at Arasan Complex on GST Road, or talk to us about courses, internships, faculty development and school partnerships. We reply within one business day.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn-lg" href="{{ rel }}contact.html">Enquire now <span class="arr">&rarr;</span></a>
+        <a class="btn btn-wa btn-lg" href="{{ site.whatsapp_msg }}" target="_blank" rel="noopener">Chat on WhatsApp</a>
+      </div>
+      <p class="cta-note">{{ site.phone }} &middot; {{ site.email }} &middot; {{ site.hours }}</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

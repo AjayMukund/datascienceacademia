@@ -1,0 +1,350 @@
+{% extends "base.html" %}
+{% block title %}AI Internships, Certifications & Programmes | DSA Chennai{% endblock %}
+{% block description %}AICTE-aligned AI internships, Microsoft certification prep, faculty & corporate training, UGC NET/GATE coaching and a 12-month AI Mastery Track in Chennai.{% endblock %}
+{% block og_title %}AI Internships, Certifications & Training Programmes — Data Science Academia, Chennai{% endblock %}
+{% block og_image %}{{ og_for('page','programmes') }}{% endblock %}
+{% block body_class %}page-programmes{% endblock %}
+
+{# Card copy per programme — facts from programmes-data.js and Company_Info.txt (§5–7). Code Champs uses Company_Info §6 (4 levels, Grades 3–12). #}
+{% set meta = {
+  'internship': {
+    'badge': 'badge-teal', 'cat': 'Real projects · Ph.D. mentors · Offer letter',
+    'blurb': 'Structured 1–2 month data science and AI internships aligned with NEP 2020 and AICTE guidelines. Work on real projects under Ph.D.-qualified mentors and leave with a certificate, offer letter and project portfolio.',
+    'points': ['Six domains: ML, data analytics, computer vision, NLP & GenAI, research, software tools', 'DSA Internship Certificate + formal Offer Letter', 'AICTE-aligned where your institution is accredited', 'Online or hybrid, with offline workshops in Chennai'],
+    'foot': '1–2 months · cohorts start monthly', 'cert': 'DSA Internship Certificate + Offer Letter', 'type': 'EducationalOccupationalProgram'},
+  'microsoft-certification': {
+    'badge': 'badge-blue', 'cat': 'Azure · Power BI · MCT collaboration',
+    'blurb': 'Focused preparation for Microsoft Azure and Power BI certifications, delivered in collaboration with Microsoft Certified Trainers — hands-on Azure labs, practice question banks and timed mock exams.',
+    'points': ['AI-900 Azure AI Fundamentals and DP-900 Data Fundamentals', 'PL-300 Power BI Data Analyst prep; AZ-900 as an add-on', 'MCT-led sessions with Azure portal labs', 'Timed mock exams and exam-strategy sessions'],
+    'foot': '4–8 weeks per certification', 'cert': 'Microsoft Certification (AI-900 / DP-900) + DSA Completion Certificate', 'type': 'Course'},
+  'fdp': {
+    'badge': 'badge-gold', 'cat': 'FDP / MDP · AICTE-aligned',
+    'blurb': 'AICTE-aligned faculty development and corporate training in AI, machine learning, Power BI and Generative AI — from a two-day workshop to a four-week programme, on campus, on site or online.',
+    'points': ['FDPs on AI, ML, data science and research tools', 'Corporate MDP: Power BI, Generative AI, Python, Azure and AWS', 'Train-the-Trainer and Industry 4.0 workshops', 'Needs assessment first; MOU-based partnerships available'],
+    'foot': '2 days to 4 weeks · customisable', 'cert': 'DSA FDP Certificate of Participation + AICTE-aligned credential', 'type': 'Course'},
+  'exam-coaching': {
+    'badge': 'badge-green', 'cat': 'UGC NET · GATE · TNSET · PG-TRB',
+    'blurb': 'UGC NET, GATE, TNSET and PG-TRB coaching in Computer Science, taught by faculty who have cleared these examinations themselves — with weekly mock tests and personalised performance reports.',
+    'points': ['UGC NET / NET JRF, GATE CS · IT · DS & AI, TNSET, PG-TRB', 'Topic weightage from 5+ years of previous papers', 'Weekly timed tests and full-length mock exams', 'Regular batches or intensive crash courses'],
+    'foot': 'Crash course 4–6 weeks · regular batch 3–6 months', 'cert': 'DSA Coaching Completion Certificate', 'type': 'Course'},
+  'research-assistance': {
+    'badge': 'badge-coral', 'cat': 'Powered by AID VIRTUAL',
+    'blurb': 'End-to-end research support for Ph.D. scholars, faculty and independent researchers — from domain mapping and proposal writing to statistical analysis, proofreading and journal submission.',
+    'points': ['Topic finalisation, literature review and proposal writing', 'Statistical analysis in SPSS, R and Python', 'Journal targeting: Scopus, Web of Science, UGC Care', 'Technical support for Humanities, Education and Social Science scholars'],
+    'foot': 'Project-based · 1 week to 6 months', 'cert': 'Research Guidance Acknowledgement Letter', 'type': 'EducationalOccupationalProgram'},
+  'language-communication': {
+    'badge': 'badge-pink', 'cat': 'Academic · Interview · Research communication',
+    'blurb': 'Practical, feedback-driven communication training for engineers, researchers and job seekers — academic writing, technical interviews, professional emails and presentations, anchored in real tech scenarios.',
+    'points': ['Academic writing: papers, abstracts and proposals', 'Interview prep: spoken English, STAR method, mock interviews', 'Emails, reports, LinkedIn profiles and slide design', '100% practical, with 1-on-1 recorded mock sessions'],
+    'foot': '4–8 weeks · online, live + recorded', 'cert': 'DSA Communication Programme Certificate', 'type': 'Course'},
+  'code-champs': {
+    'badge': 'badge-violet', 'cat': 'School outreach wing · Grades 3–12',
+    'blurb': 'DSA\'s school outreach wing brings AI and coding to Grades 3–12: four progressive levels from Scratch to Python, machine learning and computer vision, delivered in schools across Chennai and online. NEP 2020-aligned and activity-first, with a special focus on girls in STEM.',
+    'points': ['Four levels: Code Explorers, Builders, Innovators and Pioneers', 'Scratch → Python → machine learning → computer vision', 'Fully managed school visits across Chennai, plus online live sessions', 'Level certificates, a parent showcase and a performance report for the school'],
+    'foot': '3–6 months per level · Grades 3–12', 'cert': 'Code Champs level certificate (Explorers, Builders, Innovators, Pioneers)', 'type': 'Course'},
+  'ai-mastery': {
+    'badge': 'badge-yellow', 'cat': '12-month structured roadmap · Q1 → Q4',
+    'blurb': 'A structured, mentor-guided 12-month programme from absolute beginner to job-ready AI and data science professional: 16 courses across four quarters, four capstone projects, a bundled internship certificate and placement assistance.',
+    'points': [], 'foot': '12 months · 4 quarters', 'cert': 'DSA AI Mastery Certificate + Project Portfolio + Internship Certificate', 'type': 'Course'}
+} %}
+
+{% block head_extra %}
+<style>
+.aud-strip{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 3rem;padding:1.6rem 2rem;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--card)}
+.aud-strip .label{margin-bottom:.75rem}
+.aud-strip .pill{font-size:.8rem}
+.feat-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;padding:2.75rem}
+.feat .sh{font-size:clamp(1.9rem,3.6vw,2.9rem)}
+.feat .lead{font-size:1rem}
+.feat-meta{display:flex;flex-wrap:wrap;gap:.5rem 1.75rem;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:.8rem;color:var(--fog2)}
+.feat-meta strong{color:var(--cream);font-weight:500}
+.feat-visual{position:relative}
+.feat-visual .float-badge{bottom:1rem;left:1rem}
+.feat-roadmap{padding:0 2.75rem 2.75rem}
+.roadmap.compact .rq{padding:1.1rem 1.2rem;background:rgba(11,12,14,.35)}
+.roadmap.compact .rq-title{font-size:1.15rem}
+.roadmap.compact .rq-sub{margin-bottom:0}
+.roadmap.compact .rq-cap{margin-top:.7rem;padding-top:.6rem}
+.prog-grid .card-body{gap:.7rem}
+.prog-grid .card-title{font-size:1.3rem}
+.prog-grid .check-list{gap:.4rem;margin-top:.15rem}
+.prog-grid .check-list li{font-size:.83rem}
+.card-wide{grid-column:1/-1;flex-direction:row}
+.card-wide .card-img{flex:0 0 38%;aspect-ratio:auto;min-height:300px;border-bottom:0;border-right:1px solid var(--border)}
+.card-wide .card-img img{position:absolute;inset:0}
+.card-wide .card-body{padding:2rem 2.5rem}
+.card-wide .card-title{font-size:1.75rem}
+.card-wide .card-text{max-width:640px}
+.fit-list{margin-top:1rem;border-top:1px solid var(--border)}
+.fit-list li{display:flex;flex-direction:column;gap:.1rem;padding:.65rem 0;border-bottom:1px solid var(--border);font-size:.76rem;color:var(--fog2);line-height:1.5}
+.fit-list a{font-size:.9rem;font-weight:600;color:var(--champ2)}
+.fit-list a:hover{color:var(--champ3)}
+@media (max-width:900px){
+  .feat-grid{grid-template-columns:1fr;gap:2rem;padding:2rem}.feat-roadmap{padding:0 2rem 2rem}
+  .card-wide{flex-direction:column}
+  .card-wide .card-img{flex:none;aspect-ratio:16/9;min-height:0;border-right:0;border-bottom:1px solid var(--border)}
+  .card-wide .card-img img{position:static}
+  .card-wide .card-body{padding:1.5rem}.card-wide .card-title{font-size:1.4rem}
+}
+@media (max-width:640px){.aud-strip{grid-template-columns:1fr;padding:1.25rem;gap:1.25rem}.feat-grid{padding:1.5rem}.feat-roadmap{padding:0 1.5rem 1.5rem}}
+</style>
+{% endblock %}
+
+{% block jsonld %}
+{{ jsonld(breadcrumb_ld([('Home',''),('Programmes',None)])) }}
+{% set ns = namespace(items=[]) %}
+{% for p in [programmes['ai-mastery']] + (programmes_list | rejectattr('id','equalto','ai-mastery') | list) %}
+{% set m = meta[p.id] %}
+{% set purl = 'codechamps.html' if p.id == 'code-champs' else p.url %}
+{% set ns.items = ns.items + [{
+  "@type": "ListItem", "position": loop.index,
+  "item": {
+    "@type": m.type,
+    "name": p.title,
+    "description": m.blurb,
+    "url": absolute(purl),
+    "image": absolute(img_url(p.image, 960)),
+    "provider": {"@id": site.url ~ "/#organization"},
+    "educationalCredentialAwarded": m.cert
+  }
+}] %}
+{% endfor %}
+{{ jsonld({
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Programmes at Data Science Academia, Chennai",
+  "description": "AI internships, Microsoft certification preparation, faculty and corporate development, competitive examination coaching, research assistance, communication training, the 12-month AI Mastery Track and DSA Code Champs for schools.",
+  "itemListOrder": "https://schema.org/ItemListOrderAscending",
+  "numberOfItems": ns.items | length,
+  "itemListElement": ns.items
+}) }}
+{% endblock %}
+
+{% block content %}
+{% set am = programmes['ai-mastery'] %}
+<!-- ═══ PAGE HERO ═══ -->
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="page-hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumbs">
+        <li><a href="{{ rel }}index.html">Home</a></li>
+        <li aria-current="page">Programmes</li>
+      </ol>
+    </nav>
+    <div class="eyebrow" data-r>Academic &amp; training division</div>
+    <h1 class="sh sh-lg" id="page-title" data-r="1">AI Internships, Certifications &amp; <em>Training Programmes</em> in Chennai</h1>
+    <p class="page-hero-sub" data-r="2">Seven Ph.D.-led programmes plus the DSA Code Champs school wing: AICTE-aligned internships, Microsoft Azure certification preparation, faculty and corporate development, UGC NET and GATE coaching, research assistance, communication training and the 12-month AI Mastery Track — delivered live in Chennai and online across India.</p>
+    <div class="hero-badges" data-r="3">
+      <span class="badge badge-teal">AICTE-aligned</span>
+      <span class="badge">Ph.D.-led faculty</span>
+      <span class="badge badge-cream">MSME registered</span>
+      <span class="badge badge-blue">Chennai · Online · Hybrid</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ AUDIENCE & DELIVERY STRIP ═══ -->
+<section class="section-sm section-flush" aria-label="Who our programmes serve and how they are delivered">
+  <div class="container">
+    <div class="aud-strip" data-r>
+      <div>
+        <span class="label">Who our programmes serve</span>
+        <ul class="pills">
+          <li class="pill"><strong>Students</strong> UG · PG · fresh graduates</li>
+          <li class="pill"><strong>Researchers</strong> Ph.D. scholars · any discipline</li>
+          <li class="pill"><strong>Faculty</strong> colleges · research guides</li>
+          <li class="pill"><strong>Industry professionals</strong> career changers · corporate teams</li>
+          <li class="pill"><strong>School children</strong> Grades 3–12</li>
+        </ul>
+      </div>
+      <div>
+        <span class="label">How they are delivered</span>
+        <ul class="pills">
+          <li class="pill"><span aria-hidden="true">📡</span> Online — live &amp; recorded for replay</li>
+          <li class="pill"><span aria-hidden="true">🏛️</span> Offline — workshops &amp; bootcamps in Chennai</li>
+          <li class="pill"><span aria-hidden="true">🔀</span> Hybrid — online plus offline sessions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURED: AI MASTERY TRACK ═══ -->
+<section class="section section-tint" aria-labelledby="mastery-title">
+  <div class="container">
+    <article class="card static tinted c-gold card-glow feat" data-r>
+      <div class="feat-grid">
+        <div>
+          <div class="eyebrow">Flagship programme · {{ am.subtitle }}</div>
+          <h2 class="sh" id="mastery-title">The Complete <em>AI &amp; Data Science Mastery Track</em></h2>
+          <p class="lead">A structured, mentor-guided 12-month programme that takes you from absolute beginner to job-ready AI professional: 16 courses across four quarters, four capstone projects, a bundled internship certificate and placement assistance. Live online, recorded for replay, with quarterly offline bootcamps in Chennai and guidance for the Microsoft Azure AI-900 / DP-900 certifications.</p>
+          <ul class="check-list gold two mt-2">
+            <li>16 courses across 4 structured quarters</li>
+            <li>4 capstone projects — one per quarter</li>
+            <li>3 live sessions a week, recorded for replay</li>
+            <li>Dedicated mentor with weekly 1-on-1 check-ins</li>
+            <li>Internship certificate bundled — no separate application</li>
+            <li>Placement assistance: resume, LinkedIn, mock interviews</li>
+          </ul>
+          <div class="feat-meta">
+            <span><strong>Duration:</strong> {{ am.duration }}</span>
+            <span><strong>Certificate:</strong> DSA AI Mastery Certificate + Internship Certificate</span>
+            <span><strong>Prerequisites:</strong> none — 10–12 hours a week</span>
+          </div>
+          <div class="row mt-2">
+            <a class="btn btn-primary" href="{{ rel }}{{ am.url }}">Explore the Mastery Track <span class="arr">&rarr;</span></a>
+            <a class="btn btn-outline" href="{{ rel }}contact.html?course={{ am.ctaParam | urlencode }}">{{ am.cta }}</a>
+          </div>
+        </div>
+        <div class="feat-visual">
+          <div class="img-frame">{{ img('ai-mastery-track-visual', '12-Month AI and Data Science Mastery Track at Data Science Academia, Chennai', sizes='(max-width:900px) 100vw, 520px', loading='eager', fetchpriority='high') }}</div>
+          <div class="float-badge"><span class="fb-icon" aria-hidden="true">🗓️</span><div><div class="fb-v">4 quarters · 16 courses</div><div class="fb-l">No prior experience required</div></div></div>
+        </div>
+      </div>
+      <div class="roadmap compact feat-roadmap" aria-label="AI Mastery Track quarter roadmap">
+        <div class="rq q1"><div class="rq-badge">Q1 · Months 1–3</div><div class="rq-title">Foundations</div><div class="rq-sub">Python · SQL · R · Excel</div><div class="rq-cap">Capstone: EDA on a real business dataset</div></div>
+        <div class="rq q2"><div class="rq-badge">Q2 · Months 4–6</div><div class="rq-title">Analytics &amp; Engineering</div><div class="rq-sub">Tableau · EDA · Ethics · Data engineering</div><div class="rq-cap">Capstone: analytics dashboard from raw data</div></div>
+        <div class="rq q3"><div class="rq-badge">Q3 · Months 7–9</div><div class="rq-title">Machine Learning &amp; BI</div><div class="rq-sub">Power BI · ML · Time series</div><div class="rq-cap">Capstone: train, evaluate &amp; deploy a model</div></div>
+        <div class="rq q4"><div class="rq-badge">Q4 · Months 10–12</div><div class="rq-title">Advanced AI &amp; Cloud</div><div class="rq-sub">Deep learning · NLP · Big data · Cloud</div><div class="rq-cap">Capstone: full-stack AI system — data to deployed cloud API</div></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ═══ PROGRAMME GRID ═══ -->
+<section class="section" aria-labelledby="prog-title">
+  <div class="container">
+    <div class="split-head">
+      <div>
+        <div class="eyebrow" data-r>Six more programmes + Code Champs</div>
+        <h2 class="sh" id="prog-title" data-r="1">Internships, certifications, coaching <em>&amp; development</em></h2>
+      </div>
+      <a class="link-arrow" href="{{ rel }}courses.html" data-r="2">Looking for a single course? Browse all 18 <span class="arr">&rarr;</span></a>
+    </div>
+    <div class="grid grid-3 prog-grid">
+      {% set others = programmes_list | rejectattr('id','equalto','ai-mastery') | rejectattr('id','equalto','code-champs') | list %}
+      {% for p in others + [programmes['code-champs']] %}
+      {% set m = meta[p.id] %}
+      {% set is_cc = p.id == 'code-champs' %}
+      <a class="card{% if is_cc %} card-wide tinted c-violet{% endif %}" href="{{ rel }}{{ 'codechamps.html' if is_cc else p.url }}" data-r="{{ loop.index0 % 3 }}">
+        <div class="card-img">
+          {% if is_cc %}
+          {{ img(p.image, 'DSA Code Champs — AI and coding classes for school children in Chennai, Grades 3 to 12', sizes='(max-width:900px) 100vw, 460px') }}
+          {% else %}
+          {{ img(p.image, p.title ~ ' at Data Science Academia, Chennai', sizes='(max-width:640px) 100vw, (max-width:1024px) 50vw, 400px') }}
+          {% endif %}
+          <span class="badge {{ m.badge }}">{{ p.tag }}</span>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">{{ m.cat }}</div>
+          <h3 class="card-title">{{ p.title }}</h3>
+          <p class="card-text">{{ m.blurb }}</p>
+          <ul class="check-list{% if is_cc %} two{% endif %}">
+            {% for pt in m.points %}<li>{{ pt }}</li>{% endfor %}
+          </ul>
+          <div class="card-foot"><span>⏱ {{ m.foot }}</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHICH PROGRAMME IS FOR ME? ═══ -->
+<section class="section section-tint" aria-labelledby="fit-title">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow center" data-r>Which programme is for me?</div>
+      <h2 class="sh" id="fit-title" data-r="1">Recommended by <em>where you are</em> today</h2>
+      <p class="lead" data-r="2">Most learners combine two: a skills programme plus a credential or communication track. If you are unsure, tell us your goal and we will recommend a path within one business day.</p>
+    </div>
+    <div class="grid grid-4">
+      <article class="feature col" data-r>
+        <span class="icon-box teal" aria-hidden="true">🎓</span>
+        <div>
+          <h3 class="feature-title">Students &amp; fresh graduates</h3>
+          <p class="feature-text">Build a portfolio and credentials employers recognise before you leave college.</p>
+          <ul class="fit-list">
+            <li><a href="{{ rel }}programmes/internship.html">Internships</a><span>1–2 months · certificate + offer letter</span></li>
+            <li><a href="{{ rel }}programmes/ai-mastery.html">AI Mastery Track</a><span>12 months · beginner to job-ready</span></li>
+            <li><a href="{{ rel }}programmes/microsoft-certification.html">Microsoft Certification</a><span>AI-900 · DP-900 · PL-300 prep</span></li>
+            <li><a href="{{ rel }}programmes/language-communication.html">Language &amp; Communication</a><span>Technical interview preparation</span></li>
+          </ul>
+        </div>
+      </article>
+      <article class="feature col" data-r="1">
+        <span class="icon-box blue" aria-hidden="true">💼</span>
+        <div>
+          <h3 class="feature-title">Working professionals &amp; career changers</h3>
+          <p class="feature-text">Pivot into data science or AI without leaving your job — every live session is recorded for replay.</p>
+          <ul class="fit-list">
+            <li><a href="{{ rel }}programmes/ai-mastery.html">AI Mastery Track</a><span>Structured path with placement assistance</span></li>
+            <li><a href="{{ rel }}programmes/microsoft-certification.html">Microsoft Certification</a><span>Azure &amp; Power BI credentials in 4–8 weeks</span></li>
+            <li><a href="{{ rel }}programmes/fdp.html">Corporate training (MDP)</a><span>Power BI · Generative AI · Python for teams</span></li>
+            <li><a href="{{ rel }}programmes/language-communication.html">Language &amp; Communication</a><span>Interviews · LinkedIn · presentations</span></li>
+          </ul>
+        </div>
+      </article>
+      <article class="feature col" data-r="2">
+        <span class="icon-box yellow" aria-hidden="true">🏛️</span>
+        <div>
+          <h3 class="feature-title">Faculty, institutions &amp; schools</h3>
+          <p class="feature-text">AICTE-aligned upskilling for your staff and NEP 2020-aligned AI programmes for your students.</p>
+          <ul class="fit-list">
+            <li><a href="{{ rel }}programmes/fdp.html">Faculty Development Programme</a><span>2 days to 4 weeks · on campus or online</span></li>
+            <li><a href="{{ rel }}programmes/exam-coaching.html">Competitive Examination Training</a><span>UGC NET · TNSET · PG-TRB for aspiring lecturers</span></li>
+            <li><a href="{{ rel }}programmes/internship.html">Internships for your students</a><span>Annexure-1 forms for affiliated colleges</span></li>
+            <li><a href="{{ rel }}codechamps.html">DSA Code Champs</a><span>Grades 3–12 · delivered in schools across Chennai</span></li>
+          </ul>
+        </div>
+      </article>
+      <article class="feature col" data-r="3">
+        <span class="icon-box coral" aria-hidden="true">🔬</span>
+        <div>
+          <h3 class="feature-title">Researchers &amp; Ph.D. scholars</h3>
+          <p class="feature-text">From topic finalisation to journal submission, with technical support for any discipline.</p>
+          <ul class="fit-list">
+            <li><a href="{{ rel }}programmes/research-assistance.html">Research Assistance</a><span>SPSS · R · Python analysis · Scopus/WoS targeting</span></li>
+            <li><a href="{{ rel }}programmes/language-communication.html">Language &amp; Communication</a><span>Academic writing &amp; research communication</span></li>
+            <li><a href="{{ rel }}programmes/exam-coaching.html">Competitive Examination Training</a><span>NET JRF preparation</span></li>
+            <li><a href="{{ rel }}programmes/internship.html">Research internships</a><span>Literature review · data collection · analysis</span></li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW ENROLMENT WORKS ═══ -->
+<section class="section" aria-labelledby="how-title">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow center" data-r>How enrolment works</div>
+      <h2 class="sh" id="how-title" data-r="1">From enquiry to certificate in <em>four steps</em></h2>
+    </div>
+    <div class="steps" data-r>
+      <div class="step"><div class="step-num">1</div><div class="step-title">Enquire</div><p class="step-text">Fill in the enquiry form, call or WhatsApp {{ site.phone }}. We reply within one business day.</p></div>
+      <div class="step"><div class="step-num">2</div><div class="step-title">Consultation call</div><p class="step-text">A short call with DSA faculty to confirm fit and goals — or a needs assessment for institutions and corporate teams.</p></div>
+      <div class="step"><div class="step-num">3</div><div class="step-title">Onboarding</div><p class="step-text">Batch dates, learning materials and mentor allocation. Live sessions are recorded for replay.</p></div>
+      <div class="step"><div class="step-num">4</div><div class="step-title">Certificate</div><p class="step-text">Complete the programme and receive your DSA certificate — AICTE-aligned where applicable.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="section section-flush" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-banner" data-r>
+      <div class="eyebrow center">Talk to us</div>
+      <h2 class="cta-title" id="cta-title">Not sure which programme <em>fits?</em></h2>
+      <p class="cta-text">Tell us your goal — an internship, a certification, a faculty development programme for your institution or research support — and we will recommend the right path. Free consultation, no commitment.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn-lg" href="{{ rel }}contact.html">Enquire now <span class="arr">&rarr;</span></a>
+        <a class="btn btn-wa btn-lg" href="{{ site.whatsapp_msg }}" target="_blank" rel="noopener">Chat on WhatsApp</a>
+      </div>
+      <p class="cta-note">{{ site.phone }} &middot; {{ site.email }} &middot; {{ site.hours }}</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

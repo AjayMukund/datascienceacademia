@@ -1,0 +1,315 @@
+{% extends "base.html" %}
+{% block title %}Student AI & Data Science Projects | Data Science Academia{% endblock %}
+{% block description %}Explore 39 student research projects in AI & Data Science from Data Science Academia, Chennai: computer vision, NLP, healthcare AI, analytics and more.{% endblock %}
+{% block og_title %}39 Student AI & Data Science Research Projects — Data Science Academia, Chennai{% endblock %}
+{% block og_image %}{{ og_for('page','projects') }}{% endblock %}
+{% block og_image_alt %}Student AI and Data Science research projects at Data Science Academia, Chennai{% endblock %}
+{% block body_class %}page-projects{% endblock %}
+
+{# ── Derived figures (computed from projects-data.js, never hard-coded) ── #}
+{% set n_projects = projects | length %}
+{% set cohorts = [('oct23','Oct – Dec 2023'),('sep23','Sep – Nov 2023'),('jul23','Jul – Sep 2023'),('jun23','Jun – Aug 2023'),('may23','May – Jul 2023')] %}
+{% set n_cohorts = cohorts | length %}
+{% set n_domains = project_cats | length %}
+{% set tm = namespace(n=0, max=0) %}
+{% for p in projects %}
+{% set size = (1 if p.leader else 0) + (p.members | length) %}
+{% set tm.n = tm.n + size %}
+{% if size > tm.max %}{% set tm.max = size %}{% endif %}
+{% endfor %}
+{% set n_contrib = (tm.n // 10) * 10 %}
+{% set guide = projects[0].guide %}
+
+{% block head_extra %}
+<style>
+.page-hero{overflow-x:clip}
+.proj-stats{margin-top:2.5rem}
+.filter-block{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.1rem}
+.filter-block .filter-tabs{margin-bottom:0}
+.filter-label{font-family:var(--fm);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fog2)}
+.ftab .n{font-family:var(--fm);font-size:.62rem;opacity:.7;margin-left:.3rem}
+.filter-note{font-family:var(--fm);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fog2);margin:.5rem 0 2rem}
+.proj-period{font-family:var(--fm);font-size:.66rem;letter-spacing:.06em;color:var(--fog2);white-space:nowrap}
+.proj-size{font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--fog3);white-space:nowrap}
+.proj-team{font-size:.76rem;color:var(--fog2);line-height:1.55;min-width:0}
+.proj-team strong{color:var(--champ2);font-weight:500}
+.proj-team .sep{margin:0 .3rem;color:var(--fog3)}
+.card-foot .btn{flex-shrink:0}
+#projDialog{overflow:hidden}
+#projDialog .dialog-body{position:static}
+.dlg-img{margin:-2.25rem -2.25rem 1.5rem;aspect-ratio:16/7;overflow:hidden;background:var(--ink3);border-bottom:1px solid var(--border)}
+.dlg-img img{width:100%;height:100%;object-fit:cover;display:block}
+.dlg-meta{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1rem;margin-bottom:.9rem;padding-right:3rem}
+.dlg-title{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:1rem;padding-right:2.5rem}
+.proj-full-desc{font-size:.95rem;color:var(--fog);line-height:1.85;margin-bottom:1.5rem}
+.proj-team-list{display:grid;gap:.65rem;padding:1.25rem 1.5rem;border:1px solid var(--border);border-radius:var(--r);background:rgba(200,169,110,.04)}
+.proj-team-list>div{display:grid;grid-template-columns:150px 1fr;gap:.75rem;font-size:.86rem;line-height:1.5}
+.proj-team-list dt{color:var(--fog2);font-size:.76rem;letter-spacing:.04em}
+.proj-team-list dd{color:var(--cream);font-weight:500}
+.proj-team-title{font-size:.64rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--champ);margin-bottom:.75rem}
+.dlg-foot{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border)}
+html.dlg-open{overflow:hidden}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
+.domain-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.25rem}
+@media (max-width:1024px){.how-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.how-grid{grid-template-columns:1fr}.proj-team-list>div{grid-template-columns:1fr;gap:.15rem}.dlg-img{margin:-1.5rem -1.5rem 1.25rem}.card-foot{flex-wrap:wrap}}
+</style>
+<noscript><style>.proj-full[hidden]{display:block}.proj-full{margin-top:.5rem;padding-top:1rem;border-top:1px dashed var(--border)}[data-project]{display:none}</style></noscript>
+{% endblock %}
+
+{% block jsonld %}
+{{ jsonld(breadcrumb_ld([('Home',''),('Student projects',None)])) }}
+{% set ld = namespace(items=[]) %}
+{% for p in projects %}
+{% set ld.items = ld.items + [{
+  "@type": "ListItem",
+  "position": loop.index,
+  "item": {
+    "@type": "CreativeWork",
+    "@id": canonical ~ "#proj-" ~ p.idx,
+    "url": canonical ~ "#proj-" ~ p.idx,
+    "name": p.title,
+    "description": p.desc | meta_desc(160),
+    "image": absolute(img_url(p.img, 960)),
+    "dateCreated": p.period.split(' ') | last,
+    "genre": p.cat_label,
+    "publisher": {"@id": site.url ~ "/#organization"}
+  }
+}] %}
+{% endfor %}
+{{ jsonld({
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": canonical ~ "#projects",
+  "name": "Student AI & Data Science research projects at Data Science Academia, Chennai",
+  "description": n_projects ~ " research projects completed by Data Science Academia interns across " ~ n_cohorts ~ " cohorts in 2023, guided by " ~ guide ~ ".",
+  "numberOfItems": n_projects,
+  "itemListOrder": "https://schema.org/ItemListOrderDescending",
+  "itemListElement": ld.items
+}) }}
+{% endblock %}
+
+{% block content %}
+<!-- ═══ PAGE HERO ═══ -->
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="page-hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumbs">
+        <li><a href="{{ rel }}index.html">Home</a></li>
+        <li aria-current="page">Student projects</li>
+      </ol>
+    </nav>
+    <div class="eyebrow" data-r>Student research</div>
+    <h1 class="sh sh-lg" id="page-title" data-r="1">{{ n_projects }} Student Research Projects in <em>AI&nbsp;&amp; Data Science</em></h1>
+    <p class="page-hero-sub" data-r="2">Every project on this page was built by Data Science Academia interns — from autonomous-driving aids and Parkinson's gait analysis to crop protection, sarcasm detection and recommender systems. Each one tackles a real problem with real data, and each was supervised end-to-end by {{ guide }}, a practising AI engineer and Ph.D. scholar at Anna University. Browse by research domain or cohort, and open any card for the full abstract and team.</p>
+    <div class="hero-badges" data-r="3">
+      <span class="badge badge-teal">Guided by Ph.D.-level faculty</span>
+      <span class="badge">AICTE &amp; NEP-aligned internships</span>
+      <span class="badge badge-cream">{{ n_cohorts }} cohorts · 2023</span>
+      <span class="badge badge-blue">Chennai &amp; online</span>
+    </div>
+    <div class="stats proj-stats" data-r="4" role="group" aria-label="Project archive at a glance">
+      <div class="stat"><div class="stat-n">{{ n_projects }}</div><div class="stat-l">Projects completed</div></div>
+      <div class="stat"><div class="stat-n">{{ n_cohorts }}</div><div class="stat-l">Internship cohorts</div></div>
+      <div class="stat"><div class="stat-n">{{ n_contrib }}+</div><div class="stat-l">Student contributors</div></div>
+      <div class="stat"><div class="stat-n">{{ n_domains }}</div><div class="stat-l">Research domains</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROJECT ARCHIVE ═══ -->
+<section class="section section-sm" id="archive" aria-labelledby="archive-title">
+  <div class="container">
+    <div class="split-head">
+      <div>
+        <div class="eyebrow" data-r>The project archive</div>
+        <h2 class="sh" id="archive-title" data-r="1">Browse all {{ n_projects }} projects by <em>domain and cohort</em></h2>
+      </div>
+      <a class="link-arrow" href="{{ rel }}programmes/internship.html" data-r="2">Want to build one? Internship programme <span class="arr">&rarr;</span></a>
+    </div>
+
+    <div class="filter-block" data-r>
+      <span class="filter-label" id="cat-label">Research domain</span>
+      <div class="filter-tabs" data-filter-group="cat" data-filter-target="#projGrid" role="group" aria-labelledby="cat-label">
+        <button class="ftab on" type="button" data-filter="all">All domains<span class="n">{{ n_projects }}</span></button>
+        {% for key, c in project_cats.items() %}
+        <button class="ftab" type="button" data-filter="{{ key }}">{{ c.label }}<span class="n">{{ projects | selectattr('cat','equalto',key) | list | length }}</span></button>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="filter-block" data-r="1">
+      <span class="filter-label" id="cohort-label">Cohort</span>
+      <div class="filter-tabs" data-filter-group="cohort" data-filter-target="#projGrid" role="group" aria-labelledby="cohort-label">
+        <button class="ftab on" type="button" data-filter="all">All cohorts<span class="n">{{ n_cohorts }}</span></button>
+        {% for key, label in cohorts %}
+        <button class="ftab" type="button" data-filter="{{ key }}">{{ label }}<span class="n">{{ projects | selectattr('cohort','equalto',key) | list | length }}</span></button>
+        {% endfor %}
+      </div>
+    </div>
+    <p class="filter-note" aria-live="polite">Showing <span data-filter-count="#projGrid">{{ n_projects }}</span> of {{ n_projects }} projects</p>
+
+    <div class="grid grid-3" id="projGrid">
+      {% for p in projects %}
+      {% set c = project_cats[p.cat] %}
+      {% set size = (1 if p.leader else 0) + (p.members | length) %}
+      <article class="card" data-filter-item data-cat="{{ p.cat }}" data-cohort="{{ p.cohort }}" data-r="{{ loop.index0 % 3 }}">
+        <div class="card-img">
+          {{ img(p.img, p.title ~ ' — ' ~ p.cat_label ~ ' student project', sizes='(max-width:640px) 100vw, (max-width:1024px) 50vw, 400px') }}
+          <span class="badge" style="color:{{ c.color }};border-color:{{ c.border }}">{{ c.label }}</span>
+        </div>
+        <div class="card-body">
+          <div class="card-top">
+            <time class="proj-period" datetime="{{ p.period.split(' ') | last }}">{{ p.period }}</time>
+            <span class="proj-size">{% if size > 1 %}Team of {{ size }}{% elif size == 1 %}Solo project{% else %}Student team{% endif %}</span>
+          </div>
+          <h3 class="card-title">{{ p.title }}</h3>
+          <p class="card-text">{{ p.desc | meta_desc(150) }}</p>
+          <div class="card-foot">
+            <p class="proj-team">Guide: <strong>{{ p.guide }}</strong>{% if p.leader %}<span class="sep" aria-hidden="true">·</span>Lead: {{ p.leader }}{% endif %}{% if p.members %}<span class="sep" aria-hidden="true">·</span>+{{ p.members | length }} member{% if p.members | length > 1 %}s{% endif %}{% endif %}</p>
+            <button type="button" class="btn btn-outline btn-sm" data-project="{{ p.idx }}" aria-haspopup="dialog" aria-controls="projDialog" aria-label="Details: {{ p.title }}">Details</button>
+          </div>
+          <div class="proj-full" id="proj-{{ p.idx }}" hidden>
+            <p class="proj-full-desc">{{ p.desc }}</p>
+            <div class="proj-team-title">Project team</div>
+            <dl class="proj-team-list">
+              <div><dt>Guide &amp; supervisor</dt><dd>{{ p.guide }}</dd></div>
+              {% if p.leader %}<div><dt>Team leader</dt><dd>{{ p.leader }}</dd></div>{% endif %}
+              {% if p.members %}<div><dt>Team member{% if p.members | length > 1 %}s{% endif %}</dt><dd>{{ p.members | join(', ') }}</dd></div>{% endif %}
+            </dl>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+      <p class="empty-state hidden" data-filter-empty="#projGrid">No projects match this domain and cohort together — choose another combination, or <a href="{{ rel }}programmes/internship.html">start one in the next cohort</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW PROJECTS WORK ═══ -->
+<section class="section section-tint" aria-labelledby="how-title">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" data-r>The DSA method</div>
+      <h2 class="sh" id="how-title" data-r="1">How projects work <em>at DSA</em></h2>
+      <p class="lead" data-r="2">Every project in this archive was completed inside a Data Science Academia internship: a real problem, a real dataset, a small team and a faculty guide who reviews the work from problem statement to final presentation.</p>
+    </div>
+    <div class="how-grid">
+      <div class="feature col" data-r>
+        <span class="icon-box" aria-hidden="true">🎓</span>
+        <div><h3 class="feature-title">Guided by faculty, not left to templates</h3><p class="feature-text">All {{ n_projects }} projects were supervised by {{ guide }} — AI engineer, Ph.D. scholar at Anna University and founder of DSA. Students choose the problem; the guide sets the methodology and reviews every milestone.</p></div>
+      </div>
+      <div class="feature col" data-r="1">
+        <span class="icon-box teal" aria-hidden="true">👥</span>
+        <div><h3 class="feature-title">Small teams inside monthly cohorts</h3><p class="feature-text">Projects run inside 1–2 month <a href="{{ rel }}programmes/internship.html">NEP- and AICTE-aligned internships</a> that start every month. Teams of one to {{ tm.max }} students share a team leader, a mid-internship milestone presentation and a final review.</p></div>
+      </div>
+      <div class="feature col" data-r="2">
+        <span class="icon-box blue" aria-hidden="true">🔬</span>
+        <div><h3 class="feature-title">Real problems, real evaluation</h3><p class="feature-text">Autonomous-driving aids in the CARLA simulator, Parkinson's freezing-of-gait detection, crop protection with CNNs, sarcasm detection, rainfall forecasting — compared across models with accuracy, precision and recall, not toy datasets.</p></div>
+      </div>
+      <div class="feature col" data-r="3">
+        <span class="icon-box violet" aria-hidden="true">📁</span>
+        <div><h3 class="feature-title">A portfolio you can show</h3><p class="feature-text">Every intern leaves with a DSA Internship Certificate naming the project and mentor, a formal offer letter and a domain-specific project portfolio — evidence for placements, higher studies and research applications.</p></div>
+      </div>
+    </div>
+    <div class="domain-list" data-r role="group" aria-label="Research domains covered">
+      {% for key, c in project_cats.items() %}
+      <span class="badge" style="color:{{ c.color }};border-color:{{ c.border }};background:{{ c.bg }}">{{ c.label }}</span>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="section" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-banner" data-r>
+      <div class="eyebrow center">Your project next</div>
+      <h2 class="cta-title" id="cta-title">Join the next <em>internship cohort</em></h2>
+      <p class="cta-text">Undergraduate, postgraduate or research scholar — apply for a 1–2 month internship in Machine Learning, Computer Vision, NLP &amp; Generative AI or Data Analytics, and build a project like these under a Ph.D.-qualified guide. Cohorts start every month.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn-lg" href="{{ rel }}contact.html?course={{ programmes['internship'].ctaParam | urlencode }}">{{ programmes['internship'].cta }} <span class="arr">&rarr;</span></a>
+        <a class="btn btn-outline btn-lg" href="{{ rel }}programmes/internship.html">How the internship works</a>
+      </div>
+      <p class="cta-note">{{ site.phone }} &middot; {{ site.email }} &middot; {{ site.hours }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROJECT DETAILS DIALOG (filled from the hidden .proj-full block of the chosen card) ═══ -->
+<dialog class="dsa-dialog" id="projDialog" aria-labelledby="projDialogTitle">
+  <div class="dialog-body">
+    <button class="dialog-close" type="button" data-dialog-close aria-label="Close project details">&#10005;</button>
+    <div class="dlg-img" id="projDialogImg" aria-hidden="true"></div>
+    <div class="dlg-meta" id="projDialogMeta"></div>
+    <h2 class="dlg-title" id="projDialogTitle">Project details</h2>
+    <div id="projDialogBody"></div>
+    <div class="dlg-foot">
+      <a class="btn btn-primary btn-sm" href="{{ rel }}programmes/internship.html">Build a project like this <span class="arr">&rarr;</span></a>
+      <button class="btn btn-ghost btn-sm" type="button" data-dialog-close>Back to all projects</button>
+    </div>
+  </div>
+</dialog>
+{% endblock %}
+
+{% block scripts %}
+<script>
+/* Project details dialog — progressive enhancement. The full abstract and team list for every project are already
+   in the HTML (.proj-full, hidden); this copies the chosen one into the shared <dialog>. Filtering is handled by script.js. */
+(function () {
+  var dlg = document.getElementById('projDialog'), grid = document.getElementById('projGrid');
+  if (!dlg || !grid) return;
+  var imgBox = document.getElementById('projDialogImg'), meta = document.getElementById('projDialogMeta');
+  var title = document.getElementById('projDialogTitle'), body = document.getElementById('projDialogBody');
+  var native = typeof dlg.showModal === 'function', opener = null;
+
+  function open(btn) {
+    var card = btn.closest('.card'), full = document.getElementById('proj-' + btn.getAttribute('data-project'));
+    if (!card || !full) return;
+    var im = card.querySelector('.card-img img');
+    imgBox.innerHTML = '';
+    if (im) { var c = im.cloneNode(false); c.removeAttribute('loading'); c.setAttribute('sizes', '(max-width:800px) 92vw, 760px'); imgBox.appendChild(c); }
+    meta.innerHTML = '';
+    var badge = card.querySelector('.card-img .badge'), per = card.querySelector('.proj-period');
+    if (badge) meta.appendChild(badge.cloneNode(true));
+    if (per) meta.appendChild(per.cloneNode(true));
+    var h = card.querySelector('.card-title');
+    title.textContent = h ? h.textContent : 'Project details';
+    body.innerHTML = full.innerHTML;
+    opener = btn;
+    if (native) dlg.showModal(); else dlg.setAttribute('open', '');
+    document.documentElement.classList.add('dlg-open');
+    var dbody = dlg.querySelector('.dialog-body'); if (dbody) dbody.scrollTop = 0;
+  }
+  function afterClose() {
+    document.documentElement.classList.remove('dlg-open');
+    if (opener) { opener.focus(); opener = null; }
+  }
+  function close() {
+    if (!dlg.open) return;
+    if (native) dlg.close(); else { dlg.removeAttribute('open'); afterClose(); }
+  }
+
+  grid.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-project]'); if (!btn) return;
+    e.preventDefault(); open(btn);
+  });
+  dlg.addEventListener('click', function (e) {
+    if (e.target === dlg || e.target.closest('[data-dialog-close]')) close();   /* backdrop or close buttons */
+  });
+  dlg.addEventListener('close', afterClose);                                    /* native close incl. Escape */
+  if (!native) document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+
+  /* Keep ?filter= in sync with the active domain tab so a filtered view can be shared. */
+  var tabs = document.querySelector('.filter-tabs[data-filter-group="cat"][data-filter-target="#projGrid"]');
+  if (tabs && window.URL && window.history && history.replaceState) {
+    tabs.addEventListener('click', function (e) {
+      var b = e.target.closest('.ftab'); if (!b) return;
+      var u = new URL(location.href), f = b.getAttribute('data-filter');
+      if (f === 'all') u.searchParams.delete('filter'); else u.searchParams.set('filter', f);
+      history.replaceState(null, '', u.toString());
+    });
+  }
+})();
+</script>
+{% endblock %}

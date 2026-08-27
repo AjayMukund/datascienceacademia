@@ -1,7 +1,7 @@
 ================================================================================
 DATA SCIENCE ACADEMIA PRIVATE LIMITED — COMPLETE COMPANY & COURSE INFORMATION
 ================================================================================
-Last Updated: April 2026
+Last Updated: August 2026
 Website: https://ajaymukund.github.io/datascienceacademia/
 
 --------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ Key Strengths:
   guidelines, recognised across Tamil Nadu
 
 Metrics:
-- 16+ Specialised Courses
+- 18 Specialised Courses (5 categories)
 - 500+ Students Trained
 - Founded in 2019
 
@@ -71,7 +71,7 @@ Social Media:
 Response Time: We typically respond within 1 business day.
 
 --------------------------------------------------------------------------------
-4. COURSES OFFERED (16 Courses across 4 Categories)
+4. COURSES OFFERED (18 Courses across 5 Categories)
 --------------------------------------------------------------------------------
 
 CATEGORY A — FOUNDATION (Beginner Level)
@@ -569,19 +569,30 @@ A: AID VIRTUAL is the proofreading and research support arm that powers DSA's
    Research Assistance programme, providing journal-ready manuscript support and
    interdisciplinary research guidance.
 
---------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 9. WEBSITE PAGES
 --------------------------------------------------------------------------------
 
 Home          : index.html
-Courses       : courses.html (browse all 16 courses)
-Course Detail : course.html (individual course syllabus and modules)
+Courses       : courses.html (browse all 18 courses)
+Course Detail : courses/<course-id>.html  (e.g. courses/python.html, courses/machine-learning.html,
+                courses/deep-learning.html, courses/llm.html, courses/power-bi.html, courses/azure.html,
+                courses/aws.html, courses/sql.html, courses/r-programming.html, courses/excel.html,
+                courses/tableau.html, courses/data-visualization.html, courses/nlp.html,
+                courses/feature-engineering.html, courses/computer-vision.html, courses/generative-ai.html,
+                courses/reinforcement-learning.html, courses/mlops.html)
 About Us      : about.html (company story and leadership)
-Programmes    : programmes.html (all 7 special programmes)
-Programme     : programme.html (individual programme detail)
+Programmes    : programmes.html (all special programmes)
+Programme     : programmes/<programme-id>.html  (ai-mastery, internship, microsoft-certification, fdp,
+                exam-coaching, research-assistance, language-communication, code-champs)
 Code Champs   : codechamps.html (school outreach wing overview)
-Level Detail  : cc-level.html (individual Code Champs level detail)
+Level Detail  : codechamps/<level>.html  (explorers, builders, innovators, pioneers)
+Projects      : projects.html (39 student research projects)
+Testimonials  : testimonials.html (15 intern testimonials)
+Blog          : blog.html and blog/<slug>.html
 Contact/Enrol : contact.html (enquiry form, location, social links)
+Verify        : verify.html (certificate verification)
+Student Portal: login.html
 
 ================================================================================
 END OF DOCUMENT

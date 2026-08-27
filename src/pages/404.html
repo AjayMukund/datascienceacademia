@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Page not found | Data Science Academia{% endblock %}
+{% block description %}That page could not be found on the Data Science Academia site. Go back to the home page, browse our 18 data science and AI courses in Chennai or contact us.{% endblock %}
+{% block robots %}noindex, follow{% endblock %}
+{% block body_class %}page-404{% endblock %}
+
+{# GitHub Pages serves 404.html for missing URLs at ANY depth (e.g. /blog/missing.html).
+   When that happens the relative asset/link paths below would break, so we set a <base>
+   pointing at the site root — only when the current path is deeper than the root. #}
+{% block head_meta %}
+<script>(function(){try{var sp=new URL('{{ site.url }}/').pathname,p=location.pathname,i=p.indexOf(sp),r=i>=0?p.slice(0,i+sp.length):'/';if(p.slice(r.length).indexOf('/')>=0){var b=document.createElement('base');b.href=location.origin+r;document.head.appendChild(b);}}catch(e){}})();</script>
+{% endblock %}
+
+{% block head_extra %}
+<style>
+.e404{position:relative;padding:calc(var(--nav-h) + 3.5rem) 0 4rem;text-align:center}
+.e-glow{position:absolute;top:0;left:50%;transform:translateX(-50%);width:min(900px,120vw);height:520px;background:radial-gradient(ellipse at top,rgba(200,169,110,.12),rgba(62,207,178,.04) 45%,transparent 70%);pointer-events:none;z-index:-1}
+.e-code{font-family:var(--fd);font-size:clamp(6.5rem,18vw,13rem);font-weight:700;line-height:.95;letter-spacing:-.05em;background:linear-gradient(135deg,rgba(200,169,110,.35),var(--champ2) 45%,rgba(200,169,110,.35));-webkit-background-clip:text;background-clip:text;color:transparent;user-select:none;margin-bottom:.75rem}
+.e404 .sh{margin-bottom:.8rem}
+.e-sub{max-width:480px;margin:0 auto 2rem;color:var(--fog);line-height:1.8}
+.e-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:2.5rem;align-items:start;max-width:1000px;margin:3.5rem auto 0;text-align:left}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.quick .card{flex-direction:row;align-items:center;gap:.9rem;padding:1rem 1.1rem}
+.quick .card-title{font-size:1.12rem;margin-bottom:.15rem}
+.quick .card-text{font-size:.76rem;line-height:1.5}
+.e-term .t-out-label{margin-bottom:.35rem}
+.e-term .t-out{font-size:.7rem;color:var(--fog);line-height:1.8}
+.e-term .t-out strong{color:var(--teal);font-weight:500}
+@media (max-width:900px){.e-grid{grid-template-columns:1fr;gap:2rem;margin-top:2.75rem}}
+@media (max-width:480px){.quick{grid-template-columns:1fr}}
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="e404" aria-labelledby="page-title">
+  <div class="e-glow" aria-hidden="true"></div>
+  <div class="container">
+    <div class="e-code" aria-hidden="true">404</div>
+    <div class="eyebrow center" data-r>Page not found</div>
+    <h1 class="sh" id="page-title" data-r="1">Lost in the <em>feature space</em></h1>
+    <p class="e-sub" data-r="2">The page you are looking for does not exist — it may have been moved, renamed, or it never trained on this data. Use the links below to get back on track.</p>
+    <div class="row" style="justify-content:center" data-r="3">
+      <a class="btn btn-primary btn-lg" href="{{ rel }}index.html">Back to home <span class="arr">&rarr;</span></a>
+      <a class="btn btn-outline btn-lg" href="{{ rel }}courses.html">Browse all 18 courses</a>
+    </div>
+
+    <div class="e-grid">
+      <nav aria-labelledby="quick-title" data-r>
+        <span class="label" id="quick-title">Popular destinations</span>
+        <div class="quick">
+          <a class="card" href="{{ rel }}courses.html"><span class="icon-box sm" aria-hidden="true">📚</span><div><div class="card-title">Courses</div><p class="card-text">18 courses — Python, ML, Deep Learning, Power BI, Azure</p></div></a>
+          <a class="card" href="{{ rel }}programmes.html"><span class="icon-box sm teal" aria-hidden="true">🎓</span><div><div class="card-title">Programmes</div><p class="card-text">AICTE-aligned internships, certifications, FDPs and coaching</p></div></a>
+          <a class="card" href="{{ rel }}codechamps.html"><span class="icon-box sm violet" aria-hidden="true">🤖</span><div><div class="card-title">Code Champs</div><p class="card-text">AI &amp; coding for school children, Grades 3–12</p></div></a>
+          <a class="card" href="{{ rel }}projects.html"><span class="icon-box sm blue" aria-hidden="true">🔬</span><div><div class="card-title">Student projects</div><p class="card-text">39 research projects across five cohorts</p></div></a>
+          <a class="card" href="{{ rel }}about.html"><span class="icon-box sm yellow" aria-hidden="true">🏛️</span><div><div class="card-title">About DSA</div><p class="card-text">Ph.D.-led, MSME-registered, founded 2019 in Chennai</p></div></a>
+          <a class="card" href="{{ rel }}contact.html"><span class="icon-box sm green" aria-hidden="true">✉️</span><div><div class="card-title">Contact</div><p class="card-text">{{ site.phone }} · West Tambaram, Chennai</p></div></a>
+        </div>
+        <p class="small muted mt-2">Looking for something else? Try the <a href="{{ rel }}blog.html">blog</a>, <a href="{{ rel }}testimonials.html">intern testimonials</a> or <a href="{{ rel }}verify.html">certificate verification</a>.</p>
+      </nav>
+
+      <div class="term e-term" data-r="1" aria-hidden="true">
+        <div class="t-bar"><span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span><span class="t-title">debug.py &mdash; DSA Studio</span></div>
+        <div class="t-body">
+          <div class="t-line"><span class="t-ln">1</span><span><span class="tk-kw">raise</span> <span class="tk-fn">PageNotFoundError</span>(</span></div>
+          <div class="t-line"><span class="t-ln">2</span><span>    <span class="tk-str">"HTTP 404: this URL is not in"</span></span></div>
+          <div class="t-line"><span class="t-ln">3</span><span>    <span class="tk-str">" the training distribution"</span></span></div>
+          <div class="t-line"><span class="t-ln">4</span><span>)</span></div>
+          <div class="t-line"><span class="t-ln">5</span><span> </span></div>
+          <div class="t-line"><span class="t-ln">6</span><span class="tk-cm"># suggestion: go back to index.html</span></div>
+          <div class="t-line"><span class="t-ln">7</span><span class="tk-cm" id="e-path"># requested: (unknown route)</span></div>
+          <div class="t-out">
+            <div class="t-out-label">Output</div>
+            <div>Matching routes: <strong>0</strong> &middot; nearest neighbour: <strong>index.html</strong></div>
+            <div>Status: <strong>404</strong> &middot; model confidence that you meant <strong>courses.html</strong>: 0.87</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function(){
+  // Show the requested path inside the debug terminal (text only — never injected as HTML).
+  var el=document.getElementById('e-path');
+  if(el){var p=location.pathname.replace(/^\/+/,'')||'/';el.textContent='# requested: '+(p.length>48?'…'+p.slice(-47):p);}
+  // If a <base> was injected (nested 404 on GitHub Pages), keep in-page fragment links on this document.
+  if(document.querySelector('base')){
+    var here=location.pathname+location.search;
+    Array.prototype.forEach.call(document.querySelectorAll('a[href^="#"]'),function(a){a.setAttribute('href',here+a.getAttribute('href'));});
+  }
+})();
+</script>
+{% endblock %}

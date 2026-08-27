@@ -519,7 +519,7 @@ const DSA_PROGRAMMES = {
     id: 'code-champs',
     image: 'Website Images/Code Champs Hero Illustration.jpeg',
     title: 'DSA Code Champs',
-    subtitle: 'School Outreach Programme — Grade 6 to 9',
+    subtitle: 'School Outreach Programme — Grades 3 to 12',
     tag: 'School Outreach',
     tagClass: 'pte',
     icon: '🤖',
@@ -529,7 +529,7 @@ const DSA_PROGRAMMES = {
     delivery: ['Offline — School Visits (Chennai)', 'Online — Interactive Live Sessions'],
     duration: '4 Weeks (1 session per week) · Weekend Bootcamps available',
     certificate: 'DSA Code Champs Participation Certificate',
-    overview: 'DSA Code Champs is a school outreach initiative designed to nurture early interest in STEM and AI among students in Grades 6 to 9. Through fun, activity-based, and project-driven learning — using age-appropriate tools like Scratch and introductory Python — we plant the seeds for tomorrow\'s AI engineers, researchers, and innovators. Every session is designed to be engaging, visual, and hands-on, making technology accessible and exciting for young minds.',
+    overview: 'DSA Code Champs is a school outreach initiative designed to nurture early interest in STEM and AI among school students from Grade 3 to Grade 12. Through fun, activity-based, and project-driven learning across four progressive levels — from Scratch and introductory Python to machine learning and computer vision — we plant the seeds for tomorrow\'s AI engineers, researchers, and innovators. Every session is designed to be engaging, visual, and hands-on, making technology accessible and exciting for young minds.',
     outcomes: [
       'First steps in programming using Scratch (visual) and Python (text)',
       'Core computational thinking and mathematical logic skills',
@@ -585,7 +585,7 @@ const DSA_PROGRAMMES = {
       }
     ],
     stats: [
-      {n:'Gr 6–9', label:'Target Age Group'},
+      {n:'Gr 3–12', label:'Target Age Group'},
       {n:'4', label:'Weeks'},
       {n:'NEP', label:'2020 Aligned'},
       {n:'STEM', label:'Mission'}

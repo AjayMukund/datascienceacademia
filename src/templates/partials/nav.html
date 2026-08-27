@@ -1,0 +1,20 @@
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="{{ rel }}index.html" aria-label="{{ site.name }} — home">
+      <img class="nav-logo" src="{{ rel }}assets/img/logo-mark-128.png" width="40" height="40" alt="" decoding="async">
+      <span><span class="nav-name">Data Science Academia</span><span class="nav-sub">Pvt. Ltd. &middot; Chennai</span></span>
+    </a>
+    <nav class="nav-menu" id="nav-menu" aria-label="Primary">
+      <ul class="nav-links">
+        {% for key, label, href in nav_items %}
+        <li><a href="{{ rel }}{{ href }}"{% if nav_active == key %} class="active" aria-current="page"{% endif %}>{{ label }}</a></li>
+        {% endfor %}
+      </ul>
+      <div class="nav-actions">
+        <a class="nav-signin" href="{{ rel }}login.html">Student sign in</a>
+        <a class="btn btn-primary btn-sm" href="{{ rel }}contact.html">Enquire now <span class="arr">&rarr;</span></a>
+      </div>
+    </nav>
+    <button class="nav-tog" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
