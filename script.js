@@ -174,14 +174,7 @@
         entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('vis'); io.unobserve(en.target); } });
       }, { threshold: .08, rootMargin: '0px 0px -5% 0px' });
       revealEls.forEach(function (el) { io.observe(el); });
-      // safety nets: never leave content invisible (odd viewports, observer quirks, print)
-      var revealAbove = function (factor) {
-        var limit = w.innerHeight * factor, pending = [];
-        revealEls.forEach(function (el) { if (!el.classList.contains('vis') && el.getBoundingClientRect().top < limit) pending.push(el); });  // reads
-        pending.forEach(function (el) { el.classList.add('vis'); });                                                                       // then writes
-      };
-      setTimeout(function () { revealAbove(1.25); }, 1200);
-      w.addEventListener('load', function () { setTimeout(function () { revealAbove(1.25); }, 300); });
+      // safety net lives in CSS (.js [data-r] animation after 3s) — no geometry reads, no forced reflow
       w.addEventListener('beforeprint', function () { revealEls.forEach(function (el) { el.classList.add('vis'); }); });
     }
   }
