@@ -257,6 +257,24 @@ def og_for(kind: str, ident: str) -> str:
     return absolute(f"assets/og/{kind}-{ident}.jpg") if p.exists() else absolute("assets/og/default.jpg")
 
 
+# ── Inline CSS (fonts.css + style.css minified into every page → no render-blocking CSS) ──
+def minify_css(css: str) -> str:
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    return "\n".join(line.strip() for line in css.splitlines() if line.strip())
+
+
+_STYLE_MIN = minify_css((ROOT / "style.css").read_text(encoding="utf-8"))
+_FONTS_RAW = (ROOT / "assets/fonts/fonts.css").read_text(encoding="utf-8")
+_inline_cache: dict = {}
+
+
+def inline_css(rel: str) -> Markup:
+    if rel not in _inline_cache:
+        fonts = minify_css(_FONTS_RAW.replace("url('", f"url('{rel}assets/fonts/"))
+        _inline_cache[rel] = Markup(fonts + "\n" + _STYLE_MIN)
+    return _inline_cache[rel]
+
+
 # ── Jinja environment ──────────────────────────────────────────────────────
 env = jinja2.Environment(
     loader=jinja2.FileSystemLoader([str(SRC / "pages"), str(SRC / "templates")]),
@@ -345,7 +363,7 @@ def render(template: str, out_rel: str, changefreq: str | None = "monthly", prio
     depth = out_rel.count("/")
     rel = "../" * depth
     context = dict(COMMON)
-    context.update(rel=rel, depth=depth, out_path=out_rel, canonical=absolute(out_rel), nav_active=None)
+    context.update(rel=rel, depth=depth, out_path=out_rel, canonical=absolute(out_rel), nav_active=None, inline_css=inline_css(rel))
     context.update(ctx)
     out = env.get_template(template).render(**context)
     target = ROOT / out_rel
@@ -450,11 +468,41 @@ Sitemap: {SITE['url']}/sitemap.xml
     print(f"sitemap.xml ({len(SITEMAP) + 1} URLs) + robots.txt")
 
 
+def build_llms_txt() -> None:
+    """llms.txt — a Markdown map of the site for AI crawlers and agents (https://llmstxt.org)."""
+    a = SITE["address"]
+    L = [f"# {SITE['name']}", "", f"> {SITE['description']}", "",
+         f"Address: {a['street']}, {a['locality']}, {a['region']} {a['postal']}, India. Phone/WhatsApp: {SITE['phone']}. "
+         f"Email: {SITE['email']}. Hours: {SITE['hours']}. Founded {SITE['founded']}; MSME registered; AICTE-aligned internships and FDPs.",
+         "", "## Key pages", ""]
+    for name, path in [("Home", ""), ("All courses", "courses.html"), ("Programmes", "programmes.html"),
+                       ("DSA Code Champs (schools, Grades 3-12)", "codechamps.html"), ("Student projects", "projects.html"),
+                       ("Intern testimonials", "testimonials.html"), ("Blog", "blog.html"), ("About", "about.html"),
+                       ("Contact and enrol", "contact.html")]:
+        L.append(f"- [{name}]({absolute(path)})")
+    L += ["", "## Courses", ""]
+    for c in COURSES.values():
+        L.append(f"- [{c['title']}]({absolute(c['url'])}): {c['category']} - {c['level']} - {c['duration']}, {c['hours']}. {meta_desc(c['overview'], 140)}")
+    L += ["", "## Programmes", ""]
+    for p in PROGRAMMES.values():
+        L.append(f"- [{p['title']}]({absolute(p['url'])}): {p['subtitle']} - {p['duration']}. {meta_desc(p['overview'], 140)}")
+    L += ["", "## DSA Code Champs levels", ""]
+    for lv in LEVELS.values():
+        L.append(f"- [{lv['name']}]({absolute(lv['url'])}): {lv['badge']} - {lv['grade']} - {lv['age']} - {lv['duration']}, {lv['sessions']}.")
+    L += ["", "## Blog posts", ""]
+    for post in POSTS:
+        L.append(f"- [{post['title']}]({absolute(post['url'])}): {post['catLabel']}, {post['dateDisplay']}. {meta_desc(post['excerpt'], 140)}")
+    L += ["", "## Optional", "", f"- [Company facts (plain text)]({absolute('Company_Info.txt')})", f"- [Sitemap]({absolute('sitemap.xml')})", ""]
+    (ROOT / "llms.txt").write_text("\n".join(L), encoding="utf-8", newline="\n")
+    print("llms.txt")
+
+
 def main() -> None:
     build_pages()
     build_details()
     build_redirects()
     build_sitemap_robots()
+    build_llms_txt()
     print("Build complete.")
 
 

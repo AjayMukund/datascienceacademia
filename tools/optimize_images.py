@@ -23,15 +23,15 @@ FORCE = "--force" in sys.argv
 
 # (source glob, output subdir, widths)
 JOBS = [
-    ("Website Images/Courses/*.jpeg", "courses", (480, 960, 1600)),
-    ("Website Images/Projects/*.jpeg", "projects", (480, 960)),
-    ("Website Images/Code Champs/*.jpeg", "codechamps", (480, 960, 1600)),
-    ("Website Images/*.jpeg", "", (480, 960, 1600)),
+    ("Website Images/Courses/*.jpeg", "courses", (480, 720, 960, 1600)),
+    ("Website Images/Projects/*.jpeg", "projects", (480, 720, 960)),
+    ("Website Images/Code Champs/*.jpeg", "codechamps", (480, 720, 960, 1600)),
+    ("Website Images/*.jpeg", "", (480, 720, 960, 1600)),
     ("Intern Testimonials/*.png", "testimonials", (480, 960)),
     ("12 Month AI Mastery Programme Roadmap.png", "", (960, 1600, 2400)),
 ]
 
-QUALITY = {480: 80, 960: 80, 1600: 78, 2400: 76}
+QUALITY = {480: 76, 720: 74, 960: 72, 1600: 70, 2400: 66}
 
 
 def slugify(name: str) -> str:

@@ -34,8 +34,7 @@
 <link rel="manifest" href="{{ rel }}manifest.json">
 <link rel="preload" href="{{ rel }}assets/fonts/outfit-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ rel }}assets/fonts/cormorant-garamond-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{{ asset('assets/fonts/fonts.css') }}">
-<link rel="stylesheet" href="{{ asset('style.css') }}">
+<style>{{ inline_css }}</style>
 <script>document.documentElement.classList.add('js');</script>
 {% block head_extra %}{% endblock %}
 {{ site_jsonld }}

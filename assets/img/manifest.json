@@ -9,6 +9,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/courses/aws-for-data-science-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/courses/aws-for-data-science-960.webp",
     "w": 960,
@@ -30,6 +35,11 @@
     "file": "assets/img/courses/computer-vision-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/courses/computer-vision-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/courses/computer-vision-960.webp",
@@ -53,6 +63,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/courses/data-visualization-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/courses/data-visualization-960.webp",
     "w": 960,
@@ -74,6 +89,11 @@
     "file": "assets/img/courses/deep-learning-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/courses/deep-learning-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/courses/deep-learning-960.webp",
@@ -97,6 +117,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/courses/excel-for-data-analysis-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/courses/excel-for-data-analysis-960.webp",
     "w": 960,
@@ -118,6 +143,11 @@
     "file": "assets/img/courses/feature-engineering-and-model-selection-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/courses/feature-engineering-and-model-selection-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/courses/feature-engineering-and-model-selection-960.webp",
@@ -141,6 +171,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/courses/generative-ai-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/courses/generative-ai-960.webp",
     "w": 960,
@@ -162,6 +197,11 @@
     "file": "assets/img/courses/large-language-models-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/courses/large-language-models-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/courses/large-language-models-960.webp",
@@ -185,6 +225,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/courses/machine-learning-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/courses/machine-learning-960.webp",
     "w": 960,
@@ -206,6 +251,11 @@
     "file": "assets/img/courses/microsoft-azure-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/courses/microsoft-azure-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/courses/microsoft-azure-960.webp",
@@ -229,6 +279,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/courses/mlops-and-model-deployment-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/courses/mlops-and-model-deployment-960.webp",
     "w": 960,
@@ -250,6 +305,11 @@
     "file": "assets/img/courses/natural-language-processing-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/courses/natural-language-processing-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/courses/natural-language-processing-960.webp",
@@ -273,6 +333,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/courses/power-bi-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/courses/power-bi-960.webp",
     "w": 960,
@@ -294,6 +359,11 @@
     "file": "assets/img/courses/python-programming-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/courses/python-programming-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/courses/python-programming-960.webp",
@@ -317,6 +387,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/courses/r-programming-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/courses/r-programming-960.webp",
     "w": 960,
@@ -338,6 +413,11 @@
     "file": "assets/img/courses/reinforcement-learning-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/courses/reinforcement-learning-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/courses/reinforcement-learning-960.webp",
@@ -361,6 +441,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/courses/sql-for-data-science-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/courses/sql-for-data-science-960.webp",
     "w": 960,
@@ -382,6 +467,11 @@
     "file": "assets/img/courses/tableau-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/courses/tableau-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/courses/tableau-960.webp",
@@ -405,6 +495,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/advanced-sentiment-analysis-and-sarcasm-detection-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/advanced-sentiment-analysis-and-sarcasm-detection-960.webp",
     "w": 960,
@@ -421,6 +516,11 @@
     "file": "assets/img/projects/ai-virtual-mouse-using-mediapipe-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/ai-virtual-mouse-using-mediapipe-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/ai-virtual-mouse-using-mediapipe-960.webp",
@@ -439,6 +539,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/autonomous-driving-aid-with-multilabel-image-classification-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/autonomous-driving-aid-with-multilabel-image-classification-960.webp",
     "w": 960,
@@ -455,6 +560,11 @@
     "file": "assets/img/projects/breast-cancer-prediction-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/breast-cancer-prediction-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/breast-cancer-prediction-960.webp",
@@ -473,6 +583,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/clothing-sales-forecasting-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/clothing-sales-forecasting-960.webp",
     "w": 960,
@@ -489,6 +604,11 @@
     "file": "assets/img/projects/content-based-movie-recommender-system-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/content-based-movie-recommender-system-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/content-based-movie-recommender-system-960.webp",
@@ -507,6 +627,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/credit-card-fraud-detection-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/credit-card-fraud-detection-960.webp",
     "w": 960,
@@ -523,6 +648,11 @@
     "file": "assets/img/projects/crop-protection-animal-image-classification-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/crop-protection-animal-image-classification-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/crop-protection-animal-image-classification-960.webp",
@@ -541,6 +671,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/crop-protection-identification-and-recommendation-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/crop-protection-identification-and-recommendation-960.webp",
     "w": 960,
@@ -557,6 +692,11 @@
     "file": "assets/img/projects/customer-segmentation-and-market-basket-analysis-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/customer-segmentation-and-market-basket-analysis-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/customer-segmentation-and-market-basket-analysis-960.webp",
@@ -575,6 +715,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/cyberbullying-tweet-detection-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/cyberbullying-tweet-detection-960.webp",
     "w": 960,
@@ -591,6 +736,11 @@
     "file": "assets/img/projects/data-cleaning-in-the-perspective-of-ml-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/data-cleaning-in-the-perspective-of-ml-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/data-cleaning-in-the-perspective-of-ml-960.webp",
@@ -609,6 +759,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/drowsiness-detection-using-facial-landmarks-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/drowsiness-detection-using-facial-landmarks-960.webp",
     "w": 960,
@@ -625,6 +780,11 @@
     "file": "assets/img/projects/electric-vehicle-power-predictor-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/electric-vehicle-power-predictor-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/electric-vehicle-power-predictor-960.webp",
@@ -643,6 +803,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/emotion-detection-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/emotion-detection-960.webp",
     "w": 960,
@@ -659,6 +824,11 @@
     "file": "assets/img/projects/emotion-recognition-using-images-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/emotion-recognition-using-images-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/emotion-recognition-using-images-960.webp",
@@ -677,6 +847,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/face-recognition-attendance-system-with-anti-spoofing-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/face-recognition-attendance-system-with-anti-spoofing-960.webp",
     "w": 960,
@@ -693,6 +868,11 @@
     "file": "assets/img/projects/fake-news-detection-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/fake-news-detection-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/fake-news-detection-960.webp",
@@ -711,6 +891,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/fingerprint-matching-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/fingerprint-matching-960.webp",
     "w": 960,
@@ -727,6 +912,11 @@
     "file": "assets/img/projects/gait-analysis-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/gait-analysis-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/gait-analysis-960.webp",
@@ -745,6 +935,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/hate-speech-detection-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/hate-speech-detection-960.webp",
     "w": 960,
@@ -761,6 +956,11 @@
     "file": "assets/img/projects/health-support-chatbot-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/health-support-chatbot-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/health-support-chatbot-960.webp",
@@ -779,6 +979,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/healthcare-project-disease-prediction-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/healthcare-project-disease-prediction-960.webp",
     "w": 960,
@@ -795,6 +1000,11 @@
     "file": "assets/img/projects/image-captioning-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/image-captioning-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/image-captioning-960.webp",
@@ -813,6 +1023,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/iris-flower-species-identification-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/iris-flower-species-identification-960.webp",
     "w": 960,
@@ -829,6 +1044,11 @@
     "file": "assets/img/projects/mental-health-therapist-chatbot-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/mental-health-therapist-chatbot-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/mental-health-therapist-chatbot-960.webp",
@@ -847,6 +1067,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/movie-recommendation-system-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/movie-recommendation-system-960.webp",
     "w": 960,
@@ -863,6 +1088,11 @@
     "file": "assets/img/projects/music-recommender-system-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/music-recommender-system-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/music-recommender-system-960.webp",
@@ -881,6 +1111,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/neural-style-transfer-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/neural-style-transfer-960.webp",
     "w": 960,
@@ -897,6 +1132,11 @@
     "file": "assets/img/projects/rocks-and-mines-prediction-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/rocks-and-mines-prediction-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/rocks-and-mines-prediction-960.webp",
@@ -915,6 +1155,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/smartmcq-using-generative-ai-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/smartmcq-using-generative-ai-960.webp",
     "w": 960,
@@ -931,6 +1176,11 @@
     "file": "assets/img/projects/speaker-accent-recognition-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/speaker-accent-recognition-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/speaker-accent-recognition-960.webp",
@@ -949,6 +1199,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/speech-emotion-recognition-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/speech-emotion-recognition-960.webp",
     "w": 960,
@@ -965,6 +1220,11 @@
     "file": "assets/img/projects/visualizing-cricketing-data-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/visualizing-cricketing-data-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/visualizing-cricketing-data-960.webp",
@@ -983,6 +1243,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/vocal-aura-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/vocal-aura-960.webp",
     "w": 960,
@@ -999,6 +1264,11 @@
     "file": "assets/img/projects/water-quality-prediction-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/water-quality-prediction-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/water-quality-prediction-960.webp",
@@ -1017,6 +1287,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/weather-forecasting-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/weather-forecasting-960.webp",
     "w": 960,
@@ -1033,6 +1308,11 @@
     "file": "assets/img/projects/wine-quality-prediction-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/projects/wine-quality-prediction-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/projects/wine-quality-prediction-960.webp",
@@ -1051,6 +1331,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/projects/winning-price-prediction-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/projects/winning-price-prediction-960.webp",
     "w": 960,
@@ -1067,6 +1352,11 @@
     "file": "assets/img/codechamps/code-builders-project-quiz-game-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/codechamps/code-builders-project-quiz-game-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/codechamps/code-builders-project-quiz-game-960.webp",
@@ -1090,6 +1380,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/codechamps/code-builders-project-smart-chatbot-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/codechamps/code-builders-project-smart-chatbot-960.webp",
     "w": 960,
@@ -1111,6 +1406,11 @@
     "file": "assets/img/codechamps/code-builders-project-turtle-art-machine-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/codechamps/code-builders-project-turtle-art-machine-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/codechamps/code-builders-project-turtle-art-machine-960.webp",
@@ -1134,6 +1434,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/codechamps/code-champs-level-1-code-explorers-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/codechamps/code-champs-level-1-code-explorers-960.webp",
     "w": 960,
@@ -1155,6 +1460,11 @@
     "file": "assets/img/codechamps/code-champs-level-2-code-builders-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/codechamps/code-champs-level-2-code-builders-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/codechamps/code-champs-level-2-code-builders-960.webp",
@@ -1178,6 +1488,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/codechamps/code-champs-level-3-code-innovators-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/codechamps/code-champs-level-3-code-innovators-960.webp",
     "w": 960,
@@ -1199,6 +1514,11 @@
     "file": "assets/img/codechamps/code-champs-level-4-code-pioneers-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/codechamps/code-champs-level-4-code-pioneers-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/codechamps/code-champs-level-4-code-pioneers-960.webp",
@@ -1222,6 +1542,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/codechamps/code-explorers-project-animated-story-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/codechamps/code-explorers-project-animated-story-960.webp",
     "w": 960,
@@ -1243,6 +1568,11 @@
     "file": "assets/img/codechamps/code-explorers-project-catch-the-stars-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/codechamps/code-explorers-project-catch-the-stars-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/codechamps/code-explorers-project-catch-the-stars-960.webp",
@@ -1266,6 +1596,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/codechamps/code-explorers-project-code-art-gallery-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/codechamps/code-explorers-project-code-art-gallery-960.webp",
     "w": 960,
@@ -1287,6 +1622,11 @@
     "file": "assets/img/codechamps/code-innovators-project-computer-vision-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/codechamps/code-innovators-project-computer-vision-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/codechamps/code-innovators-project-computer-vision-960.webp",
@@ -1310,6 +1650,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/codechamps/code-innovators-project-data-dashboard-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/codechamps/code-innovators-project-data-dashboard-960.webp",
     "w": 960,
@@ -1331,6 +1676,11 @@
     "file": "assets/img/codechamps/code-innovators-project-image-classifier-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/codechamps/code-innovators-project-image-classifier-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/codechamps/code-innovators-project-image-classifier-960.webp",
@@ -1354,6 +1704,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/codechamps/code-pioneers-project-deep-learning-architecture-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/codechamps/code-pioneers-project-deep-learning-architecture-960.webp",
     "w": 960,
@@ -1375,6 +1730,11 @@
     "file": "assets/img/codechamps/code-pioneers-project-deployed-ai-app-480.webp",
     "w": 480,
     "h": 358
+   },
+   "720": {
+    "file": "assets/img/codechamps/code-pioneers-project-deployed-ai-app-720.webp",
+    "w": 720,
+    "h": 538
    },
    "960": {
     "file": "assets/img/codechamps/code-pioneers-project-deployed-ai-app-960.webp",
@@ -1398,6 +1758,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/codechamps/code-pioneers-project-ml-model-evaluation-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/codechamps/code-pioneers-project-ml-model-evaluation-960.webp",
     "w": 960,
@@ -1419,6 +1784,11 @@
     "file": "assets/img/about-page-visual-classroomlab-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/about-page-visual-classroomlab-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/about-page-visual-classroomlab-960.webp",
@@ -1442,6 +1812,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/advanced-ai-category-banner-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/advanced-ai-category-banner-960.webp",
     "w": 960,
@@ -1463,6 +1838,11 @@
     "file": "assets/img/ai-mastery-track-visual-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/ai-mastery-track-visual-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/ai-mastery-track-visual-960.webp",
@@ -1486,6 +1866,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/analytics-category-banner-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/analytics-category-banner-960.webp",
     "w": 960,
@@ -1507,6 +1892,11 @@
     "file": "assets/img/blog-bias-variance-tradeoff-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/blog-bias-variance-tradeoff-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/blog-bias-variance-tradeoff-960.webp",
@@ -1530,6 +1920,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/blog-data-science-career-in-india-2025-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/blog-data-science-career-in-india-2025-960.webp",
     "w": 960,
@@ -1551,6 +1946,11 @@
     "file": "assets/img/blog-feature-engineering-mastery-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/blog-feature-engineering-mastery-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/blog-feature-engineering-mastery-960.webp",
@@ -1574,6 +1974,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/blog-llms-in-production-2025-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/blog-llms-in-production-2025-960.webp",
     "w": 960,
@@ -1595,6 +2000,11 @@
     "file": "assets/img/blog-python-learning-roadmap-2025-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/blog-python-learning-roadmap-2025-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/blog-python-learning-roadmap-2025-960.webp",
@@ -1618,6 +2028,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/blog-statistics-meets-deep-learning-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/blog-statistics-meets-deep-learning-960.webp",
     "w": 960,
@@ -1639,6 +2054,11 @@
     "file": "assets/img/cloud-and-bi-category-banner-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/cloud-and-bi-category-banner-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/cloud-and-bi-category-banner-960.webp",
@@ -1662,6 +2082,11 @@
     "w": 480,
     "h": 358
    },
+   "720": {
+    "file": "assets/img/code-champs-hero-illustration-720.webp",
+    "w": 720,
+    "h": 538
+   },
    "960": {
     "file": "assets/img/code-champs-hero-illustration-960.webp",
     "w": 960,
@@ -1683,6 +2108,11 @@
     "file": "assets/img/code-champs-sessions-collage-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/code-champs-sessions-collage-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/code-champs-sessions-collage-960.webp",
@@ -1706,6 +2136,11 @@
     "w": 480,
     "h": 480
    },
+   "720": {
+    "file": "assets/img/competitive-examination-training-720.webp",
+    "w": 720,
+    "h": 720
+   },
    "960": {
     "file": "assets/img/competitive-examination-training-960.webp",
     "w": 960,
@@ -1727,6 +2162,11 @@
     "file": "assets/img/core-ml-category-banner-480.webp",
     "w": 480,
     "h": 268
+   },
+   "720": {
+    "file": "assets/img/core-ml-category-banner-720.webp",
+    "w": 720,
+    "h": 402
    },
    "960": {
     "file": "assets/img/core-ml-category-banner-960.webp",
@@ -1750,6 +2190,11 @@
     "w": 480,
     "h": 480
    },
+   "720": {
+    "file": "assets/img/corporate-and-faculty-development-programme-720.webp",
+    "w": 720,
+    "h": 720
+   },
    "960": {
     "file": "assets/img/corporate-and-faculty-development-programme-960.webp",
     "w": 960,
@@ -1771,6 +2216,11 @@
     "file": "assets/img/courses-page-hero-banner-480.webp",
     "w": 480,
     "h": 127
+   },
+   "720": {
+    "file": "assets/img/courses-page-hero-banner-720.webp",
+    "w": 720,
+    "h": 190
    },
    "960": {
     "file": "assets/img/courses-page-hero-banner-960.webp",
@@ -1794,6 +2244,11 @@
     "w": 480,
     "h": 268
    },
+   "720": {
+    "file": "assets/img/foundation-category-banner-720.webp",
+    "w": 720,
+    "h": 402
+   },
    "960": {
     "file": "assets/img/foundation-category-banner-960.webp",
     "w": 960,
@@ -1815,6 +2270,11 @@
     "file": "assets/img/internship-programme-480.webp",
     "w": 480,
     "h": 480
+   },
+   "720": {
+    "file": "assets/img/internship-programme-720.webp",
+    "w": 720,
+    "h": 720
    },
    "960": {
     "file": "assets/img/internship-programme-960.webp",
@@ -1838,6 +2298,11 @@
     "w": 480,
     "h": 480
    },
+   "720": {
+    "file": "assets/img/language-and-communication-programme-720.webp",
+    "w": 720,
+    "h": 720
+   },
    "960": {
     "file": "assets/img/language-and-communication-programme-960.webp",
     "w": 960,
@@ -1860,6 +2325,11 @@
     "w": 480,
     "h": 480
    },
+   "720": {
+    "file": "assets/img/microsoft-certification-programme-720.webp",
+    "w": 720,
+    "h": 720
+   },
    "960": {
     "file": "assets/img/microsoft-certification-programme-960.webp",
     "w": 960,
@@ -1881,6 +2351,11 @@
     "file": "assets/img/research-assistance-programme-480.webp",
     "w": 480,
     "h": 480
+   },
+   "720": {
+    "file": "assets/img/research-assistance-programme-720.webp",
+    "w": 720,
+    "h": 720
    },
    "960": {
     "file": "assets/img/research-assistance-programme-960.webp",

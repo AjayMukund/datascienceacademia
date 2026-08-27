@@ -46,7 +46,8 @@
 
   /* ── 3. Ambient neural-network background (cheap version) ─────────────── */
   var canvas = d.getElementById('bg-canvas') || d.getElementById('fluid-canvas');
-  if (canvas && !reduceMotion && canvas.getContext) {
+  var wantCanvas = finePointer && w.innerWidth >= 768;   // decorative only — skipped on phones (paint + battery)
+  if (canvas && !reduceMotion && wantCanvas && canvas.getContext) {
     var ctx = canvas.getContext('2d', { alpha: true });
     var DPR = Math.min(w.devicePixelRatio || 1, 1.5);
     var coarse = !finePointer;
