@@ -11,9 +11,9 @@
   --teal:#3ecfb2;--teal2:#2aab92;
   --border:rgba(200,169,110,.14);--border2:rgba(200,169,110,.28);--border3:rgba(200,169,110,.45);
   --glass:rgba(11,12,14,.82);--glass2:rgba(17,19,24,.72);
-  --fd:'Cormorant Garamond',Georgia,serif;
-  --fb:'Outfit',system-ui,sans-serif;
-  --fm:'Fira Code','Courier New',monospace;
+  --fd:'Cormorant Garamond','Cormorant Garamond Fallback',Georgia,serif;
+  --fb:'Outfit','Outfit Fallback',system-ui,sans-serif;
+  --fm:'Fira Code','Fira Code Fallback','Courier New',monospace;
   --sd:0 24px 80px rgba(0,0,0,.55);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}

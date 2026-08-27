@@ -41,6 +41,9 @@
 @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500 700;font-display:swap;src:url('../assets/fonts/cormorant-garamond-var.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
 @font-face{font-family:'Fira Code';font-style:normal;font-weight:400 500;font-display:swap;src:url('../assets/fonts/fira-code-var.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
 @font-face{font-family:'Outfit';font-style:normal;font-weight:300 700;font-display:swap;src:url('../assets/fonts/outfit-var.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'Outfit Fallback';src:local('Arial'), local('Liberation Sans'), local('Helvetica Neue'), local('Helvetica');size-adjust:99.38%;ascent-override:100.62%;descent-override:26.16%;line-gap-override:0.00%;}
+@font-face{font-family:'Cormorant Garamond Fallback';src:local('Times New Roman'), local('Liberation Serif'), local('Tinos'), local('Times');size-adjust:97.26%;ascent-override:95.00%;descent-override:29.51%;line-gap-override:0.00%;}
+@font-face{font-family:'Fira Code Fallback';src:local('Courier New'), local('Liberation Mono'), local('Cousine');size-adjust:99.98%;ascent-override:99.02%;descent-override:32.21%;line-gap-override:0.00%;}
 :root{
 --ink:#0b0c0e;--ink2:#111318;--ink3:#171a21;--ink4:#1e2230;
 --champ:#c8a96e;--champ2:#dfc08a;--champ3:#f0ddb0;
@@ -50,9 +53,9 @@
 --border:rgba(200,169,110,.14);--border2:rgba(200,169,110,.28);--border3:rgba(200,169,110,.45);
 --glass:rgba(11,12,14,.82);--glass2:rgba(17,19,24,.72);
 --card:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
---fd:'Cormorant Garamond',Georgia,'Times New Roman',serif;
---fb:'Outfit',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
---fm:'Fira Code',ui-monospace,'Cascadia Code',Consolas,monospace;
+--fd:'Cormorant Garamond','Cormorant Garamond Fallback',Georgia,'Times New Roman',serif;
+--fb:'Outfit','Outfit Fallback',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+--fm:'Fira Code','Fira Code Fallback',ui-monospace,'Cascadia Code',Consolas,monospace;
 --r-sm:8px;--r:14px;--r-lg:20px;--r-xl:28px;
 --sg:0 0 40px rgba(200,169,110,.12);
 --sd:0 24px 80px rgba(0,0,0,.55);
@@ -558,7 +561,7 @@ a{color:#000}
 <header class="nav" id="nav">
   <div class="nav-inner">
     <a class="nav-brand" href="../index.html" aria-label="Data Science Academia — home">
-      <img class="nav-logo" src="../assets/img/logo-mark-128.png" width="40" height="40" alt="" decoding="async">
+      <img class="nav-logo" src="../assets/img/logo-mark-64.png" srcset="../assets/img/logo-mark-64.png 1x, ../assets/img/logo-mark-128.png 2x" width="40" height="40" alt="" decoding="async">
       <span><span class="nav-name">Data Science Academia</span><span class="nav-sub">Pvt. Ltd. &middot; Chennai</span></span>
     </a>
     <nav class="nav-menu" id="nav-menu" aria-label="Primary">
@@ -758,7 +761,7 @@ print(f"p-value: {result.pvalue:.4f}")  # < 0.05 = significant</code></pre>
     <div class="footer-grid">
       <div>
         <div class="footer-brand">
-          <img class="nav-logo" src="../assets/img/logo-mark-128.png" width="44" height="44" alt="" loading="lazy" decoding="async">
+          <img class="nav-logo" src="../assets/img/logo-mark-64.png" srcset="../assets/img/logo-mark-64.png 1x, ../assets/img/logo-mark-128.png 2x" width="44" height="44" alt="" loading="lazy" decoding="async">
           <span><span class="nav-name">Data Science Academia</span><span class="nav-sub">Private Limited &middot; Chennai</span></span>
         </div>
         <p class="footer-about">Ph.D.-led, industry-grounded education in Data Science and Artificial Intelligence — 18 specialised courses, AICTE-aligned internships, Microsoft certification pathways and a 12-month AI Mastery Track, delivered live in Chennai and online across India.</p>
@@ -823,7 +826,7 @@ print(f"p-value: {result.pvalue:.4f}")  # < 0.05 = significant</code></pre>
       <div class="links"><a href="../sitemap.xml">Sitemap</a><a href="../contact.html">Contact</a><a href="https://wa.me/919176498814" target="_blank" rel="noopener">WhatsApp</a></div>
     </div>
   </div>
-</footer><script src="../script.js?v=0fb3a8c0" defer></script>
+</footer><script src="../script.js?v=98eac375" defer></script>
 <script>
 (function () {
   /* The scroll-progress bar is provided globally by script.js (#scroll-progress); nothing page-specific is needed for it. */
