@@ -52,7 +52,7 @@ SITE = {
     ),
     "phone": "+91 91764 98814",
     "phone_intl": "+919176498814",
-    "email": "info@datascienceacademia.in",
+    "email": "data.science.academia@gmail.com",
     "whatsapp": "https://wa.me/919176498814",
     "whatsapp_msg": "https://wa.me/919176498814?text=Hello%20DSA%2C%20I%27d%20like%20to%20know%20more%20about%20your%20courses.",
     "address": {
