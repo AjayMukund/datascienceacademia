@@ -11,3 +11,5 @@ _preview/
 src/preview/
 # third-party reference material — never publish
 homepage-hero-*.webm
+exports/
+docs/private/

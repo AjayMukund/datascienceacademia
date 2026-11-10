@@ -14,9 +14,11 @@ Disallow: /blog-post.html
 Disallow: /cc-level.html
 Disallow: /src/
 Disallow: /tools/
-Disallow: /_legacy/
-Disallow: /dsa_app/
-Disallow: /social-automation/
-Disallow: /pwa_icon_bundle/
+Disallow: /docs/
+Disallow: /archive/
+Disallow: /apps/
+Disallow: /marketing/
+Disallow: /source-images/
+Disallow: /content/
 
 Sitemap: https://datascienceacademia.in/sitemap.xml

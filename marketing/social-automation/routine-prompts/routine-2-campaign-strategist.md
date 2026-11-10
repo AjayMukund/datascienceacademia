@@ -47,7 +47,7 @@ You understand the Indian edtech market: students want placement, professionals 
 
 ### Step 1 — Read today's brief
 1. Get TODAY_DATE: `date +%Y-%m-%d`, DAY_NAME: `date +%A`
-2. Read: `social-automation/daily-briefs/{TODAY_DATE}.md`
+2. Read: `marketing/social-automation/daily-briefs/{TODAY_DATE}.md`
 3. Extract from SECTION 1: topic, hook angle, platform, format, target persona, DSA product, lead magnet, CTA
 
 ### Step 2 — Select and build the campaign
@@ -99,11 +99,11 @@ Show how this one idea becomes 8 assets:
 ## OUTPUT INSTRUCTIONS
 
 ### A — Write to repo
-1. Open `social-automation/daily-briefs/{TODAY_DATE}.md`
+1. Open `marketing/social-automation/daily-briefs/{TODAY_DATE}.md`
 2. Fill SECTION 2 completely. Preserve all other sections.
 3. Commit and push:
 ```bash
-git add social-automation/daily-briefs/{TODAY_DATE}.md
+git add marketing/social-automation/daily-briefs/{TODAY_DATE}.md
 git commit -m "Routine 2: Campaign plan for {TODAY_DATE}"
 git push origin main
 ```

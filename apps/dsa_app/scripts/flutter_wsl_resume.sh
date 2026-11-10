@@ -4,7 +4,7 @@ set -e
 export ANDROID_HOME=/home/ajay/android-sdk
 export FLUTTER_HOME=/home/ajay/flutter
 export GRADLE_USER_HOME=/home/ajay/.gradle
-PROJECT="/mnt/d/Projects/Data Science Academia/dsa_app"
+PROJECT="/mnt/e/Projects/Data_Science_Academia/apps/dsa_app"
 
 echo "===[A] Downloading Temurin JDK 17 (needed by sdkmanager) ==="
 if [ ! -d /home/ajay/jdk17 ]; then

@@ -2,7 +2,7 @@
    PORTAL — shared styles for login, register, student & admin pages
    Uses the same CSS custom properties as style.css
 ════════════════════════════════════════════════════════════════════════════ */
-@import url('assets/fonts/fonts.css'); /* self-hosted fonts (see tools/fetch_fonts.py) */
+@import url('../fonts/fonts.css'); /* self-hosted fonts (see tools/fetch_fonts.py) */
 
 :root{
   --ink:#0b0c0e;--ink2:#111318;--ink3:#181c24;

@@ -19,6 +19,8 @@ from PIL import Image, ImageOps
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "assets" / "img"
+SRC_IMG = ROOT / "source-images"          # originals; data files reference paths relative to this folder
+ICONS = ROOT / "assets" / "icons"
 FORCE = "--force" in sys.argv
 
 # (source glob, output subdir, widths)
@@ -50,7 +52,7 @@ def convert(src: Path, subdir: str, widths: tuple[int, ...], manifest: dict) -> 
     has_alpha = im.mode in ("RGBA", "LA") or (im.mode == "P" and "transparency" in im.info)
     im = im.convert("RGBA" if has_alpha else "RGB")
     w0, h0 = im.size
-    entry = {"src": str(src.relative_to(ROOT)).replace("\\", "/"), "w": w0, "h": h0, "variants": {}}
+    entry = {"src": str(src.relative_to(SRC_IMG)).replace("\\", "/"), "w": w0, "h": h0, "variants": {}}
     for width in widths:
         if width > w0:
             width = w0
@@ -68,7 +70,7 @@ def convert(src: Path, subdir: str, widths: tuple[int, ...], manifest: dict) -> 
 
 def make_logo(manifest: dict) -> None:
     """Champagne-tinted, transparent logo mark from the yellow-on-black PWA icon."""
-    src = ROOT / "icons" / "icon-512.png"
+    src = ICONS / "icon-512.png"
     im = Image.open(src).convert("RGBA")
     px = im.load()
     w, h = im.size
@@ -91,7 +93,7 @@ def make_logo(manifest: dict) -> None:
         small = canvas.resize((size, size), Image.LANCZOS)
         small.quantize(colors=48, method=Image.Quantize.FASTOCTREE).save(f, "PNG", optimize=True)  # two-tone mark → tiny palette PNG
     canvas.resize((256, 256), Image.LANCZOS).save(OUT / "logo-mark-256.webp", "WEBP", quality=90, method=6)
-    manifest["logo-mark"] = {"src": "icons/icon-512.png", "w": 256, "h": 256, "variants": {"256": {"file": "assets/img/logo-mark-256.png", "w": 256, "h": 256}}}
+    manifest["logo-mark"] = {"src": "assets/icons/icon-512.png", "w": 256, "h": 256, "variants": {"256": {"file": "assets/img/logo-mark-256.png", "w": 256, "h": 256}}}
 
     # Favicons (champagne mark on ink background) + apple touch icon
     def on_ink(size: int, pad_ratio: float = 0.12) -> Image.Image:
@@ -102,9 +104,9 @@ def make_logo(manifest: dict) -> None:
         return bg
 
     q = lambda im: im.convert("RGB").quantize(colors=48, method=Image.Quantize.FASTOCTREE)
-    q(on_ink(180, 0.1)).save(ROOT / "apple-touch-icon.png", "PNG", optimize=True)
-    q(on_ink(32, 0.06)).save(ROOT / "favicon-32.png", "PNG", optimize=True)
-    q(on_ink(192, 0.1)).save(ROOT / "favicon-192.png", "PNG", optimize=True)
+    q(on_ink(180, 0.1)).save(ICONS / "apple-touch-icon.png", "PNG", optimize=True)
+    q(on_ink(32, 0.06)).save(ICONS / "favicon-32.png", "PNG", optimize=True)
+    q(on_ink(192, 0.1)).save(ICONS / "favicon-192.png", "PNG", optimize=True)
     on_ink(48, 0.06).save(ROOT / "favicon.ico", format="ICO", sizes=[(16, 16), (32, 32), (48, 48)])
     print("  logo mark + favicons written")
 
@@ -113,7 +115,7 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     manifest: dict = {}
     for pattern, subdir, widths in JOBS:
-        for src in sorted(ROOT.glob(pattern)):
+        for src in sorted(SRC_IMG.glob(pattern)):
             print(src.name)
             convert(src, subdir, widths, manifest)
     make_logo(manifest)

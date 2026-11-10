@@ -44,7 +44,7 @@ DSA's visual identity is: modern, premium, educational. Think KPMG meets an IIT 
 
 ### Step 1 — Read today's brief
 1. TODAY_DATE: `date +%Y-%m-%d`
-2. Read: `social-automation/daily-briefs/{TODAY_DATE}.md`
+2. Read: `marketing/social-automation/daily-briefs/{TODAY_DATE}.md`
 3. Extract: carousel slide text from SECTION 3, story text from SECTION 3, reel hook from SECTION 3, posting platform and format from SECTION 2
 
 ### Step 2 — LinkedIn Carousel Design Brief (1080 x 1080px)
@@ -134,12 +134,12 @@ Try to generate designs using Canva MCP:
 ## OUTPUT INSTRUCTIONS
 
 ### A — Write to repo
-1. Open `social-automation/daily-briefs/{TODAY_DATE}.md`
+1. Open `marketing/social-automation/daily-briefs/{TODAY_DATE}.md`
 2. Fill SECTION 4: all 4 design briefs (full detail) + Canva MCP status + links + manual step reminder below
 3. Preserve all other sections.
 4. Commit and push:
 ```bash
-git add social-automation/daily-briefs/{TODAY_DATE}.md
+git add marketing/social-automation/daily-briefs/{TODAY_DATE}.md
 git commit -m "Routine 4: Design briefs for {TODAY_DATE}"
 git push origin main
 ```

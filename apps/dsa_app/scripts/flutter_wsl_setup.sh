@@ -4,7 +4,7 @@ set -e
 FLUTTER_HOME=/home/ajay/flutter
 ANDROID_HOME=/home/ajay/android-sdk
 GRADLE_HOME=/home/ajay/.gradle
-PROJECT="/mnt/d/Projects/Data Science Academia/dsa_app"
+PROJECT="/mnt/e/Projects/Data_Science_Academia/apps/dsa_app"
 
 echo "===[1/6] Verifying tools (no apt-get needed) ==="
 echo "  curl:    $(curl --version 2>&1 | head -1)"

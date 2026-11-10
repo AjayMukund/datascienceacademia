@@ -277,7 +277,7 @@
   /* ── 9. Service worker (public pages; portal registers it too) ────────── */
   if ('serviceWorker' in navigator && scriptURL && /^https?:/.test(location.protocol) && !/localhost|127\.0\.0\.1/.test(location.hostname)) {
     w.addEventListener('load', function () {
-      try { navigator.serviceWorker.register(new URL('sw.js', scriptURL).href, { scope: new URL('./', scriptURL).href }).catch(function () {}); } catch (e) {}
+      try { navigator.serviceWorker.register(new URL('../../sw.js', scriptURL).href, { scope: new URL('../../', scriptURL).href }).catch(function () {}); } catch (e) {}
     });
   }
 

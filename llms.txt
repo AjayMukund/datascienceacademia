@@ -69,5 +69,5 @@ Address: No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam, Chennai, 
 
 ## Optional
 
-- [Company facts (plain text)](https://datascienceacademia.in/Company_Info.txt)
+- [Company facts (plain text)](https://datascienceacademia.in/docs/Company_Info.txt)
 - [Sitemap](https://datascienceacademia.in/sitemap.xml)

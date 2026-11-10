@@ -39,12 +39,12 @@ DSA's voice is: direct, warm, knowledgeable, never preachy. You use specific num
 
 ### Step 1 — Read today's brief
 1. TODAY_DATE: `date +%Y-%m-%d`, DAY_NAME: `date +%A`
-2. Read: `social-automation/daily-briefs/{TODAY_DATE}.md`
+2. Read: `marketing/social-automation/daily-briefs/{TODAY_DATE}.md`
 3. Extract: topic, hook angle, persona, format, platform, CTA, lead magnet from SECTIONS 1 and 2
 
 ### Step 1.5 — Content history hook freshness check
 
-Read: `social-automation/content-history.csv`
+Read: `marketing/social-automation/content-history.csv`
 
 Extract the last 7 rows. For each, note:
 - `hook_first_line` — the exact opener used
@@ -183,11 +183,11 @@ Question: Must relate directly to today's topic and reveal audience intent.
 ## OUTPUT INSTRUCTIONS
 
 ### A — Write to repo
-1. Open `social-automation/daily-briefs/{TODAY_DATE}.md`
+1. Open `marketing/social-automation/daily-briefs/{TODAY_DATE}.md`
 2. Fill SECTION 3 completely with all 11 assets. Preserve all other sections.
 3. Commit and push:
 ```bash
-git add social-automation/daily-briefs/{TODAY_DATE}.md
+git add marketing/social-automation/daily-briefs/{TODAY_DATE}.md
 git commit -m "Routine 3: Copy assets for {TODAY_DATE}"
 git push origin main
 ```

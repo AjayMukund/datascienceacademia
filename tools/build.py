@@ -5,7 +5,7 @@ build.py — static site generator for Data Science Academia (GitHub Pages).
 
 Reads:   src/pages/*.html            → root pages (index, courses, about, …)
          src/templates/detail-*.html → one static page per course / programme / blog post / Code Champs level
-         *-data.js                   → content (courses-data.js, programmes-data.js, blog-data.js,
+         content/*-data.js           → content (courses-data.js, programmes-data.js, blog-data.js,
                                        cc-levels-data.js, projects-data.js, testimonials-data.js)
          assets/img/manifest.json    → image sizes (from tools/optimize_images.py)
 Writes:  *.html, courses/*.html, programmes/*.html, blog/*.html, codechamps/*.html,
@@ -165,7 +165,7 @@ def org_ld():
                 "name": SITE["legal"],
                 "alternateName": [n for n in ("Data Science Academia", "DSA", "DSA Chennai") if n != SITE["legal"]],
                 "url": u + "/",
-                "logo": {"@type": "ImageObject", "url": u + "/favicon-192.png", "width": 192, "height": 192},
+                "logo": {"@type": "ImageObject", "url": u + "/assets/icons/favicon-192.png", "width": 192, "height": 192},
                 "image": u + "/assets/og/default.jpg",
                 "description": SITE["description"],
                 "slogan": SITE["tagline"],
@@ -264,7 +264,7 @@ def minify_css(css: str) -> str:
     return "\n".join(line.strip() for line in css.splitlines() if line.strip())
 
 
-_STYLE_MIN = minify_css((ROOT / "style.css").read_text(encoding="utf-8"))
+_STYLE_MIN = minify_css((ROOT / "assets/css/style.css").read_text(encoding="utf-8"))
 _FONTS_RAW = (ROOT / "assets/fonts/fonts.css").read_text(encoding="utf-8")
 _inline_cache: dict = {}
 
@@ -478,10 +478,12 @@ Disallow: /blog-post.html
 Disallow: /cc-level.html
 Disallow: /src/
 Disallow: /tools/
-Disallow: /_legacy/
-Disallow: /dsa_app/
-Disallow: /social-automation/
-Disallow: /pwa_icon_bundle/
+Disallow: /docs/
+Disallow: /archive/
+Disallow: /apps/
+Disallow: /marketing/
+Disallow: /source-images/
+Disallow: /content/
 
 Sitemap: {SITE['url']}/sitemap.xml
 """
@@ -513,7 +515,7 @@ def build_llms_txt() -> None:
     L += ["", "## Blog posts", ""]
     for post in POSTS:
         L.append(f"- [{post['title']}]({absolute(post['url'])}): {post['catLabel']}, {post['dateDisplay']}. {meta_desc(post['excerpt'], 140)}")
-    L += ["", "## Optional", "", f"- [Company facts (plain text)]({absolute('Company_Info.txt')})", f"- [Sitemap]({absolute('sitemap.xml')})", ""]
+    L += ["", "## Optional", "", f"- [Company facts (plain text)]({absolute('docs/Company_Info.txt')})", f"- [Sitemap]({absolute('sitemap.xml')})", ""]
     (ROOT / "llms.txt").write_text("\n".join(L), encoding="utf-8", newline="\n")
     print("llms.txt")
 

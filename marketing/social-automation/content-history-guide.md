@@ -2,7 +2,7 @@
 
 This file explains every column in content-history.csv so routines interpret it consistently.
 
-### File: social-automation/content-history.csv
+### File: marketing/social-automation/content-history.csv
 
 Each row = one day's published content. Routine 5 appends the row. Routines 1 and 3 read it for freshness checks.
 

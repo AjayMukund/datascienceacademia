@@ -130,7 +130,7 @@ def make(name: str, title: str, kicker: str, image: Path | None, subtitle: str =
 
 def main() -> None:
     d = load_all(ROOT)
-    W_IMG = ROOT
+    W_IMG = ROOT / "source-images"
     make("default", "Where Academic Rigour Meets Real-World AI Engineering", "Data Science & AI Institute · Chennai", None,
          "18 courses · AICTE-aligned internships · Microsoft certification · 12-month AI Mastery Track")
     make("page-courses", "Data Science & AI Courses in Chennai", "18 specialised courses", W_IMG / "Website Images/Courses Page Hero Banner.jpeg",
@@ -150,13 +150,13 @@ def main() -> None:
     make("page-contact", "Begin Your Journey", "Enquire · Enrol · Collaborate", None,
          "Rajakilpakkam, Chennai · +91 91764 98814 · info@datascienceacademia.in")
     for cid, c in d["courses"].items():
-        make(f"course-{cid}", c["title"], f"{c['category']} course · {c['level']} · {c['duration']}", ROOT / c["image"], c["overview"])
+        make(f"course-{cid}", c["title"], f"{c['category']} course · {c['level']} · {c['duration']}", W_IMG / c["image"], c["overview"])
     for pid, p in d["programmes"].items():
-        make(f"programme-{pid}", p["title"], p["subtitle"], ROOT / p["image"], p["overview"])
+        make(f"programme-{pid}", p["title"], p["subtitle"], W_IMG / p["image"], p["overview"])
     for lid, lv in d["levels"].items():
-        make(f"level-{lid}", f"{lv['name']} — {lv['grade']}", f"DSA Code Champs · {lv['badge']}", ROOT / lv["image"], lv["tagline"])
+        make(f"level-{lid}", f"{lv['name']} — {lv['grade']}", f"DSA Code Champs · {lv['badge']}", W_IMG / lv["image"], lv["tagline"])
     for p in d["posts"]:
-        make(f"post-{p['slug']}", p["title"], f"{p['catLabel']} · {p['readTime']}", ROOT / p["cover"], "")
+        make(f"post-{p['slug']}", p["title"], f"{p['catLabel']} · {p['readTime']}", W_IMG / p["cover"], "")
     total = sum(f.stat().st_size for f in OUT.glob("*.jpg"))
     print(f"{len(list(OUT.glob('*.jpg')))} OG images, {total / 1024 / 1024:.1f} MB")
 

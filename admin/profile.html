@@ -5,7 +5,7 @@
 <title>My Profile — Admin — Data Science Academia</title>
 <link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="../portal.css">
+<link rel="stylesheet" href="../assets/css/portal.css">
 </head>
 <body>
 <div class="cur" id="cur"></div><canvas id="fluid-canvas"></canvas>
@@ -100,10 +100,10 @@
 
 <div id="toast"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase-client.js"></script>
-<script src="../js/auth-guard.js"></script>
-<script src="../js/portal.js"></script>
-<script src="../script.js"></script>
+<script src="../assets/js/supabase-client.js"></script>
+<script src="../assets/js/auth-guard.js"></script>
+<script src="../assets/js/portal.js"></script>
+<script src="../assets/js/script.js"></script>
 <script>
 function toast(m,t='success'){const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;document.body.appendChild(el);setTimeout(()=>el.remove(),3500);}
 

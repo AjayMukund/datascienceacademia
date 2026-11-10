@@ -81,7 +81,7 @@ Run ALL of these web searches:
 
 ### Step 2.5 — Content history freshness check (run BEFORE ranking)
 
-Read: `social-automation/content-history.csv`
+Read: `marketing/social-automation/content-history.csv`
 
 From the last 14 days of rows, extract:
 - **Topics covered in the last 7 days** → EXCLUDE these entirely from your ranked list. Do not suggest any topic that substantially overlaps with these.
@@ -125,14 +125,14 @@ Define precisely:
 ## OUTPUT INSTRUCTIONS
 
 ### A — Write to repo
-1. Read: `social-automation/daily-briefs/template.md`
-2. Create: `social-automation/daily-briefs/{TODAY_DATE}.md`
+1. Read: `marketing/social-automation/daily-briefs/template.md`
+2. Create: `marketing/social-automation/daily-briefs/{TODAY_DATE}.md`
    - Replace `{{DATE}}` with today's date
    - Fill SECTION 1 completely — ranked table + full #1 deep-dive
    - Leave SECTIONS 2-5 blank (other routines fill them)
 3. Git commit and push:
 ```bash
-git add social-automation/daily-briefs/{TODAY_DATE}.md
+git add marketing/social-automation/daily-briefs/{TODAY_DATE}.md
 git commit -m "Routine 1: Trend analysis for {TODAY_DATE}"
 git push origin main
 ```

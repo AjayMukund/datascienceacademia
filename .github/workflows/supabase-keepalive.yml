@@ -1,5 +1,5 @@
 # Daily read-only request so the free-plan Supabase project (student/admin portal)
-# is not paused for inactivity. Uses the public anon key that js/supabase-client.js
+# is not paused for inactivity. Uses the public anon key that assets/js/supabase-client.js
 # already ships to every visitor. Fails (and GitHub emails the owner) if the
 # database does not answer.
 name: Supabase keep-alive

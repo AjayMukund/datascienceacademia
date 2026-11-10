@@ -52,7 +52,7 @@ Read today's brief (SECTIONS 1-4) and self-audit the content strategy.
 
 ### Step 1 — Setup
 1. TODAY_DATE: `date +%Y-%m-%d`, DAY_NAME: `date +%A`
-2. Read `social-automation/daily-briefs/{TODAY_DATE}.md` — review all 4 sections
+2. Read `marketing/social-automation/daily-briefs/{TODAY_DATE}.md` — review all 4 sections
 
 ### Step 2 — Gmail Intelligence Extraction
 
@@ -125,7 +125,7 @@ One specific topic that competitors haven't covered well that DSA could own this
 
 This step is critical. It feeds tomorrow's Routine 1 and Routine 3.
 
-Read `social-automation/content-history.csv` and append ONE new row for today.
+Read `marketing/social-automation/content-history.csv` and append ONE new row for today.
 
 Gather the values from today's brief:
 - **date**: TODAY_DATE
@@ -146,7 +146,7 @@ Gather the values from today's brief:
 
 Append the row using Bash:
 ```bash
-echo '{TODAY_DATE},{DAY_NAME},"{topic}",{topic_category},"{hook_first_line}",{hook_type},{emotional_trigger},{platform},{format},{persona},{dsa_product},{lead_magnet},{cta_keyword},{quality_score},"{notes}"' >> social-automation/content-history.csv
+echo '{TODAY_DATE},{DAY_NAME},"{topic}",{topic_category},"{hook_first_line}",{hook_type},{emotional_trigger},{platform},{format},{persona},{dsa_product},{lead_magnet},{cta_keyword},{quality_score},"{notes}"' >> marketing/social-automation/content-history.csv
 ```
 
 If the hook_first_line or notes contain commas, wrap the entire field in double quotes.
@@ -157,11 +157,11 @@ Include this file in the git commit in Step 9 (commit message: "Routine 5: Intel
 ## OUTPUT INSTRUCTIONS
 
 ### A — Write to repo
-1. Open `social-automation/daily-briefs/{TODAY_DATE}.md`
+1. Open `marketing/social-automation/daily-briefs/{TODAY_DATE}.md`
 2. Fill SECTION 5 with full intelligence report. Preserve all other sections.
 3. Commit and push:
 ```bash
-git add social-automation/daily-briefs/{TODAY_DATE}.md
+git add marketing/social-automation/daily-briefs/{TODAY_DATE}.md
 git commit -m "Routine 5: Intelligence report for {TODAY_DATE} [brief complete]"
 git push origin main
 ```
@@ -197,7 +197,7 @@ Topic: [recommendation]
 Format: [recommendation]
 Experiment: [one A/B test to run]
 
-Full brief in repo: social-automation/daily-briefs/{TODAY_DATE}.md
+Full brief in repo: marketing/social-automation/daily-briefs/{TODAY_DATE}.md
 ```
 
 Print: "Routine 5 complete. Content quality score: [X/50]. Analytics: [found/not found via Gmail]. Tomorrow's recommendation: [topic]. Email sent."

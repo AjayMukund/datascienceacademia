@@ -120,14 +120,14 @@ def load_var(path: Path, name: str):
 
 def load_all(root: Path) -> dict:
     root = Path(root)
-    courses = load_var(root / "courses-data.js", "DSA_COURSES")
-    programmes = load_var(root / "programmes-data.js", "DSA_PROGRAMMES")
-    posts = load_var(root / "blog-data.js", "POSTS")
-    cat_style = load_var(root / "blog-data.js", "CAT_STYLE")
-    levels = load_var(root / "cc-levels-data.js", "CC_LEVELS")
-    projects = load_var(root / "projects-data.js", "PROJECTS")
-    project_cats = load_var(root / "projects-data.js", "CAT")
-    testimonials = load_var(root / "testimonials-data.js", "TESTIMONIALS")
+    courses = load_var(root / "content" / "courses-data.js", "DSA_COURSES")
+    programmes = load_var(root / "content" / "programmes-data.js", "DSA_PROGRAMMES")
+    posts = load_var(root / "content" / "blog-data.js", "POSTS")
+    cat_style = load_var(root / "content" / "blog-data.js", "CAT_STYLE")
+    levels = load_var(root / "content" / "cc-levels-data.js", "CC_LEVELS")
+    projects = load_var(root / "content" / "projects-data.js", "PROJECTS")
+    project_cats = load_var(root / "content" / "projects-data.js", "CAT")
+    testimonials = load_var(root / "content" / "testimonials-data.js", "TESTIMONIALS")
     return {
         "courses": courses,
         "programmes": programmes,

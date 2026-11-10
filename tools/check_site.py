@@ -16,7 +16,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
-SKIP_DIRS = {"admin", "student", "_legacy", "src", "tools", "dsa_app", "social-automation", "pwa_icon_bundle", "node_modules", "assets"}
+SKIP_DIRS = {"admin", "student", "archive", "src", "tools", "apps", "marketing", "docs", "content", "source-images", "exports", "_preview", "node_modules", "assets"}
 SKIP_FILES = {"login.html", "register.html", "reset-password.html", "forgot-password.html", "verify.html",
               "course.html", "programme.html", "blog-post.html", "cc-level.html"}
 

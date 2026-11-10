@@ -2647,7 +2647,7 @@
   }
  },
  "logo-mark": {
-  "src": "icons/icon-512.png",
+  "src": "assets/icons/icon-512.png",
   "w": 256,
   "h": 256,
   "variants": {
