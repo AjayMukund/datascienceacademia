@@ -64,5 +64,9 @@ python tools/screenshot.py courses.html out.png [--mobile]   # headless Chrome s
 
 ## Deploy
 
-Commit the whole folder — generated HTML included — and push `main` (GitHub Pages serves it within ~2 minutes).
-`.nojekyll` is present so every folder is served as-is. After deploying, submit `sitemap.xml` in Google Search Console.
+Commit — generated HTML included — and push `main`. The **Deploy website** workflow
+(`.github/workflows/deploy-pages.yml`) copies only the served files (root pages and site files, `assets/`,
+`content/`, `courses/`, `programmes/`, `blog/`, `codechamps/`, `student/`, `admin/`, `docs/Company_Info.txt`)
+into an artifact and publishes it — about 30 MB, live in ~1 minute. `source-images/`, `apps/`, `marketing/`,
+`archive/`, `src/` and `tools/` stay in the repository but are **not** published. If you add a new folder the
+site must serve, add it to the `cp` line in that workflow. (Pages source: Settings → Pages → "GitHub Actions".) After deploying, submit `sitemap.xml` in Google Search Console.

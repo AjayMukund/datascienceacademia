@@ -42,7 +42,7 @@ Legend: **You** = needs your account/decision · **Claude** = ask and it gets do
   (https://plausible.io). Send the measurement ID; Claude wires it into `base.html` with events for
   form submit, WhatsApp click, phone tap and "Enrol / enquire" clicks. Until then PageSpeed's
   "real users" panel stays empty and enquiries can't be attributed to pages.
-- ☐ **Claude · Build on GitHub Actions** — workflow that runs `tools/build.py` + `tools/check_site.py`
+- ☑ **Deploy via GitHub Actions** (Nov 2026: lean artifact, ~30 MB; builds still run locally) — was: **Claude · Build on GitHub Actions** — workflow that runs `tools/build.py` + `tools/check_site.py`
   on every push and deploys the output (Pages source switches from "branch" to "GitHub Actions").
   Removes the "remember to run build.py" step and lets you edit `*-data.js` in the GitHub web UI.
   Requires your OK to change Settings → Pages → Source.
