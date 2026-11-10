@@ -9,3 +9,5 @@ Thumbs.db
 blog/*.draft.html
 _preview/
 src/preview/
+# third-party reference material — never publish
+homepage-hero-*.webm
