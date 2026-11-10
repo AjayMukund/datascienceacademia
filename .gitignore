@@ -6,3 +6,4 @@ tools/.optimize.log
 tools/.frame-*.html
 .DS_Store
 Thumbs.db
+blog/*.draft.html

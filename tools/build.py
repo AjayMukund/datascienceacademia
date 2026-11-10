@@ -328,6 +328,10 @@ DATA = load_all(ROOT)
 COURSES = DATA["courses"]
 PROGRAMMES = DATA["programmes"]
 POSTS = DATA["posts"]
+# Posts with `draft: true` are not published: no page in blog/, no listing, sitemap or llms.txt entry.
+# They are rendered to blog/<slug>.draft.html (git-ignored, same folder so links resolve) for a local preview.
+DRAFTS = [p for p in POSTS if p.get("draft")]
+POSTS = [p for p in POSTS if not p.get("draft")]
 LEVELS = DATA["levels"]
 PROJECTS = DATA["projects"]
 TESTIMONIALS = DATA["testimonials"]
@@ -340,6 +344,9 @@ for cid, c in COURSES.items():
     c["cat_slug"] = CATEGORY_SLUG.get(c["category"], slugify(c["category"]))
 for pid, p in PROGRAMMES.items():
     p["url"] = f"programmes/{pid}.html"
+for post in DRAFTS:
+    post["url"] = f"blog/{post['slug']}.draft.html"
+    post["author"] = SITE["author"]["name"]
 for post in POSTS:
     post["url"] = f"blog/{post['slug']}.html"
     post["author"] = SITE["author"]["name"]
@@ -420,6 +427,10 @@ def build_details() -> None:
         related = [p for p in POSTS if p["slug"] != post["slug"] and p["category"] == post["category"]]
         related += [p for p in POSTS if p["slug"] != post["slug"] and p not in related]
         render("detail-post.html", post["url"], "monthly", "0.7", post=post, related=related[:2], nav_active="blog")
+    for post in DRAFTS:
+        if not have("detail-post.html"):
+            break
+        render("detail-post.html", post["url"], None, post=post, related=POSTS[:2], nav_active="blog")
     print("Code Champs levels")
     for lid, lv in LEVELS.items():
         if not have("detail-level.html"):

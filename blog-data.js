@@ -3,6 +3,8 @@
    Add new posts to the TOP of the array (newest first).
    Fields: slug, title, category, catLabel, date, dateDisplay,
            readTime, excerpt, body (HTML string)
+   Optional: seoTitle (shorter <title>), draft: true (local preview only —
+           rendered to blog/<slug>.draft.html, never published)
 ───────────────────────────────────────────────────────── */
 
 const CAT_STYLE = {
@@ -13,6 +15,228 @@ const CAT_STYLE = {
 };
 
 const POSTS = [
+  /* ── Career roadmap 2026 (supersedes the 2025 guide below) ── */
+  {
+    slug: 'data-science-career-india-2026',
+    cover: 'Website Images/Blog - Data Science Career in India 2025.jpeg',
+    title: 'Building a Data Science Career in India: The 2026 Roadmap',
+    seoTitle: 'Data Science Career in India: 2026 Roadmap',
+    category: 'career',
+    catLabel: 'Career',
+    date: '2026-11-10',
+    dateDisplay: 'November 10, 2026',
+    readTime: '9 min read',
+    excerpt: 'What actually gets you hired in Indian data teams in 2026 — the roles, the skills, how generative AI changed the bar, real salary data, and a 6-month plan you can start this week.',
+    body: `
+<p>A year ago we wrote that the Indian data science market had grown up. In 2026 it has also changed shape. Generative AI is now part of everyday work, entry-level hiring rewards proof over promises, and the gap between candidates who can <em>ship</em> something and candidates who can only describe it has never been wider. This is our honest roadmap for the year ahead.</p>
+
+<h2>What changed since 2025</h2>
+<ul>
+<li><strong>GenAI is a tool, not a job title.</strong> Most teams now expect analysts and data scientists to use LLMs for code, SQL drafts and summarisation — and to know when not to trust them. Knowing how to evaluate model output matters more than knowing every new model name.</li>
+<li><strong>Fundamentals are back in fashion.</strong> Because anyone can generate code, interviews lean harder on reasoning: why this metric, why this model, what could go wrong. SQL and statistics rounds have become more important, not less.</li>
+<li><strong>Portfolios are checked.</strong> Interviewers open your GitHub and ask you to walk through a decision you made. A project you cannot explain line by line now counts against you.</li>
+</ul>
+
+<h2>The four roles — and where freshers really start</h2>
+<ul>
+<li><strong>Data Analyst:</strong> SQL, Excel, Power BI or Tableau, and clear business answers. The most common first job.</li>
+<li><strong>Data Scientist:</strong> statistics, machine learning, experimentation. Usually reached after 1–3 years of analyst or junior work, or straight from a strong project portfolio.</li>
+<li><strong>ML Engineer:</strong> putting models into production — APIs, Docker, monitoring, MLOps. Closer to software engineering.</li>
+<li><strong>GenAI / LLM Engineer:</strong> retrieval-augmented generation (RAG), prompt and evaluation pipelines, fine-tuning. Growing fast, but it rewards people who already have Python and ML foundations.</li>
+</ul>
+<p>Our advice to most students: aim for an analyst or junior data scientist role first, and build towards ML or GenAI engineering from there. Skipping the foundations is the most common reason strong-looking candidates fail interviews.</p>
+
+<h2>The skills that get you hired in 2026</h2>
+<h3>Non-negotiable</h3>
+<ul>
+<li><strong>SQL</strong> — joins, window functions, CTEs. Expect a written SQL round almost everywhere.</li>
+<li><strong>Python</strong> — Pandas, NumPy and scikit-learn, well enough to go from a raw CSV to an evaluated model without copy-pasting.</li>
+<li><strong>Statistics</strong> — distributions, hypothesis tests, confidence intervals, A/B testing. You should be able to explain a p-value to a manager.</li>
+</ul>
+<h3>Differentiators</h3>
+<ul>
+<li><strong>One BI tool, properly</strong> — a published dashboard beats a list of tools on your CV. (See <a href="power-bi-vs-tableau.html">Power BI vs Tableau</a>.)</li>
+<li><strong>Working with LLMs responsibly</strong> — a small RAG or classification project with an honest evaluation section.</li>
+<li><strong>Deployment basics</strong> — a model served through FastAPI or a Streamlit app that someone else can open.</li>
+<li><strong>Communication</strong> — a one-page write-up of a project that a non-technical person can follow.</li>
+</ul>
+
+<h2>Salary expectations in 2026 — real data, read carefully</h2>
+<p>Salary numbers on social media are usually the top of the market. Here is what self-reported data shows for India, from <a href="https://www.payscale.com/research/IN/Job=Data_Scientist/Salary" target="_blank" rel="noopener">PayScale (Data Scientist, updated September 2026, 1,122 profiles)</a> and <a href="https://www.payscale.com/research/IN/Job=Data_Analyst/Salary" target="_blank" rel="noopener">PayScale (Data Analyst, updated October 2026, 2,081 profiles)</a>:</p>
+<ul>
+<li><strong>Data Analyst</strong> — average base about <strong>₹5.8 LPA</strong>; most profiles between about ₹2.9 LPA and ₹10 LPA. Entry level (under 1 year): about ₹4.1 LPA total pay.</li>
+<li><strong>Data Scientist</strong> — average base about <strong>₹10.1 LPA</strong>; most profiles between about ₹3.1 LPA and ₹20 LPA. Entry level: about ₹6 LPA; early career (1–4 years): about ₹10 LPA total pay.</li>
+</ul>
+<p>Three things to keep in mind:</p>
+<ol>
+<li>These are averages across all company types and cities. Product companies and global capability centres in Bengaluru, Hyderabad and Chennai typically pay above them; small services firms below.</li>
+<li>The jump from analyst to data scientist roughly doubles the typical salary — which is why investing in statistics and ML pays off.</li>
+<li>Your first offer matters less than your second. Skills you can demonstrate decide how fast you grow after year one.</li>
+</ol>
+
+<h2>On certifications</h2>
+<p>A certificate tells an employer you finished a structured programme; it does not replace demonstrated skill. Proctored, exam-based certifications from cloud providers — for example Microsoft's Azure and Power BI exams — carry more weight than video-completion certificates, especially for analyst and cloud roles. Pair any certificate with a project that uses the same skills.</p>
+<blockquote>Certifications open doors. Projects decide what happens inside the room.</blockquote>
+
+<h2>A 6-month plan you can start this week</h2>
+<ol>
+<li><strong>Month 1 — Python and SQL.</strong> One hour a day. Finish with a cleaned, analysed public dataset on GitHub.</li>
+<li><strong>Month 2 — Statistics and a BI tool.</strong> Rebuild your month-1 analysis as an interactive dashboard and publish it.</li>
+<li><strong>Months 3–4 — Machine learning.</strong> Two end-to-end projects in a domain you understand: problem, data, model, evaluation, limitations.</li>
+<li><strong>Month 5 — One GenAI project.</strong> A small RAG assistant over documents you care about, with an honest evaluation of where it fails.</li>
+<li><strong>Month 6 — Interview preparation.</strong> Timed SQL practice, two mock case studies, and a one-page write-up for each project.</li>
+</ol>
+<p>Strong project areas for the Indian market: demand forecasting, credit risk or fraud detection, customer churn, NLP on Indian-language text, and computer vision for agriculture or healthcare.</p>
+
+<h2>Where to go from here</h2>
+<p>If you want a structured version of this plan with live mentoring, the <a href="../programmes/ai-mastery.html">12-month AI Mastery Track</a> follows the same order — foundations, analytics, machine learning, then advanced AI — with a capstone project every quarter. If you want to start smaller, begin with <a href="../courses/python.html">Python Programming</a> and <a href="../courses/sql.html">SQL for Data Science</a>.</p>
+<p>The market rewards depth over breadth. Pick the next step, and start this week.</p>
+    `
+  },
+
+  /* ── Python vs R ── */
+  {
+    slug: 'python-vs-r-for-data-science',
+    cover: 'foundation-category-banner',
+    title: 'Python or R: Which Should You Learn First for Data Science?',
+    seoTitle: 'Python vs R for Data Science: Which First?',
+    category: 'tutorial',
+    catLabel: 'Tutorial',
+    date: '2026-11-10',
+    dateDisplay: 'November 10, 2026',
+    readTime: '7 min read',
+    excerpt: 'Both languages are excellent — but they are built for different people and different jobs. A side-by-side comparison with real code, and a clear answer for students, researchers and working professionals.',
+    body: `
+<p>It is one of the first questions every new student asks us: <em>should I learn Python or R?</em> The honest answer is that both are excellent, both are free, and you will probably use both at some point. But you have to start somewhere — and the right first choice depends on what you want to do.</p>
+
+<h2>The short answer</h2>
+<ul>
+<li><strong>Learn Python first</strong> if you want a job in industry — data analyst, data scientist, ML or GenAI engineer. It is the language of production systems and almost every AI library.</li>
+<li><strong>Learn R first</strong> if your work is research or statistics-heavy — a Ph.D., clinical or social-science research, survey analysis, or publishing papers.</li>
+</ul>
+<p>If you are not sure, start with Python. It keeps more doors open.</p>
+
+<h2>The same task in both languages</h2>
+<p>Here is a common first exercise: load a CSV, find the average salary by department, and plot it.</p>
+<h3>Python (pandas + matplotlib)</h3>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("employees.csv")
+avg = df.groupby("department")["salary"].mean().sort_values()
+
+avg.plot(kind="barh", title="Average salary by department")
+plt.tight_layout()
+plt.show()</code></pre>
+<h3>R (tidyverse)</h3>
+<pre><code>library(tidyverse)
+
+df &lt;- read_csv("employees.csv")
+
+df |&gt;
+  group_by(department) |&gt;
+  summarise(avg_salary = mean(salary)) |&gt;
+  ggplot(aes(x = avg_salary, y = reorder(department, avg_salary))) +
+  geom_col() +
+  labs(title = "Average salary by department", x = NULL, y = NULL)</code></pre>
+<p>Both are short and readable. R's pipe-and-grammar style feels natural for analysis; Python reads more like a general programming language — which is exactly the point.</p>
+
+<h2>Where each language wins</h2>
+<h3>Python</h3>
+<ul>
+<li><strong>Machine learning and AI:</strong> scikit-learn, PyTorch, TensorFlow, Hugging Face and nearly every LLM toolkit are Python-first.</li>
+<li><strong>Production:</strong> web APIs, automation scripts, data pipelines and cloud services all speak Python.</li>
+<li><strong>Jobs:</strong> most data and AI job descriptions in India list Python; far fewer require R.</li>
+<li><strong>One language for everything:</strong> the same skills carry over to backend development, automation and scripting.</li>
+</ul>
+<h3>R</h3>
+<ul>
+<li><strong>Statistics:</strong> classical and modern statistical methods often appear in R packages first, written by the statisticians who invented them.</li>
+<li><strong>Visualisation:</strong> ggplot2 remains one of the most elegant ways to build publication-quality charts.</li>
+<li><strong>Reproducible research:</strong> R Markdown and Quarto make it easy to combine code, results and writing into a single report or paper.</li>
+<li><strong>Academia:</strong> widely used in biostatistics, epidemiology, economics and the social sciences.</li>
+</ul>
+
+<h2>Our recommendation by goal</h2>
+<ul>
+<li><strong>Engineering or BCA/MCA student aiming for a data job:</strong> Python, then SQL. Add R later only if a role asks for it.</li>
+<li><strong>Working professional moving into analytics:</strong> Python plus a BI tool such as Power BI.</li>
+<li><strong>M.Sc. statistics or Ph.D. scholar:</strong> R for your analysis and thesis; Python when you need machine learning or deep learning.</li>
+<li><strong>Faculty member:</strong> whichever your department's curriculum uses — and the other one as a second language within a year.</li>
+</ul>
+<blockquote>The language matters less than the habits: clean data, honest statistics and results someone else can reproduce.</blockquote>
+
+<h2>Learning one makes the second much easier</h2>
+<p>The hard parts of data science — thinking in tables, cleaning messy data, choosing the right statistical test — are the same in both languages. Once you are comfortable in one, most people can work productively in the other within a few weeks.</p>
+
+<h2>Start with us</h2>
+<p>Our <a href="../courses/python.html">Python Programming</a> course is built for absolute beginners and ends with a real exploratory data analysis project. If your path is research, <a href="../courses/r-programming.html">R Programming</a> covers the tidyverse, ggplot2 and R Markdown end to end. Not sure which fits? Book a free trial session and we will help you decide.</p>
+    `
+  },
+
+  /* ── Power BI vs Tableau ── */
+  {
+    slug: 'power-bi-vs-tableau',
+    cover: 'analytics-category-banner',
+    title: 'Power BI vs Tableau: Which Should an Analyst in India Learn First?',
+    seoTitle: 'Power BI vs Tableau: Which to Learn First?',
+    category: 'career',
+    catLabel: 'Career',
+    date: '2026-11-10',
+    dateDisplay: 'November 10, 2026',
+    readTime: '7 min read',
+    excerpt: 'Both are industry-standard BI tools. We compare them on cost, learning curve, job demand in India and the kind of dashboards each does best — and give a clear recommendation.',
+    body: `
+<p>If you want to become a data analyst, you will need at least one business intelligence (BI) tool on your CV. In India, that choice almost always comes down to <strong>Microsoft Power BI</strong> or <strong>Tableau</strong>. Both are excellent. Here is how to choose the one to learn first.</p>
+
+<h2>The short answer</h2>
+<p><strong>Learn Power BI first</strong> if you are a student or early-career analyst in India. It is free to start, it fits naturally with Excel, and it is widely used by the services companies, banks and enterprises where most analysts get their first job. <strong>Add Tableau</strong> when a target employer uses it, or when your work is centred on visual storytelling and data exploration.</p>
+
+<h2>Cost: what you need to start</h2>
+<ul>
+<li><strong>Power BI Desktop is a free download</strong> — you can build complete reports on your laptop without paying anything. Sharing reports inside an organisation needs a paid licence; Microsoft lists Power BI Pro at ₹1,165 per user per month and Premium Per User at ₹1,995 per user per month, billed yearly plus GST (<a href="https://www.microsoft.com/en-in/power-platform/products/power-bi/pricing" target="_blank" rel="noopener">Microsoft India pricing page</a>, checked November 2026).</li>
+<li><strong>Tableau</strong> is licensed per user, with different roles for people who build and people who only view dashboards. Check <a href="https://www.tableau.com/pricing" target="_blank" rel="noopener">Tableau's pricing page</a> for current figures. Learners can practise with <strong>Tableau Public</strong>, the free edition — note that anything you save there is published publicly.</li>
+</ul>
+<p>For a student, both are effectively free to learn. For a company, cost depends on how many people need to create or view reports.</p>
+
+<h2>Learning curve</h2>
+<ul>
+<li><strong>Power BI</strong> feels familiar to anyone who knows Excel. Data preparation happens in <em>Power Query</em> (the same engine as in Excel), and calculations are written in <em>DAX</em>. Basic reports come quickly; DAX takes real practice to master.</li>
+<li><strong>Tableau</strong> is famous for its drag-and-drop exploration — you can find patterns in a dataset within minutes. Advanced work uses calculated fields and <em>Level of Detail (LOD)</em> expressions, which also take practice.</li>
+</ul>
+<p>Neither is "easy" at a professional level. Both reward the same fundamentals: a clean data model, the right chart for the question, and a dashboard that answers one decision clearly.</p>
+
+<h2>Where each one shines</h2>
+<h3>Power BI</h3>
+<ul>
+<li>Tight integration with Excel, Teams, SharePoint and the wider Microsoft cloud.</li>
+<li>Strong data modelling for business reporting — sales, finance, HR and operations dashboards.</li>
+<li>A clear certification path: Microsoft's <strong>PL-300 (Power BI Data Analyst)</strong> exam.</li>
+</ul>
+<h3>Tableau</h3>
+<ul>
+<li>Fast, flexible visual exploration and storytelling.</li>
+<li>Highly polished interactive visualisations; popular with analytics, consulting and product teams.</li>
+<li>A large public community — Tableau Public is full of inspiring examples you can learn from.</li>
+</ul>
+
+<h2>Job demand in India</h2>
+<p>Search any Indian job portal for "data analyst" and you will see both tools — often listed together as "Power BI or Tableau". In our experience working with students, Power BI appears more often in openings at IT services firms, banks and large enterprises that already run on Microsoft, while Tableau shows up more in analytics consultancies and some product companies. Before you choose, open ten job descriptions for roles you actually want and count. That is the most reliable data you will get.</p>
+
+<h2>Recommendation by profile</h2>
+<ul>
+<li><strong>Student or fresher:</strong> Power BI, plus SQL. Publish two dashboards built on real public data.</li>
+<li><strong>Excel-heavy professional:</strong> Power BI — the jump from Excel is the smallest.</li>
+<li><strong>Researcher or storyteller:</strong> Tableau for exploration and publication-quality visuals.</li>
+<li><strong>Already know one?</strong> Learn the other in a few weeks; the concepts transfer almost completely.</li>
+</ul>
+<blockquote>Employers don't hire a tool. They hire someone who can turn a messy spreadsheet into a decision.</blockquote>
+
+<h2>Learn it with us</h2>
+<p>Our <a href="../courses/power-bi.html">Power BI</a> course takes you from raw data to published, interactive dashboards with DAX and Power Query, and our <a href="../courses/tableau.html">Tableau</a> course covers LOD expressions, dashboards and publishing to Tableau Public. If certification is your goal, the <a href="../programmes/microsoft-certification.html">Microsoft Certification Programme</a> includes PL-300 preparation.</p>
+    `
+  },
+
   /* ── 1 ──────────────────────────────────────────────── */
   {
     slug: 'statistics-still-matters-deep-learning',
@@ -254,6 +478,8 @@ result = qa_chain.run("What is our refund policy?")</code></pre>
     readTime: '8 min read',
     excerpt: 'The Indian data science job market has matured significantly. Here\'s a practical, honest roadmap — from the skills that actually get you hired to salary expectations and what interviewers actually test.',
     body: `
+<p><em>Update, November 2026: there is a newer version of this guide — <a href="data-science-career-india-2026.html">Building a Data Science Career in India: The 2026 Roadmap</a>, with current salary data and how generative AI has changed hiring.</em></p>
+
 <p>The Indian data science job market has grown up. What was once a shortage of talent chasing a handful of roles has matured into a competitive market with clear hiring patterns, recognisable skill benchmarks, and real differentiation between candidates. This is an honest roadmap — not the optimistic one you'll find on LinkedIn.</p>
 
 <h2>Understanding the Role Landscape</h2>
