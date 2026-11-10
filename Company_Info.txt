@@ -1,5 +1,5 @@
 ================================================================================
-DATA SCIENCE ACADEMIA PRIVATE LIMITED — COMPLETE COMPANY & COURSE INFORMATION
+DATA SCIENCE ACADEMIA — COMPLETE COMPANY & COURSE INFORMATION
 ================================================================================
 Last Updated: August 2026
 Website: https://datascienceacademia.in/
@@ -8,13 +8,13 @@ Website: https://datascienceacademia.in/
 1. ABOUT THE COMPANY
 --------------------------------------------------------------------------------
 
-Full Name       : Data Science Academia Private Limited
+Full Name       : Data Science Academia (Data Science Academia Private Limited — incorporation in progress)
 Short Name      : DSA
 Founded         : 2019
-Type            : Private Limited Company (Pvt Ltd In Progress)
+Type            : MSME-registered academy; Private Limited incorporation in progress
 Location        : Chennai, Tamil Nadu, India
 Previous Entity : Formerly operated under Sai Chamundeeswari Academy (MSME Registered)
-Registrations   : MSME Registered · AICTE Affiliated
+Registrations   : MSME Registered · AICTE-aligned programmes
 Tagline         : "Where Academic Rigour Meets Real-World AI Engineering"
 
 Mission:
@@ -45,7 +45,7 @@ Managing Director: Advocate Chamundeeswari
   - Brings deep understanding of legal frameworks critical to an academic Pvt Ltd
   - Tags: Advocate, Managing Director, Legal & Compliance, Institutional Operations
 
-Director (Academic & Technology): (Initials: DS)
+Founder & Director (Academic & Technology): Ajay Mukund S
   - Active AI Engineer at Hotfoot Technology Solutions
   - PhD candidate at Anna University
   - TN-TRB 2026 Computer Science applicant
@@ -343,14 +343,13 @@ P3. Microsoft Certification Program
   Audience  : Students (IT/CS/Data Science), working professionals, career changers
   Delivery  : Online Live + Recorded; Offline Bootcamps in Chennai
   Certificate: Microsoft Certification (AI-900 / DP-900) + DSA Completion Certificate
-  Overview  : Focused preparation for Microsoft Azure and Power BI certifications
-              in collaboration with Microsoft Certified Trainers (MCTs).
+  Overview  : Focused preparation for Microsoft Azure and Power BI certifications.
   Certifications Covered:
     - AI-900 — Microsoft Azure AI Fundamentals
     - DP-900 — Microsoft Azure Data Fundamentals
     - PL-300 — Power BI Data Analyst Associate (prep)
     - AZ-900 — Azure Fundamentals (optional add-on)
-  Features  : MCT-led sessions, Azure portal labs, practice question banks,
+  Features  : Live instructor-led sessions, Azure portal labs, practice question banks,
               timed mock exams, exam strategy sessions, post-certification guidance
 
 P4. Corporate & Faculty Development Program (FDP / MDP)

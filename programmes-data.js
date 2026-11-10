@@ -53,7 +53,7 @@ const DSA_PROGRAMMES = {
       {
         title: 'Certification & Recognition',
         points: [
-          'AICTE Approved internship (where institution is accredited)',
+          'AICTE-aligned internship (where your institution is AICTE-accredited)',
           'DSA Internship Certificate with project title and mentor name',
           'Formal Offer Letter issued at programme start',
           'Internship completion letter for university credit submission',
@@ -111,7 +111,7 @@ const DSA_PROGRAMMES = {
     id: 'microsoft-certification',
     image: 'Website Images/Microsoft Certification Programme.jpeg',
     title: 'Microsoft Certification Program',
-    subtitle: 'Azure · Power BI · MCT Collaboration',
+    subtitle: 'Azure · Power BI · Exam Preparation',
     tag: 'Microsoft Certified',
     tagClass: 'ptc',
     icon: '🏅',
@@ -121,14 +121,14 @@ const DSA_PROGRAMMES = {
     delivery: ['Online — Live + Recorded', 'Offline Bootcamps (Chennai)'],
     duration: '4–8 Weeks per Certification',
     certificate: 'Microsoft Certification (AI-900 / DP-900) + DSA Completion Certificate',
-    overview: 'A focused preparation programme for Microsoft Azure and Power BI certifications, designed to bridge the gap between theoretical learning and industry-recognised credentials. Delivered in collaboration with Microsoft Certified Trainers (MCTs), this programme combines exam-specific preparation with practical, hands-on labs — ensuring you understand both the concepts and the cloud platform deeply enough to excel in the certification exam and on the job.',
+    overview: 'A focused preparation programme for Microsoft Azure and Power BI certifications, designed to bridge the gap between theoretical learning and industry-recognised credentials. This programme combines exam-specific preparation with practical, hands-on labs — ensuring you understand both the concepts and the cloud platform deeply enough to excel in the certification exam and on the job.',
     outcomes: [
       'Clear Microsoft Azure AI Fundamentals (AI-900) with confidence',
       'Clear Microsoft Azure Data Fundamentals (DP-900)',
       'Build proficiency in Power BI for certification and real-world use',
       'Gain practical Azure cloud experience through guided labs',
       'Receive structured exam preparation with mock tests and strategy',
-      'Access MCT-led sessions for authoritative exam guidance'
+      'Learn from live, instructor-led sessions focused on each exam objective'
     ],
     sections: [
       {
@@ -145,7 +145,6 @@ const DSA_PROGRAMMES = {
       {
         title: 'Programme Highlights',
         points: [
-          'Taught in collaboration with Microsoft Certified Trainers (MCTs)',
           'Hands-on Azure portal labs and real cloud exercises',
           'Domain-specific practice question banks per certification',
           'Timed mock exams simulating actual Microsoft test conditions',
@@ -178,7 +177,7 @@ const DSA_PROGRAMMES = {
     ],
     stats: [
       {n:'3', label:'Certifications'},
-      {n:'MCT', label:'Collaboration'},
+      {n:'4', label:'Exams covered'},
       {n:'Hands-on', label:'Azure Labs'},
       {n:'Mock', label:'Exam Series'}
     ],
@@ -195,7 +194,7 @@ const DSA_PROGRAMMES = {
     steps: {
       sectionTitle: 'Your Certification Path',
       items: [
-        {icon:'📚', title:'Foundation Sessions', desc:'Core concepts covered by MCT-led live classes with Azure portal access'},
+        {icon:'📚', title:'Foundation Sessions', desc:'Core concepts covered in live classes with Azure portal access'},
         {icon:'🧪', title:'Hands-on Labs', desc:'Real Azure exercises — build, configure, and test cloud resources'},
         {icon:'📋', title:'Practice Questions', desc:'Domain-specific question banks with explanations for every answer'},
         {icon:'⏱️', title:'Mock Exams', desc:'Timed full-length simulations under actual Microsoft exam conditions'},
@@ -738,7 +737,7 @@ const DSA_PROGRAMMES = {
       'Complete command of Python, SQL, R, and Excel for data roles',
       'Professional-grade skills in ML, Deep Learning, NLP, and Cloud',
       'Industry portfolio with 4 capstone projects (one per quarter)',
-      'DSA AI Mastery Certificate — recognised by hiring partners',
+      'DSA AI Mastery Certificate on successful completion',
       'Internship certificate upon successful programme completion',
       'Placement assistance — resume review, mock interviews, LinkedIn'
     ],
@@ -768,7 +767,7 @@ const DSA_PROGRAMMES = {
       {
         title: 'Certification & Career Outcomes',
         points: [
-          'DSA AI Mastery Certificate issued on successful completion — recognised by hiring partners',
+          'DSA AI Mastery Certificate issued on successful completion',
           'DSA Internship Certificate bundled with the track (no separate application needed)',
           'Placement assistance: resume writing, LinkedIn optimisation, and referral network',
           'Mock interview sessions (technical + HR) in the final quarter with feedback',

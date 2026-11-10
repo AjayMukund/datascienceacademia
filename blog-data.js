@@ -156,6 +156,7 @@ pipe.score(X_test, y_test)</code></pre>
     slug: 'llms-every-data-scientist-needs-to-know',
     cover: 'Website Images/Blog - LLMs in Production 2025.jpeg',
     title: 'Large Language Models: What Every Data Scientist Needs to Know',
+    seoTitle: 'LLMs: What Every Data Scientist Needs to Know',
     category: 'industry',
     catLabel: 'Industry',
     date: '2025-03-08',

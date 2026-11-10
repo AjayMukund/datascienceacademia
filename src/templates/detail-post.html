@@ -3,7 +3,8 @@
 {% set cat_badge = {'tutorial': 'badge-teal', 'career': 'badge-gold', 'industry': 'badge-blue', 'research': 'badge-violet'} %}
 {% set author_job = 'AI Engineer and Ph.D. Scholar, Anna University' %}
 {% set words = post.body | strip_html | wordcount %}
-{% set full_title = post.title ~ ' | Data Science Academia' %}
+{% set seo_title = post.get('seoTitle') or post.title %}{# optional shorter <title> for long headlines #}
+{% set full_title = seo_title ~ ' | Data Science Academia' %}
 {% set share_text = post.title ~ ' — ' ~ site.name %}
 {% set li_share = 'https://www.linkedin.com/sharing/share-offsite/?url=' ~ (canonical | urlencode) %}
 {% set wa_share = 'https://wa.me/?text=' ~ ((post.title ~ ' — ' ~ canonical) | urlencode) %}
@@ -17,7 +18,7 @@
 } %}
 {% set steps = next_steps.get(post.category, next_steps['tutorial']) %}
 
-{% block title %}{{ full_title if full_title | length <= 60 else post.title }}{% endblock %}
+{% block title %}{{ full_title if full_title | length <= 60 else seo_title }}{% endblock %}
 {% block description %}{{ post.excerpt | meta_desc(158) }}{% endblock %}
 {% block og_type %}article{% endblock %}
 {% block og_title %}{{ post.title }} — Data Science Academia{% endblock %}

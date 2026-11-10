@@ -40,7 +40,9 @@ TODAY = dt.date.today().isoformat()
 # ── Site configuration (single source of truth for contact details & URLs) ──
 SITE = {
     "name": "Data Science Academia",
-    "legal": "Data Science Academia Private Limited",
+    # Flip to True once the Private Limited company is incorporated (MCA certificate issued):
+    # the header, footer, copyright and JSON-LD legal name all follow this one flag.
+    "incorporated": False,
     "short": "DSA",
     # Public base URL — change this once when moving to a custom domain.
     "url": "https://datascienceacademia.in",
@@ -76,6 +78,9 @@ SITE = {
     "maps_link": "https://www.google.com/maps/search/?api=1&query=12.918342794186495%2C80.15253111461173",
     "author": {"name": "Ajay Mukund S", "role": "AI Engineer · Ph.D. Scholar, Anna University · Founder, Data Science Academia"},
 }
+
+SITE["legal"] = "Data Science Academia Private Limited" if SITE["incorporated"] else SITE["name"]
+SITE["name_sub"] = "Pvt. Ltd. · Chennai" if SITE["incorporated"] else "Chennai · Est. " + SITE["founded"]
 
 NAV_ITEMS = [
     ("courses", "Courses", "courses.html"),
@@ -158,7 +163,7 @@ def org_ld():
                 "@type": ["EducationalOrganization", "LocalBusiness"],
                 "@id": u + "/#organization",
                 "name": SITE["legal"],
-                "alternateName": ["Data Science Academia", "DSA", "DSA Chennai"],
+                "alternateName": [n for n in ("Data Science Academia", "DSA", "DSA Chennai") if n != SITE["legal"]],
                 "url": u + "/",
                 "logo": {"@type": "ImageObject", "url": u + "/favicon-192.png", "width": 192, "height": 192},
                 "image": u + "/assets/og/default.jpg",
