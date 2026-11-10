@@ -148,7 +148,7 @@ def main() -> None:
     make("page-blog", "The DSA Blog", "Insights & ideas", W_IMG / "Website Images/Blog - Statistics Meets Deep Learning.jpeg",
          "Machine learning tutorials, career guidance and research insights from a practising AI engineer")
     make("page-contact", "Begin Your Journey", "Enquire · Enrol · Collaborate", None,
-         "West Tambaram, Chennai · +91 91764 98814 · data.science.academia@gmail.com")
+         "Rajakilpakkam, Chennai · +91 91764 98814 · data.science.academia@gmail.com")
     for cid, c in d["courses"].items():
         make(f"course-{cid}", c["title"], f"{c['category']} course · {c['level']} · {c['duration']}", ROOT / c["image"], c["overview"])
     for pid, p in d["programmes"].items():

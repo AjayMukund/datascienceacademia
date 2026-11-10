@@ -18,7 +18,7 @@ Legend: **You** = needs your account/decision · **Claude** = ask and it gets do
   it to `src/templates/base.html` and redeploys.
 - ☐ **You · Bing Webmaster Tools** — "Import from Google Search Console".
   https://www.bing.com/webmasters
-- ☐ **You · Google Business Profile** — claim/verify the West Tambaram listing; keep name, address,
+- ☐ **You · Google Business Profile** — new address (Rajakilpakkam, 600073) set Nov 2026 — confirm the listing shows it; keep name, address,
   phone (+91 91764 98814) and hours (Mon–Sat 9:00–19:00) identical to the site.
   https://business.google.com/
 - ☐ **You · Refresh social previews** for links shared before the rebuild:

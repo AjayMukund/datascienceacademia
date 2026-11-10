@@ -56,13 +56,13 @@ SITE = {
     "whatsapp": "https://wa.me/919176498814",
     "whatsapp_msg": "https://wa.me/919176498814?text=Hello%20DSA%2C%20I%27d%20like%20to%20know%20more%20about%20your%20courses.",
     "address": {
-        "street": "2nd Floor, Arasan Complex, No. 69, Grand Southern Trunk Road, West Tambaram",
+        "street": "No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam",
         "locality": "Chennai",
         "region": "Tamil Nadu",
-        "postal": "600045",
+        "postal": "600073",
         "country": "IN",
     },
-    "geo": {"lat": 12.9286478, "lng": 80.1193835},
+    "geo": {"lat": 12.918342794186495, "lng": 80.15253111461173},
     "hours": "Mon – Sat · 9:00 AM – 7:00 PM IST",
     "social": {
         "linkedin": "https://www.linkedin.com/company/data-science-academia/",
@@ -72,12 +72,8 @@ SITE = {
     "founded": "2019",
     "year": dt.date.today().year,
     "formspree": "https://formspree.io/f/xdaypadg",
-    "maps_embed": (
-        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15554.696888476936!2d80.1193835!3d12.9286478"
-        "!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525f63da0acd75%3A0x4309ce616da11096"
-        "!2sData%20Science%20Academia!5e0!3m2!1sen!2sin!4v1776943605305!5m2!1sen!2sin"
-    ),
-    "maps_link": "https://maps.google.com/?q=Data+Science+Academia+West+Tambaram+Chennai",
+    "maps_embed": "https://maps.google.com/maps?q=12.918342794186495,80.15253111461173&z=17&hl=en&output=embed",
+    "maps_link": "https://www.google.com/maps/search/?api=1&query=12.918342794186495%2C80.15253111461173",
     "author": {"name": "Ajay Mukund S", "role": "AI Engineer · Ph.D. Scholar, Anna University · Founder, Data Science Academia"},
 }
 
