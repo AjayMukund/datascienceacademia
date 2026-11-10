@@ -278,7 +278,7 @@ def inline_css(rel: str) -> Markup:
 
 # ── Jinja environment ──────────────────────────────────────────────────────
 env = jinja2.Environment(
-    loader=jinja2.FileSystemLoader([str(SRC / "pages"), str(SRC / "templates")]),
+    loader=jinja2.FileSystemLoader([str(SRC / "pages"), str(SRC / "templates"), str(SRC)]),
     autoescape=jinja2.select_autoescape(["html"]),
     trim_blocks=True,
     lstrip_blocks=True,
@@ -396,6 +396,10 @@ def build_pages() -> None:
         name = page.name
         cf, pr = freq.get(name, (None if name == "404.html" else "monthly", "0.5"))
         render(name, name, changefreq=cf, priority=pr, nav_active=name[:-5])
+    # Private design previews: src/preview/<name>.html -> _preview/<name>.html (both git-ignored,
+    # no sitemap entry, noindex) — open via tools/serve.py, e.g. http://127.0.0.1:8765/_preview/home.html
+    for page in sorted((SRC / "preview").glob("*.html")) if (SRC / "preview").is_dir() else []:
+        render("preview/" + page.name, "_preview/" + page.name, changefreq=None, nav_active="index")
 
 
 def have(template: str) -> bool:

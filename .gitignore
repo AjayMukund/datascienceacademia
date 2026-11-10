@@ -7,3 +7,5 @@ tools/.frame-*.html
 .DS_Store
 Thumbs.db
 blog/*.draft.html
+_preview/
+src/preview/
