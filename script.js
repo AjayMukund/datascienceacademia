@@ -141,6 +141,34 @@
     raf(tick);
   } else if (canvas) { canvas.style.display = 'none'; }
 
+  /* ── 3b. Light / dark theme toggle ────────────────────────────────────────
+     The head script applies a saved "light" choice before first paint (no flash);
+     dark is the default. The choice is stored in localStorage and synced across tabs. */
+  var themeBtn = d.querySelector('.theme-tog');
+  if (themeBtn) {
+    var themeMeta = d.querySelector('meta[name="theme-color"]');
+    var syncThemeUI = function () {
+      var light = root.getAttribute('data-theme') === 'light';
+      var label = light ? 'Switch to dark theme' : 'Switch to light theme';
+      themeBtn.setAttribute('aria-label', label); themeBtn.title = label;
+      if (themeMeta) themeMeta.setAttribute('content', light ? '#f8f5ef' : '#0b0c0e');
+    };
+    var applyTheme = function (theme, save) {
+      if (!reduceMotion) {
+        root.classList.add('theme-anim');
+        clearTimeout(applyTheme.t); applyTheme.t = setTimeout(function () { root.classList.remove('theme-anim'); }, 400);
+      }
+      if (theme === 'light') root.setAttribute('data-theme', 'light'); else root.removeAttribute('data-theme');
+      if (save) { try { localStorage.setItem('dsa-theme', theme); } catch (e) {} }
+      syncThemeUI();
+    };
+    themeBtn.addEventListener('click', function () {
+      applyTheme(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light', true);
+    });
+    w.addEventListener('storage', function (e) { if (e.key === 'dsa-theme') applyTheme(e.newValue === 'light' ? 'light' : 'dark', false); });
+    syncThemeUI();
+  }
+
   /* ── 4. Navigation (scrolled state + mobile drawer) ───────────────────── */
   var nav = d.getElementById('nav');
   if (nav) {

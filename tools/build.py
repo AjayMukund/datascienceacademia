@@ -286,6 +286,11 @@ env.filters["squash"] = squash
 env.filters["initials"] = lambda name: "".join(w[0] for w in name.split()[:2]).upper()
 env.filters["level_badge"] = lambda level: LEVEL_BADGE.get(level, "badge")
 env.filters["cat_slug"] = lambda cat: CATEGORY_SLUG.get(cat, slugify(cat))
+# Brand accent hex values used in the *-data.js files → theme-aware CSS tokens
+# (the light theme swaps each token for a darker, AA-contrast variant).
+ACCENT_TOKENS = {"#3ecfb2": "var(--teal)", "#7a9fff": "var(--blue)", "#c792ea": "var(--violet)", "#f0c040": "var(--gold)",
+                 "#c8a96e": "var(--champ)", "#e8a080": "var(--coral)", "#e8956e": "var(--coral)", "#ff79c6": "var(--pink)"}
+env.filters["accent"] = lambda hexval: ACCENT_TOKENS.get((hexval or "").lower(), hexval)
 env.globals.update(site=SITE, nav_items=NAV_ITEMS, jsonld=jsonld, breadcrumb_ld=breadcrumb_ld, absolute=absolute,
                    og_for=og_for, today=TODAY, site_jsonld=jsonld(org_ld()), level_badge=LEVEL_BADGE, category_slug=CATEGORY_SLUG)
 

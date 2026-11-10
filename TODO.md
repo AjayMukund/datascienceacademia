@@ -56,15 +56,20 @@ Bought 2026-11-10 at Hostinger (`.in` + `.com`, owner Ajay Mukund S, expire 2029
 - ☑ **You** — DNS at Hostinger: 4 `A` + 4 `AAAA` records to GitHub Pages, `CNAME www → ajaymukund.github.io`,
   GitHub domain-verification `TXT` (`_github-pages-challenge-ajaymukund`).
 - ☑ **Claude** — `SITE["url"]` in `tools/build.py`, `CNAME` file, rebuilt pages + OG images, redeployed.
-- ☐ **You** — tick *Enforce HTTPS* in https://github.com/AjayMukund/datascienceacademia/settings/pages
-  once the certificate is issued.
-- ☐ **You** — Supabase → Authentication → URL Configuration: Site URL `https://datascienceacademia.in`,
-  add redirect URL `https://datascienceacademia.in/**` (password-reset links).
-- ☐ **You** — `datascienceacademia.com` → Hostinger *Redirects* → 301 to `https://datascienceacademia.in`.
-- ☐ **You → Claude** — mailbox for `info@datascienceacademia.in` (Zoho Mail / Google Workspace); add its
-  MX/SPF/DKIM records; then switch `SITE["email"]` back from the Gmail stopgap.
-- ☐ **You** — Search Console *Domain* property + sitemap; update Google Business Profile, social bios,
-  Chatbase (`Company_Info.txt`); rebuild the student app (`dsa_app`) with the new certificate URL.
+- ☑ *Enforce HTTPS* on (Let's Encrypt cert, auto-renewed by GitHub).
+- ☑ Supabase Auth Site URL + redirect URL set to the new domain; project resumed (it had auto-paused) and a
+  daily keep-alive runs in `.github/workflows/supabase-keepalive.yml`.
+- ☑ `datascienceacademia.com` → 301 to `https://datascienceacademia.in` (Hostinger *Redirects*).
+- ☑ Zoho Mail Free (India): mailbox `ajay@`, aliases `info@`, `admissions@`, `careers@`, `internships@`;
+  MX, SPF, DKIM (`zmail`, 2048-bit, verified), DMARC `p=none` (reports to `ajay@`). Site shows `info@`.
+- ☐ **Shelved — You** — Formspree (form `xdaypadg`) → *Target email* → `info@datascienceacademia.in`, confirm
+  in Zoho, then send a test enquiry and check it lands in *Enquiries* (not Zoho's *Notification* folder).
+- ☐ **Shelved — You → Claude** — Google Search Console: *URL-prefix* property `https://datascienceacademia.in/`,
+  verify with the **HTML file** method (send Claude the file name; avoids Hostinger DNS), submit `sitemap.xml`.
+- ☐ **You** — update Google Business Profile link, social bios, directories, Chatbase (`Company_Info.txt`);
+  rebuild the student app (`dsa_app`) with the new certificate URL.
+- ☐ **Claude, ~Dec 2026** — read the DMARC reports; if clean, tighten to `p=quarantine`. If Hostinger's
+  nameservers still serve TXT records intermittently, move DNS (not the domain) to Cloudflare.
 - ☐ Optional: put Cloudflare (free) in front → long cache lifetimes (the one remaining PageSpeed
   insight GitHub Pages cannot fix), Brotli, and analytics without cookies.
 

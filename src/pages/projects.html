@@ -156,7 +156,7 @@ html.dlg-open{overflow:hidden}
       <article class="card" data-filter-item data-cat="{{ p.cat }}" data-cohort="{{ p.cohort }}" data-r="{{ loop.index0 % 3 }}">
         <div class="card-img">
           {{ img(p.img, p.title ~ ' — ' ~ p.cat_label ~ ' student project', sizes='(max-width:640px) 100vw, (max-width:1024px) 50vw, 400px') }}
-          <span class="badge" style="color:{{ c.color }};border-color:{{ c.border }}">{{ c.label }}</span>
+          <span class="badge" style="color:{{ c.color | accent }};border-color:{{ c.border }}">{{ c.label }}</span>
         </div>
         <div class="card-body">
           <div class="card-top">
@@ -214,7 +214,7 @@ html.dlg-open{overflow:hidden}
     </div>
     <div class="domain-list" data-r role="group" aria-label="Research domains covered">
       {% for key, c in project_cats.items() %}
-      <span class="badge" style="color:{{ c.color }};border-color:{{ c.border }};background:{{ c.bg }}">{{ c.label }}</span>
+      <span class="badge" style="color:{{ c.color | accent }};border-color:{{ c.border }};background:{{ c.bg }}">{{ c.label }}</span>
       {% endfor %}
     </div>
   </div>
