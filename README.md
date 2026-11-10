@@ -1,6 +1,6 @@
 # Data Science Academia — website
 
-Static marketing site for **https://ajaymukund.github.io/datascienceacademia/** (GitHub Pages) plus the
+Static marketing site for **https://datascienceacademia.in/** (GitHub Pages) plus the
 Supabase-backed student/admin portal (`login.html`, `student/`, `admin/`).
 
 The public pages are **generated**: edit the sources, run the build, publish the whole folder.

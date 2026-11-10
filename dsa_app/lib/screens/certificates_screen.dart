@@ -8,7 +8,7 @@ import '../core/supabase.dart';
 import '../core/theme.dart';
 import '../providers/courses_provider.dart';
 
-const _baseUrl = 'https://ajaymukund.github.io/datascienceacademia';
+const _baseUrl = 'https://datascienceacademia.in';
 
 class CertificatesScreen extends ConsumerWidget {
   const CertificatesScreen({super.key});

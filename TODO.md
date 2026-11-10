@@ -1,7 +1,7 @@
 # Data Science Academia — website follow-ups
 
 _Status on 2026-08-27 (commit `2aa6285`): site rebuilt and live at
-https://ajaymukund.github.io/datascienceacademia/ — PageSpeed 100 / 100 / 100 / 100 on desktop
+https://datascienceacademia.in/ — PageSpeed 100 / 100 / 100 / 100 on desktop
 and mobile; 46 pages, 0 checker errors. This file tracks what is still worth doing._
 
 Legend: **You** = needs your account/decision · **Claude** = ask and it gets done · ☐ open · ☑ done
@@ -11,8 +11,8 @@ Legend: **You** = needs your account/decision · **Claude** = ask and it gets do
 ## 1. This week — indexing, local search, trust (highest impact)
 
 - ☐ **You · Google Search Console** — add a *URL-prefix* property for
-  `https://ajaymukund.github.io/datascienceacademia/`, then **Sitemaps → submit**
-  `https://ajaymukund.github.io/datascienceacademia/sitemap.xml`.
+  `https://datascienceacademia.in/`, then **Sitemaps → submit**
+  `https://datascienceacademia.in/sitemap.xml`.
   https://search.google.com/search-console
   If you choose the *HTML tag* verification, send the `google-site-verification` token → Claude adds
   it to `src/templates/base.html` and redeploys.
@@ -30,7 +30,7 @@ Legend: **You** = needs your account/decision · **Claude** = ask and it gets do
   | "10+ colleges represented", "100% would recommend" | `src/pages/testimonials.html` | /testimonials.html |
   | "DSA AI Mastery Certificate — recognised by hiring partners" | `programmes-data.js` → `ai-mastery.outcomes` | /programmes/ai-mastery.html |
   | Director shown as "DS" (unnamed) on About, but Ajay Mukund S is named on Blog/Projects/Testimonials | `src/pages/about.html` | /about.html |
-- ☐ **You · Test the enquiry form end-to-end** — submit https://ajaymukund.github.io/datascienceacademia/contact.html
+- ☐ **You · Test the enquiry form end-to-end** — submit https://datascienceacademia.in/contact.html
   once and confirm the Formspree email (`https://formspree.io/f/xdaypadg`) arrives at the right inbox.
   Also tap the WhatsApp button on a phone.
 - ☐ **You · Chatbase assistant** — `Company_Info.txt` was updated (18 courses, new page URLs). If the
@@ -49,14 +49,22 @@ Legend: **You** = needs your account/decision · **Claude** = ask and it gets do
 - ☐ **Claude · Periodic checks** — re-run PageSpeed monthly; run `python tools/check_site.py` after
   every content change (0 errors expected).
 
-## 3. Custom domain — datascienceacademia.in (when DNS is yours)
+## 3. Custom domain — datascienceacademia.in
 
-- ☐ **You** — point the domain: `A`/`AAAA` records to GitHub Pages or `CNAME www → ajaymukund.github.io`;
-  add it in https://github.com/AjayMukund/datascienceacademia/settings/pages and tick *Enforce HTTPS*.
-  Guide: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site
-- ☐ **Claude** — set `SITE["url"]` in `tools/build.py`, add `CNAME`, rebuild, rerun `tools/make_og.py`
-  (OG images print the domain), redeploy; re-add the property in Search Console; update the
-  address on Google Business Profile and social bios.
+Bought 2026-11-10 at Hostinger (`.in` + `.com`, owner Ajay Mukund S, expire 2029-11-10, auto-renew on).
+
+- ☑ **You** — DNS at Hostinger: 4 `A` + 4 `AAAA` records to GitHub Pages, `CNAME www → ajaymukund.github.io`,
+  GitHub domain-verification `TXT` (`_github-pages-challenge-ajaymukund`).
+- ☑ **Claude** — `SITE["url"]` in `tools/build.py`, `CNAME` file, rebuilt pages + OG images, redeployed.
+- ☐ **You** — tick *Enforce HTTPS* in https://github.com/AjayMukund/datascienceacademia/settings/pages
+  once the certificate is issued.
+- ☐ **You** — Supabase → Authentication → URL Configuration: Site URL `https://datascienceacademia.in`,
+  add redirect URL `https://datascienceacademia.in/**` (password-reset links).
+- ☐ **You** — `datascienceacademia.com` → Hostinger *Redirects* → 301 to `https://datascienceacademia.in`.
+- ☐ **You → Claude** — mailbox for `info@datascienceacademia.in` (Zoho Mail / Google Workspace); add its
+  MX/SPF/DKIM records; then switch `SITE["email"]` back from the Gmail stopgap.
+- ☐ **You** — Search Console *Domain* property + sitemap; update Google Business Profile, social bios,
+  Chatbase (`Company_Info.txt`); rebuild the student app (`dsa_app`) with the new certificate URL.
 - ☐ Optional: put Cloudflare (free) in front → long cache lifetimes (the one remaining PageSpeed
   insight GitHub Pages cannot fix), Brotli, and analytics without cookies.
 
@@ -126,7 +134,7 @@ git add -A && git commit -m "…" && git push  # deploy (Pages rebuilds in ~1–
 - Repo: https://github.com/AjayMukund/datascienceacademia · Pages settings:
   https://github.com/AjayMukund/datascienceacademia/settings/pages · Deployments:
   https://github.com/AjayMukund/datascienceacademia/deployments
-- Live: https://ajaymukund.github.io/datascienceacademia/ · sitemap `/sitemap.xml` · `/llms.txt`
+- Live: https://datascienceacademia.in/ · sitemap `/sitemap.xml` · `/llms.txt`
 - Validators: PageSpeed https://pagespeed.web.dev/ · Rich Results
   https://search.google.com/test/rich-results · Schema https://validator.schema.org/
 - Build docs: `README.md`

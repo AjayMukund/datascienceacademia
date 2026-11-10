@@ -43,7 +43,7 @@ SITE = {
     "legal": "Data Science Academia Private Limited",
     "short": "DSA",
     # Public base URL — change this once when moving to a custom domain.
-    "url": "https://ajaymukund.github.io/datascienceacademia",
+    "url": "https://datascienceacademia.in",
     "tagline": "Where Academic Rigour Meets Real-World AI Engineering",
     "description": (
         "Data Science Academia is a Ph.D.-led AI & Data Science institute in Chennai offering 18 courses "

@@ -120,7 +120,7 @@ def make(name: str, title: str, kicker: str, image: Path | None, subtitle: str =
             y += 32
     # bottom strip
     d.line([(72, H - 78), (W - 72, H - 78)], fill=(200, 169, 110, 90), width=1)
-    d.text((72, H - 62), "ajaymukund.github.io/datascienceacademia", font=F_BODY(20), fill=FOG)
+    d.text((72, H - 62), "datascienceacademia.in", font=F_BODY(20), fill=FOG)
     d.text((W - 72 - d.textlength("AICTE-aligned · MSME Registered · Est. 2019", font=F_BODY(20)), H - 62),
            "AICTE-aligned · MSME Registered · Est. 2019", font=F_BODY(20), fill=FOG)
     OUT.mkdir(parents=True, exist_ok=True)

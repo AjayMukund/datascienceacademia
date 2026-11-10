@@ -19,4 +19,4 @@ Disallow: /dsa_app/
 Disallow: /social-automation/
 Disallow: /pwa_icon_bundle/
 
-Sitemap: https://ajaymukund.github.io/datascienceacademia/sitemap.xml
+Sitemap: https://datascienceacademia.in/sitemap.xml
