@@ -2,7 +2,7 @@
 
 > Data Science Academia is a Ph.D.-led AI & Data Science institute in Chennai offering 18 courses (Python, Machine Learning, Deep Learning, LLMs, Power BI, Azure, AWS), AICTE-aligned internships, Microsoft certification prep and a 12-month AI Mastery Track — live in Chennai and online.
 
-Address: No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam, Chennai, Tamil Nadu 600073, India. Phone/WhatsApp: +91 91764 98814. Email: data.science.academia@gmail.com. Hours: Mon – Sat · 9:00 AM – 7:00 PM IST. Founded 2019; MSME registered; AICTE-aligned internships and FDPs.
+Address: No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam, Chennai, Tamil Nadu 600073, India. Phone/WhatsApp: +91 91764 98814. Email: info@datascienceacademia.in. Hours: Mon – Sat · 9:00 AM – 7:00 PM IST. Founded 2019; MSME registered; AICTE-aligned internships and FDPs.
 
 ## Key pages
 

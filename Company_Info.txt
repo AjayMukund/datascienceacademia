@@ -59,7 +59,7 @@ Director (Academic & Technology): (Initials: DS)
 Address   : No. 52/1A, First Floor, Madambakkam Main Road,
             Rajakilpakkam, Chennai, Tamil Nadu 600073 (near Tambaram)
 Phone     : +91 91764 98814
-Email     : data.science.academia@gmail.com
+Email     : info@datascienceacademia.in
 WhatsApp  : https://wa.me/919176498814
 
 Social Media:
@@ -554,7 +554,7 @@ A: We typically respond within 1 business day. For urgent queries, WhatsApp us
 
 Q: What is the fee for courses?
 A: Fees vary by course and programme. Please contact us at +91 91764 98814 or
-   data.science.academia@gmail.com for current pricing and batch details.
+   info@datascienceacademia.in for current pricing and batch details.
 
 Q: Are sessions recorded?
 A: Yes. All live sessions are recorded and made available for enrolled students
