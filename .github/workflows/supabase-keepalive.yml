@@ -1,0 +1,28 @@
+# Daily read-only request so the free-plan Supabase project (student/admin portal)
+# is not paused for inactivity. Uses the public anon key that js/supabase-client.js
+# already ships to every visitor. Fails (and GitHub emails the owner) if the
+# database does not answer.
+name: Supabase keep-alive
+
+on:
+  schedule:
+    - cron: "30 3 * * *"   # 03:30 UTC = 09:00 IST, daily
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Read one course id
+        env:
+          SUPABASE_URL: https://isoepiysqmqffwhroseh.supabase.co
+          SUPABASE_ANON: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlzb2VwaXlzcW1xZmZ3aHJvc2VoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwMTcyNDQsImV4cCI6MjA5MjU5MzI0NH0.lv4IquTcYPY90TRSy1IZoLktt-yY-GDAPb4gF95Cn7k
+        run: |
+          code=$(curl -s -o body.json -w '%{http_code}' --retry 3 --retry-delay 20 \
+            -H "apikey: $SUPABASE_ANON" -H "Authorization: Bearer $SUPABASE_ANON" \
+            "$SUPABASE_URL/rest/v1/courses?select=id&limit=1")
+          echo "HTTP $code"
+          test "$code" = 200
