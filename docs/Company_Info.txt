@@ -99,17 +99,17 @@ A2. SQL for Data Science
 A3. R Programming
   Duration  : 6 weeks | 30 contact hours
   Level     : Beginner
-  Tools     : R 4.x, RStudio, tidyverse, ggplot2, dplyr, tidyr, R Markdown
+  Tools     : R 4.x, RStudio, tidyverse, ggplot2, dplyr, tidyr, R Markdown, Quarto
   Overview  : Covers the R ecosystem from data wrangling with tidyverse to
               publication-ready visualisations with ggplot2 and reproducible
-              research reports with R Markdown.
+              research reports with R Markdown and Quarto.
   Topics    : R basics, data structures, dplyr & tidyr, ggplot2, statistical
-              analysis, R Markdown & Shiny intro
+              analysis, R Markdown / Quarto & Shiny intro
 
 A4. Excel for Data Analysis
   Duration  : 4 weeks | 20 contact hours
   Level     : Beginner
-  Tools     : Microsoft Excel 2019/365, Power Query, Power Pivot, VBA (intro)
+  Tools     : Microsoft Excel (Microsoft 365), Power Query, Power Pivot, VBA (intro)
   Overview  : Transforms a basic Excel user into a power analyst who can build
               dynamic reports, automate workflows, and design dashboards.
   Topics    : Power formulas (XLOOKUP, INDEX-MATCH, dynamic arrays), PivotTables,
@@ -168,7 +168,7 @@ C1. Deep Learning
 C2. Computer Vision
   Duration  : 10 weeks | 50 contact hours
   Level     : Advanced
-  Tools     : Python, OpenCV, PyTorch, Ultralytics YOLOv8, Detectron2, MediaPipe
+  Tools     : Python, OpenCV, PyTorch, Ultralytics YOLO26, Segment Anything (SAM 2), MediaPipe
   Prereqs   : Deep Learning course; Python and PyTorch basics
   Overview  : Classical image processing through state-of-the-art detection,
               segmentation, face recognition, and video analytics.
@@ -179,20 +179,21 @@ C2. Computer Vision
 C3. Large Language Models (LLM)
   Duration  : 10 weeks | 50 contact hours
   Level     : Advanced
-  Tools     : Python, HuggingFace Transformers, LangChain, LlamaIndex, Pinecone,
-              ChromaDB, FastAPI, Ollama
+  Tools     : Python, HuggingFace Transformers, LangChain, LangGraph, LlamaIndex,
+              ChromaDB, Pinecone, vLLM, FastAPI, Ollama
   Prereqs   : Deep Learning; familiarity with Transformer architecture
   Overview  : Engineering-level understanding of LLMs — from Transformer internals
               to fine-tuning, RAG pipelines, and production LLM apps.
-  Topics    : Transformer architecture, GPT family, BERT, open-source LLMs,
-              prompt engineering, fine-tuning with LoRA/QLoRA, RAG, LangChain,
-              LlamaIndex, LLM evaluation & safety, production deployment
+  Topics    : Transformer architecture, frontier and open-weight LLMs, BERT,
+              prompt engineering and reasoning models, fine-tuning with
+              LoRA/QLoRA/DPO, RAG, agents with LangGraph and MCP, LlamaIndex,
+              LLM evaluation & safety, production deployment with vLLM
 
 C4. Generative AI
   Duration  : 10 weeks | 50 contact hours
   Level     : Advanced
-  Tools     : Python, PyTorch, Diffusers, Stable Diffusion, DALL-E API, Gradio,
-              ComfyUI, OpenAI API
+  Tools     : Python, PyTorch, Diffusers, Stable Diffusion, FLUX, OpenAI Images
+              API, Gradio, ComfyUI
   Prereqs   : Deep Learning; PyTorch and CNN/Transformer fundamentals
   Overview  : Full spectrum of generative AI — VAEs, GANs, Diffusion Models,
               and Multimodal AI for creative and production applications.
@@ -203,7 +204,7 @@ C4. Generative AI
 C5. Reinforcement Learning
   Duration  : 8 weeks | 40 contact hours
   Level     : Advanced
-  Tools     : Python, OpenAI Gymnasium, Stable-Baselines3, PyTorch, TensorBoard,
+  Tools     : Python, Gymnasium (Farama), Stable-Baselines3, PyTorch, TensorBoard,
               MuJoCo (intro), RLlib
   Prereqs   : Deep Learning; probability, linear algebra, Python
   Overview  : From MDP mathematical foundations through DQN to state-of-the-art
@@ -222,7 +223,7 @@ C6. MLOps & Model Deployment
               CI/CD pipelines, serving predictions at scale, monitoring for drift.
   Topics    : Data versioning (DVC), experiment tracking (MLflow, W&B), Docker,
               FastAPI for ML, CI/CD with GitHub Actions, cloud deployment
-              (AWS SageMaker / Azure ML), model monitoring
+              (Amazon SageMaker AI / Azure ML), model monitoring
 
 
 CATEGORY D — ANALYTICS (Beginner–Intermediate)
@@ -270,22 +271,22 @@ E2. Microsoft Azure
               Azure Data Factory, Python SDK
   Prereqs   : Basic Python and SQL; no prior cloud experience required
   Overview  : From cloud fundamentals to building and deploying ML models on Azure.
-              Covers AZ-900 and DP-900 certification preparation.
+              Covers AZ-900, DP-900 and AI-901 certification preparation.
   Topics    : Cloud fundamentals, Azure storage & databases, Azure ML, Azure AI
-              Services (Cognitive Services), Azure Databricks, Azure Data Factory,
-              MLOps on Azure, AZ-900 & DP-900 certification prep
+              services in Microsoft Foundry, Azure Databricks, Azure Data Factory,
+              MLOps on Azure, AZ-900, DP-900 & AI-901 certification prep
 
 E3. AWS for Data Science
   Duration  : 8 weeks | 40 contact hours
   Level     : Intermediate
-  Tools     : AWS Console, AWS CLI, SageMaker, S3, Lambda, Glue, Athena,
+  Tools     : AWS Console, AWS CLI, SageMaker AI, Bedrock, S3, Lambda, Glue, Athena,
               Redshift, Python (boto3)
   Prereqs   : Basic Python and SQL; no prior cloud experience needed
   Overview  : Build and deploy data science solutions on AWS — storage, compute,
-              data engineering, SageMaker for ML. CLF-C02 certification prep.
+              data engineering, SageMaker AI for ML, Bedrock for generative AI. CLF-C02 certification prep.
   Topics    : AWS fundamentals & IAM, S3 & data lake, EC2 & networking, AWS data
               services (RDS, DynamoDB, Redshift, Glue, Athena, Kinesis),
-              SageMaker fundamentals & advanced, data pipelines, CLF-C02 prep
+              SageMaker AI fundamentals & advanced, Amazon Bedrock, data pipelines, CLF-C02 prep
 
 --------------------------------------------------------------------------------
 5. SPECIAL PROGRAMMES (7 Programmes)
