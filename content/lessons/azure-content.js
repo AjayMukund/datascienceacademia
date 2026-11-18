@@ -86,18 +86,18 @@ az account set --subscription "My Subscription"
 az account show --query "{Name:name, ID:id}"
 
 # Create a storage account
-az storage account create \
-  --name dsastreagecentralindia \
-  --resource-group dsa-ml-rg \
-  --location centralindia \
-  --sku Standard_LRS \
-  --kind StorageV2 \
+az storage account create \\
+  --name dsastreagecentralindia \\
+  --resource-group dsa-ml-rg \\
+  --location centralindia \\
+  --sku Standard_LRS \\
+  --kind StorageV2 \\
   --enable-hierarchical-namespace true  # enables ADLS Gen2
 
 # Create an Azure ML workspace
-az ml workspace create \
-  --name dsa-ml-workspace \
-  --resource-group dsa-ml-rg \
+az ml workspace create \\
+  --name dsa-ml-workspace \\
+  --resource-group dsa-ml-rg \\
   --location centralindia
 
 # List Azure ML compute targets
@@ -146,14 +146,14 @@ print(f"Subscription: {account['name']} ({sub_id})")
 credential = DefaultAzureCredential()
 rm_client = ResourceManagementClient(credential, sub_id)
 
-print("\nResource Groups:")
+print("\\nResource Groups:")
 for rg in rm_client.resource_groups.list():
     print(f"  {rg.name:30} {rg.location}")
 
 # 4. Create a resource group and storage account
 import subprocess
 subprocess.run(['az', 'group', 'create', '--name', 'dsa-test-rg', '--location', 'centralindia'])
-print("\nResource group created")` }
+print("\\nResource group created")` }
   ]
 };
 
@@ -186,15 +186,15 @@ L['azure-w1-l3'] = {
   <li><strong>Scope</strong>: Management Group → Subscription → Resource Group → Individual Resource. A role assigned at a higher scope is inherited by all resources below it.</li>
 </ul>
 <pre><code># Assign a role via CLI
-az role assignment create \
-  --assignee "user@mycompany.com" \
-  --role "AzureML Data Scientist" \
+az role assignment create \\
+  --assignee "user@mycompany.com" \\
+  --role "AzureML Data Scientist" \\
   --scope "/subscriptions/SUB_ID/resourceGroups/dsa-ml-rg/providers/Microsoft.MachineLearningServices/workspaces/dsa-ml-workspace"
 
 # Assign Storage Blob Data Contributor to a Managed Identity
-az role assignment create \
-  --assignee-object-id "MANAGED_IDENTITY_OBJECT_ID" \
-  --role "Storage Blob Data Contributor" \
+az role assignment create \\
+  --assignee-object-id "MANAGED_IDENTITY_OBJECT_ID" \\
+  --role "Storage Blob Data Contributor" \\
   --scope "/subscriptions/SUB_ID/resourceGroups/dsa-ml-rg/providers/Microsoft.Storage/storageAccounts/dsastorage"</code></pre>` },
     { type: 'text', body: `<h3>Managed Identities in Practice</h3>
 <p>The most important pattern for data science on Azure: give your compute resource (VM, Azure ML Compute, Databricks cluster) a Managed Identity and assign it the exact roles it needs. Your code uses <code>DefaultAzureCredential()</code> — no secrets anywhere.</p>
@@ -220,10 +220,10 @@ df = pd.read_parquet(io.BytesIO(data))
 print(df.shape)</code></pre>
 <h3>Creating a Service Principal for CI/CD</h3>
 <pre><code># Create service principal with Contributor role on the resource group
-az ad sp create-for-rbac \
-  --name "dsa-mlops-sp" \
-  --role "Contributor" \
-  --scopes "/subscriptions/SUB_ID/resourceGroups/dsa-ml-rg" \
+az ad sp create-for-rbac \\
+  --name "dsa-mlops-sp" \\
+  --role "Contributor" \\
+  --scopes "/subscriptions/SUB_ID/resourceGroups/dsa-ml-rg" \\
   --sdk-auth  # outputs JSON for AZURE_CREDENTIALS GitHub secret</code></pre>` },
     { type: 'exercise', title: 'Assign RBAC roles and authenticate with DefaultAzureCredential', hint: 'Create a user-assigned managed identity, assign Storage Blob Data Reader, authenticate from Python and list blobs', solution: `# 1. Create user-assigned managed identity
 az identity create --name "dsa-ml-identity" --resource-group dsa-ml-rg --location centralindia
@@ -232,9 +232,9 @@ az identity create --name "dsa-ml-identity" --resource-group dsa-ml-rg --locatio
 IDENTITY_OBJ=$(az identity show --name dsa-ml-identity --resource-group dsa-ml-rg --query principalId -o tsv)
 
 # 3. Assign Storage Blob Data Reader to the identity
-az role assignment create \
-  --assignee-object-id $IDENTITY_OBJ \
-  --role "Storage Blob Data Reader" \
+az role assignment create \\
+  --assignee-object-id $IDENTITY_OBJ \\
+  --role "Storage Blob Data Reader" \\
   --scope "/subscriptions/SUB_ID/resourceGroups/dsa-ml-rg/providers/Microsoft.Storage/storageAccounts/dsastorage"
 
 # 4. Python — list blob containers using DefaultAzureCredential (uses AzureCliCredential locally)
@@ -271,18 +271,18 @@ L['azure-w1-l4'] = {
 <p>The Azure Data Science Virtual Machine is a pre-built VM image with data science tools pre-installed: Python (Anaconda, conda environments), Jupyter, VS Code, R, Julia, PyTorch, TensorFlow, scikit-learn, RAPIDS (GPU), Azure ML SDK, and CLI. Start working within minutes without environment setup.</p>` },
     { type: 'text', body: `<h3>Creating a VM for ML Development</h3>
 <pre><code># Create a Data Science VM (Ubuntu DSVM image)
-az vm create \
-  --resource-group dsa-ml-rg \
-  --name dsa-dev-vm \
-  --image microsoft-dsvm:ubuntu-2004:2004:latest \
-  --size Standard_D4s_v5 \          # 4 vCPUs, 16 GB RAM
-  --admin-username azureuser \
-  --ssh-key-values ~/.ssh/id_rsa.pub \
-  --location centralindia \
+az vm create \\
+  --resource-group dsa-ml-rg \\
+  --name dsa-dev-vm \\
+  --image microsoft-dsvm:ubuntu-2004:2004:latest \\
+  --size Standard_D4s_v5 \\          # 4 vCPUs, 16 GB RAM
+  --admin-username azureuser \\
+  --ssh-key-values ~/.ssh/id_rsa.pub \\
+  --location centralindia \\
   --assign-identity                  # System-assigned Managed Identity
 
 # Get the public IP
-az vm show --name dsa-dev-vm --resource-group dsa-ml-rg \
+az vm show --name dsa-dev-vm --resource-group dsa-ml-rg \\
   --show-details --query publicIps -o tsv
 
 # SSH into the VM
@@ -304,13 +304,13 @@ az vm start --name dsa-dev-vm --resource-group dsa-ml-rg
 # Auto-shutdown: configure in Portal → VM → Auto-shutdown → set daily shutdown time</code></pre>` },
     { type: 'tip', body: `Always configure <strong>Auto-shutdown</strong> on development VMs. A Standard_NC6s_v3 (V100 GPU) left running overnight costs ~$2.50/hour = $900/month. Set auto-shutdown to 7 PM daily from the Portal (VM → Operations → Auto-shutdown). For shared team VMs, use Azure Bastion instead of exposing SSH ports publicly — Bastion provides browser-based SSH/RDP without a public IP on the VM.` },
     { type: 'exercise', title: 'Create a development VM, SSH in, and run a training script', hint: 'Create an Ubuntu VM with --size Standard_D2s_v5, SSH in, install sklearn, run a quick training script, then deallocate', solution: `# 1. Create lightweight dev VM
-az vm create \
-  --resource-group dsa-ml-rg \
-  --name dsa-dev-vm \
-  --image Ubuntu2204 \
-  --size Standard_D2s_v5 \
-  --admin-username azureuser \
-  --generate-ssh-keys \
+az vm create \\
+  --resource-group dsa-ml-rg \\
+  --name dsa-dev-vm \\
+  --image Ubuntu2204 \\
+  --size Standard_D2s_v5 \\
+  --admin-username azureuser \\
+  --generate-ssh-keys \\
   --location centralindia
 
 # 2. Get IP
@@ -401,13 +401,13 @@ for blob in container_client.list_blobs(name_starts_with="sales/"):
 </ul>` },
     { type: 'tip', body: `For ML pipelines, always use the <strong>DFS endpoint</strong> (<code>https://account.dfs.core.windows.net</code>) instead of the blob endpoint when your storage account has Hierarchical Namespace enabled (ADLS Gen2). The DFS endpoint enables true directory operations (rename, delete folder), atomic file operations, and dramatically faster performance for Spark workloads — critical for Databricks and Synapse jobs that read/write partitioned datasets.` },
     { type: 'exercise', title: 'Create a storage account, upload ML data, and read it back with pandas', hint: 'Create a storage account with ZRS redundancy, create containers for raw/processed/models, upload a CSV, download and read it', solution: `# 1. Create storage account (enable hierarchical namespace for ADLS Gen2)
-az storage account create \
-  --name dsacoursestorage \
-  --resource-group dsa-ml-rg \
-  --location centralindia \
-  --sku Standard_ZRS \
-  --kind StorageV2 \
-  --enable-hierarchical-namespace true \
+az storage account create \\
+  --name dsacoursestorage \\
+  --resource-group dsa-ml-rg \\
+  --location centralindia \\
+  --sku Standard_ZRS \\
+  --kind StorageV2 \\
+  --enable-hierarchical-namespace true \\
   --allow-blob-public-access false
 
 # 2. Create containers
@@ -492,9 +492,9 @@ L['azure-w2-l1'] = {
 }
 
 # Apply via CLI
-az storage account management-policy create \
-  --account-name dsacoursestorage \
-  --resource-group dsa-ml-rg \
+az storage account management-policy create \\
+  --account-name dsacoursestorage \\
+  --resource-group dsa-ml-rg \\
   --policy @lifecycle-policy.json</code></pre>` },
     { type: 'text', body: `<h3>Shared Access Signatures (SAS)</h3>
 <p>A SAS token is a URI query parameter string that grants delegated, time-limited access to a storage resource without sharing the account key. Critical for sharing datasets with external collaborators or generating temporary upload links.</p>
@@ -568,7 +568,7 @@ df_back = pd.read_parquet(io.BytesIO(result.content))
 print("Rows returned:", len(df_back))
 
 # Check the lifecycle policy applied
-print("\nApply lifecycle via CLI:")
+print("\\nApply lifecycle via CLI:")
 print("az storage account management-policy create --account-name", ACCOUNT, "--resource-group dsa-ml-rg --policy @lifecycle-policy.json")` }
   ]
 };
@@ -587,40 +587,40 @@ L['azure-w2-l2'] = {
   <li><strong>Built-in ML</strong> — call Azure ML endpoints directly from T-SQL using sp_invoke_external_script (via SQL Server Machine Learning Services).</li>
 </ul>
 <pre><code># Create Azure SQL Database
-az sql server create \
-  --name dsa-sql-server \
-  --resource-group dsa-ml-rg \
-  --location centralindia \
-  --admin-user sqladmin \
+az sql server create \\
+  --name dsa-sql-server \\
+  --resource-group dsa-ml-rg \\
+  --location centralindia \\
+  --admin-user sqladmin \\
   --admin-password "SecureP@ss123!"
 
-az sql db create \
-  --resource-group dsa-ml-rg \
-  --server dsa-sql-server \
-  --name dsa-mldb \
-  --service-objective S2 \   # Standard tier, 50 DTUs
+az sql db create \\
+  --resource-group dsa-ml-rg \\
+  --server dsa-sql-server \\
+  --name dsa-mldb \\
+  --service-objective S2 \\   # Standard tier, 50 DTUs
   --max-size 10GB</code></pre>` },
     { type: 'text', body: `<h3>Azure Database for PostgreSQL — Flexible Server</h3>
 <p>Fully managed PostgreSQL with Flexible Server offering granular control over maintenance windows, zone-redundant HA, and stop/start to reduce costs. Preferred for Python data science teams due to native PostgreSQL extensions (pgvector, PostGIS, pg_stat_statements, TimescaleDB).</p>
 <pre><code># Create PostgreSQL Flexible Server
-az postgres flexible-server create \
-  --name dsa-postgres \
-  --resource-group dsa-ml-rg \
-  --location centralindia \
-  --admin-user pgadmin \
-  --admin-password "SecureP@ss123!" \
-  --sku-name Standard_D2s_v3 \
-  --tier GeneralPurpose \
-  --storage-size 32 \
-  --version 16 \
+az postgres flexible-server create \\
+  --name dsa-postgres \\
+  --resource-group dsa-ml-rg \\
+  --location centralindia \\
+  --admin-user pgadmin \\
+  --admin-password "SecureP@ss123!" \\
+  --sku-name Standard_D2s_v3 \\
+  --tier GeneralPurpose \\
+  --storage-size 32 \\
+  --version 16 \\
   --high-availability Disabled  # enable ZoneRedundant for prod
 
 # Open firewall for your IP
-az postgres flexible-server firewall-rule create \
-  --name allow-my-ip \
-  --resource-group dsa-ml-rg \
-  --server-name dsa-postgres \
-  --start-ip-address YOUR_IP \
+az postgres flexible-server firewall-rule create \\
+  --name allow-my-ip \\
+  --resource-group dsa-ml-rg \\
+  --server-name dsa-postgres \\
+  --start-ip-address YOUR_IP \\
   --end-ip-address YOUR_IP</code></pre>
 <h3>Connecting from Python</h3>
 <pre><code>import psycopg2, pandas as pd
@@ -923,7 +923,7 @@ df.printSchema()
 df.groupBy("category").agg({"sales":"sum","profit":"avg"}).show()
 
 # Save aggregated result back to ADLS
-df.groupBy("category").sum("sales").write.mode("overwrite") \
+df.groupBy("category").sum("sales").write.mode("overwrite") \\
   .parquet("abfss://curated@dsacoursestorage.dfs.core.windows.net/sales_by_category/")` }
   ]
 };
@@ -968,15 +968,15 @@ adls-account/
 from delta.tables import DeltaTable
 
 # Write initial Delta table
-df.write.format("delta").mode("overwrite").partitionBy("date") \
+df.write.format("delta").mode("overwrite").partitionBy("date") \\
   .save("abfss://curated@dsadatalake.dfs.core.windows.net/features_delta/")
 
 # Read the Delta table
-df_delta = spark.read.format("delta") \
+df_delta = spark.read.format("delta") \\
   .load("abfss://curated@dsadatalake.dfs.core.windows.net/features_delta/")
 
 # Time travel — read version 0 (initial write)
-df_v0 = spark.read.format("delta").option("versionAsOf", 0) \
+df_v0 = spark.read.format("delta").option("versionAsOf", 0) \\
   .load("abfss://curated@dsadatalake.dfs.core.windows.net/features_delta/")
 
 # MERGE (upsert) daily incremental features
@@ -986,8 +986,8 @@ new_data = spark.read.parquet("abfss://processed@dsadatalake.dfs.core.windows.ne
 delta_table.alias("existing").merge(
     new_data.alias("new"),
     "existing.customer_id = new.customer_id"
-).whenMatchedUpdateAll() \
- .whenNotMatchedInsertAll() \
+).whenMatchedUpdateAll() \\
+ .whenNotMatchedInsertAll() \\
  .execute()
 
 # Query table history
@@ -1161,22 +1161,22 @@ import mlflow
 spark = SparkSession.builder.getOrCreate()
 
 # Read from ADLS Gen2 (credential passthrough via Entra ID in Databricks)
-orders = spark.read.format("delta") \
+orders = spark.read.format("delta") \\
   .load("abfss://raw@dsadatalake.dfs.core.windows.net/orders/")
-customers = spark.read.format("delta") \
+customers = spark.read.format("delta") \\
   .load("abfss://raw@dsadatalake.dfs.core.windows.net/customers/")
 
 # Feature engineering
-window_30d = Window.partitionBy("customer_id") \
-  .orderBy(col("order_date").cast("long")) \
+window_30d = Window.partitionBy("customer_id") \\
+  .orderBy(col("order_date").cast("long")) \\
   .rangeBetween(-30*86400, 0)
 
-features = orders.join(customers, "customer_id") \
-  .withColumn("purchase_count_30d", count("order_id").over(window_30d)) \
-  .withColumn("spend_30d", spark_sum("amount").over(window_30d)) \
-  .withColumn("account_age_days", datediff(current_date(), col("join_date"))) \
-  .withColumn("days_since_last_order", datediff(current_date(), col("order_date"))) \
-  .groupBy("customer_id") \
+features = orders.join(customers, "customer_id") \\
+  .withColumn("purchase_count_30d", count("order_id").over(window_30d)) \\
+  .withColumn("spend_30d", spark_sum("amount").over(window_30d)) \\
+  .withColumn("account_age_days", datediff(current_date(), col("join_date"))) \\
+  .withColumn("days_since_last_order", datediff(current_date(), col("order_date"))) \\
+  .groupBy("customer_id") \\
   .agg(
     avg("age").alias("age"),
     spark_sum("purchase_count_30d").alias("purchase_count_30d"),
@@ -1187,8 +1187,8 @@ features = orders.join(customers, "customer_id") \
   )
 
 # Write to curated Delta table
-features.write.format("delta").mode("overwrite") \
-  .partitionBy("churn_label") \
+features.write.format("delta").mode("overwrite") \\
+  .partitionBy("churn_label") \\
   .save("abfss://curated@dsadatalake.dfs.core.windows.net/churn_features/")</code></pre>
 <h3>MLflow Experiment Tracking</h3>
 <pre><code>import mlflow, mlflow.sklearn
@@ -1256,18 +1256,18 @@ L['azure-w3-l3'] = {
 <h3>Azure Event Hubs — The Streaming Ingestion Layer</h3>
 <p>Before data reaches Stream Analytics, it typically comes through Azure Event Hubs — a managed, high-throughput event streaming platform that can ingest millions of events per second. Event Hubs is the Azure equivalent of Apache Kafka and actually supports the Kafka protocol natively.</p>
 <pre><code># Create an Event Hubs namespace and hub
-az eventhubs namespace create \
-  --name dsa-eventhubs \
-  --resource-group dsa-ml-rg \
-  --location centralindia \
-  --sku Standard \
+az eventhubs namespace create \\
+  --name dsa-eventhubs \\
+  --resource-group dsa-ml-rg \\
+  --location centralindia \\
+  --sku Standard \\
   --capacity 2       # 2 Throughput Units = 2 MB/s ingestion
 
-az eventhubs eventhub create \
-  --name clickstream \
-  --namespace-name dsa-eventhubs \
-  --resource-group dsa-ml-rg \
-  --partition-count 4 \
+az eventhubs eventhub create \\
+  --name clickstream \\
+  --namespace-name dsa-eventhubs \\
+  --resource-group dsa-ml-rg \\
+  --partition-count 4 \\
   --message-retention 1  # retain events for 1 day
 
 # Send events from Python
@@ -1464,14 +1464,14 @@ func start
 # Upload a test CSV to raw-data container — watch console output
 
 # 7. Deploy to Azure
-az functionapp create \
-  --resource-group dsa-ml-rg \
-  --consumption-plan-location centralindia \
-  --runtime python \
-  --runtime-version 3.11 \
-  --functions-version 4 \
-  --name dsa-blob-validator \
-  --storage-account dsacoursestorage \
+az functionapp create \\
+  --resource-group dsa-ml-rg \\
+  --consumption-plan-location centralindia \\
+  --runtime python \\
+  --runtime-version 3.11 \\
+  --functions-version 4 \\
+  --name dsa-blob-validator \\
+  --storage-account dsacoursestorage \\
   --assign-identity
 
 func azure functionapp publish dsa-blob-validator
@@ -1507,22 +1507,22 @@ L['azure-w3-l5'] = {
 </ul>` },
     { type: 'text', body: `<h3>Creating an HDInsight Spark Cluster</h3>
 <pre><code># Create HDInsight Spark cluster
-az hdinsight create \
-  --name dsa-hdinsight-spark \
-  --resource-group dsa-ml-rg \
-  --location centralindia \
-  --type Spark \
-  --version 5.1 \
-  --component-version Spark=3.3 \
-  --http-password "Admin@Pass123!" \
-  --http-user admin \
-  --ssh-password "Admin@Pass123!" \
-  --ssh-user sshuser \
-  --headnode-size Standard_D4_v3 \
-  --workernode-count 3 \
-  --workernode-size Standard_D4_v3 \
-  --storage-account dsacoursestorage \
-  --storage-account-key "ACCOUNT_KEY" \
+az hdinsight create \\
+  --name dsa-hdinsight-spark \\
+  --resource-group dsa-ml-rg \\
+  --location centralindia \\
+  --type Spark \\
+  --version 5.1 \\
+  --component-version Spark=3.3 \\
+  --http-password "Admin@Pass123!" \\
+  --http-user admin \\
+  --ssh-password "Admin@Pass123!" \\
+  --ssh-user sshuser \\
+  --headnode-size Standard_D4_v3 \\
+  --workernode-count 3 \\
+  --workernode-size Standard_D4_v3 \\
+  --storage-account dsacoursestorage \\
+  --storage-account-key "ACCOUNT_KEY" \\
   --storage-default-container hdinsight
 
 # SSH into the head node
@@ -1530,8 +1530,8 @@ IP=$(az hdinsight show --name dsa-hdinsight-spark --resource-group dsa-ml-rg --q
 ssh sshuser@$IP
 
 # Submit a PySpark job via Livy REST API
-curl -X POST http://HEAD_NODE:8998/batches \
-  -H "Content-Type: application/json" \
+curl -X POST http://HEAD_NODE:8998/batches \\
+  -H "Content-Type: application/json" \\
   --data '{
     "file": "wasbs://hdinsight@dsacoursestorage.blob.core.windows.net/scripts/etl.py",
     "args": ["--date", "2024-05-23"],
@@ -1553,13 +1553,13 @@ result.write.mode("overwrite").parquet(
 print("Written", result.count(), "rows")</code></pre>` },
     { type: 'tip', body: `<strong>Delete HDInsight clusters when not in use.</strong> Unlike Databricks which can scale to 0 workers, HDInsight head nodes are always running even when no jobs are executing — head nodes on a Standard_D4_v3 cost ~$0.25/hour even idle. For batch workloads that run once daily, create the cluster at the start of your ADF pipeline and delete it at the end with the HDInsight ADF activity. Store all data in Azure Blob/ADLS Gen2 (not HDFS) so data persists after cluster deletion.` },
     { type: 'exercise', title: 'Submit a PySpark job to HDInsight and read results from ADLS', hint: 'Create a Spark cluster, SSH in, submit a pyspark script via spark-submit, write results to blob storage, and read back in pandas', solution: `# 1. Create cluster (5-10 min)
-az hdinsight create --name dsa-hdi --resource-group dsa-ml-rg \
-  --location centralindia --type Spark --version 5.1 \
-  --component-version Spark=3.3 \
-  --http-password "Admin@Pass123!" --http-user admin \
-  --ssh-password "Admin@Pass123!" --ssh-user sshuser \
-  --headnode-size Standard_D4_v3 --workernode-count 2 \
-  --workernode-size Standard_D4_v3 \
+az hdinsight create --name dsa-hdi --resource-group dsa-ml-rg \\
+  --location centralindia --type Spark --version 5.1 \\
+  --component-version Spark=3.3 \\
+  --http-password "Admin@Pass123!" --http-user admin \\
+  --ssh-password "Admin@Pass123!" --ssh-user sshuser \\
+  --headnode-size Standard_D4_v3 --workernode-count 2 \\
+  --workernode-size Standard_D4_v3 \\
   --storage-account dsacoursestorage --storage-default-container hdinsight
 
 # 2. Upload script to blob
@@ -1684,9 +1684,9 @@ datastore = AzureBlobDatastore(
 ml_client.datastores.create_or_update(datastore)</code></pre>` },
     { type: 'tip', body: `Connect Azure ML Studio to your <strong>GitHub or Azure DevOps repo</strong> from the Notebooks section (Notebooks → Manage files → Clone repo). Every notebook you write is version-controlled in your repo automatically. Push changes with a single click. This turns ad-hoc notebook exploration into tracked, reproducible work without requiring team members to copy notebooks manually.` },
     { type: 'exercise', title: 'Create an Azure ML workspace, register a data asset, and explore the Studio UI', hint: 'Create a workspace via SDK or CLI, register a dataset pointing to your ADLS storage, open ml.azure.com and verify the dataset appears, list compute targets', solution: `# 1. Create workspace via CLI
-az ml workspace create \
-  --name dsa-ml-workspace \
-  --resource-group dsa-ml-rg \
+az ml workspace create \\
+  --name dsa-ml-workspace \\
+  --resource-group dsa-ml-rg \\
   --location centralindia
 
 # 2. Python SDK — register data and list resources
@@ -1709,7 +1709,7 @@ ml_client.data.create_or_update(data)
 print("Dataset registered")
 
 # List all data assets
-print("\nRegistered datasets:")
+print("\\nRegistered datasets:")
 for d in ml_client.data.list():
     print(f"  {d.name} v{d.version}")
 
@@ -2331,8 +2331,8 @@ print("Tags:", [(t.name, t.confidence) for t in result.tags.list[:5]])
 print("Detected objects:", [(o.tags[0].name, o.bounding_box) for o in result.objects.list])</code></pre>` },
     { type: 'tip', body: `Use the <strong>multi-service Cognitive Services resource</strong> (kind: CognitiveServices) instead of creating separate resources per service. One endpoint, one key, one resource group — covers Text Analytics, Vision, Speech, Translation, and more. Simplifies key management and reduces Azure resource sprawl. Only create service-specific resources when you need regional isolation or separate billing by service type.` },
     { type: 'exercise', title: 'Analyse customer review sentiment and extract entities with Text Analytics', hint: 'Create an Azure AI Language resource, install azure-ai-textanalytics, run sentiment analysis and NER on 5 sample reviews, print results', solution: `# 1. Create resource
-# az cognitiveservices account create \
-#   --name dsa-language --resource-group dsa-ml-rg \
+# az cognitiveservices account create \\
+#   --name dsa-language --resource-group dsa-ml-rg \\
 #   --kind TextAnalytics --sku S --location centralindia
 
 # 2. Get endpoint and key
@@ -2371,7 +2371,7 @@ for i, (sent, ents) in enumerate(zip(sentiments, entities_list)):
 df = pd.DataFrame(results)
 print(df[["review","sentiment","pos","neg"]])
 for r in results:
-    print(f"\n{r['review'][:40]}...")
+    print(f"\\n{r['review'][:40]}...")
     print(f"  Entities: {r['entities']}")` }
   ]
 };
@@ -2441,11 +2441,11 @@ print(f"Most relevant: {docs[best_idx]}")
 print(f"Similarity: {scores[best_idx]:.4f}")
 
 # RAG — pass retrieved context to GPT
-context = "\n".join([docs[i] for i in np.argsort(scores)[-2:][::-1]])
+context = "\\n".join([docs[i] for i in np.argsort(scores)[-2:][::-1]])
 answer = client.chat.completions.create(
     model="gpt-4o",
     messages=[
-        {"role": "system", "content": f"Answer using only this context:\n{context}"},
+        {"role": "system", "content": f"Answer using only this context:\\n{context}"},
         {"role": "user", "content": query}
     ]
 )
@@ -2482,10 +2482,10 @@ def answer(question: str) -> str:
     # Find top-2 similar docs
     sims = [np.dot(q_emb, d) / (np.linalg.norm(q_emb) * np.linalg.norm(d)) for d in kb_embeddings]
     top_indices = np.argsort(sims)[-2:][::-1]
-    context = "\n".join([knowledge_base[i] for i in top_indices])
+    context = "\\n".join([knowledge_base[i] for i in top_indices])
     # Generate answer
     resp = client.chat.completions.create(model="gpt-4o", messages=[
-        {"role": "system", "content": f"Answer using only this context. Be concise.\n\nContext:\n{context}"},
+        {"role": "system", "content": f"Answer using only this context. Be concise.\\n\\nContext:\\n{context}"},
         {"role": "user", "content": question}
     ], temperature=0)
     return resp.choices[0].message.content
@@ -2750,7 +2750,7 @@ for invoice in result.documents:
 
 df = pd.DataFrame(rows)
 print(df)
-print(f"\nTotal items: {len(df)}")
+print(f"\\nTotal items: {len(df)}")
 print(f"Invoice total: {df['invoice_total'].iloc[0]}")` }
   ]
 };
@@ -2801,7 +2801,7 @@ metric_frame = MetricFrame(
 )
 print("By group:")
 print(metric_frame.by_group)
-print("\nDisparity in accuracy:", metric_frame.difference(method="between_groups")["accuracy"])</code></pre>
+print("\\nDisparity in accuracy:", metric_frame.difference(method="between_groups")["accuracy"])</code></pre>
 <h3>InterpretML — Model Explanations</h3>
 <pre><code>from interpret.ext.blackbox import TabularExplainer
 from interpret import show
@@ -2816,7 +2816,7 @@ for name, importance in sorted(zip(feature_names, global_exp.get_feature_importa
 
 # Local explanations — why did the model predict this for customer C001?
 local_exp = explainer.explain_local(X_test[:1])
-print("\nLocal explanation for row 0:")
+print("\\nLocal explanation for row 0:")
 show(local_exp)</code></pre>` },
     { type: 'tip', body: `Generate a <strong>Model Card</strong> for every model you deploy to production — a structured document capturing: intended use, training data characteristics, evaluation metrics by demographic group, known limitations, and responsible AI assessment. Azure ML now supports automated model card generation from the Responsible AI Dashboard. Model cards create accountability (who approved it, under what conditions) and are increasingly required by regulators and enterprise risk teams.` },
     { type: 'exercise', title: 'Measure model fairness across demographic groups with Fairlearn', hint: 'Train a classifier on a dataset with a sensitive attribute (age_group or gender), use Fairlearn MetricFrame to compute accuracy and FPR per group, identify the fairness gap', solution: `from sklearn.ensemble import GradientBoostingClassifier
@@ -2855,9 +2855,9 @@ mf = MetricFrame(
 )
 print("Overall:")
 print(mf.overall)
-print("\nBy age group:")
+print("\\nBy age group:")
 print(mf.by_group)
-print("\nMax accuracy disparity:", mf.difference()["accuracy"])
+print("\\nMax accuracy disparity:", mf.difference()["accuracy"])
 print("Max FPR disparity:", mf.difference()["FPR"])
 # High disparity → consider reweighting or Fairlearn's reductions (ExponentiatedGradient)` }
   ]
@@ -2987,10 +2987,10 @@ stages:
         inlineScript: python pipelines/submit_pipeline.py</code></pre>` },
     { type: 'tip', body: `Store all Azure ML Pipeline definitions as <strong>YAML component files</strong> in your git repo (<code>components/prep_data.yml</code>, <code>components/train_model.yml</code>, <code>pipelines/churn_pipeline.yml</code>). The <code>az ml job create --file pipelines/churn_pipeline.yml</code> CLI command submits the pipeline directly from YAML. This means the pipeline definition is code-reviewed in pull requests — a data scientist can't change training logic without a teammate's approval.` },
     { type: 'exercise', title: 'Set up a GitHub Actions workflow that submits an Azure ML training job on push', hint: 'Create AZURE_CREDENTIALS secret from az ad sp create-for-rbac, write a .github/workflows/train.yml that logs in to Azure and runs submit_pipeline.py, push a commit to trigger it', solution: `# 1. Create service principal
-az ad sp create-for-rbac \
-  --name "dsa-mlops-sp" \
-  --role Contributor \
-  --scopes /subscriptions/SUB_ID/resourceGroups/dsa-ml-rg \
+az ad sp create-for-rbac \\
+  --name "dsa-mlops-sp" \\
+  --role Contributor \\
+  --scopes /subscriptions/SUB_ID/resourceGroups/dsa-ml-rg \\
   --sdk-auth > azure_credentials.json
 # Copy JSON → GitHub repo → Settings → Secrets → AZURE_CREDENTIALS
 
@@ -3049,11 +3049,11 @@ L['azure-w6-l2'] = {
   <li><strong>Quota usage</strong> — VM family quota consumption per region. Critical for avoiding "quota exceeded" failures in automated pipelines.</li>
 </ul>
 <pre><code># Set up diagnostic settings to send AML metrics to Log Analytics
-az monitor diagnostic-settings create \
-  --name "aml-to-loganalytics" \
-  --resource /subscriptions/SUB_ID/resourceGroups/dsa-ml-rg/providers/Microsoft.MachineLearningServices/workspaces/dsa-ml-workspace \
-  --workspace /subscriptions/SUB_ID/resourceGroups/dsa-ml-rg/providers/microsoft.operationalinsights/workspaces/dsa-log-analytics \
-  --metrics '[{"category":"AllMetrics","enabled":true}]' \
+az monitor diagnostic-settings create \\
+  --name "aml-to-loganalytics" \\
+  --resource /subscriptions/SUB_ID/resourceGroups/dsa-ml-rg/providers/Microsoft.MachineLearningServices/workspaces/dsa-ml-workspace \\
+  --workspace /subscriptions/SUB_ID/resourceGroups/dsa-ml-rg/providers/microsoft.operationalinsights/workspaces/dsa-log-analytics \\
+  --metrics '[{"category":"AllMetrics","enabled":true}]' \\
   --logs '[{"category":"AmlComputeClusterEvent","enabled":true},
            {"category":"AmlRunStatusChangedEvent","enabled":true}]'</code></pre>` },
     { type: 'text', body: `<h3>Querying Logs with KQL</h3>
@@ -3108,32 +3108,32 @@ def run(data):
     return {"prediction": prediction.tolist(), "duration_ms": duration_ms}</code></pre>
 <h3>Alert Rules</h3>
 <pre><code># Create a metric alert: endpoint errors > 5 in 5 minutes
-az monitor metrics alert create \
-  --name "endpoint-error-spike" \
-  --resource-group dsa-ml-rg \
-  --scopes /subscriptions/SUB_ID/resourceGroups/dsa-ml-rg/providers/Microsoft.MachineLearningServices/workspaces/dsa-ml-workspace/onlineEndpoints/churn-endpoint \
-  --condition "count InvocationErrors > 5" \
-  --window-size 5m \
-  --evaluation-frequency 1m \
-  --action-groups /subscriptions/SUB_ID/resourceGroups/dsa-ml-rg/providers/microsoft.insights/actionGroups/ml-alerts \
+az monitor metrics alert create \\
+  --name "endpoint-error-spike" \\
+  --resource-group dsa-ml-rg \\
+  --scopes /subscriptions/SUB_ID/resourceGroups/dsa-ml-rg/providers/Microsoft.MachineLearningServices/workspaces/dsa-ml-workspace/onlineEndpoints/churn-endpoint \\
+  --condition "count InvocationErrors > 5" \\
+  --window-size 5m \\
+  --evaluation-frequency 1m \\
+  --action-groups /subscriptions/SUB_ID/resourceGroups/dsa-ml-rg/providers/microsoft.insights/actionGroups/ml-alerts \\
   --description "Fires when endpoint errors exceed 5 in a 5-minute window"</code></pre>` },
     { type: 'tip', body: `Build a <strong>Workbook</strong> in Azure Monitor (Monitor → Workbooks → New) as a single-pane-of-glass ML operations dashboard: endpoint latency and error rate charts, training job status table, compute utilisation heatmap, and cost breakdown by resource group. Share the Workbook URL with the team lead — it updates in real time and requires no BI tool licence. Azure Monitor Workbooks are free.` },
     { type: 'exercise', title: 'Create an alert rule for endpoint latency and query training logs with KQL', hint: 'Set a metric alert on ModelLatency p99 > 500ms targeting an SNS action group; write a KQL query in Log Analytics to find failed jobs in the last 7 days', solution: `# 1. Create action group (email notification)
-az monitor action-group create \
-  --name "ml-ops-alerts" \
-  --resource-group dsa-ml-rg \
-  --short-name "mlopss" \
+az monitor action-group create \\
+  --name "ml-ops-alerts" \\
+  --resource-group dsa-ml-rg \\
+  --short-name "mlopss" \\
   --email-receiver name=lead email=you@email.com
 
 # 2. Create latency alert
-az monitor metrics alert create \
-  --name "high-endpoint-latency" \
-  --resource-group dsa-ml-rg \
-  --scopes "/subscriptions/SUB_ID/resourceGroups/dsa-ml-rg/providers/Microsoft.MachineLearningServices/workspaces/dsa-ml-workspace/onlineEndpoints/churn-demo-endpoint" \
-  --condition "avg ModelLatency > 500" \
-  --window-size 5m \
-  --evaluation-frequency 1m \
-  --severity 2 \
+az monitor metrics alert create \\
+  --name "high-endpoint-latency" \\
+  --resource-group dsa-ml-rg \\
+  --scopes "/subscriptions/SUB_ID/resourceGroups/dsa-ml-rg/providers/Microsoft.MachineLearningServices/workspaces/dsa-ml-workspace/onlineEndpoints/churn-demo-endpoint" \\
+  --condition "avg ModelLatency > 500" \\
+  --window-size 5m \\
+  --evaluation-frequency 1m \\
+  --severity 2 \\
   --action-groups "/subscriptions/SUB_ID/resourceGroups/dsa-ml-rg/providers/microsoft.insights/actionGroups/ml-ops-alerts"
 
 # 3. KQL queries (run in Log Analytics → Logs):
@@ -3201,9 +3201,9 @@ for entity in results.get("value", []):
     print(f"{entity['qualifiedName']}: {entity.get('classification', [])}")</code></pre>` },
     { type: 'tip', body: `Register your <strong>Azure ML Workspace as a source in Purview</strong> to automatically capture ML lineage. When a training job completes, Purview shows: which data assets were consumed → which experiment run processed them → which model version was produced → which endpoint serves it. This lineage is the "data provenance" regulators and auditors ask for — and it's generated automatically, not maintained manually.` },
     { type: 'exercise', title: 'Register an ADLS Gen2 source in Purview and scan for PII classifications', hint: 'Create a Purview account, register your ADLS Gen2 storage as a source, run a scan with PII classification rules, view discovered tables and their sensitivity labels in the Data Catalogue', solution: `# 1. Create Purview account
-az purview account create \
-  --account-name dsa-purview \
-  --resource-group dsa-ml-rg \
+az purview account create \\
+  --account-name dsa-purview \\
+  --resource-group dsa-ml-rg \\
   --location centralindia
 
 # 2. Register ADLS Gen2 source (via Purview Studio: purview.microsoft.com)
@@ -3269,9 +3269,9 @@ L['azure-w6-l4'] = {
 </ul>` },
     { type: 'text', body: `<h3>Azure Cost Management</h3>
 <pre><code># View current month spending by resource type
-az consumption usage list \
-  --billing-period-name 202405 \
-  --query "[].{Service:consumedService, Cost:pretaxCost, Currency:currency}" \
+az consumption usage list \\
+  --billing-period-name 202405 \\
+  --query "[].{Service:consumedService, Cost:pretaxCost, Currency:currency}" \\
   --output table | sort -k2 -rn | head -20
 
 # Python — query costs by tag
@@ -3296,12 +3296,12 @@ for row in result.rows:
     print(f"Date: {row[1]}, Service: {row[2]}, Project: {row[3]}, Cost: \${row[0]:.2f}")</code></pre>
 <h3>Budgets and Alerts</h3>
 <pre><code># Create a budget with 80% alert
-az consumption budget create \
-  --budget-name "ml-monthly-budget" \
-  --amount 500 \
-  --category Cost \
-  --time-grain Monthly \
-  --resource-group dsa-ml-rg \
+az consumption budget create \\
+  --budget-name "ml-monthly-budget" \\
+  --amount 500 \\
+  --category Cost \\
+  --time-grain Monthly \\
+  --resource-group dsa-ml-rg \\
   --notifications '{"Actual_GreaterThan_80Percent":{"enabled":true,"operator":"GreaterThan","threshold":80,"contactEmails":["you@email.com"],"thresholdType":"Actual"}}'</code></pre>` },
     { type: 'tip', body: `Set up a <strong>monthly Azure Budget with 50% and 80% alerts</strong> from day one, before any substantial workloads run. It is far easier to catch cost overruns early (GPU cluster left at min_instances=2) than to explain a surprise bill to finance at month end. Combine the budget alert with an Azure Automation runbook that automatically scales Compute Clusters to min_instances=0 when the 80% threshold fires — self-healing cost governance.` },
     { type: 'exercise', title: 'Audit compute costs and set min_instances=0 on all compute clusters', hint: 'List all compute clusters via SDK, check min_instances, update any with min>0 to min=0, then set a monthly budget alert at 80% of $200', solution: `from azure.ai.ml import MLClient
@@ -3332,7 +3332,7 @@ for compute in ml_client.compute.list():
             ml_client.compute.begin_create_or_update(updated).result()
             print(f"  ✓ Fixed {compute.name}")
 
-print("\nAll clusters now scale to zero when idle.")
+print("\\nAll clusters now scale to zero when idle.")
 
 # Set budget alert
 import subprocess
@@ -3400,7 +3400,7 @@ run_date = sys.argv[1] if len(sys.argv) > 1 else "2024-05-23"
 # Read raw CRM data
 crm = spark.read.parquet(f"abfss://raw@dsadatalake.dfs.core.windows.net/crm/date={run_date}/")
 # Read 30-day clickstream window
-clicks = spark.read.parquet("abfss://raw@dsadatalake.dfs.core.windows.net/clickstream/") \
+clicks = spark.read.parquet("abfss://raw@dsadatalake.dfs.core.windows.net/clickstream/") \\
     .filter(col("date").between(
         date_sub(lit(run_date), 30), lit(run_date)))
 
@@ -3411,14 +3411,14 @@ features = crm.join(
         sum("page_views").alias("page_views_30d"),
         countDistinct("date").alias("active_days_30d")
     ), "customer_id", "left"
-).fillna(0, subset=["sessions_30d","page_views_30d","active_days_30d"]) \
- .withColumn("account_age_days", datediff(lit(run_date), col("join_date"))) \
+).fillna(0, subset=["sessions_30d","page_views_30d","active_days_30d"]) \\
+ .withColumn("account_age_days", datediff(lit(run_date), col("join_date"))) \\
  .withColumn("days_since_last_order", datediff(lit(run_date), col("last_order_date")))
 
 # Write to Delta curated zone
-features.write.format("delta").mode("overwrite") \
-    .partitionBy("run_date") \
-    .option("replaceWhere", f"run_date = '{run_date}'") \
+features.write.format("delta").mode("overwrite") \\
+    .partitionBy("run_date") \\
+    .option("replaceWhere", f"run_date = '{run_date}'") \\
     .save("abfss://curated@dsadatalake.dfs.core.windows.net/churn_features/")</code></pre>` },
     { type: 'text', body: `<h3>Phase 3: Training Pipeline (Azure ML)</h3>
 <pre><code># Triggered by ADF Web Activity after Databricks completes

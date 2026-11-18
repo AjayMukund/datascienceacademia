@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lesson — Data Science Academia</title>
-<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#F6F3EC">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="../assets/css/portal.css">
 <style>
@@ -63,7 +63,7 @@ html, body { height: 100%; overflow: hidden; }
   background: none; border: none; cursor: pointer; padding: 0;
   transition: color .2s;
 }
-.lesson-signout:hover { color: #f66; }
+.lesson-signout:hover { color: var(--red); }
 
 /* ── Main area ── */
 .lesson-main {
@@ -80,7 +80,7 @@ html, body { height: 100%; overflow: hidden; }
   display: flex;
   flex-direction: column;
   border-right: 1px solid var(--border);
-  background: rgba(11,12,14,.6);
+  background: var(--soft);
   transition: width .25s ease, opacity .2s ease;
   overflow: hidden;
 }
@@ -113,10 +113,10 @@ html, body { height: 100%; overflow: hidden; }
   display: flex; align-items: center; gap: .6rem;
   padding: .72rem 1rem; cursor: pointer;
   font-family: var(--fb); font-size: .75rem; font-weight: 600; color: var(--fog2);
-  background: rgba(255,255,255,.015);
+  background: rgba(16,38,61,.015);
   user-select: none; transition: background .15s, color .15s;
 }
-.lsb-module-hd:hover { background: rgba(255,255,255,.04); color: var(--cream); }
+.lsb-module-hd:hover { background: rgba(16,38,61,.04); color: var(--cream); }
 .lsb-module.open .lsb-module-hd { color: var(--cream); }
 .lsb-chevron {
   margin-left: auto; font-size: .65rem; color: var(--fog2);
@@ -134,9 +134,9 @@ html, body { height: 100%; overflow: hidden; }
   border-left: 2px solid transparent;
   transition: background .15s, color .15s, border-color .15s;
 }
-.lsb-lesson:hover { background: rgba(255,255,255,.03); color: var(--cream); }
+.lsb-lesson:hover { background: rgba(16,38,61,.03); color: var(--cream); }
 .lsb-lesson.active {
-  background: rgba(62,207,178,.07);
+  background: rgba(73,154,145,.07);
   border-left-color: var(--teal);
   color: var(--cream);
 }
@@ -483,7 +483,7 @@ async function loadQuiz(lesson){
     <div style="padding:2rem;overflow-y:auto;height:100%;font-family:var(--fb);">
       <div style="font-family:var(--fd);font-size:1.3rem;font-weight:600;color:var(--cream);margin-bottom:1.5rem;">${lesson.title}</div>
       ${questions.map((q,qi)=>`
-        <div style="background:rgba(11,12,14,.5);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:1rem;" id="q-block-${qi}">
+        <div style="background:var(--soft);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:1rem;" id="q-block-${qi}">
           <div style="font-size:.9rem;color:var(--cream);margin-bottom:1rem;line-height:1.6;">${qi+1}. ${q.question}</div>
           ${(q.options||[]).map((opt,oi)=>`
             <label style="display:flex;align-items:center;gap:.75rem;padding:.65rem .85rem;border-radius:7px;border:1px solid var(--border);margin-bottom:.5rem;cursor:pointer;transition:border-color .2s;" id="opt-${qi}-${oi}">
@@ -491,7 +491,7 @@ async function loadQuiz(lesson){
               <span style="font-size:.85rem;color:var(--fog);">${opt}</span>
             </label>`).join('')}
         </div>`).join('')}
-      <div id="quiz-result" style="display:none;background:rgba(62,207,178,.08);border:1px solid rgba(62,207,178,.25);border-radius:10px;padding:1.25rem;text-align:center;margin-top:1rem;">
+      <div id="quiz-result" style="display:none;background:rgba(73,154,145,.08);border:1px solid rgba(73,154,145,.25);border-radius:10px;padding:1.25rem;text-align:center;margin-top:1rem;">
         <div style="font-size:1.5rem;margin-bottom:.5rem;">🎉</div>
         <div id="quiz-score" style="font-family:var(--fd);font-size:1.4rem;color:var(--teal);"></div>
       </div>
@@ -502,8 +502,8 @@ async function loadQuiz(lesson){
 function checkAns(qi,selected,correct,opts){
   const block=document.getElementById(`q-block-${qi}`);
   block.querySelectorAll('label').forEach((lbl,oi)=>{
-    lbl.style.borderColor=oi===correct?'rgba(62,207,178,.5)':oi===selected&&selected!==correct?'rgba(255,80,80,.4)':'var(--border)';
-    lbl.style.background=oi===correct?'rgba(62,207,178,.07)':oi===selected&&selected!==correct?'rgba(255,80,80,.06)':'';
+    lbl.style.borderColor=oi===correct?'rgba(73,154,145,.5)':oi===selected&&selected!==correct?'rgba(255,80,80,.4)':'var(--border)';
+    lbl.style.background=oi===correct?'rgba(73,154,145,.07)':oi===selected&&selected!==correct?'rgba(255,80,80,.06)':'';
     lbl.querySelector('input').disabled=true;
   });
   if(!window._quizAnswered.has(qi)){

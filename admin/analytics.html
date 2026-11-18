@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Analytics — Admin — Data Science Academia</title>
-<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#F6F3EC">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="../assets/css/portal.css">
 </head>
@@ -66,9 +66,9 @@
 document.getElementById('updated-at').textContent = 'Last updated ' + new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
 
 const chartDefaults = {
-  color:'rgba(245,240,232,.7)',
-  plugins:{legend:{labels:{color:'rgba(245,240,232,.6)',font:{family:'Outfit',size:11}}}},
-  scales:{x:{ticks:{color:'rgba(245,240,232,.5)',font:{family:'Outfit',size:10}},grid:{color:'rgba(200,169,110,.07)'}},y:{ticks:{color:'rgba(245,240,232,.5)',font:{family:'Outfit',size:10}},grid:{color:'rgba(200,169,110,.07)'}}}
+  color:'rgba(40,45,48,.85)',
+  plugins:{legend:{labels:{color:'rgba(40,45,48,.75)',font:{family:'Outfit',size:11}}}},
+  scales:{x:{ticks:{color:'rgba(40,45,48,.65)',font:{family:'Outfit',size:10}},grid:{color:'rgba(201,169,112,.07)'}},y:{ticks:{color:'rgba(40,45,48,.65)',font:{family:'Outfit',size:10}},grid:{color:'rgba(201,169,112,.07)'}}}
 };
 
 document.addEventListener('portal:ready', async()=>{
@@ -104,7 +104,7 @@ document.addEventListener('portal:ready', async()=>{
   const courseData   = published.map(c=>enrByCourse[c.id]||0);
   new Chart(document.getElementById('chart-enroll'), {
     type:'bar',
-    data:{ labels:courseLabels, datasets:[{label:'Students Enrolled',data:courseData,backgroundColor:'rgba(200,169,110,.55)',borderColor:'rgba(200,169,110,.9)',borderWidth:1,borderRadius:5}]},
+    data:{ labels:courseLabels, datasets:[{label:'Students Enrolled',data:courseData,backgroundColor:'rgba(201,169,112,.55)',borderColor:'rgba(201,169,112,.9)',borderWidth:1,borderRadius:5}]},
     options:{...chartDefaults,plugins:{...chartDefaults.plugins,legend:{display:false}}}
   });
 
@@ -114,7 +114,7 @@ document.addEventListener('portal:ready', async()=>{
   const remaining = Math.max(0, totalSlots - completions);
   new Chart(document.getElementById('chart-progress'), {
     type:'doughnut',
-    data:{ labels:['Completed','Remaining'], datasets:[{data:[completions,remaining||1],backgroundColor:['rgba(62,207,178,.7)','rgba(200,169,110,.15)'],borderWidth:0}]},
+    data:{ labels:['Completed','Remaining'], datasets:[{data:[completions,remaining||1],backgroundColor:['rgba(73,154,145,.7)','rgba(201,169,112,.15)'],borderWidth:0}]},
     options:{...chartDefaults,cutout:'65%',scales:{x:{display:false},y:{display:false}}}
   });
 

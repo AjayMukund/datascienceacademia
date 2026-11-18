@@ -999,7 +999,7 @@ for i, subject in enumerate(subjects, start=1):
 
 total = sum(marks)
 average = total / len(marks)
-print(f"\nTotal: {total}  |  Average: {average:.1f}")`,
+print(f"\\nTotal: {total}  |  Average: {average:.1f}")`,
       out:`Subject-wise results:
   1. Maths        : 88
   2. Physics      : 76
@@ -1094,7 +1094,7 @@ for i, s in enumerate(ranked, 1):
 grade_counts = {}
 for s in students:
     grade_counts[s["grade"]] = grade_counts.get(s["grade"], 0) + 1
-print(f"\nGrade distribution: {grade_counts}")
+print(f"\\nGrade distribution: {grade_counts}")
 
 for subj in ("python", "sql", "ml"):
     avg = sum(s[subj] for s in students) / len(students)
@@ -1586,7 +1586,7 @@ def generate_report(students: list) -> None:
         grade = assign_grade(avg)
         flag  = "↑ above" if avg >= class_avg else "↓ below"
         print(f"{s['name']:<12} {avg:>6.1f} {grade:>6} {flag:>10}")
-    print(f"\nClass average: {class_avg:.2f}")
+    print(f"\\nClass average: {class_avg:.2f}")
 
 students = [
     {"name": "Priya",  "scores": [92, 88, 79]},
@@ -2272,7 +2272,7 @@ def remove_item(cart, item):
         print(f"'{item}' not found in cart.")
 
 def show_cart(cart):
-    print(f"\nCart ({len(cart)} items):")
+    print(f"\\nCart ({len(cart)} items):")
     for i, item in enumerate(cart, 1):
         print(f"  {i}. {item}")
 

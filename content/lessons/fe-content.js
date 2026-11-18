@@ -378,15 +378,15 @@ def audit_dataframe(df, target_col=None):
     miss = df.isnull().mean().mul(100).round(2)
     miss = miss[miss > 0].sort_values(ascending=False)
     if not miss.empty:
-        print(f"\n[MISSING] {len(miss)} columns have nulls:")
+        print(f"\\n[MISSING] {len(miss)} columns have nulls:")
         print(miss.to_string())
 
     # 2. Duplicates
     n_dup = df.duplicated().sum()
-    print(f"\n[DUPLICATES] {n_dup} exact duplicate rows ({n_dup/len(df)*100:.1f}%)")
+    print(f"\\n[DUPLICATES] {n_dup} exact duplicate rows ({n_dup/len(df)*100:.1f}%)")
 
     # 3. Cardinality
-    print("\n[CARDINALITY]")
+    print("\\n[CARDINALITY]")
     for c in df.select_dtypes('object').columns:
         n_unique = df[c].nunique()
         top_val  = df[c].value_counts().index[0] if n_unique else 'N/A'
@@ -394,7 +394,7 @@ def audit_dataframe(df, target_col=None):
         print(f"  {c:30s}  {n_unique:>6,} unique  top='{top_val}' ({top_pct:.1f}%)")
 
     # 4. Numerical range checks
-    print("\n[RANGES]")
+    print("\\n[RANGES]")
     for c in df.select_dtypes('number').columns:
         col = df[c].dropna()
         q1, q3 = col.quantile([0.25, 0.75])
@@ -405,16 +405,16 @@ def audit_dataframe(df, target_col=None):
     # 5. Constant/near-constant columns
     near_const = [c for c in df.columns if df[c].nunique() <= 1]
     if near_const:
-        print(f"\n[CONSTANT] Drop these columns: {near_const}")
+        print(f"\\n[CONSTANT] Drop these columns: {near_const}")
 
     # 6. Target leakage hint (if target provided)
     if target_col and target_col in df.columns:
         corrs = df.select_dtypes('number').corr()[target_col].abs().drop(target_col)
         perfect = corrs[corrs > 0.99]
         if not perfect.empty:
-            print(f"\n[LEAKAGE RISK] Near-perfect correlation with target: {perfect.index.tolist()}")
+            print(f"\\n[LEAKAGE RISK] Near-perfect correlation with target: {perfect.index.tolist()}")
 
-    print("\n" + "=" * 60)
+    print("\\n" + "=" * 60)
 
 # Usage
 df = pd.read_csv('housing.csv')
@@ -570,7 +570,7 @@ print(pd.DataFrame(result, columns=enc_linear.get_feature_names_out()))
 # drop=None (keep all columns) for tree-based models
 enc_tree = OneHotEncoder(drop=None, sparse_output=False)
 result2 = enc_tree.fit_transform(df[['city']])
-print("\nFor tree models (drop=None):")
+print("\\nFor tree models (drop=None):")
 print(pd.DataFrame(result2, columns=enc_tree.get_feature_names_out()))` },
     { type: 'text', body: `<h3>Dealing with High Cardinality</h3>
 <p>OHE on a column with 500 unique values produces 499 or 500 new binary columns. This is called the "curse of dimensionality" in miniature — sparse, high-dimensional representations that hurt linear models (regularisation helps) and bloat memory. Practical mitigations:</p>

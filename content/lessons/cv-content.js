@@ -1465,7 +1465,7 @@ class DiceLoss(nn.Module):
         probs   = probs.view(-1)
         targets = targets.view(-1)
         intersection = (probs * targets).sum()
-        return 1 - (2 * intersection + self.smooth) / \
+        return 1 - (2 * intersection + self.smooth) / \\
                     (probs.sum() + targets.sum() + self.smooth)
 
 # --- Combined BCE + Dice ---
@@ -1477,7 +1477,7 @@ class BCEDiceLoss(nn.Module):
         self.dice = DiceLoss()
 
     def forward(self, logits, targets):
-        return self.alpha * self.bce(logits, targets.float()) + \
+        return self.alpha * self.bce(logits, targets.float()) + \\
                (1 - self.alpha) * self.dice(logits, targets.float())` },
     { type: 'code', lang: 'python', src: `# --- Evaluation metrics for medical segmentation ---
 def dice_coefficient(pred_mask, gt_mask, smooth=1e-6):
@@ -1962,7 +1962,7 @@ result_icp = o3d.pipelines.registration.registration_icp(
     source, target, max_correspondence_distance=0.05,
     estimation_method=o3d.pipelines.registration.TransformationEstimationPointToPlane())
 print('ICP fitness:', result_icp.fitness)
-print('Transformation:\n', result_icp.transformation)` },
+print('Transformation:\\n', result_icp.transformation)` },
     { type: 'tip', body: `Always downsample before ICP (voxel size = 5–10% of the object size). ICP is O(N·k) per iteration where k is the KD-tree neighbourhood size — running it on raw LiDAR (millions of points) is prohibitively slow. Voxel downsampling to ~10K–50K points makes ICP run in under a second while preserving geometric fidelity.` }
   ]
 };
@@ -2283,8 +2283,8 @@ async def frame_generator(camera_id: int, conf: float):
             annotated = results.plot()
             _, jpg = cv2.imencode('.jpg', annotated,
                                    [cv2.IMWRITE_JPEG_QUALITY, 75])
-            yield (b'--frame\r\nContent-Type: image/jpeg\r\n\r\n'
-                   + jpg.tobytes() + b'\r\n')
+            yield (b'--frame\\r\\nContent-Type: image/jpeg\\r\\n\\r\\n'
+                   + jpg.tobytes() + b'\\r\\n')
             await asyncio.sleep(0)  # yield control to event loop
     finally:
         cap.release()
@@ -2298,7 +2298,7 @@ async def stream(camera: int = 0, conf: float = 0.5):
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 # Test with curl
-curl -X POST http://localhost:8000/detect \
+curl -X POST http://localhost:8000/detect \\
   -F "file=@photo.jpg" -F "conf=0.5"
 
 # View live stream in browser
@@ -2533,7 +2533,7 @@ async def live_stream(source: str = '0'):
                 annotated, _ = tracker.process_frame(frame)
                 _, jpg = cv2.imencode('.jpg', annotated,
                                        [cv2.IMWRITE_JPEG_QUALITY, 80])
-                yield b'--frame\r\nContent-Type: image/jpeg\r\n\r\n' + jpg.tobytes() + b'\r\n'
+                yield b'--frame\\r\\nContent-Type: image/jpeg\\r\\n\\r\\n' + jpg.tobytes() + b'\\r\\n'
                 await asyncio.sleep(0)
         finally:
             cap.release()

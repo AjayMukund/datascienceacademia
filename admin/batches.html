@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Batches — Admin — Data Science Academia</title>
-<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#F6F3EC">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="../assets/css/portal.css">
 </head>
@@ -86,10 +86,10 @@
         </table>
       </div>
       <div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--glass2);">
-        <button class="portal-btn" id="btn-enroll-all" style="background:rgba(62,207,178,.15);border-color:rgba(62,207,178,.4);color:var(--teal);">
+        <button class="portal-btn" id="btn-enroll-all" style="background:rgba(73,154,145,.15);border-color:rgba(73,154,145,.4);color:var(--teal);">
           Enroll All Members in Course
         </button>
-        <button class="portal-btn-ghost" id="btn-delete-batch" style="margin-left:.5rem;color:#f87171;border-color:#f8717155;">
+        <button class="portal-btn-ghost" id="btn-delete-batch" style="margin-left:.5rem;color:var(--red);border-color:rgba(179,38,30,.35);">
           Delete Batch
         </button>
       </div>
@@ -195,7 +195,7 @@ async function refreshMembers(){
     return `<tr>
       <td>${s?s.name:m.user_id}</td>
       <td style="color:var(--fog2);font-size:.82rem;">${new Date(m.joined_at).toLocaleDateString('en-IN')}</td>
-      <td><button class="portal-btn-ghost" style="padding:.2rem .6rem;font-size:.75rem;color:#f87171;border-color:#f8717155;" onclick="removeMember('${m.user_id}')">Remove</button></td>
+      <td><button class="portal-btn-ghost" style="padding:.2rem .6rem;font-size:.75rem;color:var(--red);border-color:rgba(179,38,30,.35);" onclick="removeMember('${m.user_id}')">Remove</button></td>
     </tr>`;
   }).join('');
   // update count in batch card

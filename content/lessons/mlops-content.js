@@ -385,7 +385,7 @@ RUN useradd --create-home --shell /bin/bash appuser
 USER appuser
 
 EXPOSE 8000
-HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \\
   CMD curl -f http://localhost:8000/health || exit 1
 
 CMD ["uvicorn", "src.api:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]`,out:`# Build: docker build -t fraud-detector:v1.2.3 .
@@ -709,8 +709,8 @@ jobs:
     steps:
       - name: Deploy to Kubernetes staging
         run: |
-          kubectl set image deployment/fraud-detector \
-            api=\${{ env.MODEL_REGISTRY }}:\${{ github.sha }} \
+          kubectl set image deployment/fraud-detector \\
+            api=\${{ env.MODEL_REGISTRY }}:\${{ github.sha }} \\
             --namespace staging
           kubectl rollout status deployment/fraud-detector --namespace staging`,out:`# GitHub Actions environments support required reviewers for production deploys.
 # "environment: production" can require manual approval before deployment runs.`},

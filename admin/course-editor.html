@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Course Editor — Admin — Data Science Academia</title>
-<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#F6F3EC">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="../assets/css/portal.css">
 </head>
@@ -243,13 +243,13 @@ async function delLesson(id){
 async function manageQuiz(lessonId, lessonTitle){
   const {data:qs}=await supa.from('quiz_questions').select('*').eq('lesson_id',lessonId).order('order_index');
   const existing=(qs||[]).map((q,i)=>`
-    <div style="background:rgba(11,12,14,.5);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:.75rem;">
+    <div style="background:var(--soft);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:.75rem;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;">
         <div style="font-family:var(--fb);font-size:.85rem;color:var(--cream);flex:1;">${i+1}. ${q.question}</div>
         <button class="icon-btn danger" onclick="delQuestion('${q.id}','${lessonId}','${lessonTitle.replace(/'/g,"\\'")}')">🗑</button>
       </div>
       <div style="margin-top:.5rem;display:flex;flex-wrap:wrap;gap:.4rem;">
-        ${(q.options||[]).map((o,oi)=>`<span style="font-family:var(--fb);font-size:.72rem;padding:3px 8px;border-radius:5px;border:1px solid;${oi===q.correct_index?'color:var(--teal);border-color:rgba(62,207,178,.3);background:rgba(62,207,178,.08);':'color:var(--fog2);border-color:var(--border);'}">${o}${oi===q.correct_index?' ✓':''}</span>`).join('')}
+        ${(q.options||[]).map((o,oi)=>`<span style="font-family:var(--fb);font-size:.72rem;padding:3px 8px;border-radius:5px;border:1px solid;${oi===q.correct_index?'color:var(--teal);border-color:rgba(73,154,145,.3);background:rgba(73,154,145,.08);':'color:var(--fog2);border-color:var(--border);'}">${o}${oi===q.correct_index?' ✓':''}</span>`).join('')}
       </div>
     </div>`).join('');
 

@@ -33,7 +33,7 @@ L['nlp-w1-l1'] = {
 # Example: loading and inspecting a text dataset
 df = pd.read_csv('news_articles.csv')
 print(df.head())
-print(f"\nShape: {df.shape}")
+print(f"\\nShape: {df.shape}")
 print(f"Columns: {df.columns.tolist()}")
 
 # Basic text statistics
@@ -113,7 +113,7 @@ for s in sentences:
     print(" Tokens:", word_tokenize(s))
 
 # 4. Regex tokeniser — keep only alphabetic tokens
-re_tokens = re.findall(r'\b[a-zA-Z]+\b', text.lower())
+re_tokens = re.findall(r'\\b[a-zA-Z]+\\b', text.lower())
 print("Regex:", re_tokens)
 
 # 5. Tweet tokeniser — preserves hashtags, mentions, emoticons
@@ -217,19 +217,19 @@ def normalise_text(text, lowercase=True, remove_punct=True,
 
     # 3. Normalise URLs
     if normalise_urls:
-        text = re.sub(r'http\S+|www\.\S+', '<URL>', text)
-        text = re.sub(r'\S+@\S+\.\S+', '<EMAIL>', text)
+        text = re.sub(r'http\\S+|www\\.\\S+', '<URL>', text)
+        text = re.sub(r'\\S+@\\S+\\.\\S+', '<EMAIL>', text)
 
     # 4. Normalise numbers
     if normalise_numbers:
-        text = re.sub(r'\d+', '<NUM>', text)
+        text = re.sub(r'\\d+', '<NUM>', text)
 
     # 5. Remove punctuation (keep spaces)
     if remove_punct:
-        text = re.sub(r'[^\w\s<>]', ' ', text)
+        text = re.sub(r'[^\\w\\s<>]', ' ', text)
 
     # 6. Collapse multiple spaces
-    text = re.sub(r'\s+', ' ', text).strip()
+    text = re.sub(r'\\s+', ' ', text).strip()
     return text
 
 examples = [
@@ -239,7 +239,7 @@ examples = [
 ]
 for ex in examples:
     print(f"IN:  {ex}")
-    print(f"OUT: {normalise_text(ex)}\n")` },
+    print(f"OUT: {normalise_text(ex)}\\n")` },
     { type: 'tip', body: `Domain-specific stopwords often matter more than generic ones. In medical text, "patient" might appear in 95% of documents and should be treated as a stopword. Build a corpus-specific stopword list by looking at the top-50 most frequent terms in your dataset.` },
     { type: 'exercise', title: 'Build a Text Cleaning Pipeline', hint: 'Write a clean_text() function that applies normalisation to a pandas Series. Apply it to the 20 Newsgroups dataset. Compare vocabulary size before and after cleaning.', solution: `from sklearn.datasets import fetch_20newsgroups
 import pandas as pd, re, unicodedata
@@ -254,9 +254,9 @@ stop = set(stopwords.words('english'))
 
 def clean_text(text):
     text = unicodedata.normalize('NFKD', text).encode('ascii','ignore').decode()
-    text = re.sub(r'http\S+', '', text)
+    text = re.sub(r'http\\S+', '', text)
     text = text.lower()
-    text = re.sub(r'[^\w\s]', ' ', text)
+    text = re.sub(r'[^\\w\\s]', ' ', text)
     tokens = [t for t in text.split() if t.isalpha() and t not in stop and len(t) > 1]
     return ' '.join(tokens)
 
@@ -330,7 +330,7 @@ nltk.download('punkt_tab', quiet=True)
 data = fetch_20newsgroups(subset='train', remove=('headers','footers','quotes'))
 texts = data.data[:500]  # subset for speed
 
-def tokenise(t): return re.findall(r'\b[a-z]{2,}\b', t.lower())
+def tokenise(t): return re.findall(r'\\b[a-z]{2,}\\b', t.lower())
 
 stemmed_vocab = set()
 lemma_vocab   = set()
@@ -369,45 +369,45 @@ L['nlp-w1-l5'] = {
 
 # 1. Extract emails
 text = "Contact john.doe@example.com or support@company.co.uk for help."
-emails = re.findall(r'[\w.+-]+@[\w-]+\.[\w.-]+', text)
+emails = re.findall(r'[\\w.+-]+@[\\w-]+\\.[\\w.-]+', text)
 print("Emails:", emails)
 
 # 2. Extract URLs
 text2 = "See https://arxiv.org/abs/2303.08774 and http://example.com/page?q=nlp&lang=en"
-urls = re.findall(r'https?://[^\s<>"]+', text2)
+urls = re.findall(r'https?://[^\\s<>"]+', text2)
 print("URLs:", urls)
 
 # 3. Extract phone numbers (Indian format)
 text3 = "Call +91-9876543210 or 080-12345678 or 1800-111-222"
-phones = re.findall(r'[\+\d][\d\-\s]{8,14}\d', text3)
+phones = re.findall(r'[\\+\\d][\\d\\-\\s]{8,14}\\d', text3)
 print("Phones:", phones)
 
 # 4. Extract dates
 text4 = "The meeting is on 23/05/2025 or 2025-05-23 or May 23, 2025"
-dates = re.findall(r'\d{1,2}[/\-]\d{1,2}[/\-]\d{2,4}|\d{4}-\d{2}-\d{2}|[A-Z][a-z]+ \d{1,2},? \d{4}', text4)
+dates = re.findall(r'\\d{1,2}[/\\-]\\d{1,2}[/\\-]\\d{2,4}|\\d{4}-\\d{2}-\\d{2}|[A-Z][a-z]+ \\d{1,2},? \\d{4}', text4)
 print("Dates:", dates)
 
 # 5. Extract hashtags and mentions (social media)
 tweet = "Excited about #NLP and #AI! Thanks @AnthropicAI for the amazing models 🙌"
-hashtags = re.findall(r'#\w+', tweet)
-mentions = re.findall(r'@\w+', tweet)
+hashtags = re.findall(r'#\\w+', tweet)
+mentions = re.findall(r'@\\w+', tweet)
 print("Hashtags:", hashtags, "Mentions:", mentions)` },
     { type: 'code', lang: 'python', src: `import re, pandas as pd
 
 def clean_social_text(text):
     """Comprehensive cleaning for social media / web text."""
     # Remove URLs
-    text = re.sub(r'https?://\S+|www\.\S+', '', text)
+    text = re.sub(r'https?://\\S+|www\\.\\S+', '', text)
     # Remove HTML tags
     text = re.sub(r'<[^>]+>', '', text)
     # Remove email addresses
-    text = re.sub(r'\S+@\S+\.\S+', '', text)
+    text = re.sub(r'\\S+@\\S+\\.\\S+', '', text)
     # Normalise repeated characters (loooove → love, !!!! → !)
-    text = re.sub(r'(.)\1{2,}', r'\1\1', text)
+    text = re.sub(r'(.)\\1{2,}', r'\\1\\1', text)
     # Remove non-ASCII and most punctuation (keep apostrophes)
-    text = re.sub(r"[^a-zA-Z0-9\s']", ' ', text)
+    text = re.sub(r"[^a-zA-Z0-9\\s']", ' ', text)
     # Collapse whitespace
-    text = re.sub(r'\s+', ' ', text).strip()
+    text = re.sub(r'\\s+', ' ', text).strip()
     return text
 
 samples = [
@@ -417,7 +417,7 @@ samples = [
 ]
 for s in samples:
     print(f"IN:  {s}")
-    print(f"OUT: {clean_social_text(s)}\n")` },
+    print(f"OUT: {clean_social_text(s)}\\n")` },
     { type: 'tip', body: `Use <code>re.compile()</code> when applying the same pattern many times — it compiles the regex once and reuses it. On large datasets, compiled patterns can be 2–10× faster than calling <code>re.sub(pattern, ...)</code> in a loop.` },
     { type: 'exercise', title: 'Extract Structured Data from Unstructured Text', hint: 'Given a list of job postings, use regex to extract: salary range (e.g. "₹8-12 LPA"), required experience ("3-5 years"), and location mentions. Return as a DataFrame.', solution: `import re, pandas as pd
 
@@ -428,8 +428,8 @@ postings = [
 ]
 
 def parse_posting(text):
-    salary = re.search(r'[₹]?(\d+)\s*[-–]\s*(\d+)\s*L', text)
-    exp    = re.search(r'(\d+)\s*[-+]\s*(\d+)?\s*y(?:ear|r)', text, re.I)
+    salary = re.search(r'[₹]?(\\d+)\\s*[-–]\\s*(\\d+)\\s*L', text)
+    exp    = re.search(r'(\\d+)\\s*[-+]\\s*(\\d+)?\\s*y(?:ear|r)', text, re.I)
     loc    = re.search(r'(Mumbai|Bangalore|Hyderabad|Delhi|Remote)', text, re.I)
     return {
         'salary_min': int(salary.group(1)) if salary else None,
@@ -476,7 +476,7 @@ X = cv.fit_transform(corpus)
 vocab = cv.get_feature_names_out()
 df = pd.DataFrame(X.toarray(), columns=vocab)
 print(df)
-print(f"\nMatrix shape: {X.shape}  (docs × vocab_size)")
+print(f"\\nMatrix shape: {X.shape}  (docs × vocab_size)")
 print(f"Sparsity: {100 * (1 - X.nnz / (X.shape[0]*X.shape[1])):.1f}%")` },
     { type: 'code', lang: 'python', src: `from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.datasets import fetch_20newsgroups
@@ -491,7 +491,7 @@ cv = CountVectorizer(
     min_df=5,           # ignore terms appearing in < 5 docs
     max_df=0.95,        # ignore terms in > 95% of docs (near-stopwords)
     max_features=10000, # keep only 10k most frequent terms
-    token_pattern=r'\b[a-zA-Z]{3,}\b'  # only 3+ letter alphabetic tokens
+    token_pattern=r'\\b[a-zA-Z]{3,}\\b'  # only 3+ letter alphabetic tokens
 )
 
 X_train = cv.fit_transform(data.data)
@@ -861,7 +861,7 @@ errors = [(test.data[i][:200], test.target_names[test.target[i]],
 err_df = pd.DataFrame(errors, columns=['text_preview','true_label','pred_label'])
 print(f"Total errors: {len(err_df)}")
 print(err_df.groupby(['true_label','pred_label']).size().sort_values(ascending=False).head(10))
-print("\nSample error:")
+print("\\nSample error:")
 print(err_df.iloc[0]['text_preview'])` },
     { type: 'tip', body: `Error analysis is the highest-ROI activity in NLP. Reading 50 misclassified examples almost always reveals a pattern — a mislabelled class, domain-specific jargon the model misses, or a systematic ambiguity. Each insight drives a concrete improvement.` },
     { type: 'warn', title: 'Use Stratified K-Fold for Imbalanced Text Data', body: `Standard KFold splits may produce folds with very different class distributions. Always use <code>StratifiedKFold</code> (or pass <code>cv=StratifiedKFold(n_splits=5)</code> to cross_val_score) for classification tasks.` },
@@ -1183,14 +1183,14 @@ for w in test_words:
 # def write_fasttext_file(texts, labels, path):
 #     with open(path, 'w') as f:
 #         for text, label in zip(texts, labels):
-#             f.write(f"__label__{label} {text.lower()}\n")
+#             f.write(f"__label__{label} {text.lower()}\\n")
 #
 # data_train = fetch_20newsgroups(subset='train', remove=('headers','footers','quotes'))
 # data_test  = fetch_20newsgroups(subset='test',  remove=('headers','footers','quotes'))
 #
 # with tempfile.NamedTemporaryFile(suffix='.txt', delete=False, mode='w') as f:
 #     for text, label in zip(data_train.data, data_train.target):
-#         f.write(f"__label__{label} {text.replace(chr(10),' ')[:500]}\n")
+#         f.write(f"__label__{label} {text.replace(chr(10),' ')[:500]}\\n")
 #     train_path = f.name
 #
 # model = fasttext.train_supervised(train_path, epoch=25, lr=1.0, wordNgrams=2,
@@ -1388,7 +1388,7 @@ df_sim = pd.DataFrame(sim_matrix.round(3), index=short, columns=short)
 print(df_sim)
 
 # Key comparison
-print(f"\n'not happy' vs 'happy': {sim_matrix[4,5]:.3f}")
+print(f"\\n'not happy' vs 'happy': {sim_matrix[4,5]:.3f}")
 print(f"'cat on mat' vs 'kitten on rug': {sim_matrix[6,7]:.3f}")
 print(f"'weather' vs 'machine learning': {sim_matrix[0,3]:.3f}")` },
     { type: 'code', lang: 'python', src: `from sentence_transformers import SentenceTransformer
@@ -1516,12 +1516,12 @@ for ent in doc.ents:
     print(f"  {ent.text:25} {ent.label_:10} ({spacy.explain(ent.label_)})")
 
 # Sentence segmentation
-print("\nSentences:")
+print("\\nSentences:")
 for sent in doc.sents:
     print(f"  '{sent.text[:80]}'")
 
 # Noun phrases (chunks)
-print("\nNoun phrases:")
+print("\\nNoun phrases:")
 for chunk in doc.noun_chunks:
     print(f"  '{chunk.text}' (root: '{chunk.root.text}', dep: '{chunk.root.dep_}')")
 
@@ -1684,7 +1684,7 @@ for doc in nlp.pipe(postings):
 df = pd.DataFrame(rows)
 print(df)
 all_orgs = [o for row in df['orgs'] for o in row]
-print("\nTop companies:", Counter(all_orgs).most_common(5))` }
+print("\\nTop companies:", Counter(all_orgs).most_common(5))` }
   ]
 };
 
@@ -1722,7 +1722,7 @@ for tok in doc:
 
 # Key relationships: find subject and object of the main verb
 root = [tok for tok in doc if tok.dep_ == 'ROOT'][0]
-print(f"\nRoot verb: '{root.text}'")
+print(f"\\nRoot verb: '{root.text}'")
 subj = [tok for tok in doc if tok.dep_ in ('nsubj','nsubjpass')]
 obj  = [tok for tok in doc if tok.dep_ in ('dobj','obj')]
 print(f"Subject: {[t.text for t in subj]}")
@@ -1833,7 +1833,7 @@ brown_text.concordance('said', width=60, lines=5)
 
 # 2. Frequency distribution
 fdist = FreqDist(brown.words(categories='news'))
-print("\nTop 10 words:", fdist.most_common(10))
+print("\\nTop 10 words:", fdist.most_common(10))
 print(f"Hapax legomena (appear once): {len(fdist.hapaxes())}")
 
 # 3. Collocations (frequently co-occurring word pairs)
@@ -1854,12 +1854,12 @@ auto = wn.synsets('automobile')[0]
 bus  = wn.synsets('bus')[0]
 dog  = wn.synsets('dog')[0]
 
-print(f"\ncar-automobile: {car.path_similarity(auto):.3f}")
+print(f"\\ncar-automobile: {car.path_similarity(auto):.3f}")
 print(f"car-bus:        {car.path_similarity(bus):.3f}")
 print(f"car-dog:        {car.path_similarity(dog):.3f}")
 
 # Hypernyms (broader concepts) and hyponyms (narrower concepts)
-print(f"\nhypernyms of 'dog': {wn.synsets('dog')[0].hypernyms()}")
+print(f"\\nhypernyms of 'dog': {wn.synsets('dog')[0].hypernyms()}")
 print(f"hyponyms of 'dog' (first 5): {wn.synsets('dog')[0].hyponyms()[:5]}")
 
 # Synonyms and antonyms
@@ -2031,7 +2031,7 @@ def drug_ner(doc):
         if tok.text.lower() in DRUGS:
             new_ents.append(Span(doc, tok.i, tok.i+1, label="DRUG"))
     # Detect dosages: e.g. "500mg", "10 mg", "2.5mg"
-    for m in re.finditer(r'\d+\.?\d*\s*mg', doc.text):
+    for m in re.finditer(r'\\d+\\.?\\d*\\s*mg', doc.text):
         span = doc.char_span(m.start(), m.end(), label="DOSAGE")
         if span:
             new_ents.append(span)
@@ -2820,7 +2820,7 @@ def get_layer_sim(s1, s2, layer=-1):
     return cosine_similarity(enc(s1), enc(s2))[0,0]
 
 for s1, s2 in pairs:
-    print(f"\n'{s1[:30]}' vs '{s2[:30]}'")
+    print(f"\\n'{s1[:30]}' vs '{s2[:30]}'")
     for layer in [1, 6, 12]:
         sim = get_layer_sim(s1, s2, layer=layer)
         print(f"  Layer {layer:2d}: {sim:.4f}")` }
@@ -3115,7 +3115,7 @@ query_embeddings = model.encode(queries, convert_to_numpy=True, normalize_embedd
 D, I = index.search(query_embeddings.astype('float32'), k=3)
 
 for query, distances, indices in zip(queries, D, I):
-    print(f"\nQuery: '{query}'")
+    print(f"\\nQuery: '{query}'")
     for dist, idx in zip(distances, indices):
         print(f"  [{dist:.3f}] {corpus[idx]}")` },
     { type: 'tip', body: `For production semantic search, use <code>faiss.IndexIVFFlat</code> or <code>IndexHNSWFlat</code> for approximate nearest neighbour search over millions of vectors. Exact IndexFlatIP search scales linearly with corpus size — fine for &lt;100K docs, slow for millions.` },
@@ -3154,7 +3154,7 @@ for ticket, label in zip(tickets, labels):
 print("Ticket clusters (likely duplicates):")
 for cluster_id, group in clusters.items():
     if len(group) > 1:
-        print(f"\nCluster {cluster_id}:")
+        print(f"\\nCluster {cluster_id}:")
         for t in group:
             print(f"  • {t}")` }
   ]
@@ -3274,7 +3274,7 @@ texts = [
 results = translator(texts, max_length=256)
 for src, res in zip(texts, results):
     print(f"EN: {src}")
-    print(f"FR: {res['translation_text']}\n")
+    print(f"FR: {res['translation_text']}\\n")
 
 # ── BLEU evaluation ──────────────────────────────────────────────────────────
 from sacrebleu.metrics import BLEU
@@ -3357,7 +3357,7 @@ questions = [
 for q in questions:
     result = qa(question=q, context=context)
     print(f"Q: {q}")
-    print(f"A: {result['answer']}  (score: {result['score']:.3f})\n")
+    print(f"A: {result['answer']}  (score: {result['score']:.3f})\\n")
 
 # ── Simple RAG demo ──────────────────────────────────────────────────────────
 from sentence_transformers import SentenceTransformer
@@ -3401,7 +3401,7 @@ qs = ["Who created Python?", "When was Python first released?",
       "What paradigms does Python support?"]
 for q in qs:
     r = qa(question=q, context=context)
-    print(f"Q: {q}\nA: {r['answer']} ({r['score']:.2f})\n")` }
+    print(f"Q: {q}\\nA: {r['answer']} ({r['score']:.2f})\\n")` }
   ]
 };
 
@@ -3440,7 +3440,7 @@ texts = [
 ]
 for t in texts:
     scores = vader.polarity_scores(t)
-    label  = "POS" if scores["compound"] >= 0.05 else \
+    label  = "POS" if scores["compound"] >= 0.05 else \\
              "NEG" if scores["compound"] <= -0.05 else "NEU"
     print(f"[{label}] {scores['compound']:.3f}  {t}")
 
@@ -3575,21 +3575,21 @@ for i, topic in lda.print_topics(num_words=5):
 # ── Coherence score ──────────────────────────────────────────────────────────
 coherence = CoherenceModel(model=lda, texts=tokenized,
                            dictionary=id2word, coherence="c_v")
-print(f"\nCoherence (c_v): {coherence.get_coherence():.4f}")
+print(f"\\nCoherence (c_v): {coherence.get_coherence():.4f}")
 
 # ── Infer topic for new doc ──────────────────────────────────────────────────
 new_doc  = "transformer models process sequences using attention"
 new_bow  = id2word.doc2bow(preprocess(new_doc))
 topics   = lda.get_document_topics(new_bow)
 dominant = max(topics, key=lambda x: x[1])
-print(f"\nDominant topic: {dominant[0]} (prob={dominant[1]:.3f})")
+print(f"\\nDominant topic: {dominant[0]} (prob={dominant[1]:.3f})")
 
 # ── BERTopic (modern alternative) ───────────────────────────────────────────
 # pip install bertopic
 from bertopic import BERTopic
 topic_model = BERTopic(nr_topics=3, verbose=False)
 topics_b, _ = topic_model.fit_transform(docs)
-print("\nBERTopic topic info:")
+print("\\nBERTopic topic info:")
 print(topic_model.get_topic_info())` },
     { type: 'tip', body: 'To choose K for LDA, train models for K=5,10,15,...,50 and plot coherence vs K. The elbow or peak is your best K. BERTopic automatically selects the number of topics via HDBSCAN min_cluster_size.' },
     { type: 'exercise', title: 'Topic Model on 20 Newsgroups', hint: 'Load `20newsgroups` from sklearn (4 categories). Train LDA with K=4. Print top words per topic and compute coherence. Do the topics align with the categories?', solution: `from sklearn.datasets import fetch_20newsgroups

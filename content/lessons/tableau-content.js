@@ -928,7 +928,7 @@ L['tableau-w5-l1'] = {
 <p>Every Tableau workbook connects to data in one of two modes:</p>
 <ul>
   <li><strong>Live Connection</strong> — Tableau sends queries directly to the source database/file each time the view renders. Data is always current. Requires constant network access to the source.</li>
-  <li><strong>Extract</strong> — Tableau copies a snapshot of the data into a columnar file (`.hyper` format) stored locally or on Server. Queries run against this fast local file. Data is current only as of the last refresh.</li>
+  <li><strong>Extract</strong> — Tableau copies a snapshot of the data into a columnar file (<code>.hyper</code> format) stored locally or on Server. Queries run against this fast local file. Data is current only as of the last refresh.</li>
 </ul>
 <h3>When to Use Each</h3>
 <table>
@@ -948,7 +948,7 @@ L['tableau-w5-l1'] = {
   <li><strong>Number of rows</strong> — sample (first N rows) for development/testing without loading the full dataset.</li>
 </ul>
 <p>Save the workbook. Tableau prompts you to build the extract now or later. Building extracts from large datasets can take several minutes.</p>` },
-    { type: 'tip', body: `Check your extract file size with <strong>Data → Extract → Compute Calculations Now</strong> before publishing. Pre-computing calculated fields in the extract means Tableau runs them once at extract time rather than on every query — a big speed win for dashboards with many heavy calculations. After extract creation, the `.hyper` file lives in the Tableau repository's Datasources folder.` },
+    { type: 'tip', body: `Check your extract file size with <strong>Data → Extract → Compute Calculations Now</strong> before publishing. Pre-computing calculated fields in the extract means Tableau runs them once at extract time rather than on every query — a big speed win for dashboards with many heavy calculations. After extract creation, the <code>.hyper</code> file lives in the Tableau repository's Datasources folder.` },
     { type: 'text', body: `<h3>Refreshing Extracts</h3>
 <p>A stale extract shows outdated data. Options for keeping extracts fresh:</p>
 <ul>

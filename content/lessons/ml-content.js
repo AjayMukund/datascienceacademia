@@ -47,7 +47,7 @@ L['ml-w1-l1'] = {
   <li>Detect unusual patterns in server logs without labelled anomalies.</li>
 </ol>`,
     hint: `Do you have labels (correct answers) in your training data? If yes → supervised. Is the output a number or a category?`,
-    solution: `1. Supervised — Binary classification (fraud / not fraud)\n2. Supervised — Regression (continuous price)\n3. Unsupervised — Clustering\n4. Supervised — Multiclass classification (50 classes)\n5. Unsupervised — Anomaly detection` }
+    solution: `1. Supervised — Binary classification (fraud / not fraud)\\n2. Supervised — Regression (continuous price)\\n3. Unsupervised — Clustering\\n4. Supervised — Multiclass classification (50 classes)\\n5. Unsupervised — Anomaly detection` }
   ]
 };
 
@@ -90,7 +90,7 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42,
     stratify=y      # preserve class proportions
 )
-print(f"\nTrain: {X_train.shape[0]} | Test: {X_test.shape[0]}")
+print(f"\\nTrain: {X_train.shape[0]} | Test: {X_test.shape[0]}")
 
 # ── Train/Val/Test split ───────────────────────────────────────────────
 X_temp, X_test2, y_temp, y_test2 = train_test_split(
@@ -105,7 +105,7 @@ model = LogisticRegression(max_iter=10000)
 cv_scores = cross_val_score(model, X_train, y_train,
                              cv=StratifiedKFold(n_splits=5, shuffle=True, random_state=42),
                              scoring='accuracy')
-print(f"\n5-Fold CV Accuracy: {cv_scores}")
+print(f"\\n5-Fold CV Accuracy: {cv_scores}")
 print(f"Mean: {cv_scores.mean():.4f}  Std: {cv_scores.std():.4f}")
 # Low std = stable model; high std = model sensitive to which data it sees` },
     { type: 'warn', body: `<strong>Data leakage</strong> is the silent killer of ML projects. It occurs when information from the test set influences training — through preprocessing fitted on all data, through target encoding without cross-validation, or through lookahead in time-series problems. Always fit your preprocessing (scalers, imputers, encoders) only on the training set.` },
@@ -342,14 +342,14 @@ model.fit(X_train_s, y_train)
 y_pred = model.predict(X_test_s)
 y_prob = model.predict_proba(X_test_s)[:, 1]
 
-print("\n=== CLASSIFICATION METRICS ===")
+print("\\n=== CLASSIFICATION METRICS ===")
 print(f"Accuracy  : {accuracy_score(y_test, y_pred):.4f}")
 print(f"Precision : {precision_score(y_test, y_pred):.4f}")
 print(f"Recall    : {recall_score(y_test, y_pred):.4f}")
 print(f"F1 Score  : {f1_score(y_test, y_pred):.4f}")
 print(f"ROC-AUC   : {roc_auc_score(y_test, y_prob):.4f}")
 
-print("\nFull report:")
+print("\\nFull report:")
 print(classification_report(y_test, y_pred,
                              target_names=data.target_names))
 
@@ -433,7 +433,7 @@ print(f"Shape: {df.shape}")
 print(df.describe().round(2))
 
 # ── Step 2: EDA — quick look ───────────────────────────────────────────
-print("\nCorrelation with target (MedHouseVal):")
+print("\\nCorrelation with target (MedHouseVal):")
 print(df.corr()['MedHouseVal'].sort_values(ascending=False).round(3))
 
 # ── Step 3: Feature engineering ───────────────────────────────────────
@@ -510,7 +510,7 @@ print("Predictions on 3 samples:", artefact['model'].predict(sample_scaled).roun
 print("Actual values:           ", y_test.iloc[:3].values.round(2))` },
     { type: 'exercise', title: 'Improve the Pipeline', body: `<p>The model above uses Ridge regression. Try replacing it with <code>sklearn.ensemble.RandomForestRegressor(n_estimators=100, random_state=42)</code>. Note: Random Forests don't require scaling. Does it improve RMSE and R²? What are the top 5 most important features?</p>`,
     hint: `<p>Use <code>model.feature_importances_</code> and pair with <code>feature_cols</code> to make a bar chart. Skip the StandardScaler step — pass raw <code>X_train</code> directly.</p>`,
-    solution: `from sklearn.ensemble import RandomForestRegressor\nrf = RandomForestRegressor(n_estimators=100, random_state=42)\nrf.fit(X_train, y_train)\ny_pred_rf = rf.predict(X_test)\nprint(f"RF RMSE: {mean_squared_error(y_test,y_pred_rf,squared=False):.4f}")\nprint(f"RF R²  : {r2_score(y_test,y_pred_rf):.4f}")\nimportances = pd.Series(rf.feature_importances_, index=feature_cols).nlargest(5)\nprint(importances)` }
+    solution: `from sklearn.ensemble import RandomForestRegressor\\nrf = RandomForestRegressor(n_estimators=100, random_state=42)\\nrf.fit(X_train, y_train)\\ny_pred_rf = rf.predict(X_test)\\nprint(f"RF RMSE: {mean_squared_error(y_test,y_pred_rf,squared=False):.4f}")\\nprint(f"RF R²  : {r2_score(y_test,y_pred_rf):.4f}")\\nimportances = pd.Series(rf.feature_importances_, index=feature_cols).nlargest(5)\\nprint(importances)` }
   ]
 };
 
@@ -645,7 +645,7 @@ print(f"R² (test): {sk_model.score(Xs_test, y_test):.4f}")
 
 # statsmodels for p-values and confidence intervals
 sm_model = sm.OLS(y_train, sm.add_constant(Xs_train)).fit()
-print("\nCoefficients with p-values:")
+print("\\nCoefficients with p-values:")
 print(sm_model.summary().tables[1])
 
 # VIF
@@ -654,7 +654,7 @@ vif_df = pd.DataFrame({
     'VIF': [variance_inflation_factor(scaler.transform(X), i)
             for i in range(X.shape[1])]
 })
-print("\nVIF (>10 = multicollinearity concern):")
+print("\\nVIF (>10 = multicollinearity concern):")
 print(vif_df.sort_values('VIF', ascending=False))` },
     { type: 'exercise', title: 'Diagnose & Fix Multicollinearity', body: `<p>Create a dataset with deliberate multicollinearity, diagnose it, and compare OLS vs Ridge:</p>
 <ol>
@@ -835,7 +835,7 @@ axes[1].set_title('Confusion Matrix')
 plt.tight_layout(); plt.show()
 
 # Threshold tuning — business-driven
-print("\nThreshold sensitivity:")
+print("\\nThreshold sensitivity:")
 for t in [0.3, 0.4, 0.5, 0.6, 0.7]:
     from sklearn.metrics import precision_score, recall_score
     p = (y_prob >= t).astype(int)
@@ -916,7 +916,7 @@ Xs_te = scaler.transform(X_te)
 for strategy in ['ovr', 'multinomial']:
     model = LogisticRegression(multi_class=strategy, solver='lbfgs', max_iter=1000)
     model.fit(Xs_tr, y_tr)
-    print(f"\n--- {strategy.upper()} ---")
+    print(f"\\n--- {strategy.upper()} ---")
     print(classification_report(y_te, model.predict(Xs_te), target_names=data.target_names))
 
 # Decision boundary visualisation (2 features)
@@ -935,7 +935,7 @@ ax.set_title('Logistic Regression — 2D Decision Boundaries')
 ax.legend(); plt.tight_layout(); plt.show()` },
     { type: 'exercise', title: 'Logistic Regression on Imbalanced Data', body: `<p>Create an imbalanced dataset: 950 samples of class 0 and 50 of class 1 using <code>make_classification(n_samples=1000, weights=[0.95,0.05])</code>. Train two Logistic Regression models — one without <code>class_weight</code> and one with <code>class_weight='balanced'</code>. Compare their precision, recall, and F1 on class 1. Which model catches more of the rare class?</p>`,
     hint: `Use <code>from sklearn.datasets import make_classification</code>. Evaluate with <code>classification_report(y_te, y_pred)</code> and look at the row for class 1.`,
-    solution: `from sklearn.datasets import make_classification\nX, y = make_classification(n_samples=1000, weights=[0.95,0.05], random_state=42)\nX_tr,X_te,y_tr,y_te = train_test_split(X,y,test_size=0.2,stratify=y,random_state=42)\nfor cw in [None,'balanced']:\n    m = LogisticRegression(class_weight=cw,max_iter=1000).fit(X_tr,y_tr)\n    print(f"class_weight={cw}")\n    print(classification_report(y_te,m.predict(X_te)))` }
+    solution: `from sklearn.datasets import make_classification\\nX, y = make_classification(n_samples=1000, weights=[0.95,0.05], random_state=42)\\nX_tr,X_te,y_tr,y_te = train_test_split(X,y,test_size=0.2,stratify=y,random_state=42)\\nfor cw in [None,'balanced']:\\n    m = LogisticRegression(class_weight=cw,max_iter=1000).fit(X_tr,y_tr)\\n    print(f"class_weight={cw}")\\n    print(classification_report(y_te,m.predict(X_te)))` }
   ]
 };
 
@@ -989,7 +989,7 @@ ax.set_title('Pruned Decision Tree (max_depth=3)')
 plt.tight_layout(); plt.show()
 
 # Text representation — readable in a terminal
-print("\nText rules:")
+print("\\nText rules:")
 print(export_text(tree_pruned, feature_names=list(data.feature_names)))
 
 # Feature importances
@@ -1098,7 +1098,7 @@ ccp_alphas = path.ccp_alphas
 cv_scores  = [cross_val_score(DecisionTreeClassifier(ccp_alpha=a, random_state=42),
                X_tr, y_tr, cv=5).mean() for a in ccp_alphas[::5]]
 best_alpha = ccp_alphas[::5][np.argmax(cv_scores)]
-print(f"\nBest ccp_alpha (pruning): {best_alpha:.6f}")` },
+print(f"\\nBest ccp_alpha (pruning): {best_alpha:.6f}")` },
     { type: 'exercise', title: 'Learning Curves for Bias-Variance Diagnosis', body: `<p>Plot learning curves for a Decision Tree (max_depth=1 and max_depth=10) on the breast cancer dataset to visually diagnose underfitting vs overfitting:</p>
 <ol>
 <li>Use <code>sklearn.model_selection.learning_curve</code> with train sizes from 10% to 100% (20 points)</li>
@@ -1394,10 +1394,10 @@ for name, model in models.items():
                     'Test AUC': round(auc,4), 'Train time(s)': round(train_time,2)})
     print(f"{name:40s}  CV={cv:.4f}  Test={auc:.4f}  Time={train_time:.2f}s")
 
-print("\nKey takeaway: Gradient Boosting wins on accuracy; Random Forest is close with much less tuning.")` },
+print("\\nKey takeaway: Gradient Boosting wins on accuracy; Random Forest is close with much less tuning.")` },
     { type: 'exercise', title: 'Tune a Random Forest End-to-End', body: `<p>Using the California Housing dataset (<code>fetch_california_housing</code>), tune a Random Forest regressor with <code>RandomizedSearchCV</code> over: <code>n_estimators=[100,200,500]</code>, <code>max_depth=[None,5,10,20]</code>, <code>min_samples_leaf=[1,3,5]</code>, <code>max_features=[0.3,0.5,'sqrt']</code>. Use 5-fold CV and RMSE as the metric. Report the best parameters and compare RMSE to a default RandomForest baseline.</p>`,
     hint: `Use <code>scoring='neg_root_mean_squared_error'</code> in RandomizedSearchCV. The score is negated — multiply by -1 to get positive RMSE.`,
-    solution: `from sklearn.model_selection import RandomizedSearchCV\nfrom sklearn.datasets import fetch_california_housing\nhousing = fetch_california_housing()\nX, y = housing.data, housing.target\nX_tr,X_te,y_tr,y_te = train_test_split(X,y,test_size=0.2,random_state=42)\nparam_dist = {'n_estimators':[100,200,500],'max_depth':[None,5,10,20],\n              'min_samples_leaf':[1,3,5],'max_features':[0.3,0.5,'sqrt']}\nrs = RandomizedSearchCV(RandomForestRegressor(random_state=42),param_dist,\n                        n_iter=20,cv=5,scoring='neg_root_mean_squared_error',\n                        random_state=42,n_jobs=-1)\nrs.fit(X_tr,y_tr)\nprint(rs.best_params_)\nprint('Best CV RMSE:',-rs.best_score_)` }
+    solution: `from sklearn.model_selection import RandomizedSearchCV\\nfrom sklearn.datasets import fetch_california_housing\\nhousing = fetch_california_housing()\\nX, y = housing.data, housing.target\\nX_tr,X_te,y_tr,y_te = train_test_split(X,y,test_size=0.2,random_state=42)\\nparam_dist = {'n_estimators':[100,200,500],'max_depth':[None,5,10,20],\\n              'min_samples_leaf':[1,3,5],'max_features':[0.3,0.5,'sqrt']}\\nrs = RandomizedSearchCV(RandomForestRegressor(random_state=42),param_dist,\\n                        n_iter=20,cv=5,scoring='neg_root_mean_squared_error',\\n                        random_state=42,n_jobs=-1)\\nrs.fit(X_tr,y_tr)\\nprint(rs.best_params_)\\nprint('Best CV RMSE:',-rs.best_score_)` }
   ]
 };
 
@@ -1742,7 +1742,7 @@ for k in [3, 5, 10, 20]:
     print(f"  k={k:2d}  RMSE={rmse:.4f}")
 
 # ── Scale sensitivity demo ─────────────────────────────────────────────
-print("\nKNN without scaling:")
+print("\\nKNN without scaling:")
 knn_unscaled = KNeighborsClassifier(n_neighbors=7)
 cv_unscaled = cross_val_score(knn_unscaled, X, y, cv=5).mean()
 print(f"  CV accuracy (unscaled): {cv_unscaled:.4f}")
@@ -1845,14 +1845,14 @@ for name, pipeline in models.items():
         'CV F1':         f"{cv_res['test_f1'].mean():.4f} ± {cv_res['test_f1'].std():.4f}",
         'Test ROC-AUC':  f"{test_auc:.4f}",
     })
-    print(f"\n=== {name} ===")
+    print(f"\\n=== {name} ===")
     print(classification_report(y_te, pipeline.predict(X_te), target_names=data.target_names))
 
-print("\nSummary:")
+print("\\nSummary:")
 print(pd.DataFrame(results).to_string(index=False))` },
     { type: 'exercise', title: 'Add Gradient Boosting to the Comparison', body: `<p>Extend the comparison above by adding <code>GradientBoostingClassifier(n_estimators=200, learning_rate=0.05, max_depth=3)</code> to the models dict. Note: Gradient Boosting doesn't require scaling. Compare its ROC-AUC and F1 against the three linear/instance-based models. Which algorithm performs best on this dataset?</p>`,
     hint: `Gradient Boosting is not affected by feature scale, so you can pass raw X_tr directly or wrap it in a Pipeline with a pass-through transformer.`,
-    solution: `from sklearn.ensemble import GradientBoostingClassifier\nmodels['Gradient Boosting'] = GradientBoostingClassifier(\n    n_estimators=200, learning_rate=0.05, max_depth=3, random_state=42)\n# Add to the cross_validate loop above — no scaler needed for GBM` }
+    solution: `from sklearn.ensemble import GradientBoostingClassifier\\nmodels['Gradient Boosting'] = GradientBoostingClassifier(\\n    n_estimators=200, learning_rate=0.05, max_depth=3, random_state=42)\\n# Add to the cross_validate loop above — no scaler needed for GBM` }
   ]
 };
 
@@ -2057,7 +2057,7 @@ for row,(dname,X,y_true) in enumerate(datasets):
         labels=alg.fit_predict(Xs)
         ari=adjusted_rand_score(y_true,labels)
         axes[row,col].scatter(X[:,0],X[:,1],c=labels,cmap='Set1',s=15,alpha=0.7)
-        axes[row,col].set_title(f'{dname} — {aname}\nARI={ari:.3f}')
+        axes[row,col].set_title(f'{dname} — {aname}\\nARI={ari:.3f}')
 plt.tight_layout(); plt.show()` }
   ]
 };
@@ -2230,7 +2230,7 @@ for n_comp in [10, 20, 30, 40, 64]:
     ])
     cv = cross_val_score(pipe, X_d, y_d, cv=5).mean()
     print(f"n_components={n_comp:3d}  CV accuracy={cv:.4f}")
-print("\n64 components = original (no PCA) — compare accuracy loss")` },
+print("\\n64 components = original (no PCA) — compare accuracy loss")` },
     { type: 'exercise', title: 'PCA for Noise Reduction & Feature Engineering', body: `<p>Apply PCA in two practical ways:</p>
 <ol>
 <li><strong>Explained variance selection:</strong> On the breast cancer dataset, find the minimum number of PCA components that capture 95% of total variance. Plot the cumulative explained variance curve.</li>
@@ -2269,7 +2269,7 @@ for name, pipe in [
 
 # 3. With noise
 X_noisy = X + np.random.normal(0, 2.0, X.shape)
-print("\nWith noise:")
+print("\\nWith noise:")
 for name, pipe in [('Raw noisy', Pipeline([('sc', StandardScaler()), ('lr', LogisticRegression(max_iter=2000))])),
                     (f'PCA-{k95} noisy', Pipeline([('sc', StandardScaler()), ('pca', PCA(n_components=k95)), ('lr', LogisticRegression(max_iter=2000))]))]:
     print(f"{name}: {cross_val_score(pipe, X_noisy, y, cv=5).mean():.4f}")` }
@@ -2328,12 +2328,12 @@ for i, perp in enumerate([5, 30, 50]):
         axes[1].legend(fontsize=8)
 plt.tight_layout(); plt.show()
 
-print("\nNote: For UMAP, install with 'pip install umap-learn'")
+print("\\nNote: For UMAP, install with 'pip install umap-learn'")
 print("Usage: import umap; reducer = umap.UMAP(n_neighbors=15, min_dist=0.1)")
 print("       X_umap = reducer.fit_transform(Xs)")` },
     { type: 'exercise', title: 'Cluster and Visualise Customer Segments', body: `<p>Generate a customer dataset with 5 features: <code>recency</code>, <code>frequency</code>, <code>monetary</code>, <code>age</code>, <code>tenure_months</code>. Apply K-Means (find the best K with the elbow method), then visualise the resulting clusters with t-SNE. Label each cluster with its mean RFM values to give it a business name (e.g., "Champions", "At Risk").</p>`,
     hint: `Scale before both K-Means and t-SNE. For t-SNE, pass <code>n_components=2</code>. Use the cluster labels as colours in the scatter plot.`,
-    solution: `# Generate, scale, find K with WCSS, fit KMeans(n_clusters=best_k)\n# labels = km.fit_predict(Xs)\n# X_tsne = TSNE(n_components=2, random_state=42).fit_transform(Xs)\n# plt.scatter(X_tsne[:,0], X_tsne[:,1], c=labels, cmap='tab10')\n# Profile: df.groupby('cluster')[rfm_cols].mean()` }
+    solution: `# Generate, scale, find K with WCSS, fit KMeans(n_clusters=best_k)\\n# labels = km.fit_predict(Xs)\\n# X_tsne = TSNE(n_components=2, random_state=42).fit_transform(Xs)\\n# plt.scatter(X_tsne[:,0], X_tsne[:,1], c=labels, cmap='tab10')\\n# Profile: df.groupby('cluster')[rfm_cols].mean()` }
   ]
 };
 
@@ -2378,7 +2378,7 @@ cv_strategies = {
 }
 
 print(f"Class balance: {np.bincount(y)}")
-print(f"\n{'Strategy':25s}  {'Mean ROC-AUC':15s}  {'Std':8s}  {'Min':8s}  {'Max':8s}")
+print(f"\\n{'Strategy':25s}  {'Mean ROC-AUC':15s}  {'Std':8s}  {'Min':8s}  {'Max':8s}")
 for name, cv in cv_strategies.items():
     res = cross_validate(model, X, y, cv=cv, scoring='roc_auc')['test_score']
     print(f"{name:25s}  {res.mean():.4f}         {res.std():.4f}    {res.min():.4f}    {res.max():.4f}")
@@ -2447,7 +2447,7 @@ rs = RandomizedSearchCV(RandomForestClassifier(random_state=42),
                          random_state=42, n_jobs=-1)
 rs.fit(X_tr, y_tr)
 t_rs = time.time() - t0
-print(f"\nRandomised:    best AUC={rs.best_score_:.4f}  trials=50  time={t_rs:.1f}s")
+print(f"\\nRandomised:    best AUC={rs.best_score_:.4f}  trials=50  time={t_rs:.1f}s")
 print(f"  Best params: {rs.best_params_}")
 
 # ── Report final test performance ──────────────────────────────────────
@@ -2611,7 +2611,7 @@ for cw, label in [(None, 'No class_weight'), ('balanced', 'class_weight=balanced
     f1  = cross_val_score(lr, X_imb, y_imb, cv=5, scoring='f1').mean()
     print(f"{label:35s}  accuracy={acc:.4f}  F1={f1:.4f}")
 
-axes[1].bar(['No weight\n(accuracy)','Balanced\n(accuracy)','No weight\n(F1)','Balanced\n(F1)'],
+axes[1].bar(['No weight\\n(accuracy)','Balanced\\n(accuracy)','No weight\\n(F1)','Balanced\\n(F1)'],
             [0.953, 0.891, 0.10, 0.55], color=['steelblue','steelblue','coral','coral'])
 axes[1].set_title('Class Imbalance: Accuracy hides the problem; F1 reveals it')
 axes[1].set_ylabel('Score')
@@ -2688,7 +2688,7 @@ print("Top 10 by F-test:")
 top_f  = [feature_names[i] for i in selector_f.get_support(indices=True)]
 top_mi = [feature_names[i] for i in selector_mi.get_support(indices=True)]
 print(top_f)
-print("\nTop 10 by Mutual Information:")
+print("\\nTop 10 by Mutual Information:")
 print(top_mi)
 
 # ── Embedded: Random Forest importances ───────────────────────────────
@@ -2707,7 +2707,7 @@ Xs = scaler.fit_transform(X)
 rfecv = RFECV(LogisticRegression(max_iter=5000, C=1.0),
               step=1, cv=StratifiedKFold(5), scoring='roc_auc', n_jobs=-1)
 rfecv.fit(Xs, y)
-print(f"\nRFECV optimal number of features: {rfecv.n_features_}")
+print(f"\\nRFECV optimal number of features: {rfecv.n_features_}")
 selected = [feature_names[i] for i in rfecv.get_support(indices=True)]
 print(f"Selected features: {selected}")
 
@@ -2722,7 +2722,7 @@ axes[1].legend()
 plt.tight_layout(); plt.show()` },
     { type: 'exercise', title: 'Full Tuning Pipeline', body: `<p>Using the Titanic dataset (available via seaborn: <code>sns.load_dataset('titanic')</code>), build a complete tuning pipeline: (1) preprocess (impute, encode), (2) select top 10 features with mutual information, (3) tune a Random Forest with RandomizedSearchCV (20 iterations, 5-fold stratified CV, ROC-AUC), (4) report final test performance with a full classification report.</p>`,
     hint: `Use <code>Pipeline([('prep', ColumnTransformer(...)), ('select', SelectKBest(mutual_info_classif, k=10)), ('model', RandomForestClassifier())])</code>. Wrap the whole pipeline in RandomizedSearchCV.`,
-    solution: `# Full solution requires ~50 lines — key steps:\n# 1. Drop rows with missing 'survived'; fill 'age' with median\n# 2. Select numeric + a few categorical features\n# 3. Build ColumnTransformer + Pipeline\n# 4. RandomizedSearchCV over RF hyperparameters\n# 5. pipeline.fit(X_tr, y_tr); print(classification_report(y_te, pipeline.predict(X_te)))` }
+    solution: `# Full solution requires ~50 lines — key steps:\\n# 1. Drop rows with missing 'survived'; fill 'age' with median\\n# 2. Select numeric + a few categorical features\\n# 3. Build ColumnTransformer + Pipeline\\n# 4. RandomizedSearchCV over RF hyperparameters\\n# 5. pipeline.fit(X_tr, y_tr); print(classification_report(y_te, pipeline.predict(X_te)))` }
   ]
 };
 
@@ -2784,7 +2784,7 @@ models = {
     'Extra-Trees':           ExtraTreesClassifier(n_estimators=100, random_state=42, n_jobs=-1),
 }
 
-print(f"\n{'Model':25s}  {'CV AUC':10s}  {'Std':8s}  {'Train time'}")
+print(f"\\n{'Model':25s}  {'CV AUC':10s}  {'Std':8s}  {'Train time'}")
 import time
 for name, model in models.items():
     t0 = time.time()
@@ -2795,7 +2795,7 @@ for name, model in models.items():
 # ── OOB score as free validation ──────────────────────────────────────
 rf = RandomForestClassifier(n_estimators=200, oob_score=True, random_state=42, n_jobs=-1)
 rf.fit(X_tr, y_tr)
-print(f"\nOOB score (free):  {rf.oob_score_:.4f}")
+print(f"\\nOOB score (free):  {rf.oob_score_:.4f}")
 print(f"Test accuracy    :  {rf.score(X_te, y_te):.4f}")` },
     { type: 'exercise', title: 'Bootstrap vs Full-Dataset Training', body: `<p>Empirically demonstrate why bootstrap sampling helps Random Forest:</p>
 <ol>
@@ -3002,7 +3002,7 @@ if LIBS_AVAILABLE:
         print(f"{name:12s}  RMSE={rmse:.4f}  Time={elapsed:.1f}s  Best n_est={model.best_iteration_}")
 
     # ── Key hyperparameter guide ──────────────────────────────────────
-    print("\nKey hyperparameters for XGBoost/LightGBM:")
+    print("\\nKey hyperparameters for XGBoost/LightGBM:")
     params = {
         'n_estimators':    'More trees = better (use early stopping to avoid over-shooting)',
         'learning_rate':   'Lower = better generalisation; pair with more trees. Default: 0.05-0.1',
@@ -3102,7 +3102,7 @@ for name, model in base_models:
 # ── Voting ensemble ────────────────────────────────────────────────────
 soft_voter = VotingClassifier(estimators=base_models, voting='soft', n_jobs=-1)
 cv_vote = cross_val_score(soft_voter, Xs_tr, y_tr, cv=5, scoring='roc_auc').mean()
-print(f"\nSoft Voting:  {cv_vote:.4f}")
+print(f"\\nSoft Voting:  {cv_vote:.4f}")
 
 # ── Stacking ensemble ─────────────────────────────────────────────────
 stacker = StackingClassifier(
@@ -3119,7 +3119,7 @@ print(f"Stacking:     {cv_stack:.4f}")
 # Test set
 soft_voter.fit(Xs_tr, y_tr)
 stacker.fit(Xs_tr, y_tr)
-print(f"\nSoft Voting test AUC : {roc_auc_score(y_te, soft_voter.predict_proba(Xs_te)[:,1]):.4f}")
+print(f"\\nSoft Voting test AUC : {roc_auc_score(y_te, soft_voter.predict_proba(Xs_te)[:,1]):.4f}")
 print(f"Stacking test AUC    : {roc_auc_score(y_te, stacker.predict_proba(Xs_te)[:,1]):.4f}")` },
     { type: 'exercise', title: 'Hard vs Soft Voting Comparison', body: `<p>Compare hard voting (majority vote) vs soft voting (average probabilities) on the wine dataset:</p>
 <ol>
@@ -3232,7 +3232,7 @@ for bar, t in zip(bars, df_res['Time (s)']):
 plt.tight_layout(); plt.show()` },
     { type: 'exercise', title: 'Build a Blending Ensemble', body: `<p>Train 3 diverse base models on 70% of the training data. Use the remaining 30% (the "hold-out") to generate predictions from each base model. Stack these predictions as features and train a Logistic Regression meta-learner on the hold-out set. Compare the blend's test AUC against each individual model. This is "blending" — a simpler version of stacking used in many Kaggle competitions.</p>`,
     hint: `Split X_train into X_blend_train (70%) and X_blend_val (30%). Fit base models on X_blend_train. Predict probabilities on X_blend_val → that becomes X_meta_train. Fit meta-learner on X_meta_train with y_blend_val as target.`,
-    solution: `X_bt, X_bv, y_bt, y_bv = train_test_split(X_tr, y_tr, test_size=0.3, random_state=42)\nbase = [RandomForestClassifier(n_estimators=100,random_state=42),\n        GradientBoostingClassifier(n_estimators=100,random_state=42),\n        KNeighborsClassifier(n_neighbors=7)]\nfor m in base: m.fit(Xs_bt, y_bt)\nmeta_tr = np.column_stack([m.predict_proba(Xs_bv)[:,1] for m in base])\nmeta_te = np.column_stack([m.predict_proba(Xs_te)[:,1] for m in base])\nmeta = LogisticRegression().fit(meta_tr, y_bv)\nprint('Blend AUC:', roc_auc_score(y_te, meta.predict_proba(meta_te)[:,1]))` }
+    solution: `X_bt, X_bv, y_bt, y_bv = train_test_split(X_tr, y_tr, test_size=0.3, random_state=42)\\nbase = [RandomForestClassifier(n_estimators=100,random_state=42),\\n        GradientBoostingClassifier(n_estimators=100,random_state=42),\\n        KNeighborsClassifier(n_neighbors=7)]\\nfor m in base: m.fit(Xs_bt, y_bt)\\nmeta_tr = np.column_stack([m.predict_proba(Xs_bv)[:,1] for m in base])\\nmeta_te = np.column_stack([m.predict_proba(Xs_te)[:,1] for m in base])\\nmeta = LogisticRegression().fit(meta_tr, y_bv)\\nprint('Blend AUC:', roc_auc_score(y_te, meta.predict_proba(meta_te)[:,1]))` }
   ]
 };
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Seed Feature Engineering Course — Admin — Data Science Academia</title>
-<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#F6F3EC">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="../assets/css/portal.css">
 </head>
@@ -231,7 +231,7 @@ const QUIZ_QUESTIONS = {
 
 function log(msg, cls=''){
   const area = document.getElementById('status-area');
-  area.innerHTML += `<div style="color:${cls==='ok'?'var(--teal)':cls==='err'?'#f66':cls==='head'?'var(--cream)':'var(--fog2)'}">${msg}</div>`;
+  area.innerHTML += `<div style="color:${cls==='ok'?'var(--teal)':cls==='err'?'var(--red)':cls==='head'?'var(--cream)':'var(--fog2)'}">${msg}</div>`;
   area.scrollTop = area.scrollHeight;
 }
 function toast(m,t='success'){

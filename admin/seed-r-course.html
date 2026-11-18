@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Seed R Programming — Admin — Data Science Academia</title>
-<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#F6F3EC">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="../assets/css/portal.css">
 </head>
@@ -363,7 +363,7 @@ const QUIZ_QUESTIONS = {
 /* ── Helpers ──────────────────────────────────────────────────────────────── */
 function log(msg, cls=''){
   const area = document.getElementById('status-area');
-  area.innerHTML += `<div style="color:${cls==='ok'?'var(--teal)':cls==='err'?'#f66':cls==='head'?'var(--cream)':'var(--fog2)'}">${msg}</div>`;
+  area.innerHTML += `<div style="color:${cls==='ok'?'var(--teal)':cls==='err'?'var(--red)':cls==='head'?'var(--cream)':'var(--fog2)'}">${msg}</div>`;
   area.scrollTop = area.scrollHeight;
 }
 function toast(m,t='success'){
@@ -407,7 +407,7 @@ function preview(){
     mod.lessons.forEach(([slug, title, mins, type]) => {
       totalMins += mins;
       const typeColor = type === 'quiz' ? 'var(--champ2)' : 'var(--teal)';
-      html += `<tr style="${mi%2===0?'':'background:rgba(255,255,255,.02)'}">
+      html += `<tr style="${mi%2===0?'':'background:rgba(16,38,61,.02)'}">
         <td style="padding:.35rem .6rem;color:var(--teal);font-family:monospace;">${slug}</td>
         <td style="padding:.35rem .6rem;color:var(--fog2);">${title}</td>
         <td style="padding:.35rem .6rem;text-align:center;color:${typeColor};">${type}</td>

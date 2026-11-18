@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Seed MLOps & Model Deployment Course — Admin — Data Science Academia</title>
-<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#0b0c0e">
+<link rel="manifest" href="../manifest.json"><meta name="theme-color" content="#F6F3EC">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="../assets/css/portal.css">
 </head>
@@ -80,7 +80,7 @@
 <script src="../assets/js/script.js"></script>
 <script>
 function toast(m,t='success'){const el=document.createElement('div');el.className=`toast-item ${t}`;el.textContent=m;document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);}
-function log(msg,type=''){const area=document.getElementById('status-area');const line=document.createElement('div');line.style.color=type==='error'?'#f66':type==='ok'?'var(--teal)':'var(--fog2)';line.textContent=msg;area.appendChild(line);area.scrollTop=area.scrollHeight;}
+function log(msg,type=''){const area=document.getElementById('status-area');const line=document.createElement('div');line.style.color=type==='error'?'var(--red)':type==='ok'?'var(--teal)':'var(--fog2)';line.textContent=msg;area.appendChild(line);area.scrollTop=area.scrollHeight;}
 
 const MODULES = [
   { title:'MLOps Foundations', order_index:0, lessons:[
@@ -215,7 +215,7 @@ document.addEventListener('portal:ready', async()=>{
   sel.innerHTML=courses.map(c=>`<option value="${c.id}"${/mlops|ml.?ops|model.?deploy/i.test(c.title)?' selected':''}>${c.title}</option>`).join('');
 
   const rows=MODULES.flatMap(m=>m.lessons.map(l=>`<tr><td style="padding:.4rem .75rem;color:var(--fog2);font-size:.75rem;">${m.title}</td><td style="padding:.4rem .75rem;font-size:.8rem;color:var(--cream);">${l.title}</td><td style="padding:.4rem .75rem;font-size:.75rem;color:var(--fog2);">${l.type}</td><td style="padding:.4rem .75rem;font-size:.75rem;color:var(--fog2);">${l.duration_mins}min</td></tr>`));
-  document.getElementById('preview-table').innerHTML=`<table style="width:100%;border-collapse:collapse;"><thead><tr style="background:rgba(255,255,255,.04)"><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Module</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Lesson</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Type</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Duration</th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
+  document.getElementById('preview-table').innerHTML=`<table style="width:100%;border-collapse:collapse;"><thead><tr style="background:rgba(16,38,61,.04)"><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Module</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Lesson</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Type</th><th style="padding:.5rem .75rem;text-align:left;font-size:.72rem;color:var(--fog2);font-family:var(--fb);">Duration</th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
 });
 
 async function runSeed(){

@@ -50,7 +50,7 @@ def slerp(z1, z2, t):
     omega = torch.acos((z1_norm * z2_norm).sum().clamp(-1, 1))
     if omega.abs() < 1e-6:
         return (1-t)*z1 + t*z2
-    return (torch.sin((1-t)*omega)/torch.sin(omega))*z1 + \
+    return (torch.sin((1-t)*omega)/torch.sin(omega))*z1 + \\
            (torch.sin(t*omega)/torch.sin(omega))*z2
 
 # Sample two random latent vectors

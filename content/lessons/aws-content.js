@@ -157,8 +157,8 @@ aws sagemaker list-training-jobs
 aws sagemaker describe-training-job --training-job-name my-job
 
 # Athena
-aws athena start-query-execution \
-  --query-string "SELECT * FROM mydb.sales LIMIT 10" \
+aws athena start-query-execution \\
+  --query-string "SELECT * FROM mydb.sales LIMIT 10" \\
   --result-configuration OutputLocation=s3://my-bucket/results/</code></pre>` },
     { type: 'text', body: `<h3>boto3 — The Python SDK</h3>
 <p>boto3 is the AWS SDK for Python and the primary tool for data science workflows on AWS. Install: <code>pip install boto3</code></p>
@@ -370,17 +370,17 @@ L['aws-w2-l1'] = {
     { type: 'text', body: `<h2>S3 Versioning</h2>
 <p>Versioning keeps multiple versions of every object in a bucket. When enabled, every PUT to an existing key creates a new version rather than overwriting. DELETE adds a delete marker — the data still exists and can be recovered by removing the marker.</p>
 <pre><code># Enable versioning via CLI
-aws s3api put-bucket-versioning \
-  --bucket my-bucket \
+aws s3api put-bucket-versioning \\
+  --bucket my-bucket \\
   --versioning-configuration Status=Enabled
 
 # List all versions of an object
-aws s3api list-object-versions \
+aws s3api list-object-versions \\
   --bucket my-bucket --prefix data/sales.csv
 
 # Restore a previous version
-aws s3api copy-object \
-  --bucket my-bucket --copy-source my-bucket/data/sales.csv?versionId=abc123 \
+aws s3api copy-object \\
+  --bucket my-bucket --copy-source my-bucket/data/sales.csv?versionId=abc123 \\
   --key data/sales.csv</code></pre>
 <p>Versioning is critical for: model artifact lineage (keep every trained model version), data pipeline recovery (reprocess from a previous raw data version), and compliance (audit trail of every data change).</p>
 <p><strong>Cost note</strong>: all versions consume storage and are billed. Add an expiration lifecycle rule to delete old versions automatically.</p>` },
@@ -408,8 +408,8 @@ aws s3api copy-object \
 <p>Cross-Region Replication (CRR): automatically copies objects to a bucket in a different Region. Use for disaster recovery, legal compliance (data residency in multiple regions), or reducing latency for global users. Same-Region Replication (SRR): copies within the same Region — for log aggregation or sharing data between accounts.</p>` },
     { type: 'tip', body: `Enable <strong>S3 Intelligent-Tiering</strong> for any bucket storing data science artifacts (datasets, model checkpoints, experiment outputs) where access patterns are unpredictable. It automatically moves objects to the most cost-effective tier with no retrieval fees for the frequent-access tier. For training data accessed daily during active projects, it stays in Standard; after project completion, it moves to infrequent access automatically.` },
     { type: 'exercise', title: 'Set up a lifecycle policy to archive old model artifacts', hint: 'Enable versioning, create a lifecycle rule to transition objects after 30 days to Glacier, delete expired versions after 90 days', solution: `# Via CLI
-aws s3api put-bucket-lifecycle-configuration \
-  --bucket my-ds-bucket \
+aws s3api put-bucket-lifecycle-configuration \\
+  --bucket my-ds-bucket \\
   --lifecycle-configuration '{
     "Rules": [{
       "ID": "archive-old-models",
@@ -766,10 +766,10 @@ df.to_parquet('/tmp/sales.parquet', index=False)
 s3.upload_file('/tmp/sales.parquet', 'my-datalake', 'processed/sales/sales.parquet')
 
 # Create Glue crawler (via console or CLI):
-# aws glue create-crawler \
-#   --name "processed-sales-crawler" \
-#   --role "GlueServiceRole" \
-#   --database-name "datalake_db" \
+# aws glue create-crawler \\
+#   --name "processed-sales-crawler" \\
+#   --role "GlueServiceRole" \\
+#   --database-name "datalake_db" \\
 #   --targets '{"S3Targets": [{"Path": "s3://my-datalake/processed/sales/"}]}'
 
 # aws glue start-crawler --name "processed-sales-crawler"
@@ -796,10 +796,10 @@ L['aws-w3-l1'] = {
     { type: 'text', body: `<h3>Glue Crawlers</h3>
 <p>A Crawler connects to a data source, samples files, infers the schema, and populates the Data Catalog automatically. Supports: S3, JDBC (RDS, Redshift), DynamoDB, Kafka, and more.</p>
 <pre><code># Create and run a crawler via CLI
-aws glue create-crawler \
-  --name "raw-sales-crawler" \
-  --role "arn:aws:iam::ACCOUNT:role/GlueServiceRole" \
-  --database-name "datalake_raw" \
+aws glue create-crawler \\
+  --name "raw-sales-crawler" \\
+  --role "arn:aws:iam::ACCOUNT:role/GlueServiceRole" \\
+  --database-name "datalake_raw" \\
   --targets '{"S3Targets": [{"Path": "s3://my-lake/raw/sales/"}]}'
 
 aws glue start-crawler --name "raw-sales-crawler"
@@ -1017,25 +1017,25 @@ L['aws-w3-l3'] = {
 </ul>` },
     { type: 'text', body: `<h3>Submitting a Spark Job to EMR</h3>
 <pre><code># Launch a transient cluster, run a Spark step, and auto-terminate
-aws emr create-cluster \
-  --name "sales-etl-cluster" \
-  --release-label emr-6.15.0 \
-  --applications Name=Spark Name=Hadoop \
+aws emr create-cluster \\
+  --name "sales-etl-cluster" \\
+  --release-label emr-6.15.0 \\
+  --applications Name=Spark Name=Hadoop \\
   --instance-groups '[
     {"InstanceRole":"MASTER","InstanceType":"m5.xlarge","InstanceCount":1},
     {"InstanceRole":"CORE","InstanceType":"m5.xlarge","InstanceCount":2},
     {"InstanceRole":"TASK","InstanceType":"m5.xlarge","InstanceCount":4,
      "Market":"SPOT","BidPrice":"0.10"}
-  ]' \
+  ]' \\
   --steps '[{
     "Type":"Spark",
     "Name":"SalesETL",
     "ActionOnFailure":"TERMINATE_CLUSTER",
     "Args":["--deploy-mode","cluster","s3://my-bucket/scripts/etl.py"]
-  }]' \
-  --auto-terminate \
-  --service-role EMR_DefaultRole \
-  --ec2-attributes KeyName=my-key,InstanceProfile=EMR_EC2_DefaultRole \
+  }]' \\
+  --auto-terminate \\
+  --service-role EMR_DefaultRole \\
+  --ec2-attributes KeyName=my-key,InstanceProfile=EMR_EC2_DefaultRole \\
   --region ap-south-1</code></pre>
 <h3>PySpark on EMR</h3>
 <pre><code># etl.py — stored in S3, run as an EMR step
@@ -1064,15 +1064,15 @@ spark.stop()</code></pre>` },
     { type: 'text', body: `<h3>EMR Serverless</h3>
 <p>EMR Serverless removes cluster management entirely. Submit Spark or Hive jobs; AWS automatically provisions compute, runs the job, and deallocates resources. You pay only for vCPU-seconds and GB-seconds of memory used during job execution — no idle instance costs.</p>
 <pre><code># Submit a job to EMR Serverless via CLI
-aws emr-serverless start-job-run \
-  --application-id "APP_ID" \
-  --execution-role-arn "arn:aws:iam::ACCOUNT:role/EMRServerlessRole" \
+aws emr-serverless start-job-run \\
+  --application-id "APP_ID" \\
+  --execution-role-arn "arn:aws:iam::ACCOUNT:role/EMRServerlessRole" \\
   --job-driver '{
     "sparkSubmit": {
       "entryPoint": "s3://my-bucket/scripts/etl.py",
       "sparkSubmitParameters": "--conf spark.executor.memory=4g --conf spark.executor.cores=2"
     }
-  }' \
+  }' \\
   --configuration-overrides '{
     "monitoringConfiguration": {
       "s3MonitoringConfiguration": {"logUri": "s3://my-bucket/emr-logs/"}
@@ -1090,9 +1090,9 @@ spark.stop()
 
 # 2. EMR Console → EMR Serverless → Create application → Spark → name "wordcount-app"
 # 3. Submit job:
-aws emr-serverless start-job-run \
-  --application-id "YOUR_APP_ID" \
-  --execution-role-arn "arn:aws:iam::ACCOUNT:role/EMRServerlessRole" \
+aws emr-serverless start-job-run \\
+  --application-id "YOUR_APP_ID" \\
+  --execution-role-arn "arn:aws:iam::ACCOUNT:role/EMRServerlessRole" \\
   --job-driver '{"sparkSubmit":{"entryPoint":"s3://my-bucket/scripts/wordcount.py"}}'
 
 # 4. Monitor: aws emr-serverless get-job-run --application-id APP_ID --job-run-id JOB_ID
@@ -1301,16 +1301,16 @@ L['aws-w4-l1'] = {
 <pre><code># SageMaker Studio uses a Domain (per-account/VPC) and User Profiles
 # Setup via Console: SageMaker → Domains → Create Domain
 # Or via CLI:
-aws sagemaker create-domain \
-  --domain-name "my-ml-domain" \
-  --auth-mode IAM \
-  --default-user-settings '{"ExecutionRole":"arn:aws:iam::ACCOUNT:role/SageMakerStudioRole"}' \
-  --subnet-ids subnet-xxxx \
+aws sagemaker create-domain \\
+  --domain-name "my-ml-domain" \\
+  --auth-mode IAM \\
+  --default-user-settings '{"ExecutionRole":"arn:aws:iam::ACCOUNT:role/SageMakerStudioRole"}' \\
+  --subnet-ids subnet-xxxx \\
   --vpc-id vpc-xxxx
 
 # Create a user profile
-aws sagemaker create-user-profile \
-  --domain-id "DOMAIN_ID" \
+aws sagemaker create-user-profile \\
+  --domain-id "DOMAIN_ID" \\
   --user-profile-name "data-scientist-1"</code></pre>
 <h3>SageMaker SDK Basics</h3>
 <pre><code>import sagemaker
