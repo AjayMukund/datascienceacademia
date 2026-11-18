@@ -33,15 +33,17 @@
 .lv .page-hero{overflow:hidden}
 .lv .page-hero-glow{background:radial-gradient(ellipse at top,rgba(var(--lv-rgb),.15),transparent 70%)}
 .lv-ghost{position:absolute;right:-.2em;top:42%;transform:translateY(-50%);font-family:var(--fd);font-size:clamp(9rem,22vw,20rem);font-weight:700;line-height:1;letter-spacing:-.06em;color:rgba(var(--lv-rgb),.05);pointer-events:none;user-select:none;z-index:-1}
-.lv .eyebrow,.lv .section-label,.lv .info-cat,.lv .info-label,.lv .breadcrumbs [aria-current],.lv .stat-n,.lv .card-cat{color:var(--lv)}
+.lv .eyebrow,.lv .section-label,.lv .info-cat,.lv .info-label,.lv .breadcrumbs [aria-current],.lv .card-cat{color:var(--lv)}
+.lv .stats .stat-n{color:var(--champ2)}
 .lv .eyebrow::before,.lv .eyebrow::after{background:var(--lv)}
 .lv .sh em,.lv .cta-title em,.lv .callout-title em{color:var(--lv)}
 .lv .card.tinted{--c:var(--lv);--glow:var(--lv)}
 .lv .check-list li::before,.lv .outcome::before{color:var(--lv)}
 .lv .icon-box{background:rgba(var(--lv-rgb),.08);border-color:rgba(var(--lv-rgb),.3)}
-.lv .cta-banner{border-color:rgba(var(--lv-rgb),.3);background:linear-gradient(135deg,rgba(var(--lv-rgb),.12),var(--tint) 60%,rgba(var(--lv-rgb),.05))}
+.lv .cta-banner{border-color:rgba(var(--lv-rgb),.55)}
 .badge-lv{color:var(--lv);border-color:rgba(var(--lv-rgb),.3);background:rgba(var(--lv-rgb),.08)}
-.btn-lv{background:var(--lv);color:var(--ink)}
+.btn-lv{background:var(--btn-bg);color:var(--btn-fg)}
+.btn-lv:hover{background:var(--btn-hover);box-shadow:0 0 0 2px var(--gold-brand)}
 .btn-lv:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(var(--lv-rgb),.35)}
 .lv-hero .two-col{grid-template-columns:1.05fr .95fr}
 .lv-hero h1{font-size:clamp(2.4rem,4.6vw,3.8rem);margin-bottom:.35rem}

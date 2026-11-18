@@ -9,9 +9,9 @@
 :root{
   --navy:#10263D;--teal-brand:#499A91;--gold-brand:#C9A970;--ivory:#F6F3EC;
   --ink:#F6F3EC;--ink2:#ffffff;--ink3:#EEE9DE;
-  --champ:#2E7A72;--champ2:#256A63;--champ3:#10263D;
+  --champ:#29716A;--champ2:#256A63;--champ3:#10263D;
   --cream:#10263D;--text:#282D30;--fog:#3F4549;--fog2:#555B60;--fog3:#6B7176;
-  --teal:#2E7A72;--teal2:#256A63;--gold:#7A5C24;--red:#B3261E;
+  --teal:#29716A;--teal2:#256A63;--gold:#7A5C24;--red:#B3261E;
   --border:rgba(16,38,61,.10);--border2:rgba(16,38,61,.18);--border3:rgba(16,38,61,.32);
   --glass:rgba(246,243,236,.9);--glass2:#ffffff;
   --soft:rgba(16,38,61,.03);--soft2:rgba(16,38,61,.06);--input-bg:#ffffff;
@@ -25,7 +25,7 @@
 :is(.portal-sidebar,.tl-code){
   --ink:#0B1B2C;--ink2:#10263D;--ink3:#16304A;
   --champ:#C9A970;--champ2:#D8BE8C;--champ3:#EAD9B5;
-  --cream:#F6F3EC;--text:#E9E5DC;--fog:#B9C2CC;--fog2:#93A0AD;--fog3:#6E7D8C;
+  --cream:#F6F3EC;--text:#E9E5DC;--fog:#B9C2CC;--fog2:#93A0AD;--fog3:#8796A5;
   --teal:#6FC2B8;--gold:#D8BE8C;--red:#FF8A80;
   --border:rgba(201,169,112,.16);--border2:rgba(201,169,112,.28);--border3:rgba(201,169,112,.45);
   --soft:rgba(16,38,61,.03);--soft2:rgba(16,38,61,.06);
