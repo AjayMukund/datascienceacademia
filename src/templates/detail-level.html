@@ -119,7 +119,7 @@
     "@type": "CourseInstance",
     "courseMode": ["online", "onsite"],
     "courseWorkload": "PT" ~ hours_n ~ "H",
-    "courseSchedule": {"@type": "Schedule", "repeatFrequency": "Weekly", "duration": "PT1H30M"},
+    "courseSchedule": {"@type": "Schedule", "repeatFrequency": "P0.5W", "repeatCount": sessions_n | int, "duration": "PT1H30M"},
     "location": {"@type": "Place", "name": "Partner schools across Chennai", "address": {"@type": "PostalAddress", "addressLocality": site.address.locality, "addressRegion": site.address.region, "addressCountry": site.address.country}}
   }],
   "offers": {"@type": "Offer", "availability": "https://schema.org/InStock", "priceCurrency": "INR", "url": absolute('contact.html') ~ "?course=DSA+Code+Champs+(School+Outreach)"}
@@ -164,7 +164,7 @@
         {% if level.get('image') %}
         <div class="img-frame">{{ img(level.image, level.name ~ ' — DSA Code Champs Level ' ~ level.level ~ ' coding and AI classes for ' ~ level.grade ~ ' students in Chennai', sizes='(max-width:900px) 100vw, 45vw', loading='eager', fetchpriority='high') }}</div>
         {% endif %}
-        <div class="float-badge"><span class="fb-icon" aria-hidden="true">{{ level.icon }}</span><div><div class="fb-v">Level {{ level.level }} of 4 &middot; {{ level.grade }}</div><div class="fb-l">{{ level.duration }} &middot; {{ level.sessions }} &middot; weekly 90-minute sessions</div></div></div>
+        <div class="float-badge"><span class="fb-icon" aria-hidden="true">{{ level.icon }}</span><div><div class="fb-v">Level {{ level.level }} of 4 &middot; {{ level.grade }}</div><div class="fb-l">{{ level.duration }} &middot; {{ level.sessions }} &middot; 2 × 90-min sessions a week</div></div></div>
       </div>
     </div>
   </div>
@@ -207,7 +207,7 @@
           <div class="card static card-pad who-card" data-r="1">
             <h3 class="card-title">How every session runs</h3>
             <ul class="check-list">
-              <li>Weekly 90-minute interactive sessions, or a weekend bootcamp format</li>
+              <li>Two 90-minute interactive sessions a week, or a weekend bootcamp format</li>
               <li>Activity-first — students do before they are taught the theory</li>
               <li>Team challenges and mini-hackathons</li>
               <li>Show-and-tell: students present mini-projects each session</li>
@@ -351,7 +351,7 @@
         <div class="info-rows">
           <div class="info-row"><span class="info-row-label">Duration</span><span class="info-row-val">{{ level.duration }}</span></div>
           <div class="info-row"><span class="info-row-label">Sessions</span><span class="info-row-val">{{ level.sessions }}</span></div>
-          <div class="info-row"><span class="info-row-label">Session length</span><span class="info-row-val">90 minutes, weekly</span></div>
+          <div class="info-row"><span class="info-row-label">Session length</span><span class="info-row-val">90 minutes, twice a week</span></div>
           <div class="info-row"><span class="info-row-label">Format</span><span class="info-row-val">{{ level.format }}</span></div>
           <div class="info-row"><span class="info-row-label">Where</span><span class="info-row-val">Chennai schools &amp; live online</span></div>
           {% if level.get('cert') %}<div class="info-row"><span class="info-row-label">Certificate</span><span class="info-row-val">{{ level.cert }}</span></div>{% endif %}

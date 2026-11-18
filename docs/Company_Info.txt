@@ -462,7 +462,7 @@ LEVEL 4 — CODE PIONEERS (Flagship School Track)
                for IIT/NIT admissions, AI research, and tech entrepreneurship.
 
 Session Format (all levels):
-  - Weekly 90-minute interactive sessions (or weekend bootcamp format)
+  - Two 90-minute interactive sessions a week (or weekend bootcamp format)
   - Activity-first approach — students do before being taught theory
   - Team challenges and mini-hackathons
   - Show-and-tell: students present mini-projects each session

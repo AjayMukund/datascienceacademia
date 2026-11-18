@@ -524,9 +524,9 @@ const DSA_PROGRAMMES = {
     icon: '🤖',
     iconClass: 'pi-code',
     glowColor: '#c792ea',
-    audience: ['School Students — Grade 6 to Grade 9', 'School Coordinators & STEM Clubs', 'Parents of Young Learners'],
+    audience: ['School Students — Grades 3 to 12 (ages 8 to 17)', 'School Coordinators & STEM Clubs', 'Parents of Young Learners'],
     delivery: ['Offline — School Visits (Chennai)', 'Online — Interactive Live Sessions'],
-    duration: '4 Weeks (1 session per week) · Weekend Bootcamps available',
+    duration: '3–6 Months per level (2 sessions a week) · Weekend Bootcamps available',
     certificate: 'DSA Code Champs Participation Certificate',
     overview: 'DSA Code Champs is a school outreach initiative designed to nurture early interest in STEM and AI among school students from Grade 3 to Grade 12. Through fun, activity-based, and project-driven learning across four progressive levels — from Scratch and introductory Python to machine learning and computer vision — we plant the seeds for tomorrow\'s AI engineers, researchers, and innovators. Every session is designed to be engaging, visual, and hands-on, making technology accessible and exciting for young minds.',
     outcomes: [
@@ -552,7 +552,7 @@ const DSA_PROGRAMMES = {
       {
         title: 'Session Format',
         points: [
-          'Weekly 90-minute interactive sessions (or weekend bootcamp format)',
+          'Two 90-minute interactive sessions a week (or weekend bootcamp format)',
           'Activity-first approach — students do before they are taught theory',
           'Team challenges and mini-hackathons to build collaboration skills',
           'Show-and-tell: students present their mini-projects each session',
@@ -611,7 +611,7 @@ const DSA_PROGRAMMES = {
         {icon:'🏆', title:'Closing Showcase', desc:'Students present projects to parents and teachers; certificates awarded'}
       ]
     },
-    prereqs: 'No prior technology experience needed. Designed for complete beginners aged 11–15. All a student needs is curiosity and enthusiasm.',
+    prereqs: 'No prior technology experience needed. Open to students aged 8 to 17 (Grades 3–12): complete beginners start at Code Explorers, and each level builds on the one before. All a student needs is curiosity and enthusiasm.',
     cta: 'Bring DSA Code Champs to Your School',
     ctaParam: 'DSA Code Champs (School Outreach)'
   },

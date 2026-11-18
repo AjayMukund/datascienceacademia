@@ -155,7 +155,7 @@ def level_faqs(lv: dict, rel: str) -> list[dict]:
              + " Not sure? We assess every child in the free trial session and recommend the right level.")
     faqs.append({"q": "Does my child need any coding experience?", "a": a})
     faqs.append({"q": f"How long is {n}, and how are classes run?",
-                 "a": f"{_e(lv['duration'].capitalize())}, {_e(lv['sessions'].lower())} in total, each about 90 minutes. Classes run "
+                 "a": f"{_e(lv['duration'].capitalize())}, {_e(lv['sessions'].lower())} in total — two 90-minute sessions a week. Classes run "
                       "in partner schools across Chennai or live online, and parents receive progress updates after "
                       "each session."})
     faqs.append({"q": "Will my child receive a certificate?",

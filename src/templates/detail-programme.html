@@ -22,8 +22,7 @@
 {% set steps = programme.get('steps') %}
 {% set cta = programme.get('cta', 'Apply / enquire') %}
 {% set cta_param = programme.get('ctaParam', programme.title) %}
-{# Code Champs keeps its parent/school FAQ on codechamps.html and per-level FAQs on each level page #}
-{% set faqs = [] if is_cc else programme_faqs(programme, rel) %}
+{% set faqs = programme_faqs(programme, rel) %}
 {% from "partials/faq-block.html" import faq_block %}
 
 {# Short delivery modes for badges / JSON-LD — classified per delivery item #}
