@@ -67,8 +67,8 @@ def main() -> None:
     (FONT_DIR / "fonts.css").write_text("\n".join(out_css) + "\n", encoding="utf-8")
     print(f"{n} font files -> {FONT_DIR.relative_to(ROOT)}/fonts.css")
 
-    # TTFs for Pillow (OG image rendering) — Outfit 600 & Cormorant 600 are enough
-    ttf_css = fetch("https://fonts.googleapis.com/css?family=Outfit:400,600|Cormorant+Garamond:600,700", UA_TTF).decode()
+    # TTFs for Pillow (OG image rendering) — Outfit 400/600/700 (+ Cormorant for legacy art)
+    ttf_css = fetch("https://fonts.googleapis.com/css?family=Outfit:400,600,700|Cormorant+Garamond:600,700", UA_TTF).decode()
     for m in re.finditer(r"font-family:\s*'([^']+)';\s*font-style:\s*\w+;\s*font-weight:\s*(\d+);\s*src:.*?url\(([^)]+\.ttf)\)", ttf_css, re.S):
         fam, weight, url = m.groups()
         target = TTF_DIR / f"{slug(fam)}-{weight}.ttf"
