@@ -406,6 +406,9 @@ body.nav-open{overflow:hidden}
 .faq[open] summary{border-bottom:1px solid var(--border)}
 .faq-a{padding:1rem 1.4rem 1.25rem;font-size:.9rem;color:var(--fog);line-height:1.8}
 .faq-a p+p{margin-top:.6rem}
+.faq-ul{margin:.5rem 0 0;padding-left:1.15rem;list-style:disc}
+.faq-ul li{margin:.2rem 0}
+.faq-ul li::marker{color:var(--teal)}
 .prose{font-size:1.02rem;line-height:1.9;color:var(--fog)}
 .prose>*+*{margin-top:1.2rem}
 .prose h2{font-size:1.8rem;margin-top:2.6rem;color:var(--cream)}
@@ -668,6 +671,22 @@ a{color:#000}
 .info-actions{display:flex;flex-direction:column;gap:.6rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)}
 .info-actions .btn{white-space:normal}
 .detail-side .sticky{max-height:calc(100vh - var(--nav-h) - 2rem);overflow-y:auto;overscroll-behavior:contain}
+.fit-list{display:grid;gap:.6rem}
+.fit-list li{position:relative;padding:.85rem 1.1rem .85rem 2.6rem;border:1px solid var(--border);border-radius:var(--r);background:var(--card);font-size:.93rem;color:var(--cream);line-height:1.55}
+.fit-list li::before{content:"";position:absolute;left:1.05rem;top:1.12rem;width:.8rem;height:.45rem;border-left:2px solid var(--teal);border-bottom:2px solid var(--teal);transform:rotate(-45deg)}
+.roles-lead,.path-note{font-size:.92rem;color:var(--fog);margin-bottom:.9rem}
+.path-note{margin:.9rem 0 0;font-size:.8rem;color:var(--fog2)}
+.path{display:grid;grid-template-columns:1fr auto 1.1fr auto 1fr;align-items:stretch;gap:.6rem;margin-top:1.6rem}
+.path-step{padding:1rem 1.1rem;border:1px solid var(--border);border-radius:var(--r);background:var(--card)}
+.path-step.is-now{border-color:var(--border2);background:linear-gradient(135deg,rgba(73,154,145,.12),var(--card) 70%)}
+.path-k{display:block;font-family:var(--fm);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fog2);margin-bottom:.45rem}
+.path-step ul{display:grid;gap:.3rem}
+.path-step a,.path-step strong{display:inline-block;font-weight:600;font-size:.92rem;line-height:1.35;color:var(--cream)}
+.path-step a{text-decoration:underline;text-decoration-color:var(--border2);text-underline-offset:3px}
+.path-step a:hover{color:var(--champ2)}
+.path-step .path-meta{display:block;font-size:.74rem;color:var(--fog2);font-weight:400;margin-top:.1rem}
+.path-arr{align-self:center;color:var(--gold-brand,var(--champ));font-size:1.2rem}
+@media (max-width:760px){.path{grid-template-columns:1fr}.path-arr{transform:rotate(90deg);justify-self:center;line-height:1}}
 .related-grid .card-title{font-size:1.1rem}
 .related-grid .card-foot{font-size:.72rem}
 @media (max-width:960px){.detail-side .sticky{max-height:none;overflow:visible}}
@@ -675,7 +694,8 @@ a{color:#000}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":["EducationalOrganization","LocalBusiness"],"@id":"https://datascienceacademia.in/#organization","name":"Data Science Academia","alternateName":["DSA","DSA Chennai"],"url":"https://datascienceacademia.in/","logo":{"@type":"ImageObject","url":"https://datascienceacademia.in/assets/icons/favicon-192.png","width":192,"height":192},"image":"https://datascienceacademia.in/assets/og/default.jpg","description":"Data Science Academia is a Ph.D.-led AI & Data Science institute in Chennai offering 18 courses (Python, Machine Learning, Deep Learning, LLMs, Power BI, Azure, AWS), AICTE-aligned internships, Microsoft certification prep and a 12-month AI Mastery Track — live in Chennai and online.","slogan":"Where Academic Rigour Meets Real-World AI Engineering","foundingDate":"2019","telephone":"+919176498814","email":"info@datascienceacademia.in","priceRange":"₹₹","address":{"@type":"PostalAddress","streetAddress":"No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam","addressLocality":"Chennai","addressRegion":"Tamil Nadu","postalCode":"600073","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":12.918342794186495,"longitude":80.15253111461173},"hasMap":"https://www.google.com/maps/search/?api=1&query=12.918342794186495%2C80.15253111461173","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"19:00"}],"areaServed":[{"@type":"City","name":"Chennai"},{"@type":"State","name":"Tamil Nadu"},{"@type":"Country","name":"India"}],"sameAs":["https://www.linkedin.com/company/data-science-academia/","https://youtube.com/@datascienceacademia3805","https://www.instagram.com/data_science_academia","https://wa.me/919176498814"],"contactPoint":[{"@type":"ContactPoint","telephone":"+919176498814","contactType":"admissions","email":"info@datascienceacademia.in","availableLanguage":["English","Tamil"],"areaServed":"IN"}]},{"@type":"WebSite","@id":"https://datascienceacademia.in/#website","url":"https://datascienceacademia.in/","name":"Data Science Academia","publisher":{"@id":"https://datascienceacademia.in/#organization"},"inLanguage":"en-IN"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://datascienceacademia.in/"},{"@type":"ListItem","position":2,"name":"Courses","item":"https://datascienceacademia.in/courses.html"},{"@type":"ListItem","position":3,"name":"MLOps & Model Deployment"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","@id":"https://datascienceacademia.in/courses/mlops.html#course","name":"MLOps & Model Deployment","description":"Building a model is just 20% of the work. MLOps covers the other 80% — versioning data and experiments, containerising models, building CI/CD pipelines, serving predictions at scale and monitoring for drift in production. This is the course that makes you a complete ML engineer.","url":"https://datascienceacademia.in/courses/mlops.html","image":"https://datascienceacademia.in/assets/img/courses/mlops-and-model-deployment-1600.webp","courseCode":"mlops","educationalLevel":"Advanced","teaches":["Version data and code systematically with DVC and Git","Track and compare experiments with MLflow and W&B","Containerise ML models and build REST APIs with FastAPI","Build end-to-end CI/CD pipelines for ML with GitHub Actions","Deploy models on cloud platforms (AWS SageMaker / Azure ML)","Monitor models for data drift and concept drift in production"],"coursePrerequisites":"Machine Learning course. Basic familiarity with Git and command line. Cloud account (AWS/Azure) helpful.","timeRequired":"PT40H","inLanguage":"en","provider":{"@id":"https://datascienceacademia.in/#organization"},"hasCourseInstance":[{"@type":"CourseInstance","courseMode":["online","onsite"],"courseWorkload":"PT40H","location":{"@type":"Place","name":"Data Science Academia, Rajakilpakkam","address":{"@type":"PostalAddress","streetAddress":"No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam","addressLocality":"Chennai","addressRegion":"Tamil Nadu","postalCode":"600073","addressCountry":"IN"}}}],"offers":{"@type":"Offer","availability":"https://schema.org/InStock","priceCurrency":"INR","url":"https://datascienceacademia.in/contact.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","@id":"https://datascienceacademia.in/courses/mlops.html#course","name":"MLOps & Model Deployment","description":"Building a model is just 20% of the work. MLOps covers the other 80% — versioning data and experiments, containerising models, building CI/CD pipelines, serving predictions at scale and monitoring for drift in production. This is the course that makes you a complete ML engineer.","url":"https://datascienceacademia.in/courses/mlops.html","image":"https://datascienceacademia.in/assets/img/courses/mlops-and-model-deployment-1600.webp","courseCode":"mlops","educationalLevel":"Advanced","teaches":["Version data and code systematically with DVC and Git","Track and compare experiments with MLflow and W&B","Containerise ML models and build REST APIs with FastAPI","Build end-to-end CI/CD pipelines for ML with GitHub Actions","Deploy models on cloud platforms (AWS SageMaker / Azure ML)","Monitor models for data drift and concept drift in production"],"coursePrerequisites":"Machine Learning course. Basic familiarity with Git and command line. Cloud account (AWS/Azure) helpful.","educationalCredentialAwarded":"Data Science Academia certificate of completion","timeRequired":"PT40H","inLanguage":"en","provider":{"@id":"https://datascienceacademia.in/#organization"},"hasCourseInstance":[{"@type":"CourseInstance","courseMode":["online","onsite"],"courseWorkload":"PT40H","courseSchedule":{"@type":"Schedule","repeatFrequency":"Weekly","repeatCount":8,"duration":"PT5H"},"instructor":{"@type":"Person","name":"Ajay Mukund S"},"location":{"@type":"Place","name":"Data Science Academia, Rajakilpakkam","address":{"@type":"PostalAddress","streetAddress":"No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam","addressLocality":"Chennai","addressRegion":"Tamil Nadu","postalCode":"600073","addressCountry":"IN"}}}],"offers":{"@type":"Offer","category":"Paid","availability":"https://schema.org/InStock","priceCurrency":"INR","url":"https://datascienceacademia.in/contact.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I need prior experience to join the MLOps & Model Deployment course?","acceptedAnswer":{"@type":"Answer","text":"Machine Learning course. Basic familiarity with Git and command line. Cloud account (AWS/Azure) helpful. New to the subject? Start with Machine Learning first."}},{"@type":"Question","name":"How long is the MLOps & Model Deployment course?","acceptedAnswer":{"@type":"Answer","text":"8 weeks with 40 contact hours of live, instructor-led sessions — about 5 hours of class a week, plus practice on your own."}},{"@type":"Question","name":"Can I take MLOps & Model Deployment online, or only in Chennai?","acceptedAnswer":{"@type":"Answer","text":"Both. Classes run live in our Chennai classroom at Rajakilpakkam, near Tambaram, and online for learners anywhere in India. Every session is recorded so enrolled students can replay it."}},{"@type":"Question","name":"Will I receive a certificate?","acceptedAnswer":{"@type":"Answer","text":"Yes. Complete the course and its project work to receive a Data Science Academia certificate of completion that you can add to your CV and LinkedIn profile."}},{"@type":"Question","name":"Which tools will I use in the MLOps & Model Deployment course?","acceptedAnswer":{"@type":"Answer","text":"You work hands-on with Python, Docker, FastAPI, MLflow, DVC, GitHub Actions, Weights & Biases, Evidently AI and Prometheus. We help you set everything up in the first session."}},{"@type":"Question","name":"What can I do after completing MLOps & Model Deployment?","acceptedAnswer":{"@type":"Answer","text":"The skills from MLOps & Model Deployment are used in roles such as MLOps Engineer, Machine Learning Engineer and ML Platform / Data Engineer. Most roles also expect a portfolio of projects, which this course helps you start. To keep building, learners usually continue with Microsoft Azure or AWS for Data Science."}},{"@type":"Question","name":"What are the fees, and when does the next batch start?","acceptedAnswer":{"@type":"Answer","text":"Fees and batch dates depend on the delivery mode you choose. Enquire online, WhatsApp +91 91764 98814 or email info@datascienceacademia.in for current pricing and the next start date — we reply within one business day. You can also book a free, no-commitment trial session."}}]}</script>
 </head>
 <body class="page-course">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -756,6 +776,16 @@ a{color:#000}
           <p>Building a model is just 20% of the work. MLOps covers the other 80% — versioning data and experiments, containerising models, building CI/CD pipelines, serving predictions at scale and monitoring for drift in production. This is the course that makes you a complete ML engineer.</p>
           <p>The course runs for 8 weeks with 40 contact hours of live, instructor-led sessions — in our Chennai classroom at Rajakilpakkam, near Tambaram, or online across India. Every session is recorded for enrolled students, every module is taught by a practising AI engineer, and you receive a Data Science Academia certificate on completion.</p>
         </div>
+      </section>
+
+      <!-- Who it's for -->
+      <section class="block" id="for-you" aria-labelledby="for-you-title" data-r>
+        <h2 class="section-label" id="for-you-title">Is this course for you?</h2>
+        <ul class="fit-list">
+          <li>ML practitioners who want their models running reliably in production</li>
+          <li>Software and DevOps engineers moving into machine learning</li>
+          <li>Data scientists who want to own deployment, monitoring and retraining</li>
+        </ul>
       </section>
 
       <!-- Outcomes -->
@@ -943,6 +973,52 @@ a{color:#000}
           </div>
         </div>
       </section>
+
+      <!-- Where it leads -->
+      <section class="block" id="careers" aria-labelledby="careers-title" data-r>
+        <h2 class="section-label" id="careers-title">Where MLOps &amp; Model Deployment leads</h2>
+        <p class="roles-lead">Typical roles that use these skills:</p>
+        <ul class="tag-list">
+          <li class="tag">MLOps Engineer</li>
+          <li class="tag">Machine Learning Engineer</li>
+          <li class="tag">ML Platform / Data Engineer</li>
+        </ul>
+        <div class="path" aria-label="Learning path">
+          <div class="path-step">
+            <span class="path-k">Start with</span>
+            <ul><li><a href="../courses/machine-learning.html">Machine Learning</a><span class="path-meta">Intermediate &middot; 10 weeks</span></li></ul>
+          </div>
+          <span class="path-arr" aria-hidden="true">&rarr;</span>
+          <div class="path-step is-now">
+            <span class="path-k">This course</span>
+            <strong>MLOps &amp; Model Deployment</strong><span class="path-meta">Advanced &middot; 8 weeks &middot; 40 contact hours</span>
+          </div>
+          <span class="path-arr" aria-hidden="true">&rarr;</span>
+          <div class="path-step">
+            <span class="path-k">Next on your path</span>
+            <ul><li><a href="../courses/azure.html">Microsoft Azure</a><span class="path-meta">Intermediate &middot; 8 weeks</span></li><li><a href="../courses/aws.html">AWS for Data Science</a><span class="path-meta">Intermediate &middot; 8 weeks</span></li></ul>
+          </div>
+        </div>
+        <p class="path-note">Roles are a guide to where these skills are used, not a placement guarantee — most employers also look for a project portfolio. Want the whole journey in one plan? See the <a href="../programmes/ai-mastery.html">12-month AI Mastery Track</a>.</p>
+      </section>
+
+      <!-- FAQ -->
+      <section class="block" id="faq" aria-labelledby="faq-title" data-r>
+  <div class="block-head">
+    <h2 class="section-label" id="faq-title">Questions about MLOps &amp; Model Deployment</h2>
+    <span class="block-meta">7 answers</span>
+  </div>
+  <div class="faq-list">
+    <details class="faq" open><summary>Do I need prior experience to join the MLOps &amp; Model Deployment course?</summary><div class="faq-a">Machine Learning course. Basic familiarity with Git and command line. Cloud account (AWS/Azure) helpful. New to the subject? Start with <a href="../courses/machine-learning.html">Machine Learning</a> first.</div></details>
+    <details class="faq"><summary>How long is the MLOps &amp; Model Deployment course?</summary><div class="faq-a">8 weeks with 40 contact hours of live, instructor-led sessions — about 5 hours of class a week, plus practice on your own.</div></details>
+    <details class="faq"><summary>Can I take MLOps &amp; Model Deployment online, or only in Chennai?</summary><div class="faq-a">Both. Classes run live in our Chennai classroom at Rajakilpakkam, near Tambaram, and online for learners anywhere in India. Every session is recorded so enrolled students can replay it.</div></details>
+    <details class="faq"><summary>Will I receive a certificate?</summary><div class="faq-a">Yes. Complete the course and its project work to receive a Data Science Academia certificate of completion that you can add to your CV and LinkedIn profile.</div></details>
+    <details class="faq"><summary>Which tools will I use in the MLOps &amp; Model Deployment course?</summary><div class="faq-a">You work hands-on with Python, Docker, FastAPI, MLflow, DVC, GitHub Actions, Weights &amp; Biases, Evidently AI and Prometheus. We help you set everything up in the first session.</div></details>
+    <details class="faq"><summary>What can I do after completing MLOps &amp; Model Deployment?</summary><div class="faq-a">The skills from MLOps &amp; Model Deployment are used in roles such as MLOps Engineer, Machine Learning Engineer and ML Platform / Data Engineer. Most roles also expect a portfolio of projects, which this course helps you start. To keep building, learners usually continue with <a href="../courses/azure.html">Microsoft Azure</a> or <a href="../courses/aws.html">AWS for Data Science</a>.</div></details>
+    <details class="faq"><summary>What are the fees, and when does the next batch start?</summary><div class="faq-a">Fees and batch dates depend on the delivery mode you choose. <a href="../contact.html">Enquire online</a>, WhatsApp <a href="https://wa.me/919176498814" target="_blank" rel="noopener">+91 91764 98814</a> or email <a href="mailto:info@datascienceacademia.in">info@datascienceacademia.in</a> for current pricing and the next start date — we reply within one business day. You can also book a free, no-commitment trial session.</div></details>
+  </div>
+</section>
+
 
       <!-- Related -->
       <section class="block" id="related" aria-labelledby="related-title" data-r>

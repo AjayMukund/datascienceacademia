@@ -91,6 +91,8 @@
 </style>
 {% endblock %}
 
+{% set faqs = level_faqs(level, rel) %}
+{% from "partials/faq-block.html" import faq_block %}
 {% block jsonld %}
 {{ jsonld(breadcrumb_ld([('Home', ''), ('DSA Code Champs', 'codechamps.html'), (level.name, None)])) }}
 {{ jsonld({
@@ -122,6 +124,7 @@
   }],
   "offers": {"@type": "Offer", "availability": "https://schema.org/InStock", "priceCurrency": "INR", "url": absolute('contact.html') ~ "?course=DSA+Code+Champs+(School+Outreach)"}
 }) }}
+{{ jsonld(faq_ld(faqs)) }}
 {% endblock %}
 
 {% block content %}
@@ -334,6 +337,9 @@
         <p class="prev-hint">This is the first Code Champs level — no prior coding experience is needed. <a href="{{ rel }}codechamps.html">Compare all four levels</a> to see where the journey leads.</p>
         {% endif %}
       </section>
+
+      <!-- FAQ -->
+      {{ faq_block(faqs, 'Questions parents ask about ' ~ level.name) }}
     </article>
 
     <!-- Sidebar -->

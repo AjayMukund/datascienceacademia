@@ -128,6 +128,8 @@ def load_all(root: Path) -> dict:
     projects = load_var(root / "content" / "projects-data.js", "PROJECTS")
     project_cats = load_var(root / "content" / "projects-data.js", "CAT")
     testimonials = load_var(root / "content" / "testimonials-data.js", "TESTIMONIALS")
+    guides_file = root / "content" / "course-guides-data.js"
+    guides = load_var(guides_file, "DSA_COURSE_GUIDES") if guides_file.exists() else {}
     return {
         "courses": courses,
         "programmes": programmes,
@@ -137,6 +139,7 @@ def load_all(root: Path) -> dict:
         "projects": projects,
         "project_cats": project_cats,
         "testimonials": testimonials,
+        "course_guides": guides,
     }
 
 

@@ -406,6 +406,9 @@ body.nav-open{overflow:hidden}
 .faq[open] summary{border-bottom:1px solid var(--border)}
 .faq-a{padding:1rem 1.4rem 1.25rem;font-size:.9rem;color:var(--fog);line-height:1.8}
 .faq-a p+p{margin-top:.6rem}
+.faq-ul{margin:.5rem 0 0;padding-left:1.15rem;list-style:disc}
+.faq-ul li{margin:.2rem 0}
+.faq-ul li::marker{color:var(--teal)}
 .prose{font-size:1.02rem;line-height:1.9;color:var(--fog)}
 .prose>*+*{margin-top:1.2rem}
 .prose h2{font-size:1.8rem;margin-top:2.6rem;color:var(--cream)}
@@ -701,7 +704,7 @@ a{color:#000}
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":["EducationalOrganization","LocalBusiness"],"@id":"https://datascienceacademia.in/#organization","name":"Data Science Academia","alternateName":["DSA","DSA Chennai"],"url":"https://datascienceacademia.in/","logo":{"@type":"ImageObject","url":"https://datascienceacademia.in/assets/icons/favicon-192.png","width":192,"height":192},"image":"https://datascienceacademia.in/assets/og/default.jpg","description":"Data Science Academia is a Ph.D.-led AI & Data Science institute in Chennai offering 18 courses (Python, Machine Learning, Deep Learning, LLMs, Power BI, Azure, AWS), AICTE-aligned internships, Microsoft certification prep and a 12-month AI Mastery Track — live in Chennai and online.","slogan":"Where Academic Rigour Meets Real-World AI Engineering","foundingDate":"2019","telephone":"+919176498814","email":"info@datascienceacademia.in","priceRange":"₹₹","address":{"@type":"PostalAddress","streetAddress":"No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam","addressLocality":"Chennai","addressRegion":"Tamil Nadu","postalCode":"600073","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":12.918342794186495,"longitude":80.15253111461173},"hasMap":"https://www.google.com/maps/search/?api=1&query=12.918342794186495%2C80.15253111461173","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"19:00"}],"areaServed":[{"@type":"City","name":"Chennai"},{"@type":"State","name":"Tamil Nadu"},{"@type":"Country","name":"India"}],"sameAs":["https://www.linkedin.com/company/data-science-academia/","https://youtube.com/@datascienceacademia3805","https://www.instagram.com/data_science_academia","https://wa.me/919176498814"],"contactPoint":[{"@type":"ContactPoint","telephone":"+919176498814","contactType":"admissions","email":"info@datascienceacademia.in","availableLanguage":["English","Tamil"],"areaServed":"IN"}]},{"@type":"WebSite","@id":"https://datascienceacademia.in/#website","url":"https://datascienceacademia.in/","name":"Data Science Academia","publisher":{"@id":"https://datascienceacademia.in/#organization"},"inLanguage":"en-IN"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://datascienceacademia.in/"},{"@type":"ListItem","position":2,"name":"Programmes","item":"https://datascienceacademia.in/programmes.html"},{"@type":"ListItem","position":3,"name":"Internships"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalOccupationalProgram","@id":"https://datascienceacademia.in/programmes/internship.html#programme","name":"Internships","description":"A structured internship programme designed in alignment with the National Education Policy 2020 and AICTE internship guidelines. Interns work on real, impactful data science and AI projects under the mentorship of PhD-qualified faculty — gaining hands-on experience that goes far beyond classroom learning. Each intern receives a formal offer letter, project completion certificate, and domain-specific project portfolio.","url":"https://datascienceacademia.in/programmes/internship.html","image":"https://datascienceacademia.in/assets/img/internship-programme-1600.webp","inLanguage":"en","provider":{"@id":"https://datascienceacademia.in/#organization"},"audience":{"@type":"Audience","audienceType":["Undergraduate & Postgraduate Students","Fresh Graduates","Research Scholars"]},"educationalCredentialAwarded":"DSA Internship Certificate + Offer Letter","offers":{"@type":"Offer","availability":"https://schema.org/InStock","priceCurrency":"INR","url":"https://datascienceacademia.in/contact.html"},"programPrerequisites":"Basic programming knowledge (Python preferred). Students from any engineering or science discipline are eligible. No prior AI/ML experience required for the beginner track.","educationalProgramMode":["Online — Live & Recorded","Hybrid — Online + Offline Workshops"],"occupationalCategory":"Data Science and Artificial Intelligence","timeToComplete":"P2M"}</script>
-</head>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Who is this programme for?","acceptedAnswer":{"@type":"Answer","text":"It is designed for: Undergraduate & Postgraduate Students; Fresh Graduates; Research Scholars."}},{"@type":"Question","name":"How long does it take, and how is it delivered?","acceptedAnswer":{"@type":"Answer","text":"Duration: 1–2 Months. Delivery options: Online — Live & Recorded; Hybrid — Online + Offline Workshops."}},{"@type":"Question","name":"What are the eligibility requirements?","acceptedAnswer":{"@type":"Answer","text":"Basic programming knowledge (Python preferred). Students from any engineering or science discipline are eligible. No prior AI/ML experience required for the beginner track."}},{"@type":"Question","name":"What do I receive on completion?","acceptedAnswer":{"@type":"Answer","text":"DSA Internship Certificate + Offer Letter."}},{"@type":"Question","name":"What are the fees, and how do I apply?","acceptedAnswer":{"@type":"Answer","text":"Fees depend on the format and duration you choose. Use the Apply for Internship form, WhatsApp +91 91764 98814 or email info@datascienceacademia.in — we reply within one business day."}}]}</script></head>
 <body class="page-programme">
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="cur" id="cur" aria-hidden="true"></div>
@@ -918,6 +921,22 @@ a{color:#000}
           </div>
         </div>
       </section>
+
+      <!-- FAQ -->
+      <section class="block" id="faq" aria-labelledby="faq-title" data-r>
+  <div class="block-head">
+    <h2 class="section-label" id="faq-title">Questions about this programme</h2>
+    <span class="block-meta">5 answers</span>
+  </div>
+  <div class="faq-list">
+    <details class="faq" open><summary>Who is this programme for?</summary><div class="faq-a">It is designed for:<ul class="faq-ul"><li>Undergraduate &amp; Postgraduate Students</li><li>Fresh Graduates</li><li>Research Scholars</li></ul></div></details>
+    <details class="faq"><summary>How long does it take, and how is it delivered?</summary><div class="faq-a">Duration: 1–2 Months. Delivery options: Online — Live &amp; Recorded; Hybrid — Online + Offline Workshops.</div></details>
+    <details class="faq"><summary>What are the eligibility requirements?</summary><div class="faq-a">Basic programming knowledge (Python preferred). Students from any engineering or science discipline are eligible. No prior AI/ML experience required for the beginner track.</div></details>
+    <details class="faq"><summary>What do I receive on completion?</summary><div class="faq-a">DSA Internship Certificate + Offer Letter.</div></details>
+    <details class="faq"><summary>What are the fees, and how do I apply?</summary><div class="faq-a">Fees depend on the format and duration you choose. Use the <a href="../contact.html?course=Student%20Internship%20Programme">Apply for Internship</a> form, WhatsApp <a href="https://wa.me/919176498814" target="_blank" rel="noopener">+91 91764 98814</a> or email <a href="mailto:info@datascienceacademia.in">info@datascienceacademia.in</a> — we reply within one business day.</div></details>
+  </div>
+</section>
+
 
       <!-- Other programmes -->
       <section class="block" id="others" aria-labelledby="others-title" data-r>

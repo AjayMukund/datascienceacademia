@@ -1,0 +1,15 @@
+{# FAQ block for detail pages. Usage: {% from "partials/faq-block.html" import faq_block %}{{ faq_block(faqs, 'Questions about X') }}
+   `faqs` comes from tools/faqs.py (answers are trusted HTML assembled from the data files). #}
+{% macro faq_block(faqs, title='Frequently asked questions') %}
+<section class="block" id="faq" aria-labelledby="faq-title" data-r>
+  <div class="block-head">
+    <h2 class="section-label" id="faq-title">{{ title }}</h2>
+    <span class="block-meta">{{ faqs|length }} answers</span>
+  </div>
+  <div class="faq-list">
+    {% for f in faqs %}
+    <details class="faq"{% if loop.first %} open{% endif %}><summary>{{ f.q|safe }}</summary><div class="faq-a">{{ f.a|safe }}</div></details>
+    {% endfor %}
+  </div>
+</section>
+{% endmacro %}

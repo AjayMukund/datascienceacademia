@@ -29,6 +29,7 @@ from markupsafe import Markup
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from jsdata import load_all  # noqa: E402
+import faqs  # noqa: E402
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -342,6 +343,7 @@ for cid, c in COURSES.items():
     c["url"] = f"courses/{cid}.html"
     c["badge"] = LEVEL_BADGE.get(c["level"], "badge")
     c["cat_slug"] = CATEGORY_SLUG.get(c["category"], slugify(c["category"]))
+    c["guide"] = DATA["course_guides"].get(cid, {})
 for pid, p in PROGRAMMES.items():
     p["url"] = f"programmes/{pid}.html"
 for post in DRAFTS:
@@ -357,6 +359,13 @@ for i, pr in enumerate(PROJECTS):
     pr["cat_label"] = DATA["project_cats"][pr["cat"]]["label"]
 for t in TESTIMONIALS:
     t["img"] = BY_SRC.get(t["file"])
+
+for c in COURSES.values():                      # learning path: course dicts for guide.before / guide.next
+    c["path_before"] = [COURSES[x] for x in c["guide"].get("before", []) if x in COURSES]
+    c["path_next"] = [COURSES[x] for x in c["guide"].get("next", []) if x in COURSES]
+faqs.setup(COURSES, LEVELS, SITE)
+env.globals.update(course_faqs=faqs.course_faqs, programme_faqs=faqs.programme_faqs, level_faqs=faqs.level_faqs,
+                   faq_ld=faqs.faq_ld)
 
 CATEGORIES = []
 for cat in ["Foundation", "Core ML", "Advanced AI", "Analytics", "Cloud & BI"]:

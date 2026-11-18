@@ -22,6 +22,9 @@
 {% set steps = programme.get('steps') %}
 {% set cta = programme.get('cta', 'Apply / enquire') %}
 {% set cta_param = programme.get('ctaParam', programme.title) %}
+{# Code Champs keeps its parent/school FAQ on codechamps.html and per-level FAQs on each level page #}
+{% set faqs = [] if is_cc else programme_faqs(programme, rel) %}
+{% from "partials/faq-block.html" import faq_block %}
 
 {# Short delivery modes for badges / JSON-LD — classified per delivery item #}
 {% set dm = namespace(online=false, offline=false, hybrid=false, chennai=false) %}
@@ -206,6 +209,7 @@
 {% if iso %}{% set _ = ld.update({"timeRequired": iso}) %}{% endif %}
 {% endif %}
 {{ jsonld(ld) }}
+{% if faqs %}{{ jsonld(faq_ld(faqs)) }}{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -429,6 +433,11 @@
           </div>
         </div>
       </section>
+
+      {% if faqs %}
+      <!-- FAQ -->
+      {{ faq_block(faqs, 'Questions about this programme') }}
+      {% endif %}
 
       <!-- Other programmes -->
       <section class="block" id="others" aria-labelledby="others-title" data-r>
