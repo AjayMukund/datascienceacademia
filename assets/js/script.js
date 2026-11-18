@@ -142,30 +142,30 @@
   } else if (canvas) { canvas.style.display = 'none'; }
 
   /* ── 3b. Light / dark theme toggle ────────────────────────────────────────
-     The head script applies a saved "light" choice before first paint (no flash);
-     dark is the default. The choice is stored in localStorage and synced across tabs. */
+     The head script applies a saved "dark" (navy) choice before first paint (no flash);
+     light (ivory) is the default. The choice is stored in localStorage and synced across tabs. */
   var themeBtn = d.querySelector('.theme-tog');
   if (themeBtn) {
     var themeMeta = d.querySelector('meta[name="theme-color"]');
     var syncThemeUI = function () {
-      var light = root.getAttribute('data-theme') === 'light';
+      var light = root.getAttribute('data-theme') !== 'dark';
       var label = light ? 'Switch to dark theme' : 'Switch to light theme';
       themeBtn.setAttribute('aria-label', label); themeBtn.title = label;
-      if (themeMeta) themeMeta.setAttribute('content', light ? '#f8f5ef' : '#0b0c0e');
+      if (themeMeta) themeMeta.setAttribute('content', light ? '#F6F3EC' : '#0B1B2C');
     };
     var applyTheme = function (theme, save) {
       if (!reduceMotion) {
         root.classList.add('theme-anim');
         clearTimeout(applyTheme.t); applyTheme.t = setTimeout(function () { root.classList.remove('theme-anim'); }, 400);
       }
-      if (theme === 'light') root.setAttribute('data-theme', 'light'); else root.removeAttribute('data-theme');
+      if (theme === 'dark') root.setAttribute('data-theme', 'dark'); else root.removeAttribute('data-theme');
       if (save) { try { localStorage.setItem('dsa-theme', theme); } catch (e) {} }
       syncThemeUI();
     };
     themeBtn.addEventListener('click', function () {
-      applyTheme(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light', true);
+      applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);
     });
-    w.addEventListener('storage', function (e) { if (e.key === 'dsa-theme') applyTheme(e.newValue === 'light' ? 'light' : 'dark', false); });
+    w.addEventListener('storage', function (e) { if (e.key === 'dsa-theme') applyTheme(e.newValue === 'dark' ? 'dark' : 'light', false); });
     syncThemeUI();
   }
 
