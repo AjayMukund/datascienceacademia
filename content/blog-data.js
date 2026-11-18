@@ -15,10 +15,9 @@ const CAT_STYLE = {
 };
 
 const POSTS = [
-  /* ── DRAFT: Microsoft fundamentals exams (awaiting owner approval) ── */
+  /* ── Microsoft fundamentals exams (Nov 2026) ── */
   {
     slug: 'ai-901-vs-dp-900-vs-az-900',
-    draft: true,
     courses: ['azure', 'p:microsoft-certification', 'power-bi'],   // shown as 'Put it into practice'; course pages list this post back
     cover: 'cloud-and-bi-category-banner',
     title: 'AI-901, DP-900 or AZ-900: Which Microsoft Fundamentals Exam Should You Take First?',
@@ -83,10 +82,9 @@ const POSTS = [
     `
   },
 
-  /* ── DRAFT: Data analyst vs data scientist (awaiting owner approval) ── */
+  /* ── Data analyst vs data scientist (Nov 2026) ── */
   {
     slug: 'data-analyst-vs-data-scientist-india',
-    draft: true,
     courses: ['sql', 'power-bi', 'python', 'machine-learning'],   // shown as 'Put it into practice'; course pages list this post back
     cover: 'analytics-category-banner',
     title: 'Data Analyst vs Data Scientist: Which Role Fits You in India?',
@@ -659,7 +657,7 @@ result = qa_chain.run("What is our refund policy?")</code></pre>
 <h2>On Certifications: Be Honest With Yourself</h2>
 <p>A certificate from Coursera, Udemy, or even Google is a signal that you completed a structured programme — not a credential in the way a degree is. It helps when your resume needs something to anchor a conversation, but it will not substitute for demonstrated skill.</p>
 <blockquote>Certifications open doors. Projects determine what happens inside the room.</blockquote>
-<p>The certifications worth your time are those that require passing a technically substantive exam: Google Professional Data Engineer, AWS Certified ML Specialty, and the TensorFlow Developer Certificate. Certificates that require only completing videos do not distinguish you.</p>
+<p>The certifications worth your time are those that require passing a technically substantive, proctored exam — for example a cloud provider's associate- or professional-level certification in data or machine learning. Check that an exam is still offered before you start preparing: vendors retire and replace exams regularly, and several were replaced in 2026. Certificates that require only completing videos do not distinguish you.</p>
 
 <h2>Building Your Portfolio</h2>
 <p>The single most impactful thing a fresher can do is build 2–3 strong, end-to-end projects and document them properly on GitHub. Not 15 Kaggle notebooks — two real projects with problem framing, methodology, results, and limitations clearly written up.</p>
