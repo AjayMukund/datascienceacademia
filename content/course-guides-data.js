@@ -187,13 +187,13 @@ const DSA_COURSE_GUIDES = {
     forWho: [
       'Data and ML practitioners moving their work to the cloud',
       'IT professionals adding Azure data and AI services to their skills',
-      'Learners preparing for Microsoft AZ-900, AI-900 or DP-900'
+      'Learners preparing for Microsoft AZ-900, AI-901 or DP-900'
     ],
     roles: ['Azure Data Engineer (junior)', 'Cloud / AI Engineer', 'Data Engineer'],
     before: ['python', 'sql'],
     next: ['mlops'],
     faqs: [
-      { q: 'Does this course prepare me for Microsoft Azure certifications?', a: 'It builds the hands-on Azure skills behind AZ-900, AI-900 and DP-900. For focused exam preparation see our <a href="{rel}programmes/microsoft-certification.html">Microsoft Certification Program</a>.' }
+      { q: 'Does this course prepare me for Microsoft Azure certifications?', a: 'It builds the hands-on Azure skills behind AZ-900, AI-901 and DP-900. For focused exam preparation see our <a href="{rel}programmes/microsoft-certification.html">Microsoft Certification Program</a>.' }
     ]
   },
   'aws': {

@@ -120,10 +120,10 @@ const DSA_PROGRAMMES = {
     audience: ['Students (IT / CS / Data Science)', 'Working Professionals', 'Career Changers', 'IT Administrators'],
     delivery: ['Online — Live + Recorded', 'Offline Bootcamps (Chennai)'],
     duration: '4–8 Weeks per Certification',
-    certificate: 'Microsoft Certification (AI-900 / DP-900) + DSA Completion Certificate',
+    certificate: 'Microsoft Certification (AI-901 / DP-900) + DSA Completion Certificate',
     overview: 'A focused preparation programme for Microsoft Azure and Power BI certifications, designed to bridge the gap between theoretical learning and industry-recognised credentials. This programme combines exam-specific preparation with practical, hands-on labs — ensuring you understand both the concepts and the cloud platform deeply enough to excel in the certification exam and on the job.',
     outcomes: [
-      'Clear Microsoft Azure AI Fundamentals (AI-900) with confidence',
+      'Clear Microsoft Azure AI Fundamentals (AI-901) with confidence',
       'Clear Microsoft Azure Data Fundamentals (DP-900)',
       'Build proficiency in Power BI for certification and real-world use',
       'Gain practical Azure cloud experience through guided labs',
@@ -134,7 +134,7 @@ const DSA_PROGRAMMES = {
       {
         title: 'Certifications Covered',
         points: [
-          'AI-900 — Microsoft Azure AI Fundamentals',
+          'AI-901 — Microsoft Azure AI Fundamentals',
           'DP-900 — Microsoft Azure Data Fundamentals',
           'Power BI Data Analyst Associate (PL-300) Prep',
           'Azure Fundamentals (AZ-900) — optional add-on module',
@@ -153,14 +153,14 @@ const DSA_PROGRAMMES = {
         ]
       },
       {
-        title: 'Topics Covered — AI-900',
+        title: 'Topics Covered — AI-901 (replaced AI-900 in 2026)',
         points: [
-          'AI workloads and considerations on Azure',
-          'Machine Learning fundamentals on Azure ML Studio',
-          'Computer Vision services — Azure Vision, Face, Form Recognizer',
-          'Natural Language Processing — Azure Language, Speech Services',
-          'Conversational AI — Azure Bot Service and QnA Maker',
-          'Responsible AI principles and Microsoft AI guidelines'
+          'AI concepts — generative and agentic AI, text analysis, speech, computer vision and information extraction',
+          'Responsible AI — fairness, reliability, privacy, inclusiveness, transparency and accountability',
+          'Choosing, deploying and configuring models in Microsoft Foundry',
+          'Building generative-AI chat apps and a single-agent solution with the Foundry SDK',
+          'Text, speech and vision apps — Azure Speech and multimodal models in Foundry',
+          'Information extraction from documents, images, audio and video with Content Understanding'
         ]
       },
       {
@@ -185,7 +185,7 @@ const DSA_PROGRAMMES = {
       sectionTitle: 'Certifications Covered',
       glowColor: 'rgba(122,159,255,.18)',
       items: [
-        {icon:'🤖', name:'AI-900 — AI Fundamentals', desc:'Azure AI services, ML Studio, Vision, NLP, and Responsible AI principles'},
+        {icon:'🤖', name:'AI-901 — AI Fundamentals', desc:'Responsible AI, generative AI and agents, speech, vision and document extraction — built hands-on in Microsoft Foundry'},
         {icon:'🗄️', name:'DP-900 — Data Fundamentals', desc:'Relational & non-relational data, Azure Synapse, Power BI basics'},
         {icon:'📈', name:'PL-300 — Power BI Analyst', desc:'DAX, data modelling, enterprise dashboards and report publishing'},
         {icon:'☁️', name:'AZ-900 — Azure Fundamentals', desc:'Cloud concepts, core Azure services, pricing and SLAs (add-on)'}
@@ -201,7 +201,7 @@ const DSA_PROGRAMMES = {
         {icon:'🏅', title:'Certification Day', desc:'Exam strategy session, then you sit the official Microsoft exam'}
       ]
     },
-    prereqs: 'No cloud experience required for AI-900 and DP-900. Basic computer literacy and familiarity with data concepts is helpful. A Microsoft account is required for Azure free tier labs.',
+    prereqs: 'No cloud experience required for DP-900 and AZ-900. AI-901 also expects basic Python syntax — we cover what you need in the labs. Familiarity with data concepts is helpful. A Microsoft account is required for Azure free tier labs.',
     cta: 'Register for Certification Prep',
     ctaParam: 'Microsoft Certification Program'
   },
@@ -772,7 +772,7 @@ const DSA_PROGRAMMES = {
           'Placement assistance: resume writing, LinkedIn optimisation, and referral network',
           'Mock interview sessions (technical + HR) in the final quarter with feedback',
           'Alumni network access — job alerts, peer mentoring, and industry events',
-          'Guidance for Microsoft Azure (AI-900 / DP-900) certification as an add-on'
+          'Guidance for Microsoft Azure (AI-901 / DP-900) certification as an add-on'
         ]
       },
       {

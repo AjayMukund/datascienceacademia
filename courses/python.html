@@ -687,6 +687,13 @@ a{color:#000}
 .path-step .path-meta{display:block;font-size:.74rem;color:var(--fog2);font-weight:400;margin-top:.1rem}
 .path-arr{align-self:center;color:var(--gold-brand,var(--champ));font-size:1.2rem}
 @media (max-width:760px){.path{grid-template-columns:1fr}.path-arr{transform:rotate(90deg);justify-self:center;line-height:1}}
+.read-list{display:grid;gap:.7rem}
+.read-list a{display:block;padding:1rem 1.2rem;border:1px solid var(--border);border-radius:var(--r);background:var(--card);transition:border-color .25s}
+.read-list a:hover{border-color:var(--border2)}
+.read-cat{display:block;font-family:var(--fm);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fog2);margin-bottom:.35rem}
+.read-t{display:block;font-weight:600;font-size:1rem;line-height:1.35;color:var(--cream)}
+.read-x{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:.86rem;color:var(--fog);margin-top:.3rem;line-height:1.55}
+.read-list a:hover .read-t{color:var(--champ2)}
 .related-grid .card-title{font-size:1.1rem}
 .related-grid .card-foot{font-size:.72rem}
 @media (max-width:960px){.detail-side .sticky{max-height:none;overflow:visible}}
@@ -1070,6 +1077,19 @@ a{color:#000}
           </div>
         </div>
         <p class="path-note">Roles are a guide to where these skills are used, not a placement guarantee — most employers also look for a project portfolio. Want the whole journey in one plan? See the <a href="../programmes/ai-mastery.html">12-month AI Mastery Track</a>.</p>
+      </section>
+
+      <!-- From the blog -->
+      <section class="block" id="reading" aria-labelledby="reading-title" data-r>
+        <div class="block-head">
+          <h2 class="section-label" id="reading-title">Read before you start</h2>
+          <a class="link-arrow" href="../blog.html">All articles <span class="arr">&rarr;</span></a>
+        </div>
+        <ul class="read-list">
+          <li><a href="../blog/data-science-career-india-2026.html"><span class="read-cat">Career &middot; 9 min read</span><span class="read-t">Building a Data Science Career in India: The 2026 Roadmap</span><span class="read-x">What actually gets you hired in Indian data teams in 2026 — the roles, the skills, how generative AI changed the bar, real salary data, and a 6-month plan you can start this week.</span></a></li>
+          <li><a href="../blog/python-vs-r-for-data-science.html"><span class="read-cat">Tutorial &middot; 7 min read</span><span class="read-t">Python or R: Which Should You Learn First for Data Science?</span><span class="read-x">Both languages are excellent — but they are built for different people and different jobs. A side-by-side comparison with real code, and a clear answer for students, researchers and working professionals.</span></a></li>
+          <li><a href="../blog/python-data-science-roadmap.html"><span class="read-cat">Tutorial &middot; 7 min read</span><span class="read-t">Python for Data Science: The Beginner&#39;s Roadmap</span><span class="read-x">Python is the lingua franca of data science. This guide walks through the essential libraries, a practical learning sequence, and the project-first mindset that separates people who learn data science from those who do it.</span></a></li>
+        </ul>
       </section>
 
       <!-- FAQ -->

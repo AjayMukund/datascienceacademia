@@ -317,7 +317,7 @@ P1. The Complete AI & Data Science Mastery Track (FLAGSHIP)
     - Placement assistance — resume writing, LinkedIn optimisation
     - Mock interview sessions (technical + HR)
     - Alumni network access — job alerts, peer mentoring
-    - Guidance for Microsoft Azure AI-900 / DP-900 as add-on
+    - Guidance for Microsoft Azure AI-901 / DP-900 as add-on
     - 3 live sessions per week (recorded for replay)
     - Dedicated mentor — weekly 1-on-1 check-ins
     - Quarterly offline bootcamps in Chennai
@@ -342,10 +342,10 @@ P3. Microsoft Certification Program
   Duration  : 4–8 Weeks per certification
   Audience  : Students (IT/CS/Data Science), working professionals, career changers
   Delivery  : Online Live + Recorded; Offline Bootcamps in Chennai
-  Certificate: Microsoft Certification (AI-900 / DP-900) + DSA Completion Certificate
+  Certificate: Microsoft Certification (AI-901 / DP-900) + DSA Completion Certificate
   Overview  : Focused preparation for Microsoft Azure and Power BI certifications.
   Certifications Covered:
-    - AI-900 — Microsoft Azure AI Fundamentals
+    - AI-901 — Microsoft Azure AI Fundamentals
     - DP-900 — Microsoft Azure Data Fundamentals
     - PL-300 — Power BI Data Analyst Associate (prep)
     - AZ-900 — Azure Fundamentals (optional add-on)
@@ -523,7 +523,7 @@ A: Yes. We offer fully customisable corporate training (MDP) in Power BI,
    Generative AI, Python, Azure, AWS, and more. Contact us for a needs-assessment.
 
 Q: What certifications can I prepare for with DSA?
-A: Microsoft Azure AI Fundamentals (AI-900), Azure Data Fundamentals (DP-900),
+A: Microsoft Azure AI Fundamentals (AI-901), Azure Data Fundamentals (DP-900),
    Azure Fundamentals (AZ-900), Power BI (PL-300), UGC NET, GATE CS/IT,
    TNSET, PG-TRB.
 

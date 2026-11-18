@@ -15,9 +15,153 @@ const CAT_STYLE = {
 };
 
 const POSTS = [
+  /* ── DRAFT: Microsoft fundamentals exams (awaiting owner approval) ── */
+  {
+    slug: 'ai-901-vs-dp-900-vs-az-900',
+    draft: true,
+    courses: ['azure', 'p:microsoft-certification', 'power-bi'],   // shown as 'Put it into practice'; course pages list this post back
+    cover: 'cloud-and-bi-category-banner',
+    title: 'AI-901, DP-900 or AZ-900: Which Microsoft Fundamentals Exam Should You Take First?',
+    seoTitle: 'AI-901 vs DP-900 vs AZ-900: Which First?',
+    category: 'career',
+    catLabel: 'Career',
+    date: '2026-11-18',
+    dateDisplay: 'November 18, 2026',
+    readTime: '7 min read',
+    excerpt: 'AI-900 is gone — AI-901 replaced it in 2026 and it is far more hands-on. Here is what each Microsoft fundamentals exam covers, who it suits, and which one to take first for your goal.',
+    body: `
+<p>Microsoft's <strong>fundamentals</strong> certifications are the most common first credential for students and career changers in India. Three matter for data and AI careers: <strong>AZ-900</strong> (Azure Fundamentals), <strong>DP-900</strong> (Azure Data Fundamentals) and <strong>AI-901</strong> (Azure AI Fundamentals). This guide explains what changed in 2026, what each exam actually tests, and which one to take first.</p>
+
+<h2>What changed in 2026: AI-900 is now AI-901</h2>
+<p>The long-running AI-900 exam was <strong>retired on 30 June 2026</strong> and replaced by <strong>AI-901</strong> (<a href="https://learn.microsoft.com/en-us/credentials/certifications/exams/ai-900/" target="_blank" rel="noopener">Microsoft Learn</a>). The certification keeps its name — Microsoft Certified: Azure AI Fundamentals — but the exam is very different:</p>
+<ul>
+<li><strong>It is hands-on.</strong> 55–60% of AI-901 is about <em>implementing</em> AI solutions in Microsoft Foundry: deploying a model, writing prompts, building a small chat client and a single-agent solution.</li>
+<li><strong>It expects some Python.</strong> Microsoft's study guide says candidates need knowledge of "Python coding syntax and programming techniques" and familiarity with Azure resources.</li>
+<li><strong>It reflects today's AI.</strong> Generative and agentic AI, multimodal models and extracting information from documents, images, audio and video now sit alongside the classic topics of text analysis, speech and computer vision.</li>
+</ul>
+<p>If you already passed AI-900, your Azure AI Fundamentals certification still stands. If you were preparing for AI-900 from older material, switch to the AI-901 study guide now.</p>
+
+<h2>The three exams at a glance</h2>
+<h3>AZ-900 — Azure Fundamentals</h3>
+<ul>
+<li><strong>Tests:</strong> cloud concepts; Azure architecture and services; Azure management and governance.</li>
+<li><strong>Suits:</strong> anyone heading into cloud, IT support, DevOps or infrastructure — and non-technical staff who work with cloud teams.</li>
+</ul>
+<h3>DP-900 — Azure Data Fundamentals</h3>
+<ul>
+<li><strong>Tests:</strong> core data concepts; relational data on Azure; non-relational data on Azure; analytics workloads on Azure.</li>
+<li><strong>Suits:</strong> aspiring data analysts, data engineers and BI developers. It is a natural warm-up for the Power BI Data Analyst exam, PL-300.</li>
+</ul>
+<h3>AI-901 — Azure AI Fundamentals</h3>
+<ul>
+<li><strong>Tests:</strong> AI concepts and capabilities, including responsible AI (40–45%); implementing AI solutions with Microsoft Foundry (55–60%).</li>
+<li><strong>Suits:</strong> students and developers aiming for AI, machine-learning or generative-AI roles who can already write basic Python.</li>
+</ul>
+<p>All three need a score of 700 to pass. The fee depends on the country where you take the exam, so check the current price on each exam's Microsoft Learn page when you schedule.</p>
+
+<h2>Which one first? Pick by goal</h2>
+<ul>
+<li><strong>You want to be a data analyst:</strong> DP-900 first, then PL-300 once you are comfortable with Power BI.</li>
+<li><strong>You want to work in AI or machine learning:</strong> learn Python basics, then take AI-901. Add DP-900 later — every AI project starts with data.</li>
+<li><strong>You are heading into cloud or IT:</strong> AZ-900 first; it gives you the vocabulary every Azure role assumes.</li>
+<li><strong>You are a student and not sure yet:</strong> DP-900. Data concepts are useful in every one of these paths, and the exam needs no programming.</li>
+</ul>
+
+<h2>An honest word on value</h2>
+<p>A fundamentals certificate shows an employer that you have learned the vocabulary and passed an independent test — useful, especially for freshers. On its own, it rarely gets anyone hired. What does is the certificate <em>plus</em> evidence: a Power BI dashboard on real data, a small Foundry chat app on GitHub, a SQL project you can explain in an interview. Plan the project alongside the exam, not after it.</p>
+<blockquote>Treat the exam as the syllabus, and your project as the proof.</blockquote>
+
+<h2>Free resources to start with</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-901" target="_blank" rel="noopener">AI-901 study guide</a> — the official list of skills measured.</li>
+<li>The <a href="https://learn.microsoft.com/en-us/credentials/certifications/azure-data-fundamentals/" target="_blank" rel="noopener">Azure Data Fundamentals (DP-900)</a> and <a href="https://learn.microsoft.com/en-us/credentials/certifications/azure-fundamentals/" target="_blank" rel="noopener">Azure Fundamentals (AZ-900)</a> certification pages, each with free Microsoft Learn training.</li>
+<li>Microsoft's free practice assessments — take one before you book, and again a week before the exam.</li>
+</ul>
+
+<h2>Prepare with us</h2>
+<p>Our <a href="../programmes/microsoft-certification.html">Microsoft Certification Program</a> prepares you for AI-901, DP-900, AZ-900 and PL-300 with live Azure labs, timed mock exams and exam strategy. If you want the skills behind the exams, the <a href="../courses/azure.html">Microsoft Azure</a> and <a href="../courses/power-bi.html">Power BI</a> courses go deeper — in our Chennai classroom near Tambaram or live online.</p>
+    `
+  },
+
+  /* ── DRAFT: Data analyst vs data scientist (awaiting owner approval) ── */
+  {
+    slug: 'data-analyst-vs-data-scientist-india',
+    draft: true,
+    courses: ['sql', 'power-bi', 'python', 'machine-learning'],   // shown as 'Put it into practice'; course pages list this post back
+    cover: 'analytics-category-banner',
+    title: 'Data Analyst vs Data Scientist: Which Role Fits You in India?',
+    seoTitle: 'Data Analyst vs Data Scientist in India',
+    category: 'career',
+    catLabel: 'Career',
+    date: '2026-11-18',
+    dateDisplay: 'November 18, 2026',
+    readTime: '8 min read',
+    excerpt: 'The two job titles are often confused — and the paths into them are very different. What each role does day to day, the skills it needs, how freshers get in, and a simple way to decide.',
+    body: `
+<p>"Data analyst" and "data scientist" appear side by side on every job portal, and many learners treat them as two names for the same job. They are not. They answer different questions, use different tools and — most importantly for a fresher — have very different entry routes. Here is how to tell them apart and choose.</p>
+
+<h2>The one-line difference</h2>
+<ul>
+<li>A <strong>data analyst</strong> explains <em>what happened and why</em>: which region's sales dropped, which campaign worked, where a process is slow.</li>
+<li>A <strong>data scientist</strong> builds models that <em>predict or decide</em>: which customer is likely to leave, what price to set, which transaction looks fraudulent.</li>
+</ul>
+
+<h2>A day in each role</h2>
+<h3>Data analyst</h3>
+<ul>
+<li>Pulls data from databases with SQL and cleans it in Excel or Power Query.</li>
+<li>Builds and maintains dashboards in Power BI or Tableau.</li>
+<li>Answers questions from managers — often the same day — and presents findings clearly.</li>
+</ul>
+<h3>Data scientist</h3>
+<ul>
+<li>Frames a business problem as a prediction or optimisation task.</li>
+<li>Explores data and engineers features in Python, then trains and evaluates models.</li>
+<li>Works with engineers to deploy the model and check that it keeps working.</li>
+</ul>
+
+<h2>Skills compared</h2>
+<ul>
+<li><strong>Both need:</strong> SQL, statistics, data cleaning, and the ability to explain numbers to non-technical people.</li>
+<li><strong>Analyst focus:</strong> Excel, a BI tool (Power BI or Tableau), business understanding, dashboard design.</li>
+<li><strong>Scientist focus:</strong> Python, machine learning, experiment design, and increasingly the basics of deployment (MLOps) and working with large language models.</li>
+</ul>
+
+<h2>How freshers actually get in</h2>
+<p>Analyst roles are generally the more accessible first job: there are more openings, the tool set is smaller, and a strong portfolio of two or three dashboards can carry an interview. Entry-level data scientist roles exist, but they are fewer and more competitive, and employers usually expect solid Python, statistics and at least one end-to-end machine-learning project.</p>
+<p>That is why many data scientists <strong>start as analysts</strong>. The SQL, business sense and communication skills you build as an analyst are exactly what separate a good data scientist from someone who can only train models.</p>
+<p>On pay: data scientist roles typically pay more, reflecting the deeper skill set. Ranges vary widely by city, company and experience, so compare current listings for the roles you are targeting rather than trusting a single number.</p>
+
+<h2>How generative AI is changing both</h2>
+<p>AI assistants now write first drafts of SQL queries, formulas and chart code. For analysts, that raises the bar on judgement: knowing whether an answer is right and what it means for the business. For data scientists, it adds a new kind of work — building applications on top of large language models, evaluating them and keeping them reliable. In both roles, fundamentals matter more, not less.</p>
+
+<h2>A simple way to decide</h2>
+<ul>
+<li>Do you enjoy <strong>finding the story</strong> in numbers and explaining it to people? Start on the <strong>analyst</strong> path.</li>
+<li>Do you enjoy <strong>maths, programming and building systems</strong> that make predictions? Aim for <strong>data science</strong> — and expect a longer runway.</li>
+<li>Not sure? Start with what both share: <strong>SQL and statistics</strong>. You lose nothing, whichever way you go next.</li>
+</ul>
+<blockquote>Choose the path whose everyday work you would enjoy — not the one with the more impressive title.</blockquote>
+
+<h2>A starter plan for each path</h2>
+<h3>Analyst path</h3>
+<ul>
+<li><a href="../courses/excel.html">Excel for Data Analysis</a> and <a href="../courses/sql.html">SQL for Data Science</a>.</li>
+<li><a href="../courses/power-bi.html">Power BI</a> or <a href="../courses/tableau.html">Tableau</a> — publish two dashboards on real public data.</li>
+</ul>
+<h3>Data science path</h3>
+<ul>
+<li><a href="../courses/python.html">Python Programming</a> and <a href="../courses/sql.html">SQL for Data Science</a>.</li>
+<li><a href="../courses/machine-learning.html">Machine Learning</a> — finish one end-to-end project you can explain in detail.</li>
+</ul>
+<p>Want a guided route from zero to job-ready? Our <a href="../programmes/ai-mastery.html">12-month AI Mastery Track</a> covers both paths in one structured plan, and our <a href="../programmes/internship.html">internships</a> give you real project experience. Book a free trial session and we will help you choose.</p>
+    `
+  },
+
   /* ── Career roadmap 2026 (supersedes the 2025 guide below) ── */
   {
     slug: 'data-science-career-india-2026',
+    courses: ['p:ai-mastery', 'python', 'sql', 'machine-learning'],   // shown as 'Put it into practice'; course pages list this post back
     cover: 'Website Images/Blog - Data Science Career in India 2025.jpeg',
     title: 'Building a Data Science Career in India: The 2026 Roadmap',
     seoTitle: 'Data Science Career in India: 2026 Roadmap',
@@ -97,6 +241,7 @@ const POSTS = [
   /* ── Python vs R ── */
   {
     slug: 'python-vs-r-for-data-science',
+    courses: ['python', 'r-programming', 'data-visualization'],   // shown as 'Put it into practice'; course pages list this post back
     cover: 'foundation-category-banner',
     title: 'Python or R: Which Should You Learn First for Data Science?',
     seoTitle: 'Python vs R for Data Science: Which First?',
@@ -177,6 +322,7 @@ df |&gt;
   /* ── Power BI vs Tableau ── */
   {
     slug: 'power-bi-vs-tableau',
+    courses: ['power-bi', 'tableau', 'excel'],   // shown as 'Put it into practice'; course pages list this post back
     cover: 'analytics-category-banner',
     title: 'Power BI vs Tableau: Which Should an Analyst in India Learn First?',
     seoTitle: 'Power BI vs Tableau: Which to Learn First?',
@@ -240,6 +386,7 @@ df |&gt;
   /* ── 1 ──────────────────────────────────────────────── */
   {
     slug: 'statistics-still-matters-deep-learning',
+    courses: ['machine-learning', 'deep-learning', 'r-programming'],   // shown as 'Put it into practice'; course pages list this post back
     cover: 'Website Images/Blog - Statistics Meets Deep Learning.jpeg',
     title: 'Why Statistics Still Matters in the Age of Deep Learning',
     category: 'research',
@@ -294,6 +441,7 @@ print(f"p-value: {result.pvalue:.4f}")  # < 0.05 = significant</code></pre>
   /* ── 2 ──────────────────────────────────────────────── */
   {
     slug: 'feature-engineering-craft',
+    courses: ['feature-engineering', 'machine-learning', 'mlops'],   // shown as 'Put it into practice'; course pages list this post back
     cover: 'Website Images/Blog - Feature Engineering Mastery.jpeg',
     title: 'Feature Engineering: The Craft Behind Great ML Models',
     category: 'tutorial',
@@ -378,6 +526,7 @@ pipe.score(X_test, y_test)</code></pre>
   /* ── 3 ──────────────────────────────────────────────── */
   {
     slug: 'llms-every-data-scientist-needs-to-know',
+    courses: ['llm', 'nlp', 'generative-ai'],   // shown as 'Put it into practice'; course pages list this post back
     cover: 'Website Images/Blog - LLMs in Production 2025.jpeg',
     title: 'Large Language Models: What Every Data Scientist Needs to Know',
     seoTitle: 'LLMs: What Every Data Scientist Needs to Know',
@@ -469,6 +618,7 @@ result = qa_chain.run("What is our refund policy?")</code></pre>
   /* ── 4 ──────────────────────────────────────────────── */
   {
     slug: 'data-science-career-india-2025',
+    courses: ['p:ai-mastery', 'p:internship'],   // shown as 'Put it into practice'; course pages list this post back
     cover: 'Website Images/Blog - Data Science Career in India 2025.jpeg',
     title: 'Building a Data Science Career in India: A 2025 Roadmap',
     category: 'career',
@@ -549,6 +699,7 @@ result = qa_chain.run("What is our refund policy?")</code></pre>
   /* ── 5 ──────────────────────────────────────────────── */
   {
     slug: 'bias-variance-tradeoff',
+    courses: ['machine-learning', 'feature-engineering', 'deep-learning'],   // shown as 'Put it into practice'; course pages list this post back
     cover: 'Website Images/Blog - Bias-Variance Tradeoff.jpeg',
     title: 'Understanding the Bias-Variance Tradeoff',
     category: 'tutorial',
@@ -625,6 +776,7 @@ plt.show()</code></pre>
   /* ── 6 ──────────────────────────────────────────────── */
   {
     slug: 'python-data-science-roadmap',
+    courses: ['python', 'data-visualization', 'machine-learning'],   // shown as 'Put it into practice'; course pages list this post back
     cover: 'Website Images/Blog - Python Learning Roadmap 2025.jpeg',
     title: 'Python for Data Science: The Beginner\'s Roadmap',
     category: 'tutorial',

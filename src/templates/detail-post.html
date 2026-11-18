@@ -17,6 +17,7 @@
   'research': [(courses['deep-learning'].url, courses['deep-learning'].title), (courses['r-programming'].url, courses['r-programming'].title), (programmes['research-assistance'].url, programmes['research-assistance'].title)]
 } %}
 {% set steps = next_steps.get(post.category, next_steps['tutorial']) %}
+{% if post.get('steps') %}{% set steps = post.steps %}{% endif %}
 
 {% block title %}{{ full_title if full_title | length <= 60 else seo_title }}{% endblock %}
 {% block description %}{{ post.excerpt | meta_desc(158) }}{% endblock %}

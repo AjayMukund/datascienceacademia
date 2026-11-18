@@ -363,6 +363,12 @@ for t in TESTIMONIALS:
 for c in COURSES.values():                      # learning path: course dicts for guide.before / guide.next
     c["path_before"] = [COURSES[x] for x in c["guide"].get("before", []) if x in COURSES]
     c["path_next"] = [COURSES[x] for x in c["guide"].get("next", []) if x in COURSES]
+for post in POSTS + DRAFTS:                     # post.courses: course ids, or 'p:<programme id>'
+    post["links"] = [PROGRAMMES[x[2:]] if x.startswith("p:") else COURSES[x] for x in post.get("courses", [])
+                     if (PROGRAMMES.get(x[2:]) if x.startswith("p:") else COURSES.get(x))]
+    post["steps"] = [(x["url"], x["title"]) for x in post["links"]]
+for cid, c in COURSES.items():                  # newest first (POSTS is date-ordered)
+    c["posts"] = [p for p in POSTS if cid in p.get("courses", [])][:3]
 faqs.setup(COURSES, LEVELS, SITE)
 env.globals.update(course_faqs=faqs.course_faqs, programme_faqs=faqs.programme_faqs, level_faqs=faqs.level_faqs,
                    faq_ld=faqs.faq_ld)
