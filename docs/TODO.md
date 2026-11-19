@@ -64,8 +64,9 @@ Bought 2026-11-10 at Hostinger (`.in` + `.com`, owner Ajay Mukund S, expire 2029
 - ☑ Formspree (form `xdaypadg`) → *Workflow* → *Email* → Send to `info@datascienceacademia.in` (verified under
   *Linked Emails*; free plan = one recipient). Test enquiry from /contact.html arrived in Zoho 2026-11-19.
   Keep CAPTCHA disabled (the contact form submits via fetch).
-- ☐ **Shelved — You → Claude** — Google Search Console: *URL-prefix* property `https://datascienceacademia.in/`,
-  verify with the **HTML file** method (send Claude the file name; avoids Hostinger DNS), submit `sitemap.xml`.
+- ☑ Google Search Console (2026-11-19, account ajaymukund1998@gmail.com): *URL-prefix* property
+  `https://datascienceacademia.in/`, verified by `googleea0570a9b97a9835.html` in the site root — **never delete it**.
+  `sitemap.xml` submitted: Success, 51 pages. Old `ajaymukund.github.io/datascienceacademia/` property kept (301s).
 - ☐ **You** — update Google Business Profile link, social bios, directories (Chatbase done 2026-11-19);
   rebuild the student app (`dsa_app`) with the new certificate URL.
 - ☐ **Claude, ~Dec 2026** — read the DMARC reports; if clean, tighten to `p=quarantine`. If Hostinger's
