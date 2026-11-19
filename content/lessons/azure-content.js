@@ -2265,19 +2265,19 @@ print("Pipeline:", returned.studio_url)` }
 /* ─── MODULE 5 — AI Services & Cognitive APIs ───────────────────────────── */
 
 L['azure-w5-l1'] = {
-  title: 'Azure AI Services — The Cognitive Services Portfolio',
+  title: 'Azure AI Services — The Foundry Tools Portfolio',
   sections: [
     { type: 'text', body: `<h2>Azure AI Services Overview</h2>
-<p>Azure AI Services (formerly Azure Cognitive Services) is a family of pre-built AI capabilities accessible via REST APIs and client SDKs — no ML expertise required. They cover vision, speech, language, and decision domains, enabling data scientists to add AI features to applications without training custom models.</p>
+<p>Azure AI Services (formerly Azure Cognitive Services, and now managed through <strong>Microsoft Foundry</strong>) is a family of pre-built AI capabilities accessible via REST APIs and client SDKs — no ML expertise required. They cover vision, speech, language, and decision domains, enabling data scientists to add AI features to applications without training custom models.</p>
 <h3>Service Categories</h3>
 <table>
   <tr><th>Category</th><th>Services</th><th>Use Cases</th></tr>
   <tr><td>Vision</td><td>Computer Vision, Custom Vision, Face API, Video Indexer</td><td>Image classification, OCR, face detection, video transcription</td></tr>
-  <tr><td>Speech</td><td>Speech-to-Text, Text-to-Speech, Speech Translation, Speaker Recognition</td><td>Call centre transcription, voice assistants, subtitles</td></tr>
-  <tr><td>Language</td><td>Text Analytics, Translator, Language Understanding (LUIS), Question Answering</td><td>Sentiment analysis, NER, translation, chatbots</td></tr>
-  <tr><td>Decision</td><td>Anomaly Detector, Content Moderator, Personalizer</td><td>Time-series anomaly detection, content filtering, RL recommendations</td></tr>
-  <tr><td>Document</td><td>Document Intelligence (Form Recognizer)</td><td>Invoice parsing, ID extraction, contract analysis</td></tr>
-  <tr><td>OpenAI</td><td>Azure OpenAI Service</td><td>GPT-4, embeddings, DALL-E, Whisper</td></tr>
+  <tr><td>Speech</td><td>Speech-to-Text, Text-to-Speech, Speech Translation (Speaker Recognition was retired in September 2025)</td><td>Call centre transcription, voice assistants, subtitles</td></tr>
+  <tr><td>Language</td><td>Azure AI Language (sentiment, NER, key phrases, conversational language understanding), Translator, Question Answering — LUIS is retired</td><td>Sentiment analysis, NER, translation, chatbots</td></tr>
+  <tr><td>Safety</td><td>Azure AI Content Safety (replaces Content Moderator)</td><td>Filtering harmful text and images, moderating LLM inputs and outputs</td></tr>
+  <tr><td>Document</td><td>Document Intelligence (formerly Form Recognizer), Content Understanding</td><td>Invoice parsing, ID extraction, contract analysis, audio/video extraction</td></tr>
+  <tr><td>OpenAI</td><td>Azure OpenAI in Foundry Models</td><td>Chat and reasoning models, embeddings, GPT Image, Whisper</td></tr>
 </table>` },
     { type: 'text', body: `<h3>Text Analytics — Sentiment, NER & Key Phrases</h3>
 <pre><code>from azure.ai.textanalytics import TextAnalyticsClient
@@ -2377,16 +2377,16 @@ for r in results:
 };
 
 L['azure-w5-l2'] = {
-  title: 'Azure OpenAI Service — GPT, Embeddings & DALL-E on Azure',
+  title: 'Azure OpenAI — GPT, Embeddings & Image Models on Azure',
   sections: [
     { type: 'text', body: `<h2>Azure OpenAI Service</h2>
-<p>Azure OpenAI Service deploys OpenAI's models within Microsoft's Azure infrastructure — the same GPT-4, GPT-4o, text-embedding-3, DALL-E 3, and Whisper models available from OpenAI, but with Azure's security, compliance, and data privacy guarantees. Your prompts and completions are not used for OpenAI model training, and data stays within your selected Azure region.</p>
+<p>Azure OpenAI Service deploys OpenAI's models within Microsoft's Azure infrastructure — the same GPT chat and reasoning models, text-embedding-3, GPT Image and Whisper models available from OpenAI (now deployed through Microsoft Foundry), but with Azure's security, compliance, and data privacy guarantees. Your prompts and completions are not used for OpenAI model training, and data stays within your selected Azure region.</p>
 <h3>Available Models</h3>
 <ul>
-  <li><strong>GPT-4o</strong> — multimodal (text + images), 128k context, fastest and cheapest GPT-4 class model. Use for most chat and completion tasks.</li>
-  <li><strong>GPT-4 Turbo</strong> — 128k context, strongest reasoning. Use for complex analysis, code generation, and long document tasks.</li>
+  <li><strong>GPT chat models</strong> (e.g. GPT-4o and newer) — multimodal (text + images), long context. Use a small/mini variant for most chat tasks and a full-size model when quality matters. Models are retired on a schedule, so check the Foundry model catalogue for what is currently deployable in your region.</li>
+  <li><strong>Reasoning models</strong> (o-series and newer GPT reasoning models) — spend extra compute thinking before answering. Use for complex analysis, maths and code generation.</li>
   <li><strong>text-embedding-3-large</strong> — 3072-dimension embeddings for semantic search, similarity, and RAG retrieval. Best quality; use text-embedding-3-small for cost-sensitivity.</li>
-  <li><strong>DALL-E 3</strong> — text-to-image generation at 1024×1024, 1024×1792. Use for product images, marketing assets, data visualisation mockups.</li>
+  <li><strong>GPT Image</strong> — text-to-image generation and image editing (DALL-E 3 has been retired). Use for product images, marketing assets and mockups.</li>
   <li><strong>Whisper</strong> — speech-to-text transcription. Use for meeting transcription, call centre audio processing.</li>
 </ul>
 <pre><code>from openai import AzureOpenAI
@@ -2651,28 +2651,32 @@ L['azure-w5-l4'] = {
   <li><strong>General Document</strong> — extracts key-value pairs and tables from any document without a pre-defined template.</li>
   <li><strong>Layout</strong> — extracts text, tables, selection marks, and the document structure with bounding box coordinates.</li>
 </ul>
-<pre><code>from azure.ai.formrecognizer import DocumentAnalysisClient
+<p><strong>SDK note:</strong> use the current package <code>azure-ai-documentintelligence</code> (<code>pip install azure-ai-documentintelligence</code>). The older <code>azure-ai-formrecognizer</code> package and its <code>DocumentAnalysisClient</code> belong to the retired Form Recognizer API versions.</p>
+<pre><code>from azure.ai.documentintelligence import DocumentIntelligenceClient
 from azure.core.credentials import AzureKeyCredential
 
-client = DocumentAnalysisClient(
+client = DocumentIntelligenceClient(
     endpoint="https://dsa-docint.cognitiveservices.azure.com/",
     credential=AzureKeyCredential("YOUR_KEY")
 )
 
 # Analyse an invoice
 with open("invoice.pdf", "rb") as f:
-    poller = client.begin_analyze_document("prebuilt-invoice", f)
+    poller = client.begin_analyze_document("prebuilt-invoice", body=f)
 result = poller.result()
+
+def text(field):
+    return field.get("content") if field else None
 
 for invoice in result.documents:
     fields = invoice.fields
-    print(f"Vendor: {fields.get('VendorName', {}).value}")
-    print(f"Invoice #: {fields.get('InvoiceId', {}).value}")
-    print(f"Total: {fields.get('InvoiceTotal', {}).value}")
-    for item in fields.get('Items', {}).value or []:
-        desc = item.value.get('Description', {}).value
-        amount = item.value.get('Amount', {}).value
-        print(f"  Line item: {desc} — {amount}")</code></pre>` },
+    print(f"Vendor: {text(fields.get('VendorName'))}")
+    print(f"Invoice #: {text(fields.get('InvoiceId'))}")
+    print(f"Total: {text(fields.get('InvoiceTotal'))}")
+    items = fields.get("Items")
+    for item in (items.get("valueArray") if items else []) or []:
+        obj = item.get("valueObject") or {}
+        print(f"  Line item: {text(obj.get('Description'))} — {text(obj.get('Amount'))}")</code></pre>` },
     { type: 'text', body: `<h3>Custom Document Models</h3>
 <p>When pre-built models don't match your document type (custom insurance forms, proprietary purchase orders, internal report templates), train a custom extraction model with 5–500 labelled examples.</p>
 <pre><code># Train a custom model (via Studio at documentintelligence.ai.azure.com)
@@ -2684,39 +2688,33 @@ for invoice in result.documents:
 # Use the custom model in Python
 custom_model_id = "YOUR_TRAINED_MODEL_ID"
 with open("custom_form.pdf", "rb") as f:
-    poller = client.begin_analyze_document(custom_model_id, f)
+    poller = client.begin_analyze_document(custom_model_id, body=f)
 result = poller.result()
 for doc in result.documents:
     for name, field in doc.fields.items():
-        print(f"{name}: {field.value} (confidence {field.confidence:.2f})")</code></pre>
+        print(f"{name}: {field.get('content')} (confidence {field.get('confidence') or 0:.2f})")</code></pre>
 <h3>Other Applied AI Services</h3>
 <ul>
   <li><strong>Azure Video Indexer</strong> — transcribes audio, detects speakers, identifies faces, extracts topics, OCR text in video, and detects brands and emotions. Upload an MP4 and get a structured JSON of everything that happened.</li>
-  <li><strong>Azure Anomaly Detector</strong> — univariate and multivariate time-series anomaly detection. Upload your metrics series; the API returns which points are anomalies, their severity, and whether it is a spike, dip, or trend change.</li>
+  <li><strong>Azure Content Understanding</strong> — the newer Foundry service that extracts structured fields from documents, images, audio and video with one analyser definition (it appears on the AI-901 exam).</li>
   <li><strong>Azure Content Safety</strong> — classify text and images for hate speech, violence, sexual content, and self-harm. Used to moderate LLM outputs and user-generated content before display.</li>
 </ul>
-<pre><code># Anomaly Detector — find anomalies in a time series
-from azure.ai.anomalydetector import AnomalyDetectorClient
-from azure.ai.anomalydetector.models import TimeSeriesPoint, DetectRequest
-from azure.core.credentials import AzureKeyCredential
-import datetime
+<p><strong>Retired:</strong> Azure AI Anomaly Detector and Personalizer were retired on 1 October 2026. For time-series anomaly detection, Microsoft now points to Microsoft Fabric and the open-source time-series-anomaly-detector package — or build your own with the methods from the Machine Learning course:</p>
+<pre><code># Simple, dependency-free anomaly detection: rolling z-score
+import pandas as pd
 
-client = AnomalyDetectorClient("https://dsa-anomaly.cognitiveservices.azure.com/",
-                                AzureKeyCredential("KEY"))
-series = [TimeSeriesPoint(timestamp=datetime.datetime(2024,1,i), value=v)
-          for i, v in enumerate([10,11,10,12,11,10,9,11,50,10,11], start=1)]  # 50 is anomaly
-
-request = DetectRequest(series=series, granularity="daily")
-response = client.detect_univariate_entire_series(request)
-for i, (is_anom, sev) in enumerate(zip(response.is_anomaly, response.severity)):
-    if is_anom:
-        print(f"Anomaly at point {i}: value={series[i].value}, severity={sev:.2f}")</code></pre>` },
+s = pd.Series([10,11,10,12,11,10,9,11,50,10,11],
+              index=pd.date_range("2026-01-01", periods=11, freq="D"))
+roll = s.rolling(window=5, min_periods=3)
+z = (s - roll.mean().shift(1)) / roll.std().shift(1)
+print(s[z.abs() > 3])   # flags 2026-01-09 (value 50)</code></pre>` },
     { type: 'tip', body: `Use <strong>Azure AI Document Intelligence Studio</strong> (documentintelligence.ai.azure.com) to test pre-built models on your actual documents before writing any code. Upload a PDF or image, select the model (invoice, receipt, layout), and see the extracted fields instantly with confidence scores highlighted. This tells you in 60 seconds whether the pre-built model covers your use case or whether you need a custom model — saving days of development time.` },
-    { type: 'exercise', title: 'Extract invoice data with Document Intelligence and load into a DataFrame', hint: 'Create a Document Intelligence resource, use begin_analyze_document with prebuilt-invoice on a sample PDF, extract line items into a pandas DataFrame', solution: `from azure.ai.formrecognizer import DocumentAnalysisClient
+    { type: 'exercise', title: 'Extract invoice data with Document Intelligence and load into a DataFrame', hint: 'Create a Document Intelligence resource, use begin_analyze_document with prebuilt-invoice on a sample PDF, extract line items into a pandas DataFrame', solution: `# pip install azure-ai-documentintelligence pandas requests
+from azure.ai.documentintelligence import DocumentIntelligenceClient
 from azure.core.credentials import AzureKeyCredential
 import pandas as pd, requests, io
 
-client = DocumentAnalysisClient(
+client = DocumentIntelligenceClient(
     "https://dsa-docint.cognitiveservices.azure.com/",
     AzureKeyCredential("YOUR_KEY")
 )
@@ -2725,28 +2723,30 @@ client = DocumentAnalysisClient(
 invoice_url = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/sample-invoice.pdf"
 resp = requests.get(invoice_url)
 
-poller = client.begin_analyze_document("prebuilt-invoice", io.BytesIO(resp.content))
+poller = client.begin_analyze_document("prebuilt-invoice", body=io.BytesIO(resp.content))
 result = poller.result()
+
+def text(field):
+    return field.get("content") if field else None
 
 rows = []
 for invoice in result.documents:
     f = invoice.fields
-    vendor = f.get("VendorName", {}).value
-    inv_id = f.get("InvoiceId", {}).value
-    total = f.get("InvoiceTotal", {}).value
-    items = f.get("Items", {})
-    if items and items.value:
-        for item in items.value:
-            iv = item.value
-            rows.append({
-                "vendor": vendor,
-                "invoice_id": inv_id,
-                "invoice_total": total,
-                "description": iv.get("Description", {}).value,
-                "quantity": iv.get("Quantity", {}).value,
-                "unit_price": iv.get("UnitPrice", {}).value,
-                "amount": iv.get("Amount", {}).value,
-            })
+    vendor = text(f.get("VendorName"))
+    inv_id = text(f.get("InvoiceId"))
+    total = text(f.get("InvoiceTotal"))
+    items = f.get("Items")
+    for item in (items.get("valueArray") if items else []) or []:
+        iv = item.get("valueObject") or {}
+        rows.append({
+            "vendor": vendor,
+            "invoice_id": inv_id,
+            "invoice_total": total,
+            "description": text(iv.get("Description")),
+            "quantity": text(iv.get("Quantity")),
+            "unit_price": text(iv.get("UnitPrice")),
+            "amount": text(iv.get("Amount")),
+        })
 
 df = pd.DataFrame(rows)
 print(df)

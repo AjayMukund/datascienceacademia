@@ -75,7 +75,7 @@ L['genai-w1-l3'] = { duration_mins: 20, sections: [
   { type:'text', body:`<h3>1. Variational Autoencoders (VAEs)</h3><p>Learn a probabilistic encoder q(z|x) and decoder p(x|z). Maximise the Evidence Lower BOund (ELBO). Pros: stable training, explicit latent space, fast sampling. Cons: blurry outputs due to reconstruction loss averaging over possible decodings.</p><h3>2. Generative Adversarial Networks (GANs)</h3><p>Generator G produces samples; Discriminator D distinguishes real from fake. Trained adversarially — G tries to fool D, D tries to catch G. Pros: sharp, high-quality images at their best. Cons: training instability, mode collapse (generator ignores portions of the data distribution).</p>` },
   { type:'text', body:`<h3>3. Normalising Flows</h3><p>Learn a series of invertible transformations that map a simple distribution (Gaussian) to the data distribution. Exact density computation and exact sampling. Pros: exact likelihood, invertible encoding. Cons: constrained architecture (must be invertible), computationally expensive. Examples: RealNVP, Glow.</p><h3>4. Diffusion Models</h3><p>Gradually add Gaussian noise to data until it becomes pure noise (forward process). Learn to reverse this process (denoising). Pros: state-of-the-art image quality, stable training, excellent mode coverage. Cons: slow sampling (hundreds of denoising steps). Examples: DDPM, DDIM, Stable Diffusion.</p><h3>5. Autoregressive Models</h3><p>Model P(x) = ∏ P(xᵢ | x₁, …, xᵢ₋₁). Generate one element at a time. Exact likelihood. Pros: excellent for sequential data (text, audio), good diversity. Cons: slow generation (must generate sequentially). Examples: GPT for text, WaveNet for audio, PixelCNN for images.</p>` },
   { type:'text', body:`<h3>Comparison Table</h3><table style="width:100%;border-collapse:collapse;font-size:.83rem;"><tr style="background:rgba(255,255,255,.05)"><th style="padding:.5rem;text-align:left">Family</th><th>Image Quality</th><th>Training</th><th>Sampling Speed</th><th>Diversity</th></tr><tr><td style="padding:.4rem">VAE</td><td>Low-Medium</td><td>Stable</td><td>Fast</td><td>Good</td></tr><tr style="background:rgba(255,255,255,.03)"><td style="padding:.4rem">GAN</td><td>High</td><td>Unstable</td><td>Fast</td><td>Poor (mode collapse)</td></tr><tr><td style="padding:.4rem">Normalising Flow</td><td>Medium</td><td>Stable</td><td>Medium</td><td>Good</td></tr><tr style="background:rgba(255,255,255,.03)"><td style="padding:.4rem">Diffusion</td><td>Very High</td><td>Very Stable</td><td>Slow</td><td>Excellent</td></tr><tr><td style="padding:.4rem">Autoregressive</td><td>High (text/audio)</td><td>Stable</td><td>Slow</td><td>Good</td></tr></table>` },
-  { type:'tip', body:`In 2024, diffusion models dominate image generation (Stable Diffusion, DALL-E, Midjourney), autoregressive models dominate text (GPT family), and a hybrid — autoregressive + diffusion — is emerging for video (Sora-style). GANs remain relevant for real-time applications (face reenactment, style transfer) where sampling speed matters more than quality.` }
+  { type:'tip', body:`Today, diffusion and flow-matching models dominate open image generation (Stable Diffusion 3.5, FLUX, Midjourney), natively multimodal models such as OpenAI GPT Image are a strong alternative, autoregressive models dominate text (GPT family), and a hybrid — autoregressive + diffusion — is emerging for video (Sora-style). GANs remain relevant for real-time applications (face reenactment, style transfer) where sampling speed matters more than quality.` }
 ]};
 
 L['genai-w1-l4'] = { duration_mins: 18, sections: [
@@ -114,14 +114,14 @@ print(f"FID: {fid_value:.2f}")
 
 L['genai-w1-l5'] = { duration_mins: 18, sections: [
   { type:'text', body:`<h2>Generative AI Applications & the 2024 Landscape</h2><p>Generative AI is no longer a research curiosity — it's a production technology reshaping industries. Understanding the application landscape helps you identify where to apply the techniques you'll learn in this course.</p>` },
-  { type:'text', body:`<h3>Image & Video</h3><ul><li><strong>Text-to-image:</strong> DALL-E 3, Stable Diffusion XL, Midjourney, Ideogram — marketing assets, concept art, product mockups</li><li><strong>Image editing:</strong> Adobe Firefly (inpainting, background removal, object replacement)</li><li><strong>Video generation:</strong> Sora, Runway Gen-3, Kling — advertising, short films, animation</li><li><strong>3D generation:</strong> Shap-E, Point-E, TripoSR — game assets, product visualization</li></ul>` },
+  { type:'text', body:`<h3>Image & Video</h3><ul><li><strong>Text-to-image:</strong> OpenAI GPT Image, FLUX, Stable Diffusion 3.5, Midjourney, Ideogram — marketing assets, concept art, product mockups</li><li><strong>Image editing:</strong> Adobe Firefly (inpainting, background removal, object replacement)</li><li><strong>Video generation:</strong> Sora, Runway Gen-3, Kling — advertising, short films, animation</li><li><strong>3D generation:</strong> Shap-E, Point-E, TripoSR — game assets, product visualization</li></ul>` },
   { type:'text', body:`<h3>Audio & Music</h3><ul><li><strong>Text-to-speech:</strong> ElevenLabs, Coqui XTTS, OpenAI TTS — podcasts, audiobooks, accessibility</li><li><strong>Voice cloning:</strong> 3-second voice clone from reference audio</li><li><strong>Music generation:</strong> Suno, Udio, MusicGen — background music, jingles, personalised playlists</li><li><strong>Audio effects:</strong> AudioCraft, Stable Audio — foley, sound design, game audio</li></ul>` },
   { type:'text', body:`<h3>Code, Text & Multimodal</h3><ul><li><strong>Code generation:</strong> GitHub Copilot, Cursor, Devin — code completion, refactoring, test generation</li><li><strong>Document generation:</strong> Legal drafts, medical reports, marketing copy at scale</li><li><strong>Multimodal:</strong> GPT-4V, Gemini — analyse images+text, generate slide decks, extract data from charts</li><li><strong>Drug discovery:</strong> AlphaFold 3, RFDiffusion — generating protein structures, molecular design</li></ul>` },
   { type:'text', body:`<h3>Responsible Generative AI</h3><p>The same technology that enables creative applications also enables harms:</p><ul><li><strong>Deepfakes:</strong> Realistic but fake videos of real people — misinformation, fraud</li><li><strong>Copyright:</strong> Models trained on copyrighted images; generated content may infringe</li><li><strong>Bias:</strong> Models reflect biases in training data — representation, stereotyping</li><li><strong>Synthetic media:</strong> AI-generated images indistinguishable from photos — erodes trust</li></ul><p>Mitigation: C2PA content provenance standard (watermarking), SafetyChecker in Stable Diffusion, NSFW filters, usage policies.</p>` },
   { type:'exercise', title:`Identify a Generative AI Application`, body:`<p>Pick one industry (healthcare, education, entertainment, e-commerce, or gaming) and identify: (1) three specific tasks where generative AI is currently used or could be used, (2) which model family (GAN, diffusion, autoregressive, etc.) would be most appropriate for each, and (3) what the main risks are for each application.</p>`, hint:`Think about what the input and output of each task is. Text input → image output suggests diffusion or autoregressive image models. Audio → audio suggests WaveNet-style or diffusion audio models. Be specific about the risk: patient data privacy for healthcare, age-appropriate content for education.`, solution:`Example — Education:
 1. Generating personalised practice problems from a topic description → Autoregressive LLM (GPT-4). Risk: incorrect/misleading content presented as authoritative.
 2. Converting text lessons to narrated audio → TTS (XTTS/ElevenLabs). Risk: voice cloning without consent if instructor voice is used.
-3. Generating diagrams from topic descriptions (e.g., "draw a neural network") → Text-to-image (SD/DALL-E). Risk: scientifically incorrect diagrams presented as accurate.` }
+3. Generating diagrams from topic descriptions (e.g., "draw a neural network") → Text-to-image (Stable Diffusion / GPT Image). Risk: scientifically incorrect diagrams presented as accurate.` }
 ]};
 
 L['genai-w1-quiz'] = { duration_mins: 10, sections: [
@@ -1096,62 +1096,54 @@ L['genai-w6-quiz'] = { duration_mins: 10, sections: [
 /* ── MODULE 7: Multimodal AI & Audio Generation ── */
 
 L['genai-w7-l1'] = { duration_mins: 20, sections: [
-  { type:'text', body:`<h2>Text-to-Image APIs: DALL-E 3, SDXL & Stability AI</h2><p>State-of-the-art text-to-image generation is accessible through several production APIs — no GPU required. Understanding their differences helps you choose the right tool for your application.</p><h3>DALL-E 3 (OpenAI)</h3><p>DALL-E 3 was the first major model to dramatically improve prompt adherence by rewriting user prompts with a caption model before feeding to the diffusion model. Key characteristics: excellent text rendering in images, strong prompt following, photorealistic and artistic styles, built-in content filtering. Available via OpenAI API and ChatGPT.</p>` },
+  { type:'text', body:`<h2>Text-to-Image APIs: OpenAI GPT Image, Stability AI & FLUX</h2><p>State-of-the-art text-to-image generation is accessible through several production APIs — no GPU required. Understanding their differences helps you choose the right tool for your application.</p><h3>OpenAI Images API (GPT Image models)</h3><p>OpenAI retired the DALL-E 2 and DALL-E 3 API models on 12 May 2026; the Images API now serves the <strong>GPT Image</strong> models (gpt-image-1 and newer). They are natively multimodal: strong prompt following, good text rendering inside images, image <em>editing</em> from reference images, transparent backgrounds and built-in safety filtering. Two practical differences from DALL-E: the image always comes back as base64 (no temporary URL), and quality is set as low / medium / high / auto. Check the OpenAI models page for the newest GPT Image version before you build.</p>` },
   { type:'code', lang:'python', src:`from openai import OpenAI
 from pathlib import Path
-import base64, requests
+import base64
 
 client = OpenAI()  # uses OPENAI_API_KEY env var
 
-# Text-to-image with DALL-E 3
+# Text-to-image with a GPT Image model
 response = client.images.generate(
-    model="dall-e-3",
+    model="gpt-image-1",     # check the models page for the newest GPT Image version
     prompt="A photorealistic image of a red panda coding on a laptop in a cosy library, warm lighting",
-    size="1024x1024",        # 1024×1024, 1024×1792, or 1792×1024
-    quality="hd",            # "standard" or "hd" (more detail, 2× cost)
-    n=1,                     # DALL-E 3 only supports n=1
-    response_format="url"    # or "b64_json"
+    size="1024x1024",        # 1024x1024, 1024x1536 (portrait), 1536x1024 (landscape) or "auto"
+    quality="medium",        # "low", "medium", "high" or "auto" — higher costs more
+    output_format="png",     # "png", "jpeg" or "webp"
 )
-image_url = response.data[0].url
-print(f"Generated: {image_url}")
-print(f"Revised prompt: {response.data[0].revised_prompt}")
 
-# Download and save
-img_data = requests.get(image_url).content
-Path("output.png").write_bytes(img_data)`,out:`# Generated: https://oaidalleapiprodscus.blob.core.windows.net/...
-# Revised prompt: "A photorealistic high-resolution photograph of a red
-# panda sitting at a wooden desk in a cosy library with bookshelves..."
-# DALL-E 3 rewrites your prompt to improve generation quality`},
-  { type:'text', body:`<h3>Stability AI (SDXL / SD3)</h3><p>Stability AI offers the Stable Diffusion model family via their Stability AI Platform API. Advantages: more artistic styles, higher community ecosystem (thousands of LoRAs/ControlNets), lower cost per generation, can fine-tune. SD3 Medium (2024) introduced a Diffusion Transformer architecture and three text encoders for significantly improved text rendering.</p>` },
-  { type:'code', lang:'python', src:`import anthropic, base64, httpx
+# GPT Image models always return base64 — decode and save
+img_bytes = base64.b64decode(response.data[0].b64_json)
+Path("output.png").write_bytes(img_bytes)
+print("Saved output.png")`,out:`# Saved output.png
+# Tip: background="transparent" gives a PNG with no background (logos, stickers);
+# client.images.edit(...) takes one or more reference images to edit or combine`},
+  { type:'text', body:`<h3>Stability AI (Stable Diffusion 3.5)</h3><p>Stability AI serves the Stable Diffusion family through its REST API (the older gRPC <code>stability_sdk</code> client is no longer used). Advantages: open-weight models you can also run yourself, a huge community ecosystem (LoRAs, ControlNets), lower cost per image and the option to fine-tune. Stable Diffusion 3 / 3.5 moved to a Diffusion Transformer (MMDiT) architecture with three text encoders, which greatly improved text rendering and prompt adherence.</p>` },
+  { type:'code', lang:'python', src:`import os, requests
 from pathlib import Path
 
-# Stability AI API for image generation
-import stability_sdk
-from stability_sdk import client as stability_client
-import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
-
-stability_api = stability_client.StabilityInference(
-    key="your-api-key",
-    engine="stable-diffusion-xl-1024-v1-0"
+# Stability AI REST API — Stable Diffusion 3.5
+resp = requests.post(
+    "https://api.stability.ai/v2beta/stable-image/generate/sd3",
+    headers={
+        "authorization": f"Bearer {os.environ['STABILITY_API_KEY']}",
+        "accept": "image/*",            # return raw image bytes
+    },
+    files={"none": ""},                  # the endpoint expects multipart/form-data
+    data={
+        "prompt": "A data scientist presenting to executives, modern boardroom, professional photography",
+        "model": "sd3.5-large",          # or "sd3.5-medium" (faster, cheaper)
+        "aspect_ratio": "1:1",
+        "seed": 42,
+        "output_format": "png",
+    },
 )
-
-answers = stability_api.generate(
-    prompt="A data scientist presenting to executives, modern boardroom, professional photography",
-    seed=42,
-    steps=50,
-    cfg_scale=7.5,
-    width=1024, height=1024,
-    samples=1
-)
-for resp in answers:
-    for artifact in resp.artifacts:
-        if artifact.finish_reason == generation.FILTER:
-            print("Content filtered")
-        elif artifact.type == generation.ARTIFACT_IMAGE:
-            Path("sdxl_output.png").write_bytes(artifact.binary)
-            print("Saved sdxl_output.png")`},
-  { type:'tip', body:`For production apps: DALL-E 3 for highest quality + reliability + simplest API; Stability AI for cost efficiency at scale (10× cheaper) + style diversity; Replicate for open-source model access (Flux, SDXL, SD3, custom fine-tunes) with pay-per-prediction pricing.` }
+if resp.status_code == 200:
+    Path("sd35_output.png").write_bytes(resp.content)
+    print("Saved sd35_output.png")
+else:
+    print("Error:", resp.json())         # e.g. content filtered, invalid key`},
+  { type:'tip', body:`For production apps: OpenAI GPT Image for strong prompt following, editing and the simplest API; Stability AI for open-weight models, lower cost at scale and style diversity; Replicate, fal or Together for pay-per-image access to open models such as FLUX and Stable Diffusion 3.5 (including your own fine-tunes). Prices change often — compare current per-image pricing before you commit.` }
 ]};
 
 L['genai-w7-l2'] = { duration_mins: 18, sections: [
@@ -1519,7 +1511,7 @@ L['genai-w8-l5'] = { duration_mins: 25, sections: [
   { type:'text', body:`<h2>Capstone Project: Full GenAI Application</h2><p>In this capstone, you'll build a complete, production-ready generative AI application that combines multiple techniques from this course. This project demonstrates mastery of the full GenAI stack: model integration, API design, UI, and responsible deployment.</p><h3>Project Options</h3><p>Choose one (or design your own with instructor approval):</p><ol><li><strong>Multimodal Story Generator:</strong> User provides a theme + style reference image → generate illustrated short story with matching images and TTS narration for each paragraph</li><li><strong>Document Intelligence System:</strong> Upload PDF reports → extract text + visual content → semantic search + Q&A + auto-generated executive summary</li><li><strong>Creative Portfolio Generator:</strong> Input: CV/resume text + professional headshot → output: portfolio website with AI-generated profile photo variants, bio, and project descriptions</li><li><strong>Brand Asset Creator:</strong> Input: company name + brand brief → output: logo variations (with background removal), social media templates, and product mockups</li></ol>` },
   { type:'text', body:`<h3>Required Components</h3><p>Whatever project you choose must include:</p><ul><li><strong>At least two GenAI modalities:</strong> e.g., text generation + image generation, or image understanding + TTS, or text-to-image + document analysis</li><li><strong>Streaming or async response:</strong> The UI must not freeze during generation — show progress or stream results</li><li><strong>Error handling:</strong> Graceful handling of content filter blocks, API rate limits, model timeouts, and invalid inputs</li><li><strong>Responsible AI features:</strong> Either invisible watermarking OR C2PA metadata OR an explicit AI disclosure label on all generated content</li><li><strong>Cost tracking:</strong> Log API calls and estimate cost per generation so you understand the economics</li></ul>` },
   { type:'code', lang:'python', src:`# Starter template: Multimodal Story Generator
-import anthropic, openai, gradio as gr
+import anthropic, openai, base64, gradio as gr
 from pathlib import Path
 
 claude = anthropic.Anthropic()
@@ -1541,21 +1533,25 @@ def generate_story_with_images(theme: str, style_desc: str, num_paragraphs: int 
     for i, para in enumerate(story["paragraphs"]):
         # 2. Generate image for each paragraph
         img_prompt = f"{para[:200]}. Art style: {style_desc}. Cinematic composition."
-        img_resp = oai.images.generate(model="dall-e-3", prompt=img_prompt, size="1024x1024")
+        img_resp = oai.images.generate(model="gpt-image-1", prompt=img_prompt, size="1024x1024", quality="medium")
+        image_path = f"/tmp/story_p{i+1}.png"
+        Path(image_path).write_bytes(base64.b64decode(img_resp.data[0].b64_json))
 
         # 3. Generate TTS narration
         audio = oai.audio.speech.create(model="tts-1", voice="nova", input=para)
         audio_path = f"/tmp/story_p{i+1}.mp3"
         Path(audio_path).write_bytes(audio.content)
 
-        results.append({"text": para, "image_url": img_resp.data[0].url, "audio": audio_path})
+        results.append({"text": para, "image": image_path, "audio": audio_path})
         yield results  # stream results as they're ready
 
     # Log cost estimate
-    cost = num_paragraphs * (0.04 + 0.015)  # DALL-E 3 HD + TTS estimate
+    # Cost tracking: set these from the providers' current price lists
+    IMAGE_COST, TTS_COST = 0.0, 0.0
+    cost = num_paragraphs * (IMAGE_COST + TTS_COST)
     print(f"Estimated cost: \${cost:.3f}")`,out:`# Each paragraph generates in ~10-15 seconds (image + TTS in parallel)
 # Stream results to Gradio UI so user sees progress immediately
-# Full story (3 paragraphs): ~$0.17 per generation`},
+# Log the real cost per story once you fill in current prices`},
   { type:'exercise', title:'Build Your Capstone: Week-by-Week Plan', body:`Create a 4-week implementation plan for your chosen capstone project. Week 1: design the system architecture (what models, what APIs, what data flow); Week 2: build the core generation pipeline with error handling; Week 3: build the Gradio UI with streaming and add responsible AI features; Week 4: deploy to Hugging Face Spaces, document API costs, conduct user testing with 3 classmates.`, hint:`Start with the simplest possible version that works end-to-end (even if slow/ugly), then add features. Never spend more than 2 days on any single component before having an end-to-end demo.`, solution:`# Architecture template (adapt for your project):
 #
 # Frontend: Gradio with gr.Blocks (streaming via yield)
