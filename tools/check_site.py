@@ -101,7 +101,8 @@ class Page(HTMLParser):
 def public_pages():
     for p in ROOT.rglob("*.html"):
         rel = p.relative_to(ROOT)
-        if rel.parts[0] in SKIP_DIRS or rel.name in SKIP_FILES or rel.name.startswith("."):
+        if rel.parts[0] in SKIP_DIRS or rel.name in SKIP_FILES or rel.name.startswith(".") \
+                or (rel.name.startswith("google") and len(rel.parts) == 1):  # Search Console verification file
             continue
         yield rel.as_posix()
 
