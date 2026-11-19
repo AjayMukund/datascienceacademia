@@ -66,7 +66,7 @@ SITE = {
         "country": "IN",
     },
     "geo": {"lat": 12.918342794186495, "lng": 80.15253111461173},
-    "hours": "Mon – Sat · 9:00 AM – 7:00 PM IST",
+    "hours": "Mon – Sat 9 AM – 9 PM · Sun 11 AM – 4 PM IST",
     "social": {
         "linkedin": "https://www.linkedin.com/company/data-science-academia/",
         "youtube": "https://youtube.com/@datascienceacademia3805",
@@ -187,7 +187,11 @@ def org_ld():
                 "openingHoursSpecification": [{
                     "@type": "OpeningHoursSpecification",
                     "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                    "opens": "09:00", "closes": "19:00",
+                    "opens": "09:00", "closes": "21:00",
+                }, {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Sunday"],
+                    "opens": "11:00", "closes": "16:00",
                 }],
                 "areaServed": [{"@type": "City", "name": "Chennai"}, {"@type": "State", "name": "Tamil Nadu"}, {"@type": "Country", "name": "India"}],
                 "sameAs": list(SITE["social"].values()) + [SITE["whatsapp"]],

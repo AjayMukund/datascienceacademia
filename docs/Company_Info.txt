@@ -61,6 +61,7 @@ Address   : No. 52/1A, First Floor, Madambakkam Main Road,
 Phone     : +91 91764 98814
 Email     : info@datascienceacademia.in
 WhatsApp  : https://wa.me/919176498814
+Hours     : Monday – Saturday 9:00 AM – 9:00 PM; Sunday 11:00 AM – 4:00 PM (IST)
 
 Social Media:
 - LinkedIn  : https://www.linkedin.com/company/data-science-academia/
