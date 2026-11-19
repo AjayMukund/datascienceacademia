@@ -75,6 +75,7 @@ SITE = {
     "founded": "2019",
     "year": dt.date.today().year,
     "formspree": "https://formspree.io/f/xdaypadg",
+    "google_review": "https://g.page/r/CZYQoW1hzglDEBM/review",
     "maps_embed": "https://maps.google.com/maps?q=12.918342794186495,80.15253111461173&z=17&hl=en&output=embed",
     "maps_link": "https://www.google.com/maps/search/?api=1&query=12.918342794186495%2C80.15253111461173",
     "author": {"name": "Ajay Mukund S", "role": "AI Engineer · Ph.D. Scholar, Anna University · Founder, Data Science Academia"},
