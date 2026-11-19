@@ -15,6 +15,163 @@ const CAT_STYLE = {
 };
 
 const POSTS = [
+  /* ── AWS vs Azure for data science (draft, Nov 2026) ── */
+  {
+    slug: 'aws-vs-azure-for-data-science',
+    draft: true,
+    courses: ['aws', 'azure', 'mlops', 'p:microsoft-certification'],   // shown as 'Put it into practice'; course pages list this post back
+    cover: 'cloud-and-bi-category-banner',
+    title: 'AWS vs Azure for Data Science: Which Cloud Should You Learn First?',
+    seoTitle: 'AWS vs Azure for Data Science: Which First?',
+    category: 'career',
+    catLabel: 'Career',
+    date: '2026-11-19',
+    dateDisplay: 'November 19, 2026',
+    readTime: '8 min read',
+    excerpt: 'Both clouds can run every data science workload you will meet. Here is how their services map to each other, what changed in their certifications in 2026, and how to choose the one to learn first.',
+    body: `
+<p>Sooner or later every data scientist works in the cloud: data lives in cloud storage, models train on cloud GPUs and get deployed behind cloud endpoints. For most learners in India the choice comes down to <strong>Amazon Web Services (AWS)</strong> or <strong>Microsoft Azure</strong>. The good news first: the core skills transfer. Learn one well and the second takes weeks, not months.</p>
+
+<h2>The short answer</h2>
+<ul>
+<li><strong>Learn Azure first</strong> if you are heading towards data analysis or business intelligence, or into companies that already run on Microsoft 365, Power BI and Microsoft Fabric.</li>
+<li><strong>Learn AWS first</strong> if you are heading towards machine-learning engineering, data engineering or product start-ups, where AWS is very common.</li>
+<li><strong>Not sure yet?</strong> Look at 20 job listings for the role you want, in the city you want, and count which cloud they name. That beats any general advice, including this article.</li>
+</ul>
+
+<h2>How the services map to each other</h2>
+<p>The names differ, but the building blocks line up closely:</p>
+<ul>
+<li><strong>Storing data:</strong> Amazon S3 on AWS; Azure Blob Storage and Azure Data Lake Storage on Azure.</li>
+<li><strong>Building, training and deploying models:</strong> Amazon SageMaker AI on AWS; Azure Machine Learning on Azure. Both give you managed notebooks, training jobs on CPUs or GPUs, a model registry and deployment endpoints.</li>
+<li><strong>Generative AI and foundation models:</strong> Amazon Bedrock on AWS; Microsoft Foundry (formerly Azure AI Foundry) on Azure. Both let you call large language models through an API, ground them on your own documents and build agents, without managing servers.</li>
+<li><strong>Moving and transforming data (ETL):</strong> AWS Glue on AWS; Azure Data Factory and the data-integration tools in Microsoft Fabric on Azure.</li>
+<li><strong>Querying and warehousing:</strong> Amazon Athena and Amazon Redshift on AWS; Microsoft Fabric (and Azure Synapse Analytics) on Azure.</li>
+<li><strong>Dashboards:</strong> Microsoft's Power BI is one of the most widely used BI tools in India, and it connects to data on either cloud.</li>
+</ul>
+<p>If you understand <em>what</em> each block does — store, prepare, train, deploy, monitor — switching clouds is mostly learning new names and a new console.</p>
+
+<h2>What changed in 2026: certifications</h2>
+<p>Both providers reshaped their AI certifications this year, so check any study plan made before 2026:</p>
+<ul>
+<li><strong>AWS retired the Machine Learning – Specialty certification.</strong> The last day to take it was 31 March 2026 (<a href="https://aws.amazon.com/certification/certified-machine-learning-specialty/" target="_blank" rel="noopener">AWS</a>). Existing holders stay certified for three years from when they earned it.</li>
+<li><strong>AWS's main ML credential is now the Machine Learning Engineer – Associate</strong>, which is moving to an updated exam version (<a href="https://aws.amazon.com/certification/certified-machine-learning-engineer-associate/" target="_blank" rel="noopener">AWS</a>). The <strong>AI Practitioner</strong> remains the entry-level AI credential, and the <strong>Data Engineer – Associate</strong> covers data pipelines.</li>
+<li><strong>Microsoft retired DP-100 (Azure Data Scientist Associate) and AI-102 (Azure AI Engineer Associate).</strong> The newer <strong>AI-103</strong> leads to the Azure AI Apps and Agents Developer Associate certification, built around Python and Microsoft Foundry (<a href="https://learn.microsoft.com/en-us/credentials/certifications/exams/ai-103/" target="_blank" rel="noopener">Microsoft Learn</a>).</li>
+<li><strong>Microsoft's fundamentals exams</strong> — AI-901, DP-900 and AZ-900 — remain the usual first step. Our guide <a href="ai-901-vs-dp-900-vs-az-900.html">AI-901, DP-900 or AZ-900</a> explains which to take first.</li>
+</ul>
+<p>Exam codes and versions change often. Always confirm on the official AWS or Microsoft Learn page before you book.</p>
+
+<h2>Learning it without a big bill</h2>
+<p>Both clouds offer free credits or free tiers for new accounts, and Microsoft's Azure for Students offer gives student credit without a credit card. Whichever you use, protect yourself from surprise charges:</p>
+<ul>
+<li>Set a <strong>budget alert</strong> on day one (AWS Budgets or Azure Cost Management).</li>
+<li><strong>Stop or delete</strong> notebooks, endpoints and GPU instances when you finish a session; idle endpoints are the most common source of student bills.</li>
+<li>Use the <strong>smallest</strong> instance that works, and start with CPU unless the course genuinely needs a GPU.</li>
+</ul>
+
+<h2>A learning path that works on either cloud</h2>
+<ol>
+<li><strong>Python, SQL and core machine learning</strong> on your own laptop. The cloud is a place to run skills you already have.</li>
+<li><strong>Storage and a notebook:</strong> upload a dataset to S3 or Blob Storage and explore it from a cloud notebook.</li>
+<li><strong>Train and deploy one model</strong> with SageMaker AI or Azure Machine Learning, then call the endpoint from a short Python script.</li>
+<li><strong>Build one small generative-AI app</strong> with Bedrock or Foundry — for example, a question-answering assistant over your college's syllabus PDFs.</li>
+<li><strong>Add the MLOps habits</strong> employers ask about: version your data and models, log experiments, monitor the deployed model.</li>
+</ol>
+<blockquote>Pick one cloud, build one complete project on it, and put that project on GitHub. That says more in an interview than a list of services.</blockquote>
+
+<h2>Learn it with us</h2>
+<p>Our <a href="../courses/aws.html">AWS for Data Science</a> and <a href="../courses/azure.html">Microsoft Azure</a> courses take you through exactly this path with hands-on labs, and the <a href="../courses/mlops.html">MLOps</a> course covers deployment and monitoring on both. For exam preparation, see the <a href="../programmes/microsoft-certification.html">Microsoft Certification Program</a>. Classes run at our centre near Tambaram, Chennai, and live online.</p>
+    `
+  },
+
+  /* ── Computer vision projects for final-year students (draft, Nov 2026) ── */
+  {
+    slug: 'computer-vision-projects-final-year',
+    draft: true,
+    courses: ['computer-vision', 'deep-learning', 'python', 'p:internship'],   // shown as 'Put it into practice'; course pages list this post back
+    cover: 'advanced-ai-category-banner',
+    title: '10 Computer Vision Project Ideas for Final-Year Students (That Stand Out in 2026)',
+    seoTitle: 'Computer Vision Final-Year Project Ideas 2026',
+    category: 'tutorial',
+    catLabel: 'Tutorial',
+    date: '2026-11-19',
+    dateDisplay: 'November 19, 2026',
+    readTime: '9 min read',
+    excerpt: 'Ten computer vision projects for B.E., B.Tech and M.Sc. final years — with datasets, tools and what makes each one stand out — plus a semester plan and the mistakes examiners notice.',
+    body: `
+<p>Computer vision is one of the most popular choices for final-year projects, which is exactly the problem: examiners and interviewers have seen hundreds of "face detection with OpenCV" projects. A project stands out when it solves a <strong>local, real problem</strong>, uses <strong>your own data</strong> alongside public data, and ends in something people can <strong>actually use</strong>.</p>
+
+<h2>Before you choose: four questions</h2>
+<ul>
+<li><strong>Is there data?</strong> A public dataset to start with, and a way to collect a few hundred images of your own.</li>
+<li><strong>Is it the right size?</strong> One clear task (classify, detect, segment, read text) done well beats five tasks done badly.</li>
+<li><strong>Can you show it working?</strong> A web or mobile demo on a phone camera is far more convincing than an accuracy number in a report.</li>
+<li><strong>Can you explain every line?</strong> In the viva you will be asked why you chose this model and what your results mean.</li>
+</ul>
+
+<h2>The ten ideas</h2>
+
+<h3>1. Crop disease detection for local crops</h3>
+<p><strong>Task:</strong> image classification. <strong>Start with:</strong> the public PlantVillage dataset, then add your own photos of paddy, banana or tomato leaves from nearby farms. <strong>Stand out by:</strong> testing on real field photos (PlantVillage images are taken on plain backgrounds) and showing how much accuracy drops — then fixing it with augmentation. Deliver it as a simple mobile or web app.</p>
+
+<h3>2. Helmet and triple-riding detection for two-wheelers</h3>
+<p><strong>Task:</strong> object detection. <strong>Start with:</strong> helmet datasets on Roboflow Universe, plus your own videos of traffic (shot legally, from a public place). <strong>Tools:</strong> Ultralytics YOLO. <strong>Stand out by:</strong> counting riders per bike, and reporting performance at night and in rain separately.</p>
+
+<h3>3. Pothole detection and mapping</h3>
+<p><strong>Task:</strong> detection or segmentation. <strong>Start with:</strong> the India Driving Dataset (IDD) from IIIT Hyderabad and public pothole datasets. <strong>Stand out by:</strong> tagging each detection with GPS from a phone and plotting a map of your locality's roads.</p>
+
+<h3>4. Indian Sign Language recognition</h3>
+<p><strong>Task:</strong> gesture classification. <strong>Tools:</strong> MediaPipe hand landmarks plus a small classifier — fast enough for a laptop webcam. <strong>Stand out by:</strong> recording your own signers, recognising short words rather than single letters, and working with a local deaf community organisation for feedback.</p>
+
+<h3>5. Bilingual document reader (Tamil and English)</h3>
+<p><strong>Task:</strong> OCR and information extraction. <strong>Tools:</strong> Tesseract (which includes a Tamil model) or PaddleOCR, with OpenCV for cleaning scans. <strong>Stand out by:</strong> extracting fields from a real form type — a ration card, a bus pass, a college certificate — into a spreadsheet, and measuring field-level accuracy.</p>
+
+<h3>6. Retail shelf monitoring</h3>
+<p><strong>Task:</strong> detection and counting. <strong>Start with:</strong> public grocery-shelf datasets, then photos from a local store (with the owner's permission). <strong>Stand out by:</strong> flagging empty shelf gaps and estimating stock levels, and explaining how a shop owner would use it.</p>
+
+<h3>7. Chest X-ray screening with explanations</h3>
+<p><strong>Task:</strong> medical image classification. <strong>Start with:</strong> public chest X-ray datasets on Kaggle. <strong>Stand out by:</strong> adding Grad-CAM heatmaps that show <em>where</em> the model looked, reporting sensitivity and specificity rather than only accuracy, and stating clearly that it is a research prototype, not a diagnostic tool.</p>
+
+<h3>8. Queue and crowd counting</h3>
+<p><strong>Task:</strong> people detection and counting over video. <strong>Tools:</strong> YOLO with a tracker such as ByteTrack. <strong>Stand out by:</strong> estimating waiting time at a canteen, bus stop or ticket counter and showing it on a live dashboard.</p>
+
+<h3>9. Waste sorting assistant</h3>
+<p><strong>Task:</strong> classification or detection of plastic, paper, metal and organic waste. <strong>Start with:</strong> public waste datasets, then your own images from campus bins. <strong>Stand out by:</strong> running on a Raspberry Pi or phone, which forces you to learn model compression and export (ONNX or TensorFlow Lite).</p>
+
+<h3>10. Ask questions about images with a vision-language model</h3>
+<p><strong>Task:</strong> visual question answering or zero-shot classification. <strong>Tools:</strong> an open vision-language model or CLIP, through Hugging Face. <strong>Stand out by:</strong> comparing it with a small model you trained yourself on the same task — when is the big general model better, and when is your specialised one faster and more accurate? That comparison is exactly what 2026 employers want to discuss.</p>
+
+<h2>Tools worth learning for any of these</h2>
+<ul>
+<li><strong>Python, OpenCV and PyTorch</strong> — the foundation.</li>
+<li><strong>Ultralytics YOLO</strong> (the current release is YOLO26) for detection, segmentation and pose — quick to train on a custom dataset.</li>
+<li><strong>Label Studio or Roboflow</strong> for labelling your own images.</li>
+<li><strong>Gradio or Streamlit</strong> to turn a model into a demo in an afternoon.</li>
+</ul>
+
+<h2>A simple semester plan</h2>
+<ol>
+<li><strong>Weeks 1–2:</strong> pick the problem, read three recent papers or blog posts, find the dataset.</li>
+<li><strong>Weeks 3–5:</strong> collect and label your own images; train a first baseline model.</li>
+<li><strong>Weeks 6–9:</strong> improve it — augmentation, a better model, error analysis on the images it gets wrong.</li>
+<li><strong>Weeks 10–11:</strong> build the demo app and test it on real users.</li>
+<li><strong>Weeks 12–14:</strong> write the report, record a demo video, put the code on GitHub with a clear README.</li>
+</ol>
+
+<h2>Mistakes examiners notice</h2>
+<ul>
+<li><strong>Copied notebooks.</strong> If your code matches a popular Kaggle notebook line for line, assume the examiner knows.</li>
+<li><strong>Test images leaking into training.</strong> Very high accuracy on a small dataset usually means this. Split your data first and never touch the test set while tuning.</li>
+<li><strong>Accuracy as the only metric.</strong> Report precision, recall and a confusion matrix — and show examples the model gets wrong.</li>
+<li><strong>Ignoring consent.</strong> Projects with faces or people need permission and a sentence on privacy in the report.</li>
+</ul>
+<blockquote>The best final-year projects are not the most complicated ones. They are the ones where the student can show it working and explain every decision.</blockquote>
+
+<h2>Build it with guidance</h2>
+<p>Our <a href="../courses/computer-vision.html">Computer Vision</a> course covers OpenCV, CNNs, YOLO detection, segmentation and deployment, and the <a href="../courses/deep-learning.html">Deep Learning</a> course builds the foundations underneath. If you want a mentor for your final-year project, the <a href="../programmes/internship.html">internship programme</a> pairs you with DSA faculty and ends with a final project demonstration and a DSA Internship Certificate. Classes run near Tambaram, Chennai, and live online.</p>
+    `
+  },
+
   /* ── Microsoft fundamentals exams (Nov 2026) ── */
   {
     slug: 'ai-901-vs-dp-900-vs-az-900',
