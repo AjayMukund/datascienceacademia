@@ -174,13 +174,13 @@ import numpy as np
 envs = {
     'CartPole-v1':    'Balance a pole on a cart (discrete actions)',
     'MountainCar-v0': 'Drive a car up a hill (sparse reward)',
-    'LunarLander-v2': 'Land a spacecraft (discrete)',
+    'LunarLander-v3': 'Land a spacecraft (discrete; pip install "gymnasium[box2d]")',
     'BipedalWalker-v3':'Teach a robot to walk (continuous)',
     'Pendulum-v1':    'Swing up and balance a pendulum (continuous)',
     'Ant-v4':         'MuJoCo 8-DoF ant robot (continuous, requires MuJoCo)',
 }
 
-env = gym.make('LunarLander-v2', render_mode=None)
+env = gym.make('LunarLander-v3', render_mode=None)
 
 print("=== LunarLander Environment ===")
 print(f"Observation space: {env.observation_space}")      # Box(8,) — position, velocity, angle, contact
@@ -1823,7 +1823,7 @@ class RLTrainingMonitor:
 ]};
 
 L['rl-w8-l5'] = { duration_mins: 25, sections: [
-  { type:'text', body:`<h2>Capstone: Training a PPO Agent</h2><p>In this capstone, you'll train a PPO agent on a non-trivial Gymnasium environment, evaluate it systematically, and experiment with key hyperparameters. You'll implement the full PPO loop, log training metrics, and produce a learning curve.</p><h3>Project Options</h3><ol><li><strong>LunarLander-v2:</strong> Land a spacecraft. Dense reward, discrete actions. Solvable in ~500K steps with PPO. Visualisable.</li><li><strong>BipedalWalker-v3:</strong> Teach a 2D robot to walk. Continuous actions. Solvable in ~2M steps. Classic PPO benchmark.</li><li><strong>CartPole-v1:</strong> Balance a pole. Solve it in &lt;50K steps, then modify to make it harder (increase time limit, add noise).</li><li><strong>Custom Environment:</strong> Design a custom Gymnasium env (inventory management, scheduling, game) and train PPO on it.</li></ol>` },
+  { type:'text', body:`<h2>Capstone: Training a PPO Agent</h2><p>In this capstone, you'll train a PPO agent on a non-trivial Gymnasium environment, evaluate it systematically, and experiment with key hyperparameters. You'll implement the full PPO loop, log training metrics, and produce a learning curve.</p><h3>Project Options</h3><ol><li><strong>LunarLander-v3:</strong> Land a spacecraft. Dense reward, discrete actions. Solvable in ~500K steps with PPO. Visualisable.</li><li><strong>BipedalWalker-v3:</strong> Teach a 2D robot to walk. Continuous actions. Solvable in ~2M steps. Classic PPO benchmark.</li><li><strong>CartPole-v1:</strong> Balance a pole. Solve it in &lt;50K steps, then modify to make it harder (increase time limit, add noise).</li><li><strong>Custom Environment:</strong> Design a custom Gymnasium env (inventory management, scheduling, game) and train PPO on it.</li></ol>` },
   { type:'code', lang:'python', src:`# Complete PPO training loop — reference implementation for the capstone
 import gymnasium as gym
 import numpy as np, torch, torch.nn as nn
@@ -1841,7 +1841,7 @@ class ActorCritic(nn.Module):
         return self.actor(f), self.critic(f)
 
 # --- Hyperparameters ---
-ENV_NAME    = 'LunarLander-v2'
+ENV_NAME    = 'LunarLander-v3'
 N_STEPS     = 2048    # rollout length
 N_EPOCHS    = 10      # PPO epochs per update
 BATCH_SIZE  = 64

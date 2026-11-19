@@ -119,7 +119,7 @@ Best AUC: 0.9748
 Params: {'n_estimators': '200', 'max_depth': '10', ...}
 Registered: version 1
 Predictions: [0 1 0 0 1]`},
-  { type:'tip', body:`MLflow's Model Registry has three stages: Staging (under evaluation), Production (live), and Archived. Use client.transition_model_version_stage() to promote models through stages as part of your CI/CD pipeline. This creates an auditable, governed promotion process — essential for regulated industries (finance, healthcare).` }
+  { type:'tip', body:`MLflow's Model Registry uses <strong>aliases</strong> to mark which version does what — for example <code>@challenger</code> (under evaluation) and <code>@champion</code> (live). Promote with <code>client.set_registered_model_alias("fraud-detector", "champion", version)</code> and load with <code>mlflow.pyfunc.load_model("models:/fraud-detector@champion")</code>. (The older fixed stages — Staging/Production/Archived — are deprecated since MLflow 2.9; you will still see them in older tutorials.) This creates an auditable, governed promotion process — essential for regulated industries (finance, healthcare).` }
 ]};
 
 L['mlops-w1-l3'] = { duration_mins: 20, sections: [
@@ -824,7 +824,7 @@ def validate_model(
                 raise ValueError(f"Fairness gate FAILED: group '{group_name}' AUC={group_auc:.4f}")
 
     return {"status": "PASSED", "new_auc": new_auc, "prod_auc": prod_auc,
-            "auc_delta": new_auc - prod_auc, "p99_latency_ms": p99_latency_ms}`,out:`# All gates passed → model promoted to Staging in MLflow registry
+            "auc_delta": new_auc - prod_auc, "p99_latency_ms": p99_latency_ms}`,out:`# All gates passed → model registered with the @challenger alias in MLflow
 # Any gate failure → deployment blocked, alert sent to ML team Slack channel`},
   { type:'tip', body:`Store the validation gate thresholds in a config file (thresholds.yaml), not hardcoded in the validation script. This makes them reviewable in PRs, auditable in git history, and easy to adjust without code changes. Governance teams can also review and sign off on threshold changes.` }
 ]};
@@ -932,12 +932,11 @@ def validate_and_promote(run_id: str) -> bool:
     try:
         report = validate_model(
             new_model_uri=f"runs:/{run_id}/model",
-            prod_model_uri="models:/fraud-detector/Production",
+            prod_model_uri="models:/fraud-detector@champion",
             X_test=X_holdout, y_test=y_holdout
         )
-        mlflow.register_model(f"runs:/{run_id}/model", "fraud-detector")
-        client.transition_model_version_stage("fraud-detector",
-            version=report['version'], stage="Staging")
+        mv = mlflow.register_model(f"runs:/{run_id}/model", "fraud-detector")
+        client.set_registered_model_alias("fraud-detector", "challenger", mv.version)
         return True
     except ValueError as e:
         notify_slack(f"Model validation failed: {e}")
@@ -1371,11 +1370,12 @@ def train_model(**context):
 def validate_and_promote(**context):
     model_uri = context["ti"].xcom_pull(task_ids="train_model", key="model_uri")
     client = mlflow.tracking.MlflowClient()
-    # Promote to staging if AUC >= 0.88
+    # Mark as challenger if AUC >= 0.88
     run_id = model_uri.split("/")[1]
     auc = float(client.get_run(run_id).data.metrics["auc"])
     if auc >= 0.88:
-        client.transition_model_version_stage("fraud_model", version=1, stage="Staging")
+        mv = client.search_model_versions(f"run_id='{run_id}'")[0]
+        client.set_registered_model_alias("fraud_model", "challenger", mv.version)
     else:
         raise ValueError(f"Model AUC {auc:.3f} below threshold 0.88")
 
@@ -2608,39 +2608,38 @@ Feature schema: v{metrics['feature_schema_version']}
 
     return mv.version
 
-def promote_to_production(version: str, approved_by: str):
-    """Promote model to production; archive current production version."""
-    # Archive current production (keeping it for rollback)
-    prod_versions = client.get_latest_versions(MODEL_NAME, stages=["Production"])
-    for v in prod_versions:
-        client.transition_model_version_stage(MODEL_NAME, v.version, "Archived")
-        print(f"Archived v{v.version} (rollback available)")
+def get_alias(alias: str):
+    """Return the model version behind an alias, or None if the alias is not set."""
+    try:
+        return client.get_model_version_by_alias(MODEL_NAME, alias)
+    except mlflow.exceptions.MlflowException:
+        return None
 
-    # Promote new version
-    client.transition_model_version_stage(MODEL_NAME, version, "Production")
+def promote_to_production(version: str, approved_by: str):
+    """Point the 'champion' alias at a new version; keep the old one as 'previous'."""
+    current = get_alias("champion")
+    if current:  # keep the outgoing version addressable for rollback
+        client.set_registered_model_alias(MODEL_NAME, "previous", current.version)
+        print(f"v{current.version} kept as @previous (rollback available)")
+
+    # Serving code loads models:/fraud-detection@champion, so this one call deploys
+    client.set_registered_model_alias(MODEL_NAME, "champion", version)
     client.set_model_version_tag(MODEL_NAME, version, "deployed_by", approved_by)
     client.set_model_version_tag(MODEL_NAME, version, "deployed_at", datetime.utcnow().isoformat())
-    print(f"Promoted v{version} to Production")
+    print(f"Promoted v{version} to @champion")
 
 def rollback(reason: str):
-    """Rollback to most recent Archived version."""
-    # Find most recent archived version
-    archived = client.get_latest_versions(MODEL_NAME, stages=["Archived"])
-    if not archived:
-        raise RuntimeError("No archived version available for rollback!")
+    """Swap 'champion' back to the version saved as 'previous'."""
+    previous, current = get_alias("previous"), get_alias("champion")
+    if not previous:
+        raise RuntimeError("No previous version available for rollback!")
 
-    # Sort by version number (descending)
-    latest_archived = sorted(archived, key=lambda v: int(v.version), reverse=True)[0]
-
-    # Archive current production
-    current_prod = client.get_latest_versions(MODEL_NAME, stages=["Production"])[0]
-    client.transition_model_version_stage(MODEL_NAME, current_prod.version, "Archived")
-
-    # Restore archived version to production
-    client.transition_model_version_stage(MODEL_NAME, latest_archived.version, "Production")
-    client.set_model_version_tag(MODEL_NAME, latest_archived.version, "rollback_reason", reason)
-    client.set_model_version_tag(MODEL_NAME, latest_archived.version, "rolled_back_at", datetime.utcnow().isoformat())
-    print(f"Rolled back to v{latest_archived.version}. Reason: {reason}")`,out:`# Rollback checklist:
+    client.set_registered_model_alias(MODEL_NAME, "champion", previous.version)
+    if current:
+        client.set_registered_model_alias(MODEL_NAME, "previous", current.version)
+    client.set_model_version_tag(MODEL_NAME, previous.version, "rollback_reason", reason)
+    client.set_model_version_tag(MODEL_NAME, previous.version, "rolled_back_at", datetime.utcnow().isoformat())
+    print(f"Rolled back to v{previous.version}. Reason: {reason}")`,out:`# Rollback checklist:
 # 1. Trigger: automated (alert threshold breached) or manual (on-call decision)
 # 2. Time to rollback: < 5 minutes (automated) or < 15 minutes (manual)
 # 3. Rollback scope: model only, or model + feature pipeline?
@@ -2892,9 +2891,12 @@ def validate_model(run_id: str, auc: float) -> bool:
     if auc < 0.88:
         raise ValueError(f"Model AUC {auc:.4f} below minimum threshold 0.88")
     client = mlflow.tracking.MlflowClient()
-    prod_versions = client.get_latest_versions("fraud-model", stages=["Production"])
-    if prod_versions:
-        prod_run = client.get_run(prod_versions[0].run_id)
+    try:
+        champion = client.get_model_version_by_alias("fraud-model", "champion")
+    except mlflow.exceptions.MlflowException:
+        champion = None  # first model: nothing to compare against
+    if champion:
+        prod_run = client.get_run(champion.run_id)
         prod_auc = prod_run.data.metrics["auc"]
         if auc < prod_auc - 0.005:  # Allow 0.5% regression
             raise ValueError(f"New AUC {auc:.4f} regresses vs production {prod_auc:.4f}")
@@ -2907,11 +2909,11 @@ def register_and_deploy(run_id: str, approved: bool):
         return
     client = mlflow.tracking.MlflowClient()
     mv = mlflow.register_model(f"runs:/{run_id}/model", "fraud-model")
-    client.transition_model_version_stage("fraud-model", mv.version, "Staging")
+    client.set_registered_model_alias("fraud-model", "challenger", mv.version)
     # Trigger Kubernetes deployment via kubectl or API
     deploy_to_kubernetes(model_version=mv.version, environment="staging")
     # After smoke tests pass (automated), promote to production
-    client.transition_model_version_stage("fraud-model", mv.version, "Production")
+    client.set_registered_model_alias("fraud-model", "champion", mv.version)
 
 @flow(name="fraud-model-retraining", log_prints=True)
 def retraining_pipeline(data_path: str):

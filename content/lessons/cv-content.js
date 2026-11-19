@@ -1078,14 +1078,16 @@ L['cv-w4-l3'] = {
   <li><strong>v1–v3</strong> — Darknet-based, anchor boxes introduced in v2, multi-scale predictions in v3.</li>
   <li><strong>YOLOv5</strong> (Ultralytics, 2020) — PyTorch rewrite; fast training pipeline; CSP backbone; excellent documentation.</li>
   <li><strong>YOLOv8</strong> (Ultralytics, 2023) — anchor-free; decoupled head (separate classification and regression branches); C2f bottleneck; native support for detect, segment, pose, track, classify.</li>
+  <li><strong>YOLO11</strong> (Ultralytics, 2024) — refined backbone and attention blocks; higher accuracy with fewer parameters than YOLOv8.</li>
+  <li><strong>YOLO26</strong> (Ultralytics, 2026) — built for edge deployment: drops Distribution Focal Loss, adds an end-to-end head that can skip Non-Maximum Suppression (<code>nms=False</code>), and runs faster on CPUs.</li>
 </ul>
-<p>YOLOv8 is the current Ultralytics recommendation and the focus of this lesson.</p>` },
+<p>YOLO26 is the current Ultralytics recommendation and the focus of this lesson. The <code>ultralytics</code> API is the same across YOLOv8, YOLO11 and YOLO26 — only the weights file name changes, so older tutorials still apply.</p>` },
     { type: 'code', lang: 'bash', src: `pip install ultralytics` },
     { type: 'code', lang: 'python', src: `from ultralytics import YOLO
 import cv2
 
-# --- Inference with pretrained YOLOv8n (nano) ---
-model = YOLO('yolov8n.pt')        # downloads 6MB model automatically
+# --- Inference with pretrained YOLO26n (nano) ---
+model = YOLO('yolo26n.pt')        # downloads the small model automatically
 
 results = model('street.jpg')     # can pass path, URL, numpy, tensor
 for r in results:
@@ -1093,7 +1095,7 @@ for r in results:
     print(r.boxes.cls)            # (N,)   class indices
     print(r.boxes.conf)           # (N,)   confidence scores
     annotated = r.plot()          # numpy BGR with boxes drawn
-    cv2.imshow('YOLOv8', annotated); cv2.waitKey(0)
+    cv2.imshow('YOLO26', annotated); cv2.waitKey(0)
 
 # Batch inference
 results = model(['img1.jpg', 'img2.jpg', 'img3.jpg'])
@@ -1102,14 +1104,14 @@ results = model(['img1.jpg', 'img2.jpg', 'img3.jpg'])
 results = model('video.mp4', stream=True)   # lazy generator
 for r in results:
     cv2.imshow('Frame', r.plot()); cv2.waitKey(1)` },
-    { type: 'code', lang: 'python', src: `# --- Training YOLOv8 on a custom dataset ---
+    { type: 'code', lang: 'python', src: `# --- Training YOLO26 on a custom dataset ---
 # Dataset must be in YOLO format:
 # dataset/
 #   images/train/, images/val/
 #   labels/train/, labels/val/    ← .txt files: cls cx cy w h (normalised)
 # data.yaml: nc, names, train/val paths
 
-model = YOLO('yolov8s.pt')    # start from pretrained small model
+model = YOLO('yolo26s.pt')    # start from pretrained small model
 
 results = model.train(
     data='data.yaml',
@@ -1130,7 +1132,7 @@ print(metrics.box.map50)       # mAP@0.5
 
 # Export to ONNX for deployment
 model.export(format='onnx', dynamic=True, simplify=True)` },
-    { type: 'tip', body: `YOLOv8 model variants: <strong>n</strong> (nano, 3.2M params), <strong>s</strong> (small, 11M), <strong>m</strong> (medium, 25M), <strong>l</strong> (large, 43M), <strong>x</strong> (xlarge, 68M). Start with YOLOv8s for custom training — it provides a good accuracy/speed balance and overfits less than larger variants on small datasets.` }
+    { type: 'tip', body: `YOLO26 comes in five sizes: <strong>n</strong> (nano), <strong>s</strong> (small), <strong>m</strong> (medium), <strong>l</strong> (large) and <strong>x</strong> (xlarge) — each step is larger, slower and more accurate. Start with YOLO26s for custom training — it provides a good accuracy/speed balance and overfits less than larger variants on small datasets.` }
   ]
 };
 
@@ -1242,7 +1244,7 @@ ap = np.trapz(prec[::-1], rec[::-1])
 plt.plot(rec, prec, marker='.'); plt.xlabel('Recall'); plt.ylabel('Precision')
 plt.title(f'PR Curve — AP = {ap:.3f}'); plt.show()` },
     { type: 'tip', body: `When comparing detectors, always report the same metric on the same benchmark dataset (COCO val2017 is standard). mAP@0.5:0.95 on COCO is the hardest and most informative. If your application is time-sensitive, always plot the speed-accuracy tradeoff (mAP vs. FPS) rather than reporting accuracy alone.` },
-    { type: 'exercise', title: 'Compute mAP on a YOLOv8 custom model', hint: 'Use model.val() with your data.yaml — it returns a Metrics object with .box.map, .box.map50', solution: `from ultralytics import YOLO
+    { type: 'exercise', title: 'Compute mAP on a YOLO26 custom model', hint: 'Use model.val() with your data.yaml — it returns a Metrics object with .box.map, .box.map50', solution: `from ultralytics import YOLO
 model = YOLO('runs/detect/custom_v1/weights/best.pt')
 metrics = model.val(data='data.yaml', imgsz=640, batch=16, conf=0.001, iou=0.6)
 print(f"mAP@0.5:     {metrics.box.map50:.4f}")
@@ -1982,8 +1984,8 @@ L['cv-w7-l3'] = {
     { type: 'code', lang: 'python', src: `from ultralytics import YOLO
 import cv2
 
-# YOLOv8 + ByteTrack (built-in)
-model = YOLO('yolov8n.pt')
+# YOLO26 + ByteTrack (built-in)
+model = YOLO('yolo26n.pt')
 
 cap = cv2.VideoCapture('pedestrians.mp4')
 while cap.isOpened():
@@ -2006,7 +2008,7 @@ while cap.isOpened():
 
     cv2.imshow('Tracking', frame); cv2.waitKey(1)
 cap.release()` },
-    { type: 'tip', body: `Set <code>persist=True</code> in YOLOv8's <code>model.track()</code> call — this tells the tracker to maintain state (Kalman filter predictions, track history) across successive frames. Without it, the tracker resets on each call and track IDs are not persistent across frames.` }
+    { type: 'tip', body: `Set <code>persist=True</code> in the Ultralytics <code>model.track()</code> call — this tells the tracker to maintain state (Kalman filter predictions, track history) across successive frames. Without it, the tracker resets on each call and track IDs are not persistent across frames.` }
   ]
 };
 
@@ -2142,7 +2144,7 @@ elbow    = [lm[mp_pose.PoseLandmark.LEFT_ELBOW].x,
 wrist    = [lm[mp_pose.PoseLandmark.LEFT_WRIST].x,
             lm[mp_pose.PoseLandmark.LEFT_WRIST].y]
 print(f'Elbow angle: {angle_between(shoulder, elbow, wrist):.1f}°')` },
-    { type: 'tip', body: `For multi-person pose in sports or crowd analytics, use <strong>YOLOv8-pose</strong> (ultralytics) — it detects 17 COCO keypoints alongside bounding boxes in a single forward pass and runs at 30+ FPS on a modern GPU. Call <code>model = YOLO("yolov8n-pose.pt")</code> and use <code>results[0].keypoints</code> for keypoint access.` }
+    { type: 'tip', body: `For multi-person pose in sports or crowd analytics, use <strong>YOLO26-pose</strong> (ultralytics) — it detects 17 COCO keypoints alongside bounding boxes in a single forward pass and runs at 30+ FPS on a modern GPU. Call <code>model = YOLO("yolo26n-pose.pt")</code> and use <code>results[0].keypoints</code> for keypoint access.` }
   ]
 };
 
@@ -2187,10 +2189,10 @@ sess = ort.InferenceSession('resnet50.onnx',
 x_np  = np.random.randn(1, 3, 224, 224).astype(np.float32)
 logits = sess.run(['logits'], {'image': x_np})[0]
 print('Top-1:', logits.argmax())` },
-    { type: 'code', lang: 'python', src: `# --- YOLOv8 INT8 export via ultralytics ---
+    { type: 'code', lang: 'python', src: `# --- YOLO26 INT8 export via ultralytics ---
 from ultralytics import YOLO
 
-model = YOLO('yolov8s.pt')
+model = YOLO('yolo26s.pt')
 
 # Export to TensorRT INT8 with calibration
 model.export(
@@ -2200,10 +2202,10 @@ model.export(
     data='data.yaml',      # calibration dataset
     batch=8
 )
-# Generates yolov8s.engine
+# Generates yolo26s.engine
 
 # Load and run the TensorRT engine
-trt_model = YOLO('yolov8s.engine')
+trt_model = YOLO('yolo26s.engine')
 results = trt_model.predict('image.jpg')` },
     { type: 'code', lang: 'python', src: `# --- PyTorch post-training static quantisation ---
 import torch
@@ -2248,7 +2250,7 @@ model = None
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global model
-    model = YOLO('yolov8s.pt')
+    model = YOLO('yolo26s.pt')
     print('Model loaded')
     yield
     model = None
@@ -2325,15 +2327,15 @@ L['cv-w8-l3'] = {
 import mlflow, mlflow.pytorch
 from ultralytics import YOLO
 
-mlflow.set_experiment('yolov8_detection')
+mlflow.set_experiment('yolo26_detection')
 
-with mlflow.start_run(run_name='yolov8s_baseline'):
+with mlflow.start_run(run_name='yolo26s_baseline'):
     mlflow.log_params({
-        'model': 'yolov8s', 'epochs': 50,
+        'model': 'yolo26s', 'epochs': 50,
         'imgsz': 640, 'batch': 16, 'lr0': 0.01
     })
 
-    model = YOLO('yolov8s.pt')
+    model = YOLO('yolo26s.pt')
     results = model.train(data='data.yaml', epochs=50, imgsz=640,
                           batch=16, project='runs')
 
@@ -2428,7 +2430,7 @@ L['cv-w8-l5'] = {
 <h3>Architecture</h3>
 <ol>
   <li><strong>Data preparation</strong> — annotate images with Roboflow, export in YOLO format, version with DVC.</li>
-  <li><strong>Training</strong> — fine-tune YOLOv8s with albumentations augmentation, log to W&B.</li>
+  <li><strong>Training</strong> — fine-tune YOLO26s with albumentations augmentation, log to W&B.</li>
   <li><strong>Optimisation</strong> — export to ONNX; optionally TensorRT INT8.</li>
   <li><strong>Service</strong> — FastAPI with detection + tracking endpoints, MJPEG stream.</li>
   <li><strong>Monitoring</strong> — log confidence distributions; alert on drift.</li>
@@ -2505,7 +2507,7 @@ tracker = None
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global tracker
-    tracker = DetectionTracker('yolov8s.pt', conf=0.4)
+    tracker = DetectionTracker('yolo26s.pt', conf=0.4)
     yield
 
 app = FastAPI(title='CV Capstone Pipeline', lifespan=lifespan)
@@ -2543,7 +2545,7 @@ async def live_stream(source: str = '0'):
     { type: 'exercise', title: 'Extend the pipeline with a zone alert', hint: 'Define a polygon zone in frame coordinates; count objects inside it per frame; trigger an alert if count exceeds a threshold', solution: `import cv2, numpy as np
 from pipeline import DetectionTracker
 
-tracker = DetectionTracker('yolov8s.pt')
+tracker = DetectionTracker('yolo26s.pt')
 
 # Define a restricted zone as a polygon (normalised coords 0-1)
 ZONE = np.array([[0.2, 0.3],[0.6, 0.3],[0.6, 0.8],[0.2, 0.8]], dtype=np.float32)
