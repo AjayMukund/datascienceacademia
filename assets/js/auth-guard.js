@@ -14,6 +14,16 @@
     return;
   }
 
+  // Accounts with two-step verification must finish it (AAL2) before any portal page loads.
+  try {
+    const { data: aal } = await supa.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (aal && aal.nextLevel === 'aal2' && aal.currentLevel !== 'aal2') {
+      const here = location.pathname.split('/').slice(-2).join('/');
+      window.location.href = root + 'login.html?next=' + encodeURIComponent(here);
+      return;
+    }
+  } catch (e) { /* older client without MFA support: fall through */ }
+
   // Retry once after 400 ms in case of a transient DB hiccup
   let profile = null;
   for (let attempt = 0; attempt < 2; attempt++) {

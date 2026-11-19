@@ -45,6 +45,17 @@
       <button type="submit" class="auth-btn" id="login-btn">Sign In &nbsp;&rarr;</button>
     </form>
 
+    <!-- Two-step verification (shown only for accounts that have an authenticator app) -->
+    <form id="mfa-form" autocomplete="off" style="display:none;">
+      <p class="auth-sub" style="margin-top:0;">Open your authenticator app and enter the 6-digit code for <strong>Data Science Academia</strong>.</p>
+      <div class="field-group">
+        <label class="flbl" for="mfa-code">Verification code</label>
+        <input type="text" class="fi" id="mfa-code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="123456" autocomplete="one-time-code" required style="letter-spacing:.3em;font-size:1.1rem;text-align:center;">
+      </div>
+      <button type="submit" class="auth-btn" id="mfa-btn">Verify &nbsp;&rarr;</button>
+      <p class="auth-switch"><a href="#" class="auth-link" id="mfa-cancel">Use a different account</a></p>
+    </form>
+
     <p class="auth-switch">New here? <a href="register.html" class="auth-link">Create an account</a></p>
 
     <div class="auth-divider">or</div>
@@ -64,15 +75,58 @@
     return;
   }
 
-  const { data: { session } } = await supa.auth.getSession();
-  if (session) {
-    const { data: p } = await supa.from('profiles').select('role').eq('id', session.user.id).single();
-    window.location.href = p?.role === 'admin' ? 'admin/dashboard.html' : 'student/dashboard.html';
-  }
-
   const form  = document.getElementById('login-form');
   const btn   = document.getElementById('login-btn');
   const errEl = document.getElementById('auth-error');
+  const mfaForm = document.getElementById('mfa-form');
+
+  // Accounts with an authenticator app must enter a code before going anywhere (AAL2).
+  async function needsCode() {
+    const { data } = await supa.auth.mfa.getAuthenticatorAssuranceLevel();
+    return !!data && data.nextLevel === 'aal2' && data.currentLevel !== 'aal2';
+  }
+  async function goToDashboard() {
+    if (await needsCode()) { showCodeStep(); return; }
+    const { data: { user } } = await supa.auth.getUser();
+    const { data: p } = await supa.from('profiles').select('role').eq('id', user.id).single();
+    const next = new URLSearchParams(location.search).get('next');
+    const safeNext = next && /^(admin|student)\/[a-z0-9-]+\.html$/.test(next) ? next : null;
+    window.location.href = safeNext || (p?.role === 'admin' ? 'admin/dashboard.html' : 'student/dashboard.html');
+  }
+  function showCodeStep() {
+    form.style.display = 'none';
+    document.querySelector('.auth-title').textContent = 'Two-step verification';
+    document.querySelectorAll('.auth-card > .auth-sub, .auth-card > .auth-switch, .auth-card > .auth-divider').forEach(el => el.style.display = 'none');
+    mfaForm.style.display = 'block';
+    document.getElementById('mfa-code').focus();
+  }
+
+  mfaForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const mbtn = document.getElementById('mfa-btn');
+    const code = document.getElementById('mfa-code').value.trim();
+    errEl.style.display = 'none';
+    mbtn.disabled = true; mbtn.textContent = 'Verifying…';
+    const { data: f, error: lerr } = await supa.auth.mfa.listFactors();
+    const factor = (f?.totp || []).find(x => x.status === 'verified');
+    const { error } = lerr || !factor ? { error: lerr || new Error('No authenticator found for this account.') }
+      : await supa.auth.mfa.challengeAndVerify({ factorId: factor.id, code });
+    if (error) {
+      errEl.textContent = /invalid|expired/i.test(error.message) ? 'That code is not valid. Wait for a fresh code and try again.' : error.message;
+      errEl.style.display = 'block';
+      mbtn.disabled = false; mbtn.textContent = 'Verify →';
+      return;
+    }
+    goToDashboard();
+  });
+  document.getElementById('mfa-cancel').addEventListener('click', async e => {
+    e.preventDefault();
+    await supa.auth.signOut();
+    location.href = 'login.html';
+  });
+
+  const { data: { session } } = await supa.auth.getSession();
+  if (session) { goToDashboard(); }
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
@@ -93,8 +147,9 @@
       return;
     }
 
-    const { data: p } = await supa.from('profiles').select('role').eq('id', (await supa.auth.getUser()).data.user.id).single();
-    window.location.href = p?.role === 'admin' ? 'admin/dashboard.html' : 'student/dashboard.html';
+    btn.disabled = false;
+    btn.textContent = 'Sign In →';
+    goToDashboard();
   });
 })();
 </script>

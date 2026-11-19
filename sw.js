@@ -3,7 +3,7 @@
              CSS / JS / fonts / images → stale-while-revalidate;
              cross-origin (Supabase, Chatbase, CDN) → never cached.
    Bump VERSION to drop old caches. Static assets are also cache-busted with ?v=hash by the build. */
-const VERSION = 'dsa-v5';
+const VERSION = 'dsa-v6';
 const RUNTIME = VERSION + '-runtime';
 
 self.addEventListener('install', () => self.skipWaiting());

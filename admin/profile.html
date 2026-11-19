@@ -93,6 +93,39 @@
       <button class="portal-btn" id="pass-btn" style="font-size:.78rem;padding:10px 22px;" onclick="savePassword()">Update Password</button>
     </div>
 
+    <!-- Two-step verification -->
+    <div class="editor-card" id="mfa-card">
+      <div class="editor-card-title">Two-step verification</div>
+      <p style="font-family:var(--fb);font-size:.82rem;color:var(--fog);line-height:1.6;margin:0 0 1rem;">
+        After your password, the portal will also ask for a 6-digit code from an authenticator app on your phone
+        (Google Authenticator, Microsoft Authenticator, etc.). A stolen password alone is then not enough to open the admin panel.
+      </p>
+      <div id="mfa-list" style="margin-bottom:1rem;font-family:var(--fb);font-size:.82rem;color:var(--cream);">Checking…</div>
+
+      <div id="mfa-setup" style="display:none;border-top:1px solid var(--border);padding-top:1rem;margin-bottom:1rem;">
+        <ol style="font-family:var(--fb);font-size:.82rem;color:var(--fog);line-height:1.7;margin:0 0 1rem 1.1rem;padding:0;">
+          <li>In your authenticator app tap <strong>+</strong> &rarr; <strong>Scan a QR code</strong>.</li>
+          <li>Scan the code below, then type the 6-digit code the app shows.</li>
+        </ol>
+        <div style="display:flex;gap:1.25rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem;">
+          <img id="mfa-qr" alt="QR code for your authenticator app" width="180" height="180" style="background:#fff;border-radius:8px;padding:8px;border:1px solid var(--border);">
+          <div style="font-family:var(--fb);font-size:.75rem;color:var(--fog2);max-width:260px;">
+            Can't scan? Choose <em>Enter a setup key</em> in the app and type:<br>
+            <code id="mfa-secret" style="display:inline-block;margin-top:.4rem;font-size:.8rem;letter-spacing:.08em;word-break:break-all;color:var(--cream);"></code>
+          </div>
+        </div>
+        <div class="field-group"><label class="flbl" for="mfa-code">6-digit code</label>
+          <input type="text" class="fi" id="mfa-code" inputmode="numeric" maxlength="6" placeholder="123456" autocomplete="one-time-code" style="max-width:180px;letter-spacing:.3em;text-align:center;"></div>
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap;">
+          <button class="portal-btn" id="mfa-verify-btn" style="font-size:.78rem;padding:10px 22px;" onclick="mfaVerify()">Verify &amp; turn on</button>
+          <button class="portal-btn-ghost" style="font-size:.78rem;" onclick="mfaCancel()">Cancel</button>
+        </div>
+      </div>
+
+      <div id="mfa-msg" class="auth-error" style="display:none;"></div>
+      <button class="portal-btn" id="mfa-start-btn" style="font-size:.78rem;padding:10px 22px;" onclick="mfaStart()">Set up authenticator app</button>
+    </div>
+
   </div>
 </main>
 </div>
@@ -112,7 +145,84 @@ document.addEventListener('portal:ready', () => {
   document.getElementById('p-name').value = window._profile.name;
   document.getElementById('profile-email').textContent = window._user.email;
   applyAvatar(window._profile.avatar_url, window._profile.name);
+  mfaRefresh();
 });
+
+/* ── Two-step verification (Supabase Auth TOTP) ───────────────────────── */
+let mfaPendingId = null;
+const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+const esc = s => String(s).replace(/[&<>"']/g, c => ESC_MAP[c]);
+
+async function mfaRefresh(){
+  const list = document.getElementById('mfa-list');
+  const startBtn = document.getElementById('mfa-start-btn');
+  const { data, error } = await supa.auth.mfa.listFactors();
+  if(error){ list.textContent = 'Could not load: ' + error.message; return; }
+  const on = (data.totp || []).filter(f => f.status === 'verified');
+  if(!on.length){
+    list.innerHTML = '<span style="color:var(--red);font-weight:600;">Off</span> — only your password protects this account.';
+    startBtn.textContent = 'Set up authenticator app';
+    return;
+  }
+  list.innerHTML = '<div style="color:var(--teal);font-weight:600;margin-bottom:.5rem;">On ✓</div>' + on.map(f => {
+    const added = new Date(f.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    return '<div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.55rem .75rem;border:1px solid var(--border);border-radius:6px;margin-bottom:.4rem;">'
+      + '<span>📱 ' + esc(f.friendly_name || 'Authenticator') + '<span style="color:var(--fog2);font-size:.72rem;"> · added ' + added + '</span></span>'
+      + '<button class="portal-btn-ghost" style="font-size:.7rem;padding:5px 12px;" data-factor="' + esc(f.id) + '">Remove</button></div>';
+  }).join('');
+  list.querySelectorAll('button[data-factor]').forEach(b => b.addEventListener('click', () => mfaRemove(b.dataset.factor, on.length)));
+  startBtn.textContent = 'Add another device';
+}
+
+async function mfaStart(){
+  const msg = document.getElementById('mfa-msg'); msg.style.display = 'none';
+  const name = prompt('Name this device (e.g. "Ajay phone"):', 'My phone');
+  if(name === null) return;
+  // Remove any half-finished setups first, so enrolment does not fail on a duplicate.
+  const { data: l } = await supa.auth.mfa.listFactors();
+  for(const f of (l?.all || []).filter(f => f.status !== 'verified')) await supa.auth.mfa.unenroll({ factorId: f.id });
+  const friendly = (name.trim() || 'Authenticator').slice(0, 40) + ' · ' + Date.now().toString(36).slice(-4);
+  const { data, error } = await supa.auth.mfa.enroll({ factorType: 'totp', friendlyName: friendly });
+  if(error){ showMsg(msg, error.message, 'error'); return; }
+  mfaPendingId = data.id;
+  document.getElementById('mfa-qr').src = data.totp.qr_code;
+  document.getElementById('mfa-secret').textContent = data.totp.secret;
+  document.getElementById('mfa-setup').style.display = 'block';
+  document.getElementById('mfa-start-btn').style.display = 'none';
+  document.getElementById('mfa-code').value = '';
+  document.getElementById('mfa-code').focus();
+}
+
+async function mfaVerify(){
+  const msg = document.getElementById('mfa-msg'); msg.style.display = 'none';
+  const code = document.getElementById('mfa-code').value.trim();
+  if(!/^[0-9]{6}$/.test(code)){ showMsg(msg, 'Enter the 6-digit code from your app.', 'error'); return; }
+  const btn = document.getElementById('mfa-verify-btn'); btn.disabled = true; btn.textContent = 'Verifying…';
+  const { error } = await supa.auth.mfa.challengeAndVerify({ factorId: mfaPendingId, code });
+  btn.disabled = false; btn.textContent = 'Verify & turn on';
+  if(error){ showMsg(msg, /invalid|expired/i.test(error.message) ? 'That code is not valid — wait for a fresh code and try again.' : error.message, 'error'); return; }
+  mfaPendingId = null;
+  document.getElementById('mfa-setup').style.display = 'none';
+  document.getElementById('mfa-start-btn').style.display = '';
+  toast('Two-step verification is on ✅');
+  mfaRefresh();
+}
+
+async function mfaCancel(){
+  if(mfaPendingId) await supa.auth.mfa.unenroll({ factorId: mfaPendingId });
+  mfaPendingId = null;
+  document.getElementById('mfa-setup').style.display = 'none';
+  document.getElementById('mfa-start-btn').style.display = '';
+}
+
+async function mfaRemove(id, count){
+  const warn = count <= 1 ? 'This is your only device — removing it turns two-step verification OFF. Continue?' : 'Remove this device?';
+  if(!confirm(warn)) return;
+  const { error } = await supa.auth.mfa.unenroll({ factorId: id });
+  if(error){ showMsg(document.getElementById('mfa-msg'), error.message, 'error'); return; }
+  toast('Device removed');
+  mfaRefresh();
+}
 
 function applyAvatar(url, name){
   const el = document.getElementById('profile-avatar');
