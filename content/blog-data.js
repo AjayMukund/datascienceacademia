@@ -18,7 +18,6 @@ const POSTS = [
   /* ── AWS vs Azure for data science (draft, Nov 2026) ── */
   {
     slug: 'aws-vs-azure-for-data-science',
-    draft: true,
     courses: ['aws', 'azure', 'mlops', 'p:microsoft-certification'],   // shown as 'Put it into practice'; course pages list this post back
     cover: 'cloud-and-bi-category-banner',
     title: 'AWS vs Azure for Data Science: Which Cloud Should You Learn First?',
@@ -87,7 +86,6 @@ const POSTS = [
   /* ── Computer vision projects for final-year students (draft, Nov 2026) ── */
   {
     slug: 'computer-vision-projects-final-year',
-    draft: true,
     courses: ['computer-vision', 'deep-learning', 'python', 'p:internship'],   // shown as 'Put it into practice'; course pages list this post back
     cover: 'advanced-ai-category-banner',
     title: '10 Computer Vision Project Ideas for Final-Year Students (That Stand Out in 2026)',
