@@ -80,7 +80,7 @@
           </div>
         </div>
         <div class="float-badge"><span class="fb-icon">🎓</span><div><div class="fb-v">Ph.D. faculty</div><div class="fb-l">Anna University</div></div></div>
-        <div class="float-badge tr"><span class="fb-icon">★</span><div><div class="fb-v">5.0 intern rating</div><div class="fb-l">15 testimonials</div></div></div>
+        <div class="float-badge tr"><span class="fb-icon">★</span><div><div class="fb-v">{{ site.google_rating }} on Google</div><div class="fb-l">{{ site.google_reviews }} reviews</div></div></div>
       </div>
     </div>
   </div>
@@ -280,7 +280,7 @@
         <div class="eyebrow" data-r>Intern testimonials</div>
         <h2 class="sh" id="test-title" data-r="1">What our students <em>say</em></h2>
       </div>
-      <a class="link-arrow" href="testimonials.html" data-r="2">Read all 15 reviews <span class="arr">&rarr;</span></a>
+      <a class="link-arrow" href="testimonials.html" data-r="2">★ {{ site.google_rating }} from {{ site.google_reviews }} Google reviews — read more <span class="arr">&rarr;</span></a>
     </div>
     <div class="grid grid-3">
       {% for name in ['Praiselin P','Saravana Pandian K','Divya Chougule'] %}
