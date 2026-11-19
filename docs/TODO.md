@@ -30,11 +30,10 @@ Legend: **You** = needs your account/decision · **Claude** = ask and it gets do
   | "10+ colleges represented", "100% would recommend" | `src/pages/testimonials.html` | /testimonials.html |
   | "DSA AI Mastery Certificate — recognised by hiring partners" | `programmes-data.js` → `ai-mastery.outcomes` | /programmes/ai-mastery.html |
   | Director shown as "DS" (unnamed) on About, but Ajay Mukund S is named on Blog/Projects/Testimonials | `src/pages/about.html` | /about.html |
-- ☐ **You · Test the enquiry form end-to-end** — submit https://datascienceacademia.in/contact.html
-  once and confirm the Formspree email (`https://formspree.io/f/xdaypadg`) arrives at the right inbox.
-  Also tap the WhatsApp button on a phone.
-- ☐ **You · Chatbase assistant** — `docs/Company_Info.txt` was updated (18 courses, new page URLs). If the
-  assistant's knowledge base was built from it, re-upload the file in Chatbase so answers match the site.
+- ☑ **You · Test the enquiry form end-to-end** — done 2026-11-19, arrives at info@ in Zoho.
+  ☐ Still to do: tap the WhatsApp button on a phone.
+- ☑ **You · Chatbase assistant** — `docs/Company_Info.txt` re-uploaded 2026-11-19 (auto-synced; Playground
+  answers on Code Champs ages, AI-901 and the office address checked OK). Re-upload whenever Company_Info.txt changes.
 
 ## 2. Next — measurement and automation
 
@@ -62,11 +61,12 @@ Bought 2026-11-10 at Hostinger (`.in` + `.com`, owner Ajay Mukund S, expire 2029
 - ☑ `datascienceacademia.com` → 301 to `https://datascienceacademia.in` (Hostinger *Redirects*).
 - ☑ Zoho Mail Free (India): mailbox `ajay@`, aliases `info@`, `admissions@`, `careers@`, `internships@`;
   MX, SPF, DKIM (`zmail`, 2048-bit, verified), DMARC `p=none` (reports to `ajay@`). Site shows `info@`.
-- ☐ **Shelved — You** — Formspree (form `xdaypadg`) → *Target email* → `info@datascienceacademia.in`, confirm
-  in Zoho, then send a test enquiry and check it lands in *Enquiries* (not Zoho's *Notification* folder).
+- ☑ Formspree (form `xdaypadg`) → *Workflow* → *Email* → Send to `info@datascienceacademia.in` (verified under
+  *Linked Emails*; free plan = one recipient). Test enquiry from /contact.html arrived in Zoho 2026-11-19.
+  Keep CAPTCHA disabled (the contact form submits via fetch).
 - ☐ **Shelved — You → Claude** — Google Search Console: *URL-prefix* property `https://datascienceacademia.in/`,
   verify with the **HTML file** method (send Claude the file name; avoids Hostinger DNS), submit `sitemap.xml`.
-- ☐ **You** — update Google Business Profile link, social bios, directories, Chatbase (`docs/Company_Info.txt`);
+- ☐ **You** — update Google Business Profile link, social bios, directories (Chatbase done 2026-11-19);
   rebuild the student app (`dsa_app`) with the new certificate URL.
 - ☐ **Claude, ~Dec 2026** — read the DMARC reports; if clean, tighten to `p=quarantine`. If Hostinger's
   nameservers still serve TXT records intermittently, move DNS (not the domain) to Cloudflare.
