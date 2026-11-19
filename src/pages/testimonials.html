@@ -147,7 +147,6 @@ dialog.lb-dialog{max-width:min(860px,94vw)}
     <div class="grid grid-2">
       {% for g in google_quotes %}
       <blockquote class="quote-card" data-r="{{ loop.index0 % 2 }}">
-        <div class="stars" role="img" aria-label="Rated 5 out of 5 stars">★★★★★</div>
         <p class="quote-text">{{ g.quote }}</p>
         <footer class="quote-author">
           <span class="avatar" aria-hidden="true">{{ g.name | initials }}</span>
