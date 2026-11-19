@@ -31,7 +31,7 @@ Legend: **You** = needs your account/decision · **Claude** = ask and it gets do
   | "DSA AI Mastery Certificate — recognised by hiring partners" | `programmes-data.js` → `ai-mastery.outcomes` | /programmes/ai-mastery.html |
   | Director shown as "DS" (unnamed) on About, but Ajay Mukund S is named on Blog/Projects/Testimonials | `src/pages/about.html` | /about.html |
 - ☑ **You · Test the enquiry form end-to-end** — done 2026-11-19, arrives at info@ in Zoho.
-  ☐ Still to do: tap the WhatsApp button on a phone.
+  WhatsApp button tested on a phone 2026-11-19 ✓.
 - ☑ **You · Chatbase assistant** — `docs/Company_Info.txt` re-uploaded 2026-11-19 (auto-synced; Playground
   answers on Code Champs ages, AI-901 and the office address checked OK). Re-upload whenever Company_Info.txt changes.
 
