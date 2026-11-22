@@ -69,7 +69,7 @@ SITE = {
     "hours": "Mon – Sat 9 AM – 9 PM · Sun 11 AM – 4 PM IST",
     "social": {
         "linkedin": "https://www.linkedin.com/company/data-science-academia/",
-        "youtube": "https://youtube.com/@datascienceacademia3805",
+        "youtube": "https://www.youtube.com/@Data_Science_Academia",
         "instagram": "https://www.instagram.com/data_science_academia",
     },
     "founded": "2019",

@@ -91,7 +91,7 @@ Enquire: datascienceacademia.in · info@datascienceacademia.in · +91 91764 9881
 
 ---
 
-## 4. YouTube — @datascienceacademia3805
+## 4. YouTube — @Data_Science_Academia (handle changed 2026-11-22)
 
 Where: studio.youtube.com → **Customisation → Profile** (description) and **Links**.
 
