@@ -173,7 +173,7 @@ def make(name: str, title: str, kicker: str, image: Path | None, subtitle: str =
     # bottom strip
     d.line([(72, H - 80), (650, H - 80)], fill=GOLD, width=2)
     d.text((72, H - 64), "datascienceacademia.in", font=F_BOLD(20), fill=IVORY)
-    cred = "AICTE-aligned · MSME Registered · Est. 2022"
+    cred = "AICTE-aligned · MSME Registered · Est. 2019"
     d.text((72, H - 36), cred, font=F_BODY(16), fill=MIST)
     OUT.mkdir(parents=True, exist_ok=True)
     im.save(OUT / f"{name}.jpg", "JPEG", quality=84, optimize=True, progressive=True)
