@@ -38,6 +38,7 @@
 {% block head_extra %}{% endblock %}
 {{ site_jsonld }}
 {% block jsonld %}{% endblock %}
+{% if site.clarity_id %}<script>(function(c,l,a,r,i){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};function go(){var t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";l.head.appendChild(t)}if(l.readyState==="complete")setTimeout(go,1500);else c.addEventListener("load",function(){setTimeout(go,1500)})})(window,document,"clarity","script","{{ site.clarity_id }}");</script>{% endif %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
 <a class="skip-link" href="#main">Skip to content</a>
