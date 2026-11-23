@@ -37,7 +37,7 @@ Legend: **You** = needs your account/decision · **Claude** = ask and it gets do
 
 ## 2. Next — measurement and automation
 
-- ☐ **You → Claude · Analytics** — decide GA4 (https://analytics.google.com) or Plausible
+- ☑ **Analytics** (2026-11-23): GA4 G-KK7SGHVKSE via Google tag GTM-K7TB3NBD, key events generate_lead / whatsapp_click / phone_click, linked to Search Console; Microsoft Clarity zi01v79mv9; Bing Webmaster + IndexNow; privacy.html. Was: decide GA4 (https://analytics.google.com) or Plausible
   (https://plausible.io). Send the measurement ID; Claude wires it into `base.html` with events for
   form submit, WhatsApp click, phone tap and "Enrol / enquire" clicks. Until then PageSpeed's
   "real users" panel stays empty and enquiries can't be attributed to pages.
