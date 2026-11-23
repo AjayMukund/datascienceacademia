@@ -10,13 +10,13 @@ Legend: **You** = needs your account/decision · **Claude** = ask and it gets do
 
 ## 1. This week — indexing, local search, trust (highest impact)
 
-- ☐ **You · Google Search Console** — add a *URL-prefix* property for
+- ☑ **You · Google Search Console** — done 2026-11-19 (see §3). Was: add a *URL-prefix* property for
   `https://datascienceacademia.in/`, then **Sitemaps → submit**
   `https://datascienceacademia.in/sitemap.xml`.
   https://search.google.com/search-console
   If you choose the *HTML tag* verification, send the `google-site-verification` token → Claude adds
   it to `src/templates/base.html` and redeploys.
-- ☐ **You · Bing Webmaster Tools** — "Import from Google Search Console".
+- ☑ **You · Bing Webmaster Tools** — datascienceacademia.in added 2026-11-23, sitemap 53 URLs, IndexNow; Bing Places imported from GBP (weekly sync).
   https://www.bing.com/webmasters
 - ☐ **You · Google Business Profile** — new address (Rajakilpakkam, 600073) set Nov 2026 — confirm the listing shows it; keep name, address,
   phone (+91 91764 98814) and hours (Mon–Sat 9:00–19:00) identical to the site.
@@ -45,7 +45,7 @@ Legend: **You** = needs your account/decision · **Claude** = ask and it gets do
   on every push and deploys the output (Pages source switches from "branch" to "GitHub Actions").
   Removes the "remember to run build.py" step and lets you edit `*-data.js` in the GitHub web UI.
   Requires your OK to change Settings → Pages → Source.
-- ☐ **Claude · Periodic checks** — re-run PageSpeed monthly; run `python tools/check_site.py` after
+- ☐ **Claude · Periodic checks** — (last: 2026-11-23, CLS fix + analytics on interaction) re-run PageSpeed monthly; run `python tools/check_site.py` after
   every content change (0 errors expected).
 
 ## 3. Custom domain — datascienceacademia.in
@@ -79,12 +79,12 @@ Bought 2026-11-10 at Hostinger (`.in` + `.com`, owner Ajay Mukund S, expire 2029
 
 ## 4. Content & SEO growth (compounds more than further tuning)
 
-- ☐ **Blog cadence** — last post is April 2025. Aim for 2 posts/month targeting real searches, e.g.
+- ☐ **Blog cadence** — 8 posts Nov 2026 (incl. fees in Chennai + AICTE internships, 2026-11-23). Keep ~2 posts/month. Next ideas: Power BI interview questions for freshers; choosing a final-year ML project. Original note: aim for 2 posts/month targeting real searches, e.g.
   "data science course fees in Chennai", "AICTE internship for CSE students — how it works",
   "Power BI vs Tableau for analysts", "Python vs R for beginners", "how to prepare for AI-900".
   Add to the top of `content/blog-data.js` (newest first) → rebuild → push. New posts get their own
   page, OG image and sitemap entry automatically.
-- ☐ **Course pages** — per-course FAQ (3–4 questions), "careers this leads to", "who this is for";
+- ◐ **Course pages** — FAQs, roles and "who this is for" live 2026-11-18; still to do:
   batch start dates when known (also enables `CourseInstance.startDate` rich results).
 - ☐ **Fees** — if you decide to publish fees, add `price`/`priceCurrency` to the Course `offers`
   in `src/templates/detail-course.html` (currently deliberately omitted).
