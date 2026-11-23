@@ -24,7 +24,7 @@ Legend: **You** = needs your account/decision · **Claude** = ask and it gets do
 - ☐ **You · Refresh social previews** for links shared before the rebuild:
   LinkedIn https://www.linkedin.com/post-inspector/ · Facebook/Instagram
   https://developers.facebook.com/tools/debug/ ("Scrape again").
-- ☐ **You · Confirm three inherited claims** (edit or keep):
+- ☑ **Inherited claims** — owner confirmed 2026-11-23 that "10+ colleges", "100% would recommend" and "recognised by hiring partners" are true (kept). Was: confirm (edit or keep):
   | Claim | Where | Live page |
   |---|---|---|
   | "10+ colleges represented", "100% would recommend" | `src/pages/testimonials.html` | /testimonials.html |

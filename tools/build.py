@@ -506,6 +506,7 @@ Disallow: /cc-level.html
 Disallow: /src/
 Disallow: /tools/
 Disallow: /docs/
+Allow: /docs/Company_Info.txt
 Disallow: /archive/
 Disallow: /apps/
 Disallow: /marketing/
