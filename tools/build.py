@@ -416,7 +416,8 @@ def build_pages() -> None:
     print("Root pages")
     freq = {"index.html": ("weekly", "1.0"), "courses.html": ("weekly", "0.9"), "programmes.html": ("monthly", "0.9"),
             "codechamps.html": ("monthly", "0.8"), "about.html": ("monthly", "0.8"), "contact.html": ("monthly", "0.7"),
-            "projects.html": ("monthly", "0.7"), "testimonials.html": ("monthly", "0.7"), "blog.html": ("weekly", "0.8")}
+            "projects.html": ("monthly", "0.7"), "testimonials.html": ("monthly", "0.7"), "blog.html": ("weekly", "0.8"),
+            "privacy.html": ("yearly", "0.3")}
     for page in sorted((SRC / "pages").glob("*.html")):
         name = page.name
         cf, pr = freq.get(name, (None if name == "404.html" else "monthly", "0.5"))

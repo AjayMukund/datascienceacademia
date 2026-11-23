@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Privacy Policy | Data Science Academia{% endblock %}
+{% block description %}How Data Science Academia, Chennai, collects, uses and protects your information: enquiry form, website analytics (Microsoft Clarity), chat assistant, student portal and certificate verification.{% endblock %}
+{% block body_class %}page-privacy{% endblock %}
+
+{% block head_extra %}
+<style>
+.privacy-body{max-width:760px}
+.privacy-body table{width:100%;border-collapse:collapse;font-size:.92rem}
+.privacy-body th,.privacy-body td{text-align:left;vertical-align:top;padding:.65rem .75rem;border-bottom:1px solid var(--border)}
+.privacy-body th{color:var(--cream);font-weight:600}
+.privacy-updated{font-size:.85rem;color:var(--fog2)}
+@media (max-width:640px){.privacy-body table,.privacy-body tbody,.privacy-body tr,.privacy-body td{display:block}.privacy-body thead{display:none}.privacy-body td{border:0;padding:.2rem 0}.privacy-body tr{border-bottom:1px solid var(--border);padding:.7rem 0}}
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="page-hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumbs">
+        <li><a href="{{ rel }}index.html">Home</a></li>
+        <li aria-current="page">Privacy Policy</li>
+      </ol>
+    </nav>
+    <div class="eyebrow" data-r>Your information</div>
+    <h1 class="sh sh-lg" id="page-title" data-r="1">Privacy <em>Policy</em></h1>
+    <p class="page-hero-sub" data-r="2">What we collect when you use this website or our student portal, why we collect it, who processes it for us, and how to ask us to see, correct or delete it. In short: we collect only what we need to answer you and teach you, we never sell it, and we don't run advertising.</p>
+  </div>
+</section>
+
+<section class="section-sm" aria-label="Privacy policy">
+  <div class="container">
+    <div class="prose privacy-body">
+      <p class="privacy-updated">Last updated: 23 November 2026</p>
+
+      <h2>Who we are</h2>
+      <p>This website, <a href="{{ site.url }}/">{{ site.url | replace('https://', '') }}</a>, is run by {{ site.legal }}, {{ site.address.street }}, {{ site.address.locality }}, {{ site.address.region }} {{ site.address.postal }}, India. For any privacy question or request, email <a href="mailto:{{ site.email }}">{{ site.email }}</a> or call {{ site.phone }}.</p>
+
+      <h2>What we collect and why</h2>
+      <table>
+        <thead><tr><th>When you…</th><th>We receive</th><th>We use it to</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Send the enquiry form</strong></td><td>Your name, email, phone number (optional), enquiry type, organisation, course of interest and message</td><td>Reply to you about courses, batches, internships or partnerships</td></tr>
+          <tr><td><strong>Call, email or WhatsApp us</strong></td><td>What you choose to share, plus your number or email address</td><td>Answer you and arrange enrolment</td></tr>
+          <tr><td><strong>Browse the website</strong></td><td>Anonymous usage data: pages visited, clicks, scrolling, device and browser type, approximate location</td><td>Understand which pages help visitors and fix the ones that don't</td></tr>
+          <tr><td><strong>Chat with the website assistant</strong></td><td>The messages you type</td><td>Answer your question about our courses</td></tr>
+          <tr><td><strong>Use the student portal</strong></td><td>Name, email, password (stored encrypted), optional profile photo, enrolments, lesson progress, quiz answers, comments and certificates</td><td>Run your account, track your progress and issue certificates</td></tr>
+          <tr><td><strong>Verify a certificate</strong></td><td>The certificate ID you enter</td><td>Show whether the certificate is genuine, with the holder's name, course and issue date</td></tr>
+        </tbody>
+      </table>
+      <p>We do not sell, rent or trade your information, and we do not use it for advertising.</p>
+
+      <h2>Services that process data for us</h2>
+      <ul>
+        <li><strong>Formspree</strong> delivers enquiry-form submissions to our inbox.</li>
+        <li><strong>Zoho Mail</strong> hosts our email.</li>
+        <li><strong>Microsoft Clarity</strong> records anonymised visits (heatmaps and session replays) so we can improve the site. It masks everything typed into forms, so your name, email and phone number are never captured. Microsoft's privacy statement: <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">privacy.microsoft.com</a>.</li>
+        <li><strong>Chatbase</strong> runs the chat assistant. It loads only after you interact with the page. Please don't share sensitive personal details in the chat.</li>
+        <li><strong>Supabase</strong> hosts student-portal accounts and learning records.</li>
+        <li><strong>GitHub Pages</strong> hosts this website, and <strong>jsDelivr</strong> serves some code for the student portal. Like any web host, they see your IP address when they deliver a page.</li>
+      </ul>
+      <p>Some of these providers store data outside India. Each is bound by its own privacy and security commitments.</p>
+
+      <h2>Cookies and storage on your device</h2>
+      <ul>
+        <li><strong>Theme preference:</strong> if you switch between light and dark mode, your choice is saved in your browser.</li>
+        <li><strong>Offline cache:</strong> the site saves some of its own files on your device so pages load faster on later visits.</li>
+        <li><strong>Analytics cookies:</strong> Microsoft Clarity sets cookies (such as <code>_clck</code> and <code>_clsk</code>) to recognise repeat visits. You can block or delete them in your browser settings, and the site will still work.</li>
+        <li><strong>Portal sign-in:</strong> signing in to the student portal stores a session token so you stay signed in.</li>
+      </ul>
+
+      <h2>Children</h2>
+      <p>Code Champs is for students aged 8 to 17. Enrolment details for a child should come from a parent or guardian, and we use them only to run the programme. If you think a child has sent us information without a parent's consent, contact us and we'll delete it.</p>
+
+      <h2>How long we keep it</h2>
+      <p>We keep enquiries for as long as needed to answer and follow up, and student records for as long as your account is active. We keep certificate records so that certificates can still be verified later. When information is no longer needed, we delete it.</p>
+
+      <h2>Your rights</h2>
+      <p>Under India's Digital Personal Data Protection Act, 2023, you can ask us to show you the personal data we hold about you, correct it, delete it, or stop using it where you gave consent. Email <a href="mailto:{{ site.email }}">{{ site.email }}</a> from the address you used with us. We'll reply within 30 days.</p>
+      <p><strong>Grievance contact:</strong> {{ site.author.name }}, Founder, {{ site.name }} — <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p>
+
+      <h2>Changes to this policy</h2>
+      <p>If we change how we handle information, for example by adding a new analytics tool, we'll update this page and the date at the top.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}
