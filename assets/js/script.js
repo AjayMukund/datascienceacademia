@@ -216,6 +216,8 @@
       if (!m) return;
       var target = parseInt(m[2].replace(/,/g, ''), 10), pre = m[1], suf = m[3];
       var start = target > 1900 && target < 2100 ? target - 12 : 0, t0 = performance.now(), dur = 1600;
+      // lock the final width so counting digits never reflow the row (was causing CLS on the home hero)
+      el.style.minWidth = el.getBoundingClientRect().width + 'px';
       (function frame(now) {
         var p = Math.min((now - t0) / dur, 1);
         el.textContent = pre + Math.round(start + (target - start) * ease(p)) + suf;
