@@ -31,7 +31,7 @@ jobs:
         run: |
           mkdir -p _site
           # root files that must be served from the site root
-          cp *.html CNAME .nojekyll robots.txt sitemap.xml llms.txt manifest.json sw.js favicon.ico _site/
+          cp *.html CNAME .nojekyll robots.txt sitemap.xml llms.txt fc8eb34d40e3e051d52465939f4a4414.txt manifest.json sw.js favicon.ico _site/
           # served folders
           cp -r assets content courses programmes blog codechamps student admin _site/
           mkdir -p _site/docs && cp docs/Company_Info.txt _site/docs/      # linked from llms.txt
