@@ -15,6 +15,144 @@ const CAT_STYLE = {
 };
 
 const POSTS = [
+  /* ── Data science course fees in Chennai (Nov 2026) ── */
+  {
+    slug: 'data-science-course-fees-chennai',
+    courses: ['python', 'machine-learning', 'power-bi', 'p:ai-mastery'],   // shown as 'Put it into practice'; course pages list this post back
+    cover: 'foundation-category-banner',
+    title: 'Data Science Course Fees in Chennai: What to Expect in 2026',
+    seoTitle: 'Data Science Course Fees in Chennai (2026)',
+    category: 'career',
+    catLabel: 'Career',
+    date: '2026-11-23',
+    dateDisplay: 'November 23, 2026',
+    readTime: '7 min read',
+    excerpt: 'Data science course fees in Chennai range from a few thousand rupees to several lakhs. Here is what each price band usually buys, what drives the fee up, and the questions to ask before you pay.',
+    body: `
+<p>Search for a data science course in Chennai and you will see fees from a few thousand rupees to several lakhs for what looks like the same subject. The difference is rarely the syllabus: almost every course lists Python, SQL, statistics and machine learning. The difference is <strong>how much teaching, feedback and project work</strong> you actually get. This guide explains the price bands, what moves a fee up or down, and how to compare courses fairly.</p>
+
+<h2>The price bands, roughly</h2>
+<p>These ranges come from fees that institutes and course aggregators publish for Chennai in 2026. They are wide on purpose. Treat them as a map, not a quote, and always confirm the current fee with the provider.</p>
+<ul>
+<li><strong>Self-paced online courses: roughly ₹500 to ₹25,000.</strong> Recorded videos, quizzes and sometimes a certificate. Good value if you are disciplined; the catch is that nobody checks your code.</li>
+<li><strong>Short live courses (one to three months): roughly ₹15,000 to ₹50,000.</strong> A single subject such as Python, SQL, Power BI or machine learning, taught live online or in a classroom, with assignments.</li>
+<li><strong>Job-focused certificate programmes (six to twelve months): roughly ₹50,000 to ₹1,50,000.</strong> Several subjects in sequence, capstone projects, mentoring and placement support. Classroom versions usually cost more than online ones.</li>
+<li><strong>University PG diplomas and degrees: from about ₹2,00,000 upwards.</strong> A formal qualification, an academic calendar and usually a longer commitment.</li>
+</ul>
+<p>Prices quoted as "discounted from" a much higher figure are common. Compare the price you would actually pay, including GST, not the crossed-out number.</p>
+
+<h2>What pushes the fee up (and whether it is worth it)</h2>
+<ul>
+<li><strong>Live teaching hours.</strong> The biggest cost for any institute is a trainer's time. Ask for the number of live hours, not the number of "modules".</li>
+<li><strong>Batch size.</strong> A batch of 10 gets questions answered; a batch of 150 gets a webinar. Small batches cost more and are usually worth it for beginners.</li>
+<li><strong>Who teaches.</strong> Practitioners and researchers cost more than recent graduates reading slides. Ask who will teach your batch, not who appears in the brochure.</li>
+<li><strong>Project feedback.</strong> Reviewing each student's code and project takes time. If a course includes real feedback on your work, that alone can justify a higher fee.</li>
+<li><strong>Classroom space.</strong> In-person classes add rent and travel. Some students learn much better in a room; others are fine online. Pay for the classroom only if you will use it.</li>
+<li><strong>Placement support.</strong> Mock interviews, résumé reviews and referrals are valuable. "100% placement guarantee" promises usually come with conditions; read them before you pay.</li>
+<li><strong>Exam vouchers.</strong> Some fees include a Microsoft or AWS exam voucher; otherwise the exam fee is paid separately. Check which applies.</li>
+</ul>
+
+<h2>What a low fee usually leaves out</h2>
+<p>A cheap course is not a bad course, and many excellent free and low-cost resources exist. But a low price usually means one or more of these is missing:</p>
+<ul>
+<li>Someone to unblock you when your code does not run at 11 pm.</li>
+<li>Feedback on your projects, so you know whether they would impress an interviewer.</li>
+<li>A fixed schedule and a batch that keeps you going in month three, when most self-learners stop.</li>
+</ul>
+<p>If you already have the discipline and a friend who codes, a self-paced course plus your own projects can work well. If you have tried that and stalled, paying for structure is often the cheaper route in the end.</p>
+
+<h2>Ten questions to ask before you pay</h2>
+<ol>
+<li>How many <strong>live hours</strong> of teaching are included, and how many are recorded?</li>
+<li>What is the <strong>batch size</strong>?</li>
+<li><strong>Who</strong> teaches my batch, and what have they built or published?</li>
+<li>How many <strong>projects</strong> will I complete, and does someone review my code?</li>
+<li>Can I see <strong>past student projects</strong> on GitHub?</li>
+<li>Is the fee <strong>inclusive of GST</strong>, and are exam vouchers included?</li>
+<li>Are <strong>instalments</strong> available, and are there interest or processing charges?</li>
+<li>What is the <strong>refund policy</strong>, in writing?</li>
+<li>If I miss classes, can I <strong>join a later batch</strong> or watch recordings?</li>
+<li>What exactly does <strong>placement support</strong> include?</li>
+</ol>
+<blockquote>Compare courses on cost per live hour and on the projects you will finish, not on the length of the syllabus.</blockquote>
+
+<h2>Free ways to start before you spend anything</h2>
+<ul>
+<li>Learn basic Python and SQL from free tutorials for two or three weeks. If you enjoy it, a paid course will take you much further; if you do not, you have saved the fee.</li>
+<li>Read our <a href="python-data-science-roadmap.html">Python for data science roadmap</a> and the <a href="data-analyst-vs-data-scientist-india.html">data analyst vs data scientist</a> guide to decide which direction you want.</li>
+<li>Attend a free demo class at any institute you are considering, and judge the teaching, not the sales pitch.</li>
+</ul>
+
+<h2>Our fees</h2>
+<p>At Data Science Academia, fees depend on the course or programme and on whether you join online or at our centre near Tambaram, Chennai. You can take a single course such as <a href="../courses/python.html">Python</a>, <a href="../courses/machine-learning.html">Machine Learning</a> or <a href="../courses/power-bi.html">Power BI</a>, or the full <a href="../programmes/ai-mastery.html">12-month AI Mastery Track</a>. <a href="../contact.html">Contact us</a> for current fees and batch dates, and ask us every question on the list above.</p>
+    `
+  },
+
+  /* ── AICTE internships for CSE students (Nov 2026) ── */
+  {
+    slug: 'aicte-internships-cse-students',
+    courses: ['python', 'machine-learning', 'sql', 'p:internship'],   // shown as 'Put it into practice'; course pages list this post back
+    cover: 'analytics-category-banner',
+    title: 'AICTE Internships for CSE Students: How They Work and How to Choose One',
+    seoTitle: 'AICTE Internships for CSE Students: A Guide',
+    category: 'career',
+    catLabel: 'Career',
+    date: '2026-11-23',
+    dateDisplay: 'November 23, 2026',
+    readTime: '7 min read',
+    excerpt: 'Why your engineering college asks for internships, how the AICTE guidelines count them, where to find one, and how to tell a useful data science internship from a certificate mill.',
+    body: `
+<p>If you study engineering at an AICTE-approved college, at some point your department will ask for an internship certificate. Many students then scramble for "any internship" in the last few weeks before the deadline. Planned properly, an internship is the most useful line on a fresher's résumé. This guide explains how internships fit into your degree and how to choose one that actually teaches you something.</p>
+
+<h2>Why your college asks for internships</h2>
+<p>The All India Council for Technical Education (AICTE) published an internship policy for engineering programmes in 2019. Its model guidelines suggest that a B.E. or B.Tech student completes internships and related activities worth <strong>14 to 20 credits</strong> over the degree, roughly <strong>600 to 700 hours</strong> in total, usually during the summer breaks (<a href="https://aicte.gov.in/sites/default/files/Aicte%20Internship%20Policy-%2002.04.2019.pdf" target="_blank" rel="noopener">AICTE Internship Policy</a>). Diploma students have a smaller requirement.</p>
+<p>These are guidelines. Each university, including Anna University and its affiliated colleges, sets its own rules on how many internships you need, when, and how they are assessed. <strong>Your department's regulations are the ones that count</strong>, so check them first.</p>
+
+<h2>Types of internships that usually count</h2>
+<ul>
+<li><strong>Industry internships</strong> at a company, on site or remote.</li>
+<li><strong>Training internships</strong> at an institute or training partner, where you learn a skill and complete a project under a mentor.</li>
+<li><strong>Research internships</strong> at a university, a research lab or with a faculty guide.</li>
+<li><strong>Virtual internships</strong> run through industry partners, often listed on the AICTE portal.</li>
+<li><strong>Activities inside your own college</strong>, such as projects and workshops, where your university allows them.</li>
+</ul>
+<p>Whether a particular internship counts is your college's decision. Ask your internship coordinator before you start, not after.</p>
+
+<h2>Where to find one</h2>
+<ul>
+<li><strong>The AICTE Internship Portal</strong> (<a href="https://internship.aicte-india.org/" target="_blank" rel="noopener">internship.aicte-india.org</a>) lists internships from companies, government bodies and training partners. Registration is free, so be wary of anyone who charges a fee "for AICTE registration".</li>
+<li><strong>Your college's placement or internship cell</strong>, which often has tie-ups with local companies.</li>
+<li><strong>Faculty and seniors.</strong> Research groups and start-ups founded by alumni frequently take interns.</li>
+<li><strong>Company careers pages and LinkedIn</strong> for larger firms' summer internship programmes, which open months in advance.</li>
+</ul>
+
+<h2>How to tell a good internship from a certificate mill</h2>
+<p>Some "internships" are a set of recorded videos followed by a certificate. They may satisfy a requirement on paper, but they teach little, and interviewers can tell. Look for these signs of a real one:</p>
+<ul>
+<li><strong>A named mentor</strong> who reviews your work, not just an email address.</li>
+<li><strong>A defined project</strong> with a deliverable you could show in an interview.</li>
+<li><strong>Regular check-ins</strong>, such as weekly reviews where you discuss progress and problems.</li>
+<li><strong>An offer letter and a certificate</strong> that state your dates, domain and project, so your college can verify them.</li>
+<li><strong>Clear terms</strong> on duration, hours and any fee, in writing, before you start.</li>
+</ul>
+<p>Be cautious when a provider promises a certificate without any work, sells "experience letters" for internships you did not do, or cannot tell you who your mentor will be.</p>
+
+<h2>Making a data science internship count</h2>
+<p>For CSE, IT and AI &amp; Data Science students, a data science internship is one of the most useful choices, because the project can carry straight into your final-year work and your résumé. To get the most out of it:</p>
+<ol>
+<li><strong>Learn the basics first:</strong> Python, SQL and basic statistics. You will learn far more in the internship if you are not stuck on syntax.</li>
+<li><strong>Pick one domain:</strong> analytics, machine learning, computer vision, or NLP and generative AI. Depth beats a tour of everything.</li>
+<li><strong>Keep a work log.</strong> Note what you did each day. Colleges often ask for a report, and the log makes it easy to write.</li>
+<li><strong>Put the project on GitHub</strong> with a clear README, and add it to your LinkedIn profile.</li>
+<li><strong>Ask for feedback before the last week</strong>, while there is still time to act on it.</li>
+</ol>
+<blockquote>An internship you can explain in detail is worth more than three certificates you cannot.</blockquote>
+
+<h2>Internships with us</h2>
+<p>Our <a href="../programmes/internship.html">internship programme</a> is aligned with NEP 2020 and AICTE guidelines and runs in rolling monthly cohorts, online or hybrid, for one to two months. You choose a domain (machine learning, data analytics, Python and SQL, computer vision, or NLP and generative AI), work on a real project with a mentor, and receive an offer letter and a DSA Internship Certificate. If you need the basics first, start with <a href="../courses/python.html">Python</a> or <a href="../courses/sql.html">SQL</a>. Our centre is near Tambaram, Chennai; <a href="../contact.html">contact us</a> for the next cohort.</p>
+    `
+  },
+
   /* ── AWS vs Azure for data science (draft, Nov 2026) ── */
   {
     slug: 'aws-vs-azure-for-data-science',
