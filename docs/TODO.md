@@ -106,6 +106,7 @@ python tools/build.py                        # ALWAYS after editing src/ or cont
 python tools/check_site.py                   # must report 0 errors
 python tools/serve.py                        # preview http://127.0.0.1:8765/
 git add -A && git commit -m "…" && git push  # deploy (Pages rebuilds in ~1–2 min)
+python tools/indexnow.py                     # after the deploy: tell Bing which pages changed
 ```
 
 - Content lives in `content/courses-data.js`, `programmes-data.js`, `blog-data.js`, `cc-levels-data.js`,
