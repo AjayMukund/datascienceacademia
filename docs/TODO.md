@@ -70,7 +70,7 @@ Bought 2026-11-10 at Hostinger (`.in` + `.com`, owner Ajay Mukund S, expire 2029
 - ☑ Google Business Profile (2026-11-19): description, opening date, hours, address 52/1A, website; all 61
   unreplied reviews answered; site shows 4.9 ★ / 91 reviews (`SITE["google_rating"/"google_reviews"]` — update
   when they change) + "Review us on Google" in the footer. Newest review is Dec 2024 → ask 2025–26 students.
-- ☐ **You** — social bios + directories from `docs/listings-bios.md` (Instagram ☑ + LinkedIn ☑ 2026-11-22; YouTube, Justdial open);
+- ☐ **You** — social bios + directories from `docs/listings-bios.md` (Instagram, LinkedIn, YouTube ☑ 2026-11-22; Justdial paid plan ₹54k/yr declined — free listing only if offered);
   rebuild the student app (`dsa_app`) with the new certificate URL.
 - ☐ **Claude, ~Dec 2026** — read the DMARC reports; if clean, tighten to `p=quarantine`. If Hostinger's
   nameservers still serve TXT records intermittently, move DNS (not the domain) to Cloudflare.
