@@ -38,6 +38,7 @@
 {% block head_extra %}{% endblock %}
 {{ site_jsonld }}
 {% block jsonld %}{% endblock %}
+{% if site.google_tag %}<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());(function(w,d){function go(){var s=d.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtm.js?id={{ site.google_tag }}';d.head.appendChild(s)}if(d.readyState==='complete')setTimeout(go,300);else w.addEventListener('load',function(){setTimeout(go,300)});d.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.getAttribute('href'),t=(a.textContent||'').trim().slice(0,60);if(/wa\.me|whatsapp\.com/.test(h))gtag('event','whatsapp_click',{link_text:t});else if(h.indexOf('tel:')===0)gtag('event','phone_click',{link_text:t});else if(h.indexOf('mailto:')===0)gtag('event','email_click',{link_text:t});else if(/(^|\/)contact\.html/.test(h))gtag('event','enquire_click',{link_text:t,page:location.pathname})},true)})(window,document);</script>{% endif %}
 {% if site.clarity_id %}<script>(function(c,l,a,r,i){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};function go(){var t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";l.head.appendChild(t)}if(l.readyState==="complete")setTimeout(go,1500);else c.addEventListener("load",function(){setTimeout(go,1500)})})(window,document,"clarity","script","{{ site.clarity_id }}");</script>{% endif %}
 </head>
 <body class="{% block body_class %}{% endblock %}">

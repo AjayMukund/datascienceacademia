@@ -465,6 +465,7 @@
         form.classList.add('hidden');
         successEl.classList.remove('hidden');
         successEl.focus();
+        if (window.gtag) window.gtag('event', 'generate_lead', { form: 'contact', enquiry_type: (form.elements.type || {}).value || '', interest: (form.elements.interest || {}).value || '' });
       })
       .catch(function () {
         errorEl.classList.remove('hidden');
