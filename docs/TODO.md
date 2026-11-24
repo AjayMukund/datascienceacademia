@@ -70,6 +70,7 @@ Bought 2026-11-10 at Hostinger (`.in` + `.com`, owner Ajay Mukund S, expire 2029
 - ☑ Google Business Profile (2026-11-19): description, opening date, hours, address 52/1A, website; all 61
   unreplied reviews answered; site shows 4.9 ★ / 91 reviews (`SITE["google_rating"/"google_reviews"]` — update
   when they change) + "Review us on Google" in the footer. Newest review is Dec 2024 → ask 2025–26 students.
+- ◐ **Apple Business** (2026-11-24): domain www verified (keep www DNS as A/AAAA + TXT, no CNAME); location "Data Science Academia" submitted for review (up to 5 days), address 52/1A First Floor, hours Mon–Sat 9–19, About in English + Tamil. **You:** add logo + cover (Go to Brand), 3–5 real photos, a "Learn more" action → contact.html; check the place card in Apple Maps once approved.
 - ☐ **You** — social bios + directories from `docs/listings-bios.md` (Instagram, LinkedIn, YouTube ☑ 2026-11-22; Justdial paid plan ₹54k/yr declined — free listing only if offered);
   rebuild the student app (`dsa_app`) with the new certificate URL.
 - ☐ **Claude, ~Dec 2026** — read the DMARC reports; if clean, tighten to `p=quarantine`. If Hostinger's
