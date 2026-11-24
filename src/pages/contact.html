@@ -12,7 +12,7 @@
   ('Do you offer online sessions?', 'Yes — live online, recorded and hybrid options are all available. Every session is fully interactive, faculty-led and recorded for enrolled students to replay.'),
 ] %}
 {# "Programme of interest" — special programmes list from the previous page (values match each programme's ctaParam used in ?course= links) #}
-{% set special = ['AI Mastery Track (12-Month Programme)', 'Student Internship Programme', 'Microsoft Certification Program', 'Competitive Examination Training', 'DSA Code Champs (School Outreach)', 'Research Assistance & Interdisciplinary Guidance', 'Language & Communication for Tech Professionals', 'Corporate Training', 'Faculty Development Programme'] %}
+{% set special = ([site.batch.name] if site.batch.open else []) + ['AI Mastery Track (12-Month Programme)', 'Student Internship Programme', 'Microsoft Certification Program', 'Competitive Examination Training', 'DSA Code Champs (School Outreach)', 'Research Assistance & Interdisciplinary Guidance', 'Language & Communication for Tech Professionals', 'Corporate Training', 'Faculty Development Programme'] %}
 
 {% block head_extra %}
 <style>

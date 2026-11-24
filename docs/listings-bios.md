@@ -12,7 +12,7 @@ Address:  No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam, Chennai,
 Phone:    +91 91764 98814
 Email:    info@datascienceacademia.in
 Website:  https://datascienceacademia.in
-Hours:    Monday – Saturday 9:00 AM – 9:00 PM · Sunday 11:00 AM – 4:00 PM
+Hours:    Monday – Saturday 9:00 AM – 7:00 PM · Sunday closed
 Category: Educational institution / Computer training school
 ```
 
@@ -24,7 +24,7 @@ Where: business.google.com → your profile → **Edit profile**.
 
 - **Business information → Website:** `https://datascienceacademia.in`
 - **Location → Address:** as in section 0, then **drag the map pin** to the new office.
-- **Hours:** Mon–Sat 9:00–21:00, Sunday 11:00–16:00. ✅ Done 2026-11-19.
+- **Hours:** Mon–Sat 9:00–19:00, Sunday closed (owner confirmed 2026-11-24; Apple Business set the same).
 - **Description** (Google's limit is 750 characters. Don't add links or phone numbers; Google rejects them):
 
 ```

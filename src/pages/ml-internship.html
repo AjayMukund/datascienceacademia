@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+{# Current Machine Learning internship batch. Dates, fee and schedule come from SITE["batch"] in tools/build.py;
+   the plan, projects and FAQ below are hand-written (owner-confirmed facts: 2026-11-24). #}
+{% set b = site.batch %}
+{% set fee = '₹' ~ '{:,}'.format(b.fee) %}
+{% set fee_p = '₹' ~ '{:,}'.format(b.fee_partner) %}
+{% set apply_url = rel ~ 'contact.html?course=' ~ (b.name | urlencode) %}
+{% set wa_url = site.whatsapp ~ '?text=' ~ (('Hello DSA, I would like to join the ' ~ b.name ~ '.') | urlencode) %}
+{% set faqs = [
+  {'q': 'Who can apply?', 'a': 'Final-year students of BCA, B.Sc. and B.E./B.Tech Computer Science, and postgraduate students (for example MCA, M.Sc. and M.E./M.Tech). If your degree is close to these and you are unsure, <a href="' ~ rel ~ 'contact.html">ask us</a>.'},
+  {'q': 'Do I need to know machine learning already?', 'a': 'No. The first month is training: it starts from the machine learning workflow and builds up to ensembles and pipelines. Basic Python helps, and the first week includes a refresher on the parts you need.'},
+  {'q': 'How much time does it take each week?', 'a': 'One live online session every weekday, ' ~ b.schedule | replace('Monday to Friday, ', '') ~ ' — about five hours of live sessions a week — plus your own practice and, in the second month, project work with your group.'},
+  {'q': 'What is the fee, and who gets the 50% discount?', 'a': 'The fee is ' ~ fee ~ ' for the full two months. Students of select partner colleges get a 50% discount, so they pay ' ~ fee_p ~ '. Ask your placement or internship coordinator, or send us your college name, to check whether your college is eligible.'},
+  {'q': 'What will I receive at the end?', 'a': 'Every intern receives an Internship Offer Letter, an Internship Completion Certificate, a Project Completion Certificate and the documentation of their group project.'},
+  {'q': 'How do the group projects work?', 'a': 'In the second month you work in a small group on one machine learning project, guided by the Internship Supervisor: problem statement, data, model, evaluation, a simple demo and the final documentation and presentation.'},
+  {'q': 'Is the internship AICTE aligned?', 'a': 'The programme follows NEP 2020 and AICTE internship guidelines. Where your institution is AICTE accredited, the internship is AICTE aligned. Check your own university\'s rules on how many internship hours or credits you need; our guide <a href="' ~ rel ~ 'blog/aicte-internships-cse-students.html">AICTE internships for CSE students</a> explains how this usually works.'},
+  {'q': 'Will the sessions be recorded?', 'a': 'No. All sessions are live, so plan to join every weekday evening at 7:30 PM. Live sessions let you ask questions and get help on your code as you go.'},
+  {'q': 'What do I need to join?', 'a': 'A laptop or desktop with a stable internet connection and a Google account. We use Google Colab, so you do not need to install anything to start.'}
+] %}
+
+{% block title %}Machine Learning Internship (Online) – Dec 2026 | DSA{% endblock %}
+{% block description %}Online 2-month Machine Learning internship for final-year BCA, B.Sc., B.Tech CSE and PG students. Starts {{ b.start_display }}. {{ fee }}; {{ fee_p }} for select colleges.{% endblock %}
+{% block og_title %}{{ b.short }} — starts {{ b.start_display }} (online, 2 months){% endblock %}
+{% block og_image %}{{ site.url }}/assets/og/ml-internship.jpg{% endblock %}
+{% block body_class %}page-batch{% endblock %}
+
+{% block head_extra %}
+<style>
+.batch-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:3rem;align-items:start}
+.batch-facts{border:1px solid var(--border2);border-radius:var(--r-lg);background:var(--soft);padding:1.5rem 1.6rem}
+.batch-facts dl{display:grid;grid-template-columns:auto 1fr;gap:.75rem 1.1rem;margin:0}
+.batch-facts dt{font-family:var(--fm);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fog2);padding-top:.2rem}
+.batch-facts dd{margin:0;color:var(--cream);font-size:.95rem;line-height:1.45}
+.batch-facts dd small{display:block;color:var(--fog2);font-size:.8rem}
+.batch-facts .btn{margin-top:1.4rem}
+.batch-close{display:inline-block;margin-bottom:1rem;font-size:.78rem;font-weight:600;color:var(--teal)}
+.months{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.month{border:1px solid var(--border);border-radius:var(--r-lg);padding:1.5rem 1.6rem;background:var(--soft)}
+.month-badge{font-family:var(--fm);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+.month h3{font-family:var(--fd);font-size:1.35rem;margin:.35rem 0 .5rem}
+.month p{font-size:.92rem;color:var(--fog);margin:0}
+.weeks{list-style:none;padding:0;margin:0;display:grid;gap:0}
+.weeks li{display:grid;grid-template-columns:5.5rem 1fr;gap:1rem;padding:.95rem 0;border-bottom:1px solid var(--border)}
+.weeks li:first-child{border-top:1px solid var(--border)}
+.wk{font-family:var(--fm);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--champ2);padding-top:.2rem}
+.weeks strong{display:block;color:var(--cream);font-weight:600;margin-bottom:.15rem}
+.weeks span.d{font-size:.88rem;color:var(--fog)}
+.weeks .split{display:block;padding:.6rem 0 .3rem;border-bottom:0;font-family:var(--fm);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+.plan-note{font-size:.82rem;color:var(--fog2);margin-top:.9rem}
+.recv{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.recv .feature{flex-direction:column;gap:.6rem;padding:1.25rem}
+.fee-box{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fee-card{border:1px solid var(--border2);border-radius:var(--r-lg);padding:1.4rem 1.5rem;background:var(--soft)}
+.fee-card.alt{border-color:var(--b-teal);background:var(--t-teal)}
+.fee-amt{font-family:var(--fd);font-size:2.3rem;font-weight:700;color:var(--cream);line-height:1.1}
+.fee-lbl{font-size:.8rem;color:var(--fog2);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.fee-card p{font-size:.88rem;color:var(--fog);margin:.5rem 0 0}
+.block{margin-bottom:3.5rem}
+@media (max-width:960px){.batch-hero-grid{grid-template-columns:1fr}.recv{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.months,.fee-box,.recv{grid-template-columns:1fr}.weeks li{grid-template-columns:1fr;gap:.2rem}}
+</style>
+{% endblock %}
+
+{% block jsonld %}
+{{ jsonld(breadcrumb_ld([('Home', ''), ('Programmes', 'programmes.html'), ('Internships', 'programmes/internship.html'), (b.short ~ ' – December 2026', None)])) }}
+{{ jsonld({
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "@id": absolute(b.url) ~ "#course",
+  "name": b.name,
+  "description": "Two-month online Machine Learning internship: one month of live training followed by one month of guided group projects, for final-year BCA, B.Sc. and B.Tech Computer Science students and postgraduates.",
+  "url": absolute(b.url),
+  "inLanguage": "en",
+  "provider": {"@id": site.url ~ "/#organization"},
+  "educationalCredentialAwarded": "Internship Offer Letter, Internship Completion Certificate and Project Completion Certificate",
+  "coursePrerequisites": "Final-year BCA, B.Sc. or B.E./B.Tech Computer Science student, or a postgraduate student. Basic Python helps.",
+  "teaches": ["Supervised learning", "Unsupervised learning", "Model evaluation", "Scikit-learn pipelines", "Group machine learning project"],
+  "offers": [
+    {"@type": "Offer", "category": "Paid", "price": b.fee, "priceCurrency": "INR", "availability": "https://schema.org/InStock", "validThrough": b.apply_by ~ "T23:59:59+05:30", "url": absolute(b.url)}
+  ],
+  "hasCourseInstance": [{
+    "@type": "CourseInstance",
+    "courseMode": "online",
+    "startDate": b.start,
+    "endDate": b.end,
+    "courseWorkload": "PT5H",
+    "courseSchedule": {"@type": "Schedule", "repeatFrequency": "P1W", "repeatCount": 9, "byDay": ["https://schema.org/Monday", "https://schema.org/Tuesday", "https://schema.org/Wednesday", "https://schema.org/Thursday", "https://schema.org/Friday"], "startTime": "19:30", "endTime": "20:30", "duration": "PT1H", "scheduleTimezone": "Asia/Kolkata"},
+    "instructor": {"@type": "Person", "name": site.author.name}
+  }]
+}) }}
+{{ jsonld(faq_ld(faqs)) }}
+{% endblock %}
+
+{% block content %}
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="page-hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumbs">
+        <li><a href="{{ rel }}index.html">Home</a></li>
+        <li><a href="{{ rel }}programmes.html">Programmes</a></li>
+        <li><a href="{{ rel }}programmes/internship.html">Internships</a></li>
+        <li aria-current="page">{{ b.short }}</li>
+      </ol>
+    </nav>
+    <div class="batch-hero-grid">
+      <div>
+        <div class="eyebrow" data-r>New batch &middot; {{ b.months_display }}</div>
+        <h1 class="sh sh-lg" id="page-title" data-r="1">Machine Learning <em>Internship</em></h1>
+        <p class="page-hero-sub" data-r="2">Two months, fully online: a month of live machine learning training, then a month building a real project in a small group, guided by the Internship Supervisor. One hour every weekday evening, so it fits around college. For final-year BCA, B.Sc. and B.Tech Computer Science students and postgraduates.</p>
+        <div class="hero-badges" aria-label="Batch format" data-r="2">
+          <span class="badge badge-cream">2 months</span>
+          <span class="badge badge-teal">Online, live</span>
+          <span class="badge">Mon–Fri · 7:30–8:30 PM</span>
+          <span class="badge">3 certificates + project documentation</span>
+        </div>
+        <div class="row" data-r="3" style="margin-top:1.75rem">
+          <a class="btn btn-primary" href="{{ apply_url }}">Apply by {{ b.apply_by_display | replace(' 2026', '') }} <span class="arr">&rarr;</span></a>
+          <a class="btn btn-ghost" href="#plan">See the 8-week plan</a>
+        </div>
+      </div>
+      <aside class="batch-facts" aria-label="Batch details" data-r="2">
+        <span class="batch-close" data-batch-open>Applications close {{ b.apply_by_display }}</span>
+        <dl>
+          <dt>Starts</dt><dd>{{ b.start_display }}</dd>
+          <dt>Duration</dt><dd>2 months<small>{{ b.months_display }}</small></dd>
+          <dt>Schedule</dt><dd>{{ b.schedule }}</dd>
+          <dt>Mode</dt><dd>{{ b.mode }}<small>Join from anywhere</small></dd>
+          <dt>Fee</dt><dd>{{ fee }}<small>{{ fee_p }} for students of select colleges (50% off)</small></dd>
+          <dt>Seats</dt><dd>Open to all eligible students</dd>
+        </dl>
+        <a class="btn btn-primary btn-block" href="{{ apply_url }}">Apply now <span class="arr">&rarr;</span></a>
+        <a class="btn btn-wa btn-block" style="margin-top:.6rem" href="{{ wa_url }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+  <section class="block" aria-labelledby="how-title" data-r>
+    <h2 class="section-label" id="how-title">How the two months work</h2>
+    <div class="months">
+      <div class="month">
+        <div class="month-badge">Month 1 &middot; December</div>
+        <h3>Training</h3>
+        <p>Live sessions every weekday evening take you from the machine learning workflow to regression, classification, tree ensembles, clustering and complete scikit-learn pipelines, with hands-on exercises on real datasets after every topic.</p>
+      </div>
+      <div class="month">
+        <div class="month-badge">Month 2 &middot; January</div>
+        <h3>Group projects</h3>
+        <p>You join a small group and build one end-to-end machine learning project, guided by the Internship Supervisor: problem statement, data, model, evaluation, a simple demo, and the final documentation and presentation.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="plan" aria-labelledby="plan-title" data-r>
+    <h2 class="section-label" id="plan-title">The 8-week plan</h2>
+    <ol class="weeks">
+      <li class="split">Month 1 — Training</li>
+      <li><span class="wk">Week 1</span><div><strong>Python and data for machine learning</strong><span class="d">NumPy and pandas refresher, exploratory data analysis, the machine learning workflow, train/validation/test splits.</span></div></li>
+      <li><span class="wk">Week 2</span><div><strong>Regression and classification</strong><span class="d">Linear and logistic regression, regularisation, and the metrics that matter: MAE, RMSE, R², precision, recall, F1.</span></div></li>
+      <li><span class="wk">Week 3</span><div><strong>Trees and ensembles</strong><span class="d">Decision trees, random forests, gradient boosting and XGBoost, and reading feature importance.</span></div></li>
+      <li><span class="wk">Week 4</span><div><strong>Unsupervised learning and pipelines</strong><span class="d">K-Means and PCA, cross-validation and tuning, handling imbalanced data, and building a full scikit-learn pipeline.</span></div></li>
+      <li class="split">Month 2 — Group projects</li>
+      <li><span class="wk">Week 5</span><div><strong>Teams and problem statements</strong><span class="d">Groups formed, project topics assigned, datasets collected, project plan agreed with the Internship Supervisor.</span></div></li>
+      <li><span class="wk">Week 6</span><div><strong>Data and baseline</strong><span class="d">Cleaning, exploratory analysis, feature engineering and a first baseline model.</span></div></li>
+      <li><span class="wk">Week 7</span><div><strong>Improve and review</strong><span class="d">Better models, tuning and error analysis; mid-project review with the supervisor.</span></div></li>
+      <li><span class="wk">Week 8</span><div><strong>Demo, documentation and presentation</strong><span class="d">A simple web demo of the model, the project documentation, and the final presentation and evaluation.</span></div></li>
+    </ol>
+    <p class="plan-note">The Internship Supervisor may adjust the pace of the plan to suit the batch.</p>
+  </section>
+
+  <section class="block" aria-labelledby="proj-title" data-r>
+    <h2 class="section-label" id="proj-title">Example project topics</h2>
+    <ul class="check-list two">
+      <li>Student performance prediction from academic and attendance data</li>
+      <li>Loan default risk scoring</li>
+      <li>Customer churn prediction for a subscription business</li>
+      <li>House price estimation for Chennai localities</li>
+      <li>Crop recommendation from soil and weather data</li>
+      <li>Fake job posting detection</li>
+    </ul>
+    <p class="plan-note">Final topics are assigned to each group by the Internship Supervisor.</p>
+  </section>
+
+  <section class="block" aria-labelledby="recv-title" data-r>
+    <h2 class="section-label" id="recv-title">What every intern receives</h2>
+    <div class="recv">
+      <div class="feature"><span class="icon-box sm yellow" aria-hidden="true">✉️</span><div><h3 class="feature-title">Internship Offer Letter</h3><p class="feature-text">Issued when you join the batch.</p></div></div>
+      <div class="feature"><span class="icon-box sm yellow" aria-hidden="true">🎓</span><div><h3 class="feature-title">Internship Completion Certificate</h3><p class="feature-text">For completing the two-month internship.</p></div></div>
+      <div class="feature"><span class="icon-box sm yellow" aria-hidden="true">🏅</span><div><h3 class="feature-title">Project Completion Certificate</h3><p class="feature-text">For your group project, with its title.</p></div></div>
+      <div class="feature"><span class="icon-box sm yellow" aria-hidden="true">📄</span><div><h3 class="feature-title">Project Documentation</h3><p class="feature-text">Your project's report, ready for your college and interviews.</p></div></div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="tools-title" data-r>
+    <h2 class="section-label" id="tools-title">Tools you'll use</h2>
+    <ul class="tag-list">
+      {% for t in ['Python', 'NumPy', 'pandas', 'Matplotlib', 'Seaborn', 'scikit-learn', 'XGBoost', 'Google Colab', 'Streamlit', 'GitHub'] %}<li class="tag">{{ t }}</li>{% endfor %}
+    </ul>
+  </section>
+
+  <section class="block" aria-labelledby="who-title" data-r>
+    <h2 class="section-label" id="who-title">Who can apply</h2>
+    <ul class="check-list">
+      <li><span><strong>Final-year undergraduates</strong> in BCA, B.Sc. or B.E./B.Tech Computer Science</span></li>
+      <li><span><strong>Postgraduate students</strong>, for example MCA, M.Sc. or M.E./M.Tech</span></li>
+      <li>Basic Python helps; week 1 covers the essentials you need</li>
+      <li>A laptop or desktop with internet, and a Google account (we use Google Colab, so nothing to install)</li>
+    </ul>
+  </section>
+
+  <section class="block" id="fee" aria-labelledby="fee-title" data-r>
+    <h2 class="section-label" id="fee-title">Fee</h2>
+    <div class="fee-box">
+      <div class="fee-card">
+        <div class="fee-lbl">Standard fee</div>
+        <div class="fee-amt">{{ fee }}</div>
+        <p>For the full two-month internship: training, group project, supervision, certificates and documentation.</p>
+      </div>
+      <div class="fee-card alt">
+        <div class="fee-lbl">Select colleges · 50% off</div>
+        <div class="fee-amt">{{ fee_p }}</div>
+        <p>Per student, for students of select partner colleges. Ask your placement or internship coordinator, or <a href="{{ apply_url }}">send us your college name</a> to check.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="apply-title" data-r>
+    <h2 class="section-label" id="apply-title">How to apply</h2>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><h3 class="step-title">Apply by {{ b.apply_by_display }}</h3><p class="step-text">Fill in the enquiry form with this batch selected, or message us on WhatsApp.</p></div>
+      <div class="step"><div class="step-num">2</div><h3 class="step-title">Quick call</h3><p class="step-text">We confirm your eligibility, college and fee, and answer your questions.</p></div>
+      <div class="step"><div class="step-num">3</div><h3 class="step-title">Pay and confirm</h3><p class="step-text">Pay the fee and send us the payment screenshot. We verify it and send your Internship Offer Letter.</p></div>
+      <div class="step"><div class="step-num">4</div><h3 class="step-title">Start on {{ b.start_display | replace(' 2026', '') }}</h3><p class="step-text">You get the joining link and timetable before the first session.</p></div>
+    </div>
+  </section>
+
+  {% from "partials/faq-block.html" import faq_block %}
+  {{ faq_block(faqs, 'Questions about this batch') }}
+
+  <p class="plan-note" style="margin:-1.5rem 0 3rem">Looking for other internship domains (data analytics, computer vision, NLP and generative AI, research)? See the <a href="{{ rel }}programmes/internship.html">Internship Programme</a>. Want the full course instead? See <a href="{{ rel }}courses/machine-learning.html">Machine Learning</a>.</p>
+</div>
+
+<section class="section section-sm" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-banner" data-r>
+      <div class="eyebrow center">Applications close {{ b.apply_by_display }}</div>
+      <h2 class="cta-title" id="cta-title">Join the <em>Machine Learning Internship</em></h2>
+      <p class="cta-text">Starts {{ b.start_display }} &middot; {{ b.schedule }} &middot; online. {{ fee }}, or {{ fee_p }} for students of select colleges.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn-lg" href="{{ apply_url }}">Apply now <span class="arr">&rarr;</span></a>
+        <a class="btn btn-wa btn-lg" href="{{ wa_url }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
+      </div>
+      <p class="cta-note">{{ site.phone }} &middot; {{ site.email }}</p>
+    </div>
+  </div>
+</section>
+<script>(function(){if(Date.now()>new Date('{{ b.apply_by }}T23:59:59+05:30').getTime()){document.querySelectorAll('[data-batch-open]').forEach(function(e){e.textContent='Applications for this batch have closed — ask us about the next one'})}})();</script>
+{% endblock %}

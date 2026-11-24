@@ -1,0 +1,25 @@
+{# Upcoming-batch announcement (data: SITE["batch"] in tools/build.py).
+   Rendered only while applications are open at build time; the inline script also hides it in the
+   browser once apply_by has passed (IST), so a stale build never advertises a closed batch.
+   Usage: {% include "partials/batch-callout.html" %}  (optionally {% set batch_compact = true %} first) #}
+{% set b = site.batch %}
+{% if b and b.open %}
+{% if batch_compact is defined and batch_compact %}
+<a class="batch-pill" href="{{ rel }}{{ b.url }}" data-batch-until="{{ b.apply_by }}">
+  <span class="batch-pill-new">New batch</span>
+  <span class="batch-pill-txt">{{ b.short }} · starts {{ b.start_display | replace(' 2026', '') }} · apply by {{ b.apply_by_display | replace(' 2026', '') }}</span>
+  <span class="arr" aria-hidden="true">&rarr;</span>
+</a>
+{% else %}
+<div class="callout batch-callout" data-batch-until="{{ b.apply_by }}">
+  <div class="callout-icon" aria-hidden="true">🧠</div>
+  <div class="callout-body">
+    <div class="eyebrow" style="margin-bottom:.25rem">New batch &middot; applications close {{ b.apply_by_display }}</div>
+    <h2 class="callout-title">{{ b.short }} &mdash; <em>starts {{ b.start_display }}</em></h2>
+    <p class="callout-text">2 months online &middot; {{ b.schedule }} &middot; training, then guided group projects &middot; ₹{{ '{:,}'.format(b.fee) }} (₹{{ '{:,}'.format(b.fee_partner) }} for select colleges).</p>
+  </div>
+  <a class="btn btn-primary" href="{{ rel }}{{ b.url }}">See the batch <span class="arr">&rarr;</span></a>
+</div>
+{% endif %}
+<script>(function(){var e=document.currentScript.previousElementSibling;if(e&&Date.now()>new Date('{{ b.apply_by }}T23:59:59+05:30').getTime())e.hidden=true})();</script>
+{% endif %}

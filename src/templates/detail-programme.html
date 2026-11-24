@@ -262,6 +262,7 @@
   <div class="detail-layout">
 
     <article class="detail-main">
+      {% if pid == 'internship' %}{% include "partials/batch-callout.html" %}{% endif %}
       <!-- Overview -->
       <section class="block" id="overview" aria-labelledby="overview-title" data-r>
         <h2 class="section-label" id="overview-title">Overview</h2>

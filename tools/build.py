@@ -66,7 +66,7 @@ SITE = {
         "country": "IN",
     },
     "geo": {"lat": 12.918342794186495, "lng": 80.15253111461173},
-    "hours": "Mon – Sat 9 AM – 9 PM · Sun 11 AM – 4 PM IST",
+    "hours": "Mon – Sat 9 AM – 7 PM IST · Sunday closed",   # owner 2026-11-24: matches Google + Apple
     "social": {
         "linkedin": "https://www.linkedin.com/company/data-science-academia/",
         "youtube": "https://www.youtube.com/@Data_Science_Academia",
@@ -85,9 +85,25 @@ SITE = {
     "maps_embed": "https://maps.google.com/maps?q=12.918342794186495,80.15253111461173&z=17&hl=en&output=embed",
     "maps_link": "https://www.google.com/maps/search/?api=1&query=12.918342794186495%2C80.15253111461173",
     "author": {"name": "Ajay Mukund S", "role": "AI Engineer · Ph.D. Scholar, Anna University · Founder, Data Science Academia"},
+    # Current internship batch → ml-internship.html, the announcement strip (home, programmes, internship page)
+    # and the contact-form option. The strip hides itself after apply_by (build-time AND in the browser).
+    # For the next batch: change these values (and the plan/FAQ text in src/pages/ml-internship.html if needed).
+    "batch": {
+        "name": "Machine Learning Internship – December 2026 Batch",
+        "short": "Machine Learning Internship",
+        "url": "ml-internship.html",
+        "start": "2026-12-01", "start_display": "1 December 2026",
+        "end": "2027-01-31", "end_display": "31 January 2027",
+        "months_display": "December 2026 – January 2027",
+        "apply_by": "2026-11-30", "apply_by_display": "30 November 2026",
+        "schedule": "Monday to Friday, 7:30 – 8:30 PM IST",
+        "mode": "Online (live)",
+        "fee": 6000, "fee_partner": 3000,
+    },
 }
 
 SITE["legal"] = "Data Science Academia Private Limited" if SITE["incorporated"] else SITE["name"]
+SITE["batch"]["open"] = dt.date.today().isoformat() <= SITE["batch"]["apply_by"]   # strip + form option shown only while open
 SITE["name_sub"] = "Pvt. Ltd. · Chennai" if SITE["incorporated"] else "Chennai · Est. " + SITE["founded"]
 
 NAV_ITEMS = [
@@ -194,11 +210,7 @@ def org_ld():
                 "openingHoursSpecification": [{
                     "@type": "OpeningHoursSpecification",
                     "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                    "opens": "09:00", "closes": "21:00",
-                }, {
-                    "@type": "OpeningHoursSpecification",
-                    "dayOfWeek": ["Sunday"],
-                    "opens": "11:00", "closes": "16:00",
+                    "opens": "09:00", "closes": "19:00",
                 }],
                 "areaServed": [{"@type": "City", "name": "Chennai"}, {"@type": "State", "name": "Tamil Nadu"}, {"@type": "Country", "name": "India"}],
                 "sameAs": list(SITE["social"].values()) + [SITE["whatsapp"]],
@@ -418,7 +430,7 @@ def build_pages() -> None:
     freq = {"index.html": ("weekly", "1.0"), "courses.html": ("weekly", "0.9"), "programmes.html": ("monthly", "0.9"),
             "codechamps.html": ("monthly", "0.8"), "about.html": ("monthly", "0.8"), "contact.html": ("monthly", "0.7"),
             "projects.html": ("monthly", "0.7"), "testimonials.html": ("monthly", "0.7"), "blog.html": ("weekly", "0.8"),
-            "privacy.html": ("yearly", "0.3")}
+            "privacy.html": ("yearly", "0.3"), "ml-internship.html": ("weekly", "0.8")}
     for page in sorted((SRC / "pages").glob("*.html")):
         name = page.name
         cf, pr = freq.get(name, (None if name == "404.html" else "monthly", "0.5"))

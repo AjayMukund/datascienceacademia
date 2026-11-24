@@ -696,6 +696,16 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.025em;line-height:1.1}
 .res-link.book{color:var(--teal);border-color:var(--b-teal)}
 .module-week{color:var(--teal);border-color:var(--b-teal);background:var(--t-teal)}
 
+/* ── Upcoming-batch announcement (partials/batch-callout.html) ─────────── */
+.batch-pill{display:inline-flex;align-items:center;gap:.6rem;max-width:100%;margin:0 0 .9rem;padding:.35rem .9rem .35rem .4rem;border-radius:100px;border:1px solid var(--b-teal);background:var(--t-teal);color:var(--cream);font-size:.8rem;font-weight:500;line-height:1.4;text-decoration:none;transition:border-color .2s,transform .2s}
+.batch-pill:hover{border-color:var(--teal);transform:translateY(-1px)}
+.batch-pill-new{flex-shrink:0;padding:.18rem .6rem;border-radius:100px;background:var(--fill-teal);color:var(--on-fill);font-size:.64rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.batch-pill .arr{color:var(--teal)}
+.batch-callout{margin:0 0 2.5rem}
+.batch-callout .callout-title{font-size:1.5rem}
+.batch-callout .btn{margin-left:auto}
+@media (max-width:640px){.batch-pill{font-size:.74rem;align-items:flex-start}.batch-callout .btn{margin-left:0}}
+
 /* ── Print ──────────────────────────────────────────────────────────────── */
 @media print{
   .nav,.cur,#bg-canvas,#fluid-canvas,#scroll-progress,.footer,.btn,.hero-glow,.page-hero-glow,.skip-link{display:none!important}

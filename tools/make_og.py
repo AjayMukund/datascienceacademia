@@ -201,6 +201,8 @@ def main() -> None:
          "Machine learning tutorials, career guidance and research insights from a practising AI engineer")
     make("page-contact", "Begin Your Journey", "Enquire · Enrol · Collaborate", None,
          "Rajakilpakkam, Chennai · +91 91764 98814 · info@datascienceacademia.in")
+    make("ml-internship", "Machine Learning Internship", "New batch · starts 1 December 2026 · online", W_IMG / "Website Images/Internship Programme.jpeg",
+         "2 months · Mon–Fri 7:30–8:30 PM · training + guided group projects · ₹6,000 (₹3,000 select colleges)")
     for cid, c in d["courses"].items():
         make(f"course-{cid}", c["title"], f"{c['category']} course · {c['level']} · {c['duration']}", W_IMG / c["image"], c["overview"])
     for pid, p in d["programmes"].items():

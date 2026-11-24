@@ -643,6 +643,14 @@ background:radial-gradient(circle at 38% 38%,rgba(73,154,145,.20),rgba(73,154,14
 .res-link.tutorial,.res-link.course{color:var(--cream);border-color:var(--b-navy)}
 .res-link.book{color:var(--teal);border-color:var(--b-teal)}
 .module-week{color:var(--teal);border-color:var(--b-teal);background:var(--t-teal)}
+.batch-pill{display:inline-flex;align-items:center;gap:.6rem;max-width:100%;margin:0 0 .9rem;padding:.35rem .9rem .35rem .4rem;border-radius:100px;border:1px solid var(--b-teal);background:var(--t-teal);color:var(--cream);font-size:.8rem;font-weight:500;line-height:1.4;text-decoration:none;transition:border-color .2s,transform .2s}
+.batch-pill:hover{border-color:var(--teal);transform:translateY(-1px)}
+.batch-pill-new{flex-shrink:0;padding:.18rem .6rem;border-radius:100px;background:var(--fill-teal);color:var(--on-fill);font-size:.64rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.batch-pill .arr{color:var(--teal)}
+.batch-callout{margin:0 0 2.5rem}
+.batch-callout .callout-title{font-size:1.5rem}
+.batch-callout .btn{margin-left:auto}
+@media (max-width:640px){.batch-pill{font-size:.74rem;align-items:flex-start}.batch-callout .btn{margin-left:0}}
 @media print{
 .nav,.cur,#bg-canvas,#fluid-canvas,#scroll-progress,.footer,.btn,.hero-glow,.page-hero-glow,.skip-link{display:none!important}
 body{background:#fff;color:#000}
@@ -696,7 +704,7 @@ a{color:#000}
 @media (max-width:900px){.two-col.contact-grid{grid-template-columns:1fr;gap:2rem}}
 @media (max-width:560px){.ways{grid-template-columns:1fr}.visit .callout-title{font-size:1.6rem}}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":["EducationalOrganization","LocalBusiness"],"@id":"https://datascienceacademia.in/#organization","name":"Data Science Academia","alternateName":["DSA","DSA Chennai"],"url":"https://datascienceacademia.in/","logo":{"@type":"ImageObject","url":"https://datascienceacademia.in/assets/icons/favicon-192.png","width":192,"height":192},"image":"https://datascienceacademia.in/assets/og/default.jpg","description":"Data Science Academia is a Ph.D.-led AI & Data Science institute in Chennai offering 18 courses (Python, Machine Learning, Deep Learning, LLMs, Power BI, Azure, AWS), AICTE-aligned internships, Microsoft certification prep and a 12-month AI Mastery Track — live in Chennai and online.","slogan":"Where Academic Rigour Meets Real-World AI Engineering","foundingDate":"2019","telephone":"+919176498814","email":"info@datascienceacademia.in","priceRange":"₹₹","address":{"@type":"PostalAddress","streetAddress":"No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam","addressLocality":"Chennai","addressRegion":"Tamil Nadu","postalCode":"600073","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":12.918342794186495,"longitude":80.15253111461173},"hasMap":"https://www.google.com/maps/search/?api=1&query=12.918342794186495%2C80.15253111461173","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"21:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Sunday"],"opens":"11:00","closes":"16:00"}],"areaServed":[{"@type":"City","name":"Chennai"},{"@type":"State","name":"Tamil Nadu"},{"@type":"Country","name":"India"}],"sameAs":["https://www.linkedin.com/company/data-science-academia/","https://www.youtube.com/@Data_Science_Academia","https://www.instagram.com/data_science_academia","https://wa.me/919176498814"],"contactPoint":[{"@type":"ContactPoint","telephone":"+919176498814","contactType":"admissions","email":"info@datascienceacademia.in","availableLanguage":["English","Tamil"],"areaServed":"IN"}]},{"@type":"WebSite","@id":"https://datascienceacademia.in/#website","url":"https://datascienceacademia.in/","name":"Data Science Academia","publisher":{"@id":"https://datascienceacademia.in/#organization"},"inLanguage":"en-IN"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":["EducationalOrganization","LocalBusiness"],"@id":"https://datascienceacademia.in/#organization","name":"Data Science Academia","alternateName":["DSA","DSA Chennai"],"url":"https://datascienceacademia.in/","logo":{"@type":"ImageObject","url":"https://datascienceacademia.in/assets/icons/favicon-192.png","width":192,"height":192},"image":"https://datascienceacademia.in/assets/og/default.jpg","description":"Data Science Academia is a Ph.D.-led AI & Data Science institute in Chennai offering 18 courses (Python, Machine Learning, Deep Learning, LLMs, Power BI, Azure, AWS), AICTE-aligned internships, Microsoft certification prep and a 12-month AI Mastery Track — live in Chennai and online.","slogan":"Where Academic Rigour Meets Real-World AI Engineering","foundingDate":"2019","telephone":"+919176498814","email":"info@datascienceacademia.in","priceRange":"₹₹","address":{"@type":"PostalAddress","streetAddress":"No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam","addressLocality":"Chennai","addressRegion":"Tamil Nadu","postalCode":"600073","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":12.918342794186495,"longitude":80.15253111461173},"hasMap":"https://www.google.com/maps/search/?api=1&query=12.918342794186495%2C80.15253111461173","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"19:00"}],"areaServed":[{"@type":"City","name":"Chennai"},{"@type":"State","name":"Tamil Nadu"},{"@type":"Country","name":"India"}],"sameAs":["https://www.linkedin.com/company/data-science-academia/","https://www.youtube.com/@Data_Science_Academia","https://www.instagram.com/data_science_academia","https://wa.me/919176498814"],"contactPoint":[{"@type":"ContactPoint","telephone":"+919176498814","contactType":"admissions","email":"info@datascienceacademia.in","availableLanguage":["English","Tamil"],"areaServed":"IN"}]},{"@type":"WebSite","@id":"https://datascienceacademia.in/#website","url":"https://datascienceacademia.in/","name":"Data Science Academia","publisher":{"@id":"https://datascienceacademia.in/#organization"},"inLanguage":"en-IN"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://datascienceacademia.in/"},{"@type":"ListItem","position":2,"name":"Contact"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ContactPage","@id":"https://datascienceacademia.in/contact.html#contactpage","url":"https://datascienceacademia.in/contact.html","name":"Contact Data Science Academia","description":"Contact Data Science Academia in Rajakilpakkam, near Tambaram, Chennai for course enrolment, AICTE-aligned internships, corporate and faculty training, Code Champs school partnerships and research support. Call or WhatsApp +91 91764 98814 or email info@datascienceacademia.in.","inLanguage":"en-IN","isPartOf":{"@id":"https://datascienceacademia.in/#website"},"about":{"@id":"https://datascienceacademia.in/#organization"},"mainEntity":{"@id":"https://datascienceacademia.in/#organization"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is the trial session really free?","acceptedAnswer":{"@type":"Answer","text":"Yes — completely free, with no commitment required. We want you to experience the teaching quality and learning environment before making any decision."}},{"@type":"Question","name":"How soon can I start after enrolling?","acceptedAnswer":{"@type":"Answer","text":"Most batches begin within 1–2 weeks of enrolment. We confirm your exact start date during the onboarding call after you submit the enquiry form."}},{"@type":"Question","name":"Do you offer online sessions?","acceptedAnswer":{"@type":"Answer","text":"Yes — live online, recorded and hybrid options are all available. Every session is fully interactive, faculty-led and recorded for enrolled students to replay."}}]}</script>
@@ -749,7 +757,7 @@ a{color:#000}
     <p class="page-hero-sub" data-r="2">Ready to start your career in Data Science and AI? Reach us for course enrolment, a free trial session, internship applications, corporate or faculty training, Code Champs school partnerships and institutional collaborations. Call, WhatsApp or send the enquiry form — we typically respond within one business day.</p>
     <div class="hero-badges" data-r="3">
       <span class="badge badge-teal">Reply within 1 business day</span>
-      <span class="badge">Mon – Sat 9 AM – 9 PM · Sun 11 AM – 4 PM IST</span>
+      <span class="badge">Mon – Sat 9 AM – 7 PM IST · Sunday closed</span>
       <span class="badge badge-cream">Rajakilpakkam, Chennai</span>
       <span class="badge badge-blue">Online across India</span>
     </div>
@@ -795,7 +803,7 @@ a{color:#000}
             <span class="icon-box sm yellow" aria-hidden="true">🕐</span>
             <div>
               <span class="label">Office hours</span>
-              <div class="cl-val">Mon – Sat 9 AM – 9 PM · Sun 11 AM – 4 PM IST</div>
+              <div class="cl-val">Mon – Sat 9 AM – 7 PM IST · Sunday closed</div>
               <p class="help">Recordings of live sessions are available to enrolled students at any time.</p>
             </div>
           </li>
@@ -909,6 +917,7 @@ a{color:#000}
                 <option>AWS for Data Science</option>
               </optgroup>
               <optgroup label="Special Programmes">
+                <option>Machine Learning Internship – December 2026 Batch</option>
                 <option>AI Mastery Track (12-Month Programme)</option>
                 <option>Student Internship Programme</option>
                 <option>Microsoft Certification Program</option>
@@ -976,7 +985,7 @@ a{color:#000}
       <a class="way" href="tel:+919176498814" data-r>
         <span class="icon-box teal" aria-hidden="true">📞</span>
         <div><h3 class="way-title">Call us</h3><div class="way-val">+91 91764 98814</div></div>
-        <p class="way-text">Mon – Sat 9 AM – 9 PM · Sun 11 AM – 4 PM IST. Speak to DSA faculty about courses, batches and fees.</p>
+        <p class="way-text">Mon – Sat 9 AM – 7 PM IST · Sunday closed. Speak to DSA faculty about courses, batches and fees.</p>
       </a>
       <a class="way" href="https://wa.me/919176498814?text=Hello%20DSA%2C%20I%27d%20like%20to%20know%20more%20about%20your%20courses." target="_blank" rel="noopener" data-r="1">
         <span class="icon-box green" aria-hidden="true">💬</span>
@@ -1007,7 +1016,7 @@ a{color:#000}
         <h2 class="callout-title" id="visit-title">Find us in <em>Rajakilpakkam</em>, Chennai</h2>
         <p class="callout-text">Data Science Academia is on the first floor of No. 52/1A, Madambakkam Main Road, Rajakilpakkam, Chennai 600073 — near Tambaram. Book a free trial session or a course-counselling meeting with faculty before you visit so we can set time aside for you.</p>
         <div class="visit-meta">
-          <span><strong>Hours:</strong> Mon – Sat 9 AM – 9 PM · Sun 11 AM – 4 PM IST</span>
+          <span><strong>Hours:</strong> Mon – Sat 9 AM – 7 PM IST · Sunday closed</span>
           <span><strong>Phone:</strong> <a href="tel:+919176498814">+91 91764 98814</a></span>
           <span><strong>Pin code:</strong> 600073</span>
         </div>
@@ -1085,7 +1094,7 @@ a{color:#000}
           <li><span class="ic" aria-hidden="true">📍</span><address style="font-style:normal">No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam,<br>Chennai, Tamil Nadu 600073</address></li>
           <li><span class="ic" aria-hidden="true">📞</span><a href="tel:+919176498814">+91 91764 98814</a></li>
           <li><span class="ic" aria-hidden="true">✉️</span><a href="mailto:info@datascienceacademia.in">info@datascienceacademia.in</a></li>
-          <li><span class="ic" aria-hidden="true">🕐</span><span>Mon – Sat 9 AM – 9 PM · Sun 11 AM – 4 PM IST</span></li>
+          <li><span class="ic" aria-hidden="true">🕐</span><span>Mon – Sat 9 AM – 7 PM IST · Sunday closed</span></li>
           <li><span class="ic" aria-hidden="true">⭐</span><a href="https://g.page/r/CZYQoW1hzglDEBM/review" target="_blank" rel="noopener">Review us on Google</a></li>
         </ul>
         <div class="footer-h" style="margin-top:1.5rem">Company</div>

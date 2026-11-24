@@ -150,6 +150,7 @@
 
     <article class="detail-main">
       <!-- Overview -->
+      {% if course.id == 'machine-learning' %}{% include "partials/batch-callout.html" %}{% endif %}
       <section class="block" id="overview" aria-labelledby="overview-title" data-r>
         <h2 class="section-label" id="overview-title">Overview</h2>
         <div class="prose">

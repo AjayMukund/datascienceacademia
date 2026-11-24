@@ -61,7 +61,7 @@ Address   : No. 52/1A, First Floor, Madambakkam Main Road,
 Phone     : +91 91764 98814
 Email     : info@datascienceacademia.in
 WhatsApp  : https://wa.me/919176498814
-Hours     : Monday – Saturday 9:00 AM – 9:00 PM; Sunday 11:00 AM – 4:00 PM (IST)
+Hours     : Monday – Saturday 9:00 AM – 7:00 PM (IST); Sunday closed
 
 Social Media:
 - LinkedIn  : https://www.linkedin.com/company/data-science-academia/
@@ -339,6 +339,20 @@ P2. Internships (NEP & AICTE Aligned)
   Process   : Apply online → Screening call → Domain allocation → Onboarding →
               Internship begins (rolling monthly cohorts)
   Prereqs   : Basic Python knowledge preferred; any engineering or science discipline.
+
+  UPCOMING BATCH — Machine Learning Internship, December 2026 Batch
+  Page      : https://datascienceacademia.in/ml-internship.html
+  Starts    : 1 December 2026 · last date to apply 30 November 2026
+  Duration  : 2 months (December 2026 – January 2027)
+  Schedule  : Monday to Friday, 7:30 – 8:30 PM IST · online, live (sessions are NOT recorded)
+  Structure : Month 1 training (ML workflow, regression, classification, trees/ensembles,
+              clustering, PCA, pipelines) · Month 2 group projects guided by the Internship Supervisor
+  Eligibility: Final-year BCA, B.Sc., B.E./B.Tech Computer Science students, and postgraduate students
+  Fee       : Rs 6,000 · select partner colleges get 50% off (Rs 3,000 per student) · no seat limit
+  Every intern receives: Internship Offer Letter, Internship Completion Certificate,
+              Project Completion Certificate and their Project Documentation
+  How to apply: pay the fee, fill in the application form with the payment screenshot; DSA verifies
+              and sends the Internship Offer Letter and joining link before 1 December
 
 P3. Microsoft Certification Program
   Duration  : 4–8 Weeks per certification
