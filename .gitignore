@@ -13,3 +13,4 @@ src/preview/
 homepage-hero-*.webm
 exports/
 docs/private/
+marketing/brochures/*/brochure.html
