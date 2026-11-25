@@ -661,9 +661,11 @@ a{color:#000}
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .batch-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:3rem;align-items:start}
-.batch-facts{border:1px solid var(--border2);border-radius:var(--r-lg);background:var(--soft);padding:1.5rem 1.6rem;overflow:hidden}
-.batch-visual{display:block;margin:-1.5rem -1.6rem 1.25rem;aspect-ratio:16/11;background:#0b0d12}
-.batch-visual img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.batch-facts{border:1px solid var(--border2);border-radius:var(--r-lg);background:var(--soft);padding:1.5rem 1.6rem}
+.recv-wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:1rem;align-items:stretch}
+.recv-visual{position:relative;margin:0;min-height:260px;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border);background:#0b0d12}
+.recv-visual img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 45%}
+.recv-wrap .recv{grid-template-columns:1fr 1fr}
 /* 8-week timeline graphic (#plan) */
 .tl{margin:0 0 1.75rem;padding:1.4rem 1.5rem 1.2rem;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--soft)}
 .tl-phases,.tl-track,.tl-miles{display:grid;grid-template-columns:repeat(8,minmax(0,1fr))}
@@ -713,8 +715,8 @@ a{color:#000}
 .fee-lbl{font-size:.8rem;color:var(--fog2);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
 .fee-card p{font-size:.88rem;color:var(--fog);margin:.5rem 0 0}
 .block{margin-bottom:3.5rem}
-@media (max-width:960px){.batch-hero-grid{grid-template-columns:1fr}.recv{grid-template-columns:1fr 1fr}}
-@media (max-width:640px){.months,.fee-box,.recv{grid-template-columns:1fr}.weeks li{grid-template-columns:1fr;gap:.2rem}
+@media (max-width:960px){.batch-hero-grid{grid-template-columns:1fr}.recv-wrap{grid-template-columns:1fr}.recv-visual{aspect-ratio:16/9;min-height:0}.recv-visual img{object-position:50% 22%}.recv{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.months,.fee-box,.recv,.recv-wrap .recv{grid-template-columns:1fr}.weeks li{grid-template-columns:1fr;gap:.2rem}
   .tl{padding:1.1rem 1rem 1rem}.tl-ph em{display:none}.tl-ph{padding:.6rem .65rem}.tl-ph b{font-size:1rem}
   .tl-miles{grid-template-columns:1fr;margin-top:1rem;border-top:1px solid var(--border);padding-top:.8rem}
   .tl-mi{grid-column:1/-1 !important;text-align:left;display:flex;gap:.6rem}.tl-mi b{display:inline;min-width:3.2rem;font-family:var(--fm);font-size:.7rem;color:var(--teal)}}
@@ -785,7 +787,6 @@ a{color:#000}
         </div>
       </div>
       <aside class="batch-facts" aria-label="Batch details" data-r="2">
-        <div class="batch-visual"><img src="assets/img/internship-programme-960.webp" srcset="assets/img/internship-programme-480.webp 480w, assets/img/internship-programme-720.webp 720w, assets/img/internship-programme-960.webp 960w" sizes="(max-width:960px) 100vw, 360px" alt="A glowing internship certificate and graduation cap rising from a laptop: the Machine Learning internship at Data Science Academia" width="960" height="960" loading="eager" decoding="async"></div>
         <span class="batch-close" data-batch-open>Applications close 30 November 2026</span>
         <dl>
           <dt>Starts</dt><dd>1 December 2026</dd>
@@ -866,11 +867,14 @@ a{color:#000}
 
   <section class="block" aria-labelledby="recv-title" data-r>
     <h2 class="section-label" id="recv-title">What every intern receives</h2>
+    <div class="recv-wrap">
+    <figure class="recv-visual"><img src="assets/img/internship-programme-960.webp" srcset="assets/img/internship-programme-480.webp 480w, assets/img/internship-programme-720.webp 720w, assets/img/internship-programme-960.webp 960w" sizes="(max-width:960px) 100vw, 480px" alt="A glowing internship certificate and graduation cap rising from a laptop: every Machine Learning intern receives an offer letter, two certificates and project documentation" width="960" height="960" loading="lazy" decoding="async"></figure>
     <div class="recv">
       <div class="feature"><span class="icon-box sm yellow" aria-hidden="true">✉️</span><div><h3 class="feature-title">Internship Offer Letter</h3><p class="feature-text">Issued when you join the batch.</p></div></div>
       <div class="feature"><span class="icon-box sm yellow" aria-hidden="true">🎓</span><div><h3 class="feature-title">Internship Completion Certificate</h3><p class="feature-text">For completing the two-month internship.</p></div></div>
       <div class="feature"><span class="icon-box sm yellow" aria-hidden="true">🏅</span><div><h3 class="feature-title">Project Completion Certificate</h3><p class="feature-text">For your group project, with its title.</p></div></div>
       <div class="feature"><span class="icon-box sm yellow" aria-hidden="true">📄</span><div><h3 class="feature-title">Project Documentation</h3><p class="feature-text">Your project's report, ready for your college and interviews.</p></div></div>
+    </div>
     </div>
   </section>
 
