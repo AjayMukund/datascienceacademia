@@ -351,8 +351,12 @@ P2. Internships (NEP & AICTE Aligned)
   Fee       : Rs 6,000 · select partner colleges get 50% off (Rs 3,000 per student) · no seat limit
   Every intern receives: Internship Offer Letter, Internship Completion Certificate,
               Project Completion Certificate and their Project Documentation
-  How to apply: pay the fee, fill in the application form with the payment screenshot; DSA verifies
-              and sends the Internship Offer Letter and joining link before 1 December
+  How to apply: fill in the application form at https://forms.gle/4u44v45jTVHmxVf96 by 30 November.
+              Students of select partner colleges enter their college coupon code (from their placement /
+              internship coordinator) in the form to get the Rs 3,000 fee. Pay using the UPI QR code shown in
+              the form and upload the payment screenshot; DSA verifies the payment and emails the Internship
+              Offer Letter, then sends the joining link and timetable before 1 December.
+  Brochure  : a 3-page PDF brochure is available on request on WhatsApp.
 
 P3. Microsoft Certification Program
   Duration  : 4–8 Weeks per certification

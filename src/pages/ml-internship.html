@@ -4,13 +4,13 @@
 {% set b = site.batch %}
 {% set fee = '₹' ~ '{:,}'.format(b.fee) %}
 {% set fee_p = '₹' ~ '{:,}'.format(b.fee_partner) %}
-{% set apply_url = rel ~ 'contact.html?course=' ~ (b.name | urlencode) %}
+{% set apply_url = b.form %}{# Google Form: details + coupon code + UPI payment + screenshot #}
 {% set wa_url = site.whatsapp ~ '?text=' ~ (('Hello DSA, I would like to join the ' ~ b.name ~ '.') | urlencode) %}
 {% set faqs = [
   {'q': 'Who can apply?', 'a': 'Final-year students of BCA, B.Sc. and B.E./B.Tech Computer Science, and postgraduate students (for example MCA, M.Sc. and M.E./M.Tech). If your degree is close to these and you are unsure, <a href="' ~ rel ~ 'contact.html">ask us</a>.'},
   {'q': 'Do I need to know machine learning already?', 'a': 'No. The first month is training: it starts from the machine learning workflow and builds up to ensembles and pipelines. Basic Python helps, and the first week includes a refresher on the parts you need.'},
   {'q': 'How much time does it take each week?', 'a': 'One live online session every weekday, ' ~ b.schedule | replace('Monday to Friday, ', '') ~ ' — about five hours of live sessions a week — plus your own practice and, in the second month, project work with your group.'},
-  {'q': 'What is the fee, and who gets the 50% discount?', 'a': 'The fee is ' ~ fee ~ ' for the full two months. Students of select partner colleges get a 50% discount, so they pay ' ~ fee_p ~ '. Ask your placement or internship coordinator, or send us your college name, to check whether your college is eligible.'},
+  {'q': 'What is the fee, and who gets the 50% discount?', 'a': 'The fee is ' ~ fee ~ ' for the full two months. Students of select partner colleges get a 50% discount, so they pay ' ~ fee_p ~ '. Get your college’s coupon code from your placement or internship coordinator and enter it in the application form; the form then shows the ' ~ fee_p ~ ' payment page. Not sure whether your college is included? <a href="' ~ wa_url ~ '">Ask us on WhatsApp</a>.'},
   {'q': 'What will I receive at the end?', 'a': 'Every intern receives an Internship Offer Letter, an Internship Completion Certificate, a Project Completion Certificate and the documentation of their group project.'},
   {'q': 'How do the group projects work?', 'a': 'In the second month you work in a small group on one machine learning project, guided by the Internship Supervisor: problem statement, data, model, evaluation, a simple demo and the final documentation and presentation.'},
   {'q': 'Is the internship AICTE aligned?', 'a': 'The programme follows NEP 2020 and AICTE internship guidelines. Where your institution is AICTE accredited, the internship is AICTE aligned. Check your own university\'s rules on how many internship hours or credits you need; our guide <a href="' ~ rel ~ 'blog/aicte-internships-cse-students.html">AICTE internships for CSE students</a> explains how this usually works.'},
@@ -143,7 +143,7 @@
           <span class="badge">3 certificates + project documentation</span>
         </div>
         <div class="row" data-r="3" style="margin-top:1.75rem">
-          <a class="btn btn-primary" href="{{ apply_url }}">Apply by {{ b.apply_by_display | replace(' 2026', '') }} <span class="arr">&rarr;</span></a>
+          <a class="btn btn-primary" href="{{ apply_url }}" target="_blank" rel="noopener">Apply by {{ b.apply_by_display | replace(' 2026', '') }} <span class="arr">&rarr;</span></a>
           <a class="btn btn-ghost" href="#plan">See the 8-week plan</a>
         </div>
       </div>
@@ -157,7 +157,7 @@
           <dt>Fee</dt><dd>{{ fee }}<small>{{ fee_p }} for students of select colleges (50% off)</small></dd>
           <dt>Seats</dt><dd>Open to all eligible students</dd>
         </dl>
-        <a class="btn btn-primary btn-block" href="{{ apply_url }}">Apply now <span class="arr">&rarr;</span></a>
+        <a class="btn btn-primary btn-block" href="{{ apply_url }}" target="_blank" rel="noopener">Apply now <span class="arr">&rarr;</span></a>
         <a class="btn btn-wa btn-block" style="margin-top:.6rem" href="{{ wa_url }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
       </aside>
     </div>
@@ -271,7 +271,7 @@
       <div class="fee-card alt">
         <div class="fee-lbl">Select colleges · 50% off</div>
         <div class="fee-amt">{{ fee_p }}</div>
-        <p>Per student, for students of select partner colleges. Ask your placement or internship coordinator, or <a href="{{ apply_url }}">send us your college name</a> to check.</p>
+        <p>Per student, for students of select partner colleges. Get your college's coupon code from your placement or internship coordinator and enter it in the application form.</p>
       </div>
     </div>
   </section>
@@ -279,9 +279,9 @@
   <section class="block" aria-labelledby="apply-title" data-r>
     <h2 class="section-label" id="apply-title">How to apply</h2>
     <div class="steps">
-      <div class="step"><div class="step-num">1</div><h3 class="step-title">Apply by {{ b.apply_by_display }}</h3><p class="step-text">Fill in the enquiry form with this batch selected, or message us on WhatsApp.</p></div>
-      <div class="step"><div class="step-num">2</div><h3 class="step-title">Quick call</h3><p class="step-text">We confirm your eligibility, college and fee, and answer your questions.</p></div>
-      <div class="step"><div class="step-num">3</div><h3 class="step-title">Pay and confirm</h3><p class="step-text">Pay the fee and send us the payment screenshot. We verify it and send your Internship Offer Letter.</p></div>
+      <div class="step"><div class="step-num">1</div><h3 class="step-title">Fill in the form</h3><p class="step-text">Open the <a href="{{ apply_url }}" target="_blank" rel="noopener">application form</a> by {{ b.apply_by_display }}. Enter your college coupon code there if you have one.</p></div>
+      <div class="step"><div class="step-num">2</div><h3 class="step-title">Pay in the form</h3><p class="step-text">Pay {{ fee }} (or {{ fee_p }} with a coupon) using the UPI QR code in the form, and upload your payment screenshot.</p></div>
+      <div class="step"><div class="step-num">3</div><h3 class="step-title">Get your offer letter</h3><p class="step-text">We verify your payment and email your Internship Offer Letter.</p></div>
       <div class="step"><div class="step-num">4</div><h3 class="step-title">Start on {{ b.start_display | replace(' 2026', '') }}</h3><p class="step-text">You get the joining link and timetable before the first session.</p></div>
     </div>
   </section>
@@ -299,7 +299,7 @@
       <h2 class="cta-title" id="cta-title">Join the <em>Machine Learning Internship</em></h2>
       <p class="cta-text">Starts {{ b.start_display }} &middot; {{ b.schedule }} &middot; online. {{ fee }}, or {{ fee_p }} for students of select colleges.</p>
       <div class="cta-actions">
-        <a class="btn btn-primary btn-lg" href="{{ apply_url }}">Apply now <span class="arr">&rarr;</span></a>
+        <a class="btn btn-primary btn-lg" href="{{ apply_url }}" target="_blank" rel="noopener">Apply now <span class="arr">&rarr;</span></a>
         <a class="btn btn-wa btn-lg" href="{{ wa_url }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
       </div>
       <p class="cta-note">{{ site.phone }} &middot; {{ site.email }}</p>

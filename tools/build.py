@@ -102,6 +102,7 @@ SITE = {
         "schedule": "Monday to Friday, 7:30 – 8:30 PM IST",
         "mode": "Online (live)",
         "fee": 6000, "fee_partner": 3000,
+        "form": "https://forms.gle/4u44v45jTVHmxVf96",   # Google Form registration (QR/UPI + screenshot inside)
     },
 }
 

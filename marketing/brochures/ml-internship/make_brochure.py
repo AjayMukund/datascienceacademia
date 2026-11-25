@@ -19,7 +19,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 
-FORM_URL = ""          # ← Google Form link, e.g. "https://forms.gle/AbCdEf123"
+FORM_URL = "https://forms.gle/4u44v45jTVHmxVf96"   # Google Form registration link
 
 from icons import icon_svg  # noqa: E402  (same outline icons as the website)
 
