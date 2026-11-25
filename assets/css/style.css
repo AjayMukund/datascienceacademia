@@ -708,7 +708,7 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.025em;line-height:1.1}
 .batch-pill .arr{color:var(--teal)}
 .batch-callout{margin:0 0 2.5rem}
 .batch-ic{width:64px;height:64px;display:inline-flex;align-items:center;justify-content:center;border-radius:16px;color:#10263D;background:rgba(16,38,61,.06);border:1px solid rgba(16,38,61,.22)}
-.batch-ic svg{width:46px;height:46px;fill:none;stroke:currentColor;stroke-width:1.45;stroke-linecap:round;stroke-linejoin:round}
+.batch-ic svg{width:44px;height:44px;fill:none;stroke:currentColor;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}
 [data-theme="dark"] .batch-ic{color:#C9A970;background:rgba(201,169,112,.1);border-color:rgba(201,169,112,.45)}
 .batch-callout .callout-title{font-size:1.5rem}
 .batch-callout .btn{margin-left:auto}
