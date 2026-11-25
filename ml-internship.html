@@ -659,6 +659,7 @@ background:radial-gradient(circle at 38% 38%,rgba(73,154,145,.20),rgba(73,154,14
 @media (max-width:640px){.batch-ic svg{width:56px;height:56px}}
 .batch-callout .callout-title{font-size:1.5rem}
 .batch-callout .btn{margin-left:auto}
+.batch-callout .callout-link{display:inline-block;margin-top:.55rem;font-size:.85rem;font-weight:600;color:var(--teal);text-decoration:underline;text-underline-offset:3px}
 @media (max-width:640px){.batch-pill{font-size:.74rem;align-items:flex-start}.batch-callout .btn{margin-left:0}}
 @media print{
 .nav,.cur,#bg-canvas,#fluid-canvas,#scroll-progress,.footer,.btn,.hero-glow,.page-hero-glow,.skip-link{display:none!important}
@@ -734,6 +735,9 @@ a{color:#000}
 .fee-lbl{font-size:.8rem;color:var(--fog2);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
 .fee-card p{font-size:.88rem;color:var(--fog);margin:.5rem 0 0}
 .block{margin-bottom:3.5rem}
+/* open / closed states: build sets .batch-closed after apply_by; the inline script also flips it in the browser */
+.page-batch:not(.batch-closed) .when-closed,.page-batch.batch-closed .when-open{display:none!important}
+.closed-note{border:1px solid var(--b-gold);background:var(--t-gold);border-radius:var(--r);padding:1rem 1.2rem;margin-bottom:1.25rem;font-size:.95rem}
 @media (max-width:960px){.batch-hero-grid{grid-template-columns:1fr}.recv-wrap{grid-template-columns:1fr}.recv-visual{aspect-ratio:16/9;min-height:0}.recv-visual img{object-position:50% 22%}.recv{grid-template-columns:1fr 1fr}}
 @media (max-width:640px){.months,.fee-box,.recv,.recv-wrap .recv{grid-template-columns:1fr}.weeks li{grid-template-columns:1fr;gap:.2rem}
   .tl{padding:1.1rem 1rem 1rem}.tl-ph em{display:none}.tl-ph{padding:.6rem .65rem}.tl-ph b{font-size:1rem}
@@ -744,7 +748,7 @@ a{color:#000}
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://datascienceacademia.in/"},{"@type":"ListItem","position":2,"name":"Programmes","item":"https://datascienceacademia.in/programmes.html"},{"@type":"ListItem","position":3,"name":"Internships","item":"https://datascienceacademia.in/programmes/internship.html"},{"@type":"ListItem","position":4,"name":"Machine Learning Internship – December 2026"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","@id":"https://datascienceacademia.in/ml-internship.html#course","name":"Machine Learning Internship – December 2026 Batch","description":"Two-month online Machine Learning internship: one month of live training followed by one month of guided group projects, for final-year BCA, B.Sc. and B.Tech Computer Science students and postgraduates.","url":"https://datascienceacademia.in/ml-internship.html","inLanguage":"en","provider":{"@id":"https://datascienceacademia.in/#organization"},"educationalCredentialAwarded":"Internship Offer Letter, Internship Completion Certificate and Project Completion Certificate","coursePrerequisites":"Final-year BCA, B.Sc. or B.E./B.Tech Computer Science student, or a postgraduate student. Basic Python helps.","teaches":["Supervised learning","Unsupervised learning","Model evaluation","Scikit-learn pipelines","Group machine learning project"],"offers":[{"@type":"Offer","category":"Paid","price":6000,"priceCurrency":"INR","availability":"https://schema.org/InStock","validThrough":"2026-11-30T23:59:59+05:30","url":"https://datascienceacademia.in/ml-internship.html"}],"hasCourseInstance":[{"@type":"CourseInstance","courseMode":"online","startDate":"2026-12-01","endDate":"2027-01-31","courseWorkload":"PT5H","courseSchedule":{"@type":"Schedule","repeatFrequency":"P1W","repeatCount":9,"byDay":["https://schema.org/Monday","https://schema.org/Tuesday","https://schema.org/Wednesday","https://schema.org/Thursday","https://schema.org/Friday"],"startTime":"19:30","endTime":"20:30","duration":"PT1H","scheduleTimezone":"Asia/Kolkata"},"instructor":{"@type":"Person","name":"Ajay Mukund S"}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Who can apply?","acceptedAnswer":{"@type":"Answer","text":"Final-year students of BCA, B.Sc. and B.E./B.Tech Computer Science, and postgraduate students (for example MCA, M.Sc. and M.E./M.Tech). If your degree is close to these and you are unsure, ask us."}},{"@type":"Question","name":"Do I need to know machine learning already?","acceptedAnswer":{"@type":"Answer","text":"No. The first month is training: it starts from the machine learning workflow and builds up to ensembles and pipelines. Basic Python helps, and the first week includes a refresher on the parts you need."}},{"@type":"Question","name":"How much time does it take each week?","acceptedAnswer":{"@type":"Answer","text":"One live online session every weekday, 7:30 – 8:30 PM IST — about five hours of live sessions a week — plus your own practice and, in the second month, project work with your group."}},{"@type":"Question","name":"What is the fee, and who gets the 50% discount?","acceptedAnswer":{"@type":"Answer","text":"The fee is ₹6,000 for the full two months. Students of select partner colleges get a 50% discount, so they pay ₹3,000. Get your college’s coupon code from your placement or internship coordinator and enter it in the application form; the form then shows the ₹3,000 payment page. Not sure whether your college is included? Ask us on WhatsApp."}},{"@type":"Question","name":"What will I receive at the end?","acceptedAnswer":{"@type":"Answer","text":"Every intern receives an Internship Offer Letter, an Internship Completion Certificate, a Project Completion Certificate and the documentation of their group project."}},{"@type":"Question","name":"How do the group projects work?","acceptedAnswer":{"@type":"Answer","text":"In the second month you work in a small group on one machine learning project, guided by the Internship Supervisor: problem statement, data, model, evaluation, a simple demo and the final documentation and presentation."}},{"@type":"Question","name":"Will this internship count towards my college internship credits?","acceptedAnswer":{"@type":"Answer","text":"The internship is designed to meet typical university internship-credit requirements: about 40 hours of live training and supervised project work over two months, with an offer letter, completion certificates and project documentation you can submit to your college. Rules differ between universities, so check with your department how many internship hours or credits you need and which documents they accept; our guide internships for CSE students explains how this usually works."}},{"@type":"Question","name":"Will the sessions be recorded?","acceptedAnswer":{"@type":"Answer","text":"No. All sessions are live, so plan to join every weekday evening at 7:30 PM. Live sessions let you ask questions and get help on your code as you go."}},{"@type":"Question","name":"What do I need to join?","acceptedAnswer":{"@type":"Answer","text":"A laptop or desktop with a stable internet connection and a Google account. We use Google Colab, so you do not need to install anything to start."}}]}</script>
-<script>/* load analytics on the first scroll/tap/key/mouse move, or 6 s after load: keeps them out of the page-load (PageSpeed) window */window.dsaLater=function(go,ms){var ev=['scroll','pointerdown','keydown','mousemove','touchstart'],done=0;function f(){if(done)return;done=1;ev.forEach(function(e){removeEventListener(e,f,true)});go()}ev.forEach(function(e){addEventListener(e,f,{passive:true,capture:true})});function t(){setTimeout(f,ms)}if(document.readyState==='complete')t();else addEventListener('load',t)};</script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());(function(w,d){function go(){var s=d.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtm.js?id=GTM-K7TB3NBD';d.head.appendChild(s)}w.dsaLater(go,6000);d.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.getAttribute('href'),t=(a.textContent||'').trim().slice(0,60);if(/wa\.me|whatsapp\.com/.test(h))gtag('event','whatsapp_click',{link_text:t});else if(h.indexOf('tel:')===0)gtag('event','phone_click',{link_text:t});else if(h.indexOf('mailto:')===0)gtag('event','email_click',{link_text:t});else if(/(^|\/)contact\.html/.test(h))gtag('event','enquire_click',{link_text:t,page:location.pathname})},true)})(window,document);</script><script>(function(c,l,a,r,i){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};function go(){var t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";l.head.appendChild(t)}c.dsaLater(function(){setTimeout(go,800)},6000)})(window,document,"clarity","script","zi01v79mv9");</script></head>
+<script>/* load analytics on the first scroll/tap/key/mouse move, or 6 s after load: keeps them out of the page-load (PageSpeed) window */window.dsaLater=function(go,ms){var ev=['scroll','pointerdown','keydown','mousemove','touchstart'],done=0;function f(){if(done)return;done=1;ev.forEach(function(e){removeEventListener(e,f,true)});go()}ev.forEach(function(e){addEventListener(e,f,{passive:true,capture:true})});function t(){setTimeout(f,ms)}if(document.readyState==='complete')t();else addEventListener('load',t)};</script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());(function(w,d){function go(){var s=d.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtm.js?id=GTM-K7TB3NBD';d.head.appendChild(s)}w.dsaLater(go,6000);d.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.getAttribute('href'),t=(a.textContent||'').trim().slice(0,60);if(/wa\.me|whatsapp\.com/.test(h))gtag('event','whatsapp_click',{link_text:t});else if(h.indexOf('tel:')===0)gtag('event','phone_click',{link_text:t});else if(h.indexOf('mailto:')===0)gtag('event','email_click',{link_text:t});else if(/(^|\/)contact\.html/.test(h))gtag('event','enquire_click',{link_text:t,page:location.pathname});else if(/forms\.gle|docs\.google\.com\/forms/.test(h))gtag('event','apply_form_click',{link_text:t,page:location.pathname});else if(/\.pdf(\?|$)/.test(h))gtag('event','brochure_download',{link_text:t,page:location.pathname})},true)})(window,document);</script><script>(function(c,l,a,r,i){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};function go(){var t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";l.head.appendChild(t)}c.dsaLater(function(){setTimeout(go,800)},6000)})(window,document,"clarity","script","zi01v79mv9");</script></head>
 <body class="page-batch">
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="cur" id="cur" aria-hidden="true"></div>
@@ -778,6 +782,7 @@ a{color:#000}
     <button class="nav-tog" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
 </header><main id="main">
+<script>if(Date.now()>new Date('2026-11-30T23:59:59+05:30').getTime())document.body.classList.add('batch-closed')</script>
 <section class="page-hero" aria-labelledby="page-title">
   <div class="page-hero-glow" aria-hidden="true"></div>
   <div class="container">
@@ -801,12 +806,14 @@ a{color:#000}
           <span class="badge">3 certificates + project documentation</span>
         </div>
         <div class="row" data-r="3" style="margin-top:1.75rem">
-          <a class="btn btn-primary" href="https://forms.gle/4u44v45jTVHmxVf96" target="_blank" rel="noopener">Apply by 30 November <span class="arr">&rarr;</span></a>
-          <a class="btn btn-ghost" href="#plan">See the 8-week plan</a>
+          <a class="btn btn-primary when-open" href="https://forms.gle/4u44v45jTVHmxVf96" target="_blank" rel="noopener">Apply by 30 November <span class="arr">&rarr;</span></a>
+          <a class="btn btn-primary when-closed" href="https://wa.me/919176498814?text=Hello%20DSA%2C%20please%20tell%20me%20when%20the%20next%20Machine%20Learning%20Internship%20batch%20opens." target="_blank" rel="noopener">Get notified about the next batch <span class="arr">&rarr;</span></a>
+          <a class="btn btn-ghost" href="assets/brochures/DSA-ML-Internship-Dec-2026-Brochure.pdf" download>Download brochure (PDF)</a>
         </div>
       </div>
       <aside class="batch-facts" aria-label="Batch details" data-r="2">
-        <span class="batch-close" data-batch-open>Applications close 30 November 2026</span>
+        <span class="batch-close when-open">Applications close 30 November 2026</span>
+        <span class="batch-close when-closed">Applications closed &middot; batch in progress</span>
         <dl>
           <dt>Starts</dt><dd>1 December 2026</dd>
           <dt>Duration</dt><dd>2 months<small>December 2026 – January 2027</small></dd>
@@ -815,8 +822,10 @@ a{color:#000}
           <dt>Fee</dt><dd>₹6,000<small>₹3,000 for students of select colleges (50% off)</small></dd>
           <dt>Seats</dt><dd>Open to all eligible students</dd>
         </dl>
-        <a class="btn btn-primary btn-block" href="https://forms.gle/4u44v45jTVHmxVf96" target="_blank" rel="noopener">Apply now <span class="arr">&rarr;</span></a>
-        <a class="btn btn-wa btn-block" style="margin-top:.6rem" href="https://wa.me/919176498814?text=Hello%20DSA%2C%20I%20would%20like%20to%20join%20the%20Machine%20Learning%20Internship%20%E2%80%93%20December%202026%20Batch." target="_blank" rel="noopener">Ask on WhatsApp</a>
+        <a class="btn btn-primary btn-block when-open" href="https://forms.gle/4u44v45jTVHmxVf96" target="_blank" rel="noopener">Apply now <span class="arr">&rarr;</span></a>
+        <a class="btn btn-wa btn-block when-open" style="margin-top:.6rem" href="https://wa.me/919176498814?text=Hello%20DSA%2C%20I%20would%20like%20to%20join%20the%20Machine%20Learning%20Internship%20%E2%80%93%20December%202026%20Batch." target="_blank" rel="noopener">Ask on WhatsApp</a>
+        <a class="btn btn-wa btn-block when-closed" href="https://wa.me/919176498814?text=Hello%20DSA%2C%20please%20tell%20me%20when%20the%20next%20Machine%20Learning%20Internship%20batch%20opens." target="_blank" rel="noopener">Get notified about the next batch</a>
+        <a class="btn btn-ghost btn-block" style="margin-top:.6rem" href="assets/brochures/DSA-ML-Internship-Dec-2026-Brochure.pdf" download>Download brochure (PDF)</a>
       </aside>
     </div>
   </div>
@@ -931,6 +940,7 @@ a{color:#000}
 
   <section class="block" aria-labelledby="apply-title" data-r>
     <h2 class="section-label" id="apply-title">How to apply</h2>
+    <p class="closed-note when-closed"><strong>Applications for the December 2026 batch closed on 30 November 2026.</strong> <a href="https://wa.me/919176498814?text=Hello%20DSA%2C%20please%20tell%20me%20when%20the%20next%20Machine%20Learning%20Internship%20batch%20opens." target="_blank" rel="noopener">Message us on WhatsApp</a> and we will tell you as soon as the next batch opens.</p>
     <div class="steps">
       <div class="step"><div class="step-num">1</div><h3 class="step-title">Fill in the form</h3><p class="step-text">Open the <a href="https://forms.gle/4u44v45jTVHmxVf96" target="_blank" rel="noopener">application form</a> by 30 November 2026. Enter your college coupon code there if you have one.</p></div>
       <div class="step"><div class="step-num">2</div><h3 class="step-title">Pay in the form</h3><p class="step-text">Pay ₹6,000 (or ₹3,000 with a coupon) using the UPI QR code in the form, and upload your payment screenshot.</p></div>
@@ -964,18 +974,22 @@ a{color:#000}
 <section class="section section-sm" aria-labelledby="cta-title">
   <div class="container">
     <div class="cta-banner" data-r>
-      <div class="eyebrow center">Applications close 30 November 2026</div>
-      <h2 class="cta-title" id="cta-title">Join the <em>Machine Learning Internship</em></h2>
-      <p class="cta-text">Starts 1 December 2026 &middot; Monday to Friday, 7:30 – 8:30 PM IST &middot; online. ₹6,000, or ₹3,000 for students of select colleges.</p>
+      <div class="eyebrow center when-open">Applications close 30 November 2026</div>
+      <div class="eyebrow center when-closed">Applications closed &middot; next batch coming soon</div>
+      <h2 class="cta-title" id="cta-title"><span class="when-open">Join the <em>Machine Learning Internship</em></span><span class="when-closed">Missed this batch? <em>Be first for the next one</em></span></h2>
+      <p class="cta-text when-open">Starts 1 December 2026 &middot; Monday to Friday, 7:30 – 8:30 PM IST &middot; online. ₹6,000, or ₹3,000 for students of select colleges.</p>
+      <p class="cta-text when-closed">The December batch is under way. Message us on WhatsApp and we will tell you as soon as applications open for the next Machine Learning Internship.</p>
       <div class="cta-actions">
-        <a class="btn btn-primary btn-lg" href="https://forms.gle/4u44v45jTVHmxVf96" target="_blank" rel="noopener">Apply now <span class="arr">&rarr;</span></a>
-        <a class="btn btn-wa btn-lg" href="https://wa.me/919176498814?text=Hello%20DSA%2C%20I%20would%20like%20to%20join%20the%20Machine%20Learning%20Internship%20%E2%80%93%20December%202026%20Batch." target="_blank" rel="noopener">Ask on WhatsApp</a>
+        <a class="btn btn-primary btn-lg when-open" href="https://forms.gle/4u44v45jTVHmxVf96" target="_blank" rel="noopener">Apply now <span class="arr">&rarr;</span></a>
+        <a class="btn btn-wa btn-lg when-open" href="https://wa.me/919176498814?text=Hello%20DSA%2C%20I%20would%20like%20to%20join%20the%20Machine%20Learning%20Internship%20%E2%80%93%20December%202026%20Batch." target="_blank" rel="noopener">Ask on WhatsApp</a>
+        <a class="btn btn-wa btn-lg when-closed" href="https://wa.me/919176498814?text=Hello%20DSA%2C%20please%20tell%20me%20when%20the%20next%20Machine%20Learning%20Internship%20batch%20opens." target="_blank" rel="noopener">Get notified about the next batch</a>
+        <a class="btn btn-ghost btn-lg" href="assets/brochures/DSA-ML-Internship-Dec-2026-Brochure.pdf" download>Download brochure (PDF)</a>
       </div>
       <p class="cta-note">+91 91764 98814 &middot; info@datascienceacademia.in</p>
     </div>
   </div>
 </section>
-<script>(function(){if(Date.now()>new Date('2026-11-30T23:59:59+05:30').getTime()){document.querySelectorAll('[data-batch-open]').forEach(function(e){e.textContent='Applications for this batch have closed — ask us about the next one'})}})();</script>
+
 </main>
 <footer class="footer">
   <div class="container">

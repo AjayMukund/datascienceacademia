@@ -103,6 +103,7 @@ SITE = {
         "mode": "Online (live)",
         "fee": 6000, "fee_partner": 3000,
         "form": "https://forms.gle/4u44v45jTVHmxVf96",   # Google Form registration (QR/UPI + screenshot inside)
+        "brochure": "assets/brochures/DSA-ML-Internship-Dec-2026-Brochure.pdf",   # made by marketing/brochures/ml-internship/make_brochure.py
     },
 }
 

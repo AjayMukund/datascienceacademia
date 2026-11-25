@@ -6,6 +6,8 @@
 {% set fee_p = '₹' ~ '{:,}'.format(b.fee_partner) %}
 {% set apply_url = b.form %}{# Google Form: details + coupon code + UPI payment + screenshot #}
 {% set wa_url = site.whatsapp ~ '?text=' ~ (('Hello DSA, I would like to join the ' ~ b.name ~ '.') | urlencode) %}
+{% set wa_next = site.whatsapp ~ '?text=' ~ (('Hello DSA, please tell me when the next Machine Learning Internship batch opens.') | urlencode) %}
+{% set brochure = rel ~ b.brochure %}
 {% set faqs = [
   {'q': 'Who can apply?', 'a': 'Final-year students of BCA, B.Sc. and B.E./B.Tech Computer Science, and postgraduate students (for example MCA, M.Sc. and M.E./M.Tech). If your degree is close to these and you are unsure, <a href="' ~ rel ~ 'contact.html">ask us</a>.'},
   {'q': 'Do I need to know machine learning already?', 'a': 'No. The first month is training: it starts from the machine learning workflow and builds up to ensembles and pipelines. Basic Python helps, and the first week includes a refresher on the parts you need.'},
@@ -22,7 +24,7 @@
 {% block description %}Online 2-month Machine Learning internship for final-year BCA, B.Sc., B.Tech CSE and PG students. Starts {{ b.start_display }}. {{ fee }}; {{ fee_p }} for select colleges.{% endblock %}
 {% block og_title %}{{ b.short }} — starts {{ b.start_display }} (online, 2 months){% endblock %}
 {% block og_image %}{{ site.url }}/assets/og/ml-internship.jpg{% endblock %}
-{% block body_class %}page-batch{% endblock %}
+{% block body_class %}page-batch{% if not b.open %} batch-closed{% endif %}{% endblock %}
 
 {% block head_extra %}
 <style>
@@ -81,6 +83,9 @@
 .fee-lbl{font-size:.8rem;color:var(--fog2);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
 .fee-card p{font-size:.88rem;color:var(--fog);margin:.5rem 0 0}
 .block{margin-bottom:3.5rem}
+/* open / closed states: build sets .batch-closed after apply_by; the inline script also flips it in the browser */
+.page-batch:not(.batch-closed) .when-closed,.page-batch.batch-closed .when-open{display:none!important}
+.closed-note{border:1px solid var(--b-gold);background:var(--t-gold);border-radius:var(--r);padding:1rem 1.2rem;margin-bottom:1.25rem;font-size:.95rem}
 @media (max-width:960px){.batch-hero-grid{grid-template-columns:1fr}.recv-wrap{grid-template-columns:1fr}.recv-visual{aspect-ratio:16/9;min-height:0}.recv-visual img{object-position:50% 22%}.recv{grid-template-columns:1fr 1fr}}
 @media (max-width:640px){.months,.fee-box,.recv,.recv-wrap .recv{grid-template-columns:1fr}.weeks li{grid-template-columns:1fr;gap:.2rem}
   .tl{padding:1.1rem 1rem 1rem}.tl-ph em{display:none}.tl-ph{padding:.6rem .65rem}.tl-ph b{font-size:1rem}
@@ -120,6 +125,7 @@
 {% endblock %}
 
 {% block content %}
+<script>if(Date.now()>new Date('{{ b.apply_by }}T23:59:59+05:30').getTime())document.body.classList.add('batch-closed')</script>
 <section class="page-hero" aria-labelledby="page-title">
   <div class="page-hero-glow" aria-hidden="true"></div>
   <div class="container">
@@ -143,12 +149,14 @@
           <span class="badge">3 certificates + project documentation</span>
         </div>
         <div class="row" data-r="3" style="margin-top:1.75rem">
-          <a class="btn btn-primary" href="{{ apply_url }}" target="_blank" rel="noopener">Apply by {{ b.apply_by_display | replace(' 2026', '') }} <span class="arr">&rarr;</span></a>
-          <a class="btn btn-ghost" href="#plan">See the 8-week plan</a>
+          <a class="btn btn-primary when-open" href="{{ apply_url }}" target="_blank" rel="noopener">Apply by {{ b.apply_by_display | replace(' 2026', '') }} <span class="arr">&rarr;</span></a>
+          <a class="btn btn-primary when-closed" href="{{ wa_next }}" target="_blank" rel="noopener">Get notified about the next batch <span class="arr">&rarr;</span></a>
+          <a class="btn btn-ghost" href="{{ brochure }}" download>Download brochure (PDF)</a>
         </div>
       </div>
       <aside class="batch-facts" aria-label="Batch details" data-r="2">
-        <span class="batch-close" data-batch-open>Applications close {{ b.apply_by_display }}</span>
+        <span class="batch-close when-open">Applications close {{ b.apply_by_display }}</span>
+        <span class="batch-close when-closed">Applications closed &middot; batch in progress</span>
         <dl>
           <dt>Starts</dt><dd>{{ b.start_display }}</dd>
           <dt>Duration</dt><dd>2 months<small>{{ b.months_display }}</small></dd>
@@ -157,8 +165,10 @@
           <dt>Fee</dt><dd>{{ fee }}<small>{{ fee_p }} for students of select colleges (50% off)</small></dd>
           <dt>Seats</dt><dd>Open to all eligible students</dd>
         </dl>
-        <a class="btn btn-primary btn-block" href="{{ apply_url }}" target="_blank" rel="noopener">Apply now <span class="arr">&rarr;</span></a>
-        <a class="btn btn-wa btn-block" style="margin-top:.6rem" href="{{ wa_url }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
+        <a class="btn btn-primary btn-block when-open" href="{{ apply_url }}" target="_blank" rel="noopener">Apply now <span class="arr">&rarr;</span></a>
+        <a class="btn btn-wa btn-block when-open" style="margin-top:.6rem" href="{{ wa_url }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
+        <a class="btn btn-wa btn-block when-closed" href="{{ wa_next }}" target="_blank" rel="noopener">Get notified about the next batch</a>
+        <a class="btn btn-ghost btn-block" style="margin-top:.6rem" href="{{ brochure }}" download>Download brochure (PDF)</a>
       </aside>
     </div>
   </div>
@@ -278,6 +288,7 @@
 
   <section class="block" aria-labelledby="apply-title" data-r>
     <h2 class="section-label" id="apply-title">How to apply</h2>
+    <p class="closed-note when-closed"><strong>Applications for the December 2026 batch closed on {{ b.apply_by_display }}.</strong> <a href="{{ wa_next }}" target="_blank" rel="noopener">Message us on WhatsApp</a> and we will tell you as soon as the next batch opens.</p>
     <div class="steps">
       <div class="step"><div class="step-num">1</div><h3 class="step-title">Fill in the form</h3><p class="step-text">Open the <a href="{{ apply_url }}" target="_blank" rel="noopener">application form</a> by {{ b.apply_by_display }}. Enter your college coupon code there if you have one.</p></div>
       <div class="step"><div class="step-num">2</div><h3 class="step-title">Pay in the form</h3><p class="step-text">Pay {{ fee }} (or {{ fee_p }} with a coupon) using the UPI QR code in the form, and upload your payment screenshot.</p></div>
@@ -295,16 +306,20 @@
 <section class="section section-sm" aria-labelledby="cta-title">
   <div class="container">
     <div class="cta-banner" data-r>
-      <div class="eyebrow center">Applications close {{ b.apply_by_display }}</div>
-      <h2 class="cta-title" id="cta-title">Join the <em>Machine Learning Internship</em></h2>
-      <p class="cta-text">Starts {{ b.start_display }} &middot; {{ b.schedule }} &middot; online. {{ fee }}, or {{ fee_p }} for students of select colleges.</p>
+      <div class="eyebrow center when-open">Applications close {{ b.apply_by_display }}</div>
+      <div class="eyebrow center when-closed">Applications closed &middot; next batch coming soon</div>
+      <h2 class="cta-title" id="cta-title"><span class="when-open">Join the <em>Machine Learning Internship</em></span><span class="when-closed">Missed this batch? <em>Be first for the next one</em></span></h2>
+      <p class="cta-text when-open">Starts {{ b.start_display }} &middot; {{ b.schedule }} &middot; online. {{ fee }}, or {{ fee_p }} for students of select colleges.</p>
+      <p class="cta-text when-closed">The December batch is under way. Message us on WhatsApp and we will tell you as soon as applications open for the next Machine Learning Internship.</p>
       <div class="cta-actions">
-        <a class="btn btn-primary btn-lg" href="{{ apply_url }}" target="_blank" rel="noopener">Apply now <span class="arr">&rarr;</span></a>
-        <a class="btn btn-wa btn-lg" href="{{ wa_url }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
+        <a class="btn btn-primary btn-lg when-open" href="{{ apply_url }}" target="_blank" rel="noopener">Apply now <span class="arr">&rarr;</span></a>
+        <a class="btn btn-wa btn-lg when-open" href="{{ wa_url }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
+        <a class="btn btn-wa btn-lg when-closed" href="{{ wa_next }}" target="_blank" rel="noopener">Get notified about the next batch</a>
+        <a class="btn btn-ghost btn-lg" href="{{ brochure }}" download>Download brochure (PDF)</a>
       </div>
       <p class="cta-note">{{ site.phone }} &middot; {{ site.email }}</p>
     </div>
   </div>
 </section>
-<script>(function(){if(Date.now()>new Date('{{ b.apply_by }}T23:59:59+05:30').getTime()){document.querySelectorAll('[data-batch-open]').forEach(function(e){e.textContent='Applications for this batch have closed — ask us about the next one'})}})();</script>
+
 {% endblock %}

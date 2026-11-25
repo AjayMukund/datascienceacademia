@@ -325,6 +325,9 @@ def main() -> None:
         pg.evaluate("document.fonts.ready")
         pg.pdf(path=str(pdf_path), format="A4", print_background=True, prefer_css_page_size=True)
         b.close()
+    served = ROOT / "assets" / "brochures" / pdf_path.name      # the copy the website links to (SITE["batch"]["brochure"])
+    served.parent.mkdir(parents=True, exist_ok=True)
+    served.write_bytes(pdf_path.read_bytes())
     print("wrote", pdf_path.relative_to(ROOT), "| registration link:", FORM_URL or "PLACEHOLDER")
 
 
