@@ -563,6 +563,7 @@ textarea.input{min-height:130px;resize:vertical}
 .social{width:38px;height:38px;border-radius:10px;border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;color:var(--fog);transition:all .25s}
 .social:hover{color:var(--champ2);border-color:var(--border3);background:rgba(200,169,110,.07);transform:translateY(-2px)}
 .social svg{width:16px;height:16px;fill:currentColor}
+.social svg.ol{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .footer-badges{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:1.1rem}
 .footer-bottom{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:1.5rem 0 2rem;border-top:1px solid var(--border);font-size:.74rem;color:var(--fog2);line-height:1.6}
 .footer-bottom a:hover{color:var(--champ2)}
