@@ -41,5 +41,21 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
-      - id: deployment
+      # GitHub sometimes reports "No artifacts named github-pages" for a few seconds right after the
+      # upload (seen several times in Nov 2026). Try, wait, try again before failing the run.
+      - id: deploy1
+        continue-on-error: true
         uses: actions/deploy-pages@v4
+      - if: steps.deploy1.outcome == 'failure'
+        run: sleep 45
+      - id: deploy2
+        if: steps.deploy1.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+      - if: steps.deploy1.outcome == 'failure' && steps.deploy2.outcome == 'failure'
+        run: sleep 90
+      - id: deploy3
+        if: steps.deploy1.outcome == 'failure' && steps.deploy2.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+      - id: deployment
+        run: echo "page_url=${{ steps.deploy1.outputs.page_url || steps.deploy2.outputs.page_url || steps.deploy3.outputs.page_url }}" >> "$GITHUB_OUTPUT"
