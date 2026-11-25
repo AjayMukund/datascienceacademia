@@ -27,7 +27,30 @@
 {% block head_extra %}
 <style>
 .batch-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:3rem;align-items:start}
-.batch-facts{border:1px solid var(--border2);border-radius:var(--r-lg);background:var(--soft);padding:1.5rem 1.6rem}
+.batch-facts{border:1px solid var(--border2);border-radius:var(--r-lg);background:var(--soft);padding:1.5rem 1.6rem;overflow:hidden}
+.batch-visual{display:block;margin:-1.5rem -1.6rem 1.25rem;aspect-ratio:16/11;background:#0b0d12}
+.batch-visual img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+/* 8-week timeline graphic (#plan) */
+.tl{margin:0 0 1.75rem;padding:1.4rem 1.5rem 1.2rem;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--soft)}
+.tl-phases,.tl-track,.tl-miles{display:grid;grid-template-columns:repeat(8,minmax(0,1fr))}
+.tl-ph{padding:.75rem .9rem;border-radius:var(--r);border:1px solid var(--b-teal);background:var(--t-teal)}
+.tl-ph1{grid-column:1/5;margin-right:.35rem}
+.tl-ph2{grid-column:5/9;margin-left:.35rem;border-color:var(--b-gold);background:var(--t-gold)}
+.tl-ph span{display:block;font-family:var(--fm);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+.tl-ph em{font-style:normal}
+.tl-ph2 span{color:var(--gold)}
+.tl-ph b{display:block;font-family:var(--fd);font-size:1.15rem;color:var(--cream);line-height:1.25;margin-top:.15rem}
+.tl-ph small{display:block;font-size:.78rem;color:var(--fog2);margin-top:.1rem}
+.tl-track{position:relative;margin:1.1rem 0 .2rem}
+.tl-track::before{content:"";position:absolute;left:6.25%;right:6.25%;top:9px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--teal) 0 50%,var(--gold) 50% 100%)}
+.tl-wk{position:relative;display:flex;flex-direction:column;align-items:center;gap:.35rem;font-family:var(--fm);font-size:.66rem;letter-spacing:.06em;color:var(--fog2)}
+.tl-wk i{width:21px;height:21px;border-radius:50%;background:var(--ink2);border:3px solid var(--teal);box-sizing:border-box}
+.tl-wk:nth-child(n+5) i{border-color:var(--gold)}
+.tl-wk.m i{background:var(--teal)}
+.tl-wk.m:nth-child(n+5) i{background:var(--gold)}
+.tl-miles{margin-top:.55rem;row-gap:.3rem}
+.tl-mi{font-size:.78rem;line-height:1.3;color:var(--fog);text-align:center;padding:0 .2rem}
+.tl-mi b{display:block;color:var(--cream);font-weight:600}
 .batch-facts dl{display:grid;grid-template-columns:auto 1fr;gap:.75rem 1.1rem;margin:0}
 .batch-facts dt{font-family:var(--fm);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fog2);padding-top:.2rem}
 .batch-facts dd{margin:0;color:var(--cream);font-size:.95rem;line-height:1.45}
@@ -57,7 +80,10 @@
 .fee-card p{font-size:.88rem;color:var(--fog);margin:.5rem 0 0}
 .block{margin-bottom:3.5rem}
 @media (max-width:960px){.batch-hero-grid{grid-template-columns:1fr}.recv{grid-template-columns:1fr 1fr}}
-@media (max-width:640px){.months,.fee-box,.recv{grid-template-columns:1fr}.weeks li{grid-template-columns:1fr;gap:.2rem}}
+@media (max-width:640px){.months,.fee-box,.recv{grid-template-columns:1fr}.weeks li{grid-template-columns:1fr;gap:.2rem}
+  .tl{padding:1.1rem 1rem 1rem}.tl-ph em{display:none}.tl-ph{padding:.6rem .65rem}.tl-ph b{font-size:1rem}
+  .tl-miles{grid-template-columns:1fr;margin-top:1rem;border-top:1px solid var(--border);padding-top:.8rem}
+  .tl-mi{grid-column:1/-1 !important;text-align:left;display:flex;gap:.6rem}.tl-mi b{display:inline;min-width:3.2rem;font-family:var(--fm);font-size:.7rem;color:var(--teal)}}
 </style>
 {% endblock %}
 
@@ -120,6 +146,7 @@
         </div>
       </div>
       <aside class="batch-facts" aria-label="Batch details" data-r="2">
+        <div class="batch-visual">{{ img('internship-programme', 'A glowing internship certificate and graduation cap rising from a laptop: the Machine Learning internship at Data Science Academia', sizes='(max-width:960px) 100vw, 360px', loading='eager', max_width=960) }}</div>
         <span class="batch-close" data-batch-open>Applications close {{ b.apply_by_display }}</span>
         <dl>
           <dt>Starts</dt><dd>{{ b.start_display }}</dd>
@@ -156,6 +183,24 @@
 
   <section class="block" id="plan" aria-labelledby="plan-title" data-r>
     <h2 class="section-label" id="plan-title">The 8-week plan</h2>
+    <figure class="tl" role="img" aria-label="Timeline: weeks 1 to 4 in December are training; weeks 5 to 8 in January are group projects. Kick-off in week 1, full machine learning pipeline by week 4, teams and topics in week 5, mid-project review in week 7, demo and final presentation in week 8.">
+      <div class="tl-phases">
+        <div class="tl-ph tl-ph1"><span>Month 1<em> &middot; Weeks 1–4</em></span><b>Training</b><small>December</small></div>
+        <div class="tl-ph tl-ph2"><span>Month 2<em> &middot; Weeks 5–8</em></span><b>Group projects</b><small>January</small></div>
+      </div>
+      <div class="tl-track">
+        {%- for w in range(1, 9) %}
+        <div class="tl-wk{% if w in [1, 4, 5, 7, 8] %} m{% endif %}"><i></i>W{{ w }}</div>
+        {%- endfor %}
+      </div>
+      <div class="tl-miles">
+        <div class="tl-mi" style="grid-column:1"><b>Week 1</b>Kick-off, {{ b.start_display | replace(' 2026', '') }}</div>
+        <div class="tl-mi" style="grid-column:4"><b>Week 4</b>Full ML pipeline</div>
+        <div class="tl-mi" style="grid-column:5"><b>Week 5</b>Teams + topics</div>
+        <div class="tl-mi" style="grid-column:7"><b>Week 7</b>Mid-project review</div>
+        <div class="tl-mi" style="grid-column:8"><b>Week 8</b>Demo + final presentation</div>
+      </div>
+    </figure>
     <ol class="weeks">
       <li class="split">Month 1 — Training</li>
       <li><span class="wk">Week 1</span><div><strong>Python and data for machine learning</strong><span class="d">NumPy and pandas refresher, exploratory data analysis, the machine learning workflow, train/validation/test splits.</span></div></li>

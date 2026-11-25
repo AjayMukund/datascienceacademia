@@ -661,7 +661,30 @@ a{color:#000}
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .batch-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:3rem;align-items:start}
-.batch-facts{border:1px solid var(--border2);border-radius:var(--r-lg);background:var(--soft);padding:1.5rem 1.6rem}
+.batch-facts{border:1px solid var(--border2);border-radius:var(--r-lg);background:var(--soft);padding:1.5rem 1.6rem;overflow:hidden}
+.batch-visual{display:block;margin:-1.5rem -1.6rem 1.25rem;aspect-ratio:16/11;background:#0b0d12}
+.batch-visual img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+/* 8-week timeline graphic (#plan) */
+.tl{margin:0 0 1.75rem;padding:1.4rem 1.5rem 1.2rem;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--soft)}
+.tl-phases,.tl-track,.tl-miles{display:grid;grid-template-columns:repeat(8,minmax(0,1fr))}
+.tl-ph{padding:.75rem .9rem;border-radius:var(--r);border:1px solid var(--b-teal);background:var(--t-teal)}
+.tl-ph1{grid-column:1/5;margin-right:.35rem}
+.tl-ph2{grid-column:5/9;margin-left:.35rem;border-color:var(--b-gold);background:var(--t-gold)}
+.tl-ph span{display:block;font-family:var(--fm);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+.tl-ph em{font-style:normal}
+.tl-ph2 span{color:var(--gold)}
+.tl-ph b{display:block;font-family:var(--fd);font-size:1.15rem;color:var(--cream);line-height:1.25;margin-top:.15rem}
+.tl-ph small{display:block;font-size:.78rem;color:var(--fog2);margin-top:.1rem}
+.tl-track{position:relative;margin:1.1rem 0 .2rem}
+.tl-track::before{content:"";position:absolute;left:6.25%;right:6.25%;top:9px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--teal) 0 50%,var(--gold) 50% 100%)}
+.tl-wk{position:relative;display:flex;flex-direction:column;align-items:center;gap:.35rem;font-family:var(--fm);font-size:.66rem;letter-spacing:.06em;color:var(--fog2)}
+.tl-wk i{width:21px;height:21px;border-radius:50%;background:var(--ink2);border:3px solid var(--teal);box-sizing:border-box}
+.tl-wk:nth-child(n+5) i{border-color:var(--gold)}
+.tl-wk.m i{background:var(--teal)}
+.tl-wk.m:nth-child(n+5) i{background:var(--gold)}
+.tl-miles{margin-top:.55rem;row-gap:.3rem}
+.tl-mi{font-size:.78rem;line-height:1.3;color:var(--fog);text-align:center;padding:0 .2rem}
+.tl-mi b{display:block;color:var(--cream);font-weight:600}
 .batch-facts dl{display:grid;grid-template-columns:auto 1fr;gap:.75rem 1.1rem;margin:0}
 .batch-facts dt{font-family:var(--fm);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fog2);padding-top:.2rem}
 .batch-facts dd{margin:0;color:var(--cream);font-size:.95rem;line-height:1.45}
@@ -691,7 +714,10 @@ a{color:#000}
 .fee-card p{font-size:.88rem;color:var(--fog);margin:.5rem 0 0}
 .block{margin-bottom:3.5rem}
 @media (max-width:960px){.batch-hero-grid{grid-template-columns:1fr}.recv{grid-template-columns:1fr 1fr}}
-@media (max-width:640px){.months,.fee-box,.recv{grid-template-columns:1fr}.weeks li{grid-template-columns:1fr;gap:.2rem}}
+@media (max-width:640px){.months,.fee-box,.recv{grid-template-columns:1fr}.weeks li{grid-template-columns:1fr;gap:.2rem}
+  .tl{padding:1.1rem 1rem 1rem}.tl-ph em{display:none}.tl-ph{padding:.6rem .65rem}.tl-ph b{font-size:1rem}
+  .tl-miles{grid-template-columns:1fr;margin-top:1rem;border-top:1px solid var(--border);padding-top:.8rem}
+  .tl-mi{grid-column:1/-1 !important;text-align:left;display:flex;gap:.6rem}.tl-mi b{display:inline;min-width:3.2rem;font-family:var(--fm);font-size:.7rem;color:var(--teal)}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":["EducationalOrganization","LocalBusiness"],"@id":"https://datascienceacademia.in/#organization","name":"Data Science Academia","alternateName":["DSA","DSA Chennai"],"url":"https://datascienceacademia.in/","logo":{"@type":"ImageObject","url":"https://datascienceacademia.in/assets/icons/favicon-192.png","width":192,"height":192},"image":"https://datascienceacademia.in/assets/og/default.jpg","description":"Data Science Academia is a Ph.D.-led AI & Data Science institute in Chennai offering 18 courses (Python, Machine Learning, Deep Learning, LLMs, Power BI, Azure, AWS), AICTE-aligned internships, Microsoft certification prep and a 12-month AI Mastery Track — live in Chennai and online.","slogan":"Where Academic Rigour Meets Real-World AI Engineering","foundingDate":"2019","telephone":"+919176498814","email":"info@datascienceacademia.in","priceRange":"₹₹","address":{"@type":"PostalAddress","streetAddress":"No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam","addressLocality":"Chennai","addressRegion":"Tamil Nadu","postalCode":"600073","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":12.918342794186495,"longitude":80.15253111461173},"hasMap":"https://www.google.com/maps/search/?api=1&query=12.918342794186495%2C80.15253111461173","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"19:00"}],"areaServed":[{"@type":"City","name":"Chennai"},{"@type":"State","name":"Tamil Nadu"},{"@type":"Country","name":"India"}],"sameAs":["https://www.linkedin.com/company/data-science-academia/","https://www.youtube.com/@Data_Science_Academia","https://www.instagram.com/data_science_academia","https://wa.me/919176498814"],"contactPoint":[{"@type":"ContactPoint","telephone":"+919176498814","contactType":"admissions","email":"info@datascienceacademia.in","availableLanguage":["English","Tamil"],"areaServed":"IN"}]},{"@type":"WebSite","@id":"https://datascienceacademia.in/#website","url":"https://datascienceacademia.in/","name":"Data Science Academia","publisher":{"@id":"https://datascienceacademia.in/#organization"},"inLanguage":"en-IN"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://datascienceacademia.in/"},{"@type":"ListItem","position":2,"name":"Programmes","item":"https://datascienceacademia.in/programmes.html"},{"@type":"ListItem","position":3,"name":"Internships","item":"https://datascienceacademia.in/programmes/internship.html"},{"@type":"ListItem","position":4,"name":"Machine Learning Internship – December 2026"}]}</script>
@@ -759,6 +785,7 @@ a{color:#000}
         </div>
       </div>
       <aside class="batch-facts" aria-label="Batch details" data-r="2">
+        <div class="batch-visual"><img src="assets/img/internship-programme-960.webp" srcset="assets/img/internship-programme-480.webp 480w, assets/img/internship-programme-720.webp 720w, assets/img/internship-programme-960.webp 960w" sizes="(max-width:960px) 100vw, 360px" alt="A glowing internship certificate and graduation cap rising from a laptop: the Machine Learning internship at Data Science Academia" width="960" height="960" loading="eager" decoding="async"></div>
         <span class="batch-close" data-batch-open>Applications close 30 November 2026</span>
         <dl>
           <dt>Starts</dt><dd>1 December 2026</dd>
@@ -795,6 +822,20 @@ a{color:#000}
 
   <section class="block" id="plan" aria-labelledby="plan-title" data-r>
     <h2 class="section-label" id="plan-title">The 8-week plan</h2>
+    <figure class="tl" role="img" aria-label="Timeline: weeks 1 to 4 in December are training; weeks 5 to 8 in January are group projects. Kick-off in week 1, full machine learning pipeline by week 4, teams and topics in week 5, mid-project review in week 7, demo and final presentation in week 8.">
+      <div class="tl-phases">
+        <div class="tl-ph tl-ph1"><span>Month 1<em> &middot; Weeks 1–4</em></span><b>Training</b><small>December</small></div>
+        <div class="tl-ph tl-ph2"><span>Month 2<em> &middot; Weeks 5–8</em></span><b>Group projects</b><small>January</small></div>
+      </div>
+      <div class="tl-track">        <div class="tl-wk m"><i></i>W1</div>        <div class="tl-wk"><i></i>W2</div>        <div class="tl-wk"><i></i>W3</div>        <div class="tl-wk m"><i></i>W4</div>        <div class="tl-wk m"><i></i>W5</div>        <div class="tl-wk"><i></i>W6</div>        <div class="tl-wk m"><i></i>W7</div>        <div class="tl-wk m"><i></i>W8</div>      </div>
+      <div class="tl-miles">
+        <div class="tl-mi" style="grid-column:1"><b>Week 1</b>Kick-off, 1 December</div>
+        <div class="tl-mi" style="grid-column:4"><b>Week 4</b>Full ML pipeline</div>
+        <div class="tl-mi" style="grid-column:5"><b>Week 5</b>Teams + topics</div>
+        <div class="tl-mi" style="grid-column:7"><b>Week 7</b>Mid-project review</div>
+        <div class="tl-mi" style="grid-column:8"><b>Week 8</b>Demo + final presentation</div>
+      </div>
+    </figure>
     <ol class="weeks">
       <li class="split">Month 1 — Training</li>
       <li><span class="wk">Week 1</span><div><strong>Python and data for machine learning</strong><span class="d">NumPy and pandas refresher, exploratory data analysis, the machine learning workflow, train/validation/test splits.</span></div></li>
