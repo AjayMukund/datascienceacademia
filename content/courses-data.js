@@ -212,7 +212,7 @@ const DSA_COURSES = {
     category: 'Advanced AI',
     level: 'Advanced',
     levelClass: 'la',
-    icon: 'ico:network',
+    icon: 'ico:brain-circuit',
     iconClass: 'idl',
     duration: '12 weeks',
     hours: '60 contact hours',
