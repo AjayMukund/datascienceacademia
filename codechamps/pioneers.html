@@ -512,7 +512,7 @@ textarea.input{min-height:130px;resize:vertical}
 .alert-success{background:rgba(62,207,178,.08);border:1px solid rgba(62,207,178,.3);color:var(--teal)}
 @media (max-width:640px){.form-row{grid-template-columns:1fr}.form-panel{padding:1.4rem}}
 .footer{position:relative;z-index:1;margin-top:3rem;border-top:1px solid var(--border);background:linear-gradient(180deg,var(--tint),var(--ink) 40%)}
-.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.25fr;gap:3rem;padding:4rem 0 3rem}
+.footer-grid{display:grid;grid-template-columns:1.45fr 1fr 1.1fr .8fr 1.35fr;gap:2.5rem;padding:4rem 0 3rem}
 .footer-brand{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
 .footer-brand .nav-logo{width:44px;height:44px}
 .footer-about{font-size:.86rem;color:var(--fog);line-height:1.75;max-width:360px}
@@ -532,7 +532,8 @@ textarea.input{min-height:130px;resize:vertical}
 .footer-bottom{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:1.5rem 0 2rem;border-top:1px solid var(--border);font-size:.74rem;color:var(--fog2);line-height:1.6}
 .footer-bottom a:hover{color:var(--champ2)}
 .footer-bottom .links{display:flex;gap:1.25rem;flex-wrap:wrap}
-@media (max-width:960px){.footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}}
+@media (max-width:1100px){.footer-grid{grid-template-columns:repeat(4,1fr);gap:2.5rem 2rem}.footer-main{grid-column:1/-1;max-width:640px}}
+@media (max-width:760px){.footer-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.footer-grid{grid-template-columns:1fr;gap:2rem;padding-top:3rem}}
 dialog.dsa-dialog{border:1px solid var(--border2);border-radius:var(--r-lg);background:var(--ink2);color:var(--cream);padding:0;max-width:min(760px,92vw);width:100%;box-shadow:var(--sd);margin:auto}
 dialog.dsa-dialog::backdrop{background:rgba(0,0,0,.78);backdrop-filter:blur(6px)}
@@ -1147,7 +1148,7 @@ a{color:#000}
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
-      <div>
+      <div class="footer-main">
         <div class="footer-brand">
           <img class="nav-logo" src="../assets/img/logo-mark-64.png" srcset="../assets/img/logo-mark-64.png 1x, ../assets/img/logo-mark-128.png 2x" width="44" height="44" alt="" loading="lazy" decoding="async">
           <span class="nav-name"><span class="wordmark"><span class="wm-1">Data Science</span><span class="wm-2">Academia</span></span><span class="nav-sub">Chennai · Est. 2019</span></span>
@@ -1190,6 +1191,17 @@ a{color:#000}
           <a href="../codechamps.html">DSA Code Champs (Schools)</a>
         </div>
       </nav>
+      <nav aria-label="Company">
+        <div class="footer-h">Company</div>
+        <div class="footer-links">
+          <a href="../about.html">About us</a>
+          <a href="../projects.html">Student projects</a>
+          <a href="../testimonials.html">Testimonials</a>
+          <a href="../blog.html">Blog</a>
+          <a href="../verify.html">Verify a certificate</a>
+          <a href="../login.html" rel="nofollow">Student portal</a>
+        </div>
+      </nav>
       <div>
         <div class="footer-h">Contact</div>
         <ul class="footer-contact">
@@ -1199,15 +1211,6 @@ a{color:#000}
           <li><span class="ic" aria-hidden="true">🕐</span><span>Mon – Sat 9 AM – 7 PM IST · Sunday closed</span></li>
           <li><span class="ic" aria-hidden="true">⭐</span><a href="https://g.page/r/CZYQoW1hzglDEBM/review" target="_blank" rel="noopener">Review us on Google</a></li>
         </ul>
-        <div class="footer-h" style="margin-top:1.5rem">Company</div>
-        <div class="footer-links">
-          <a href="../about.html">About us</a>
-          <a href="../projects.html">Student projects</a>
-          <a href="../testimonials.html">Testimonials</a>
-          <a href="../blog.html">Blog</a>
-          <a href="../verify.html">Verify a certificate</a>
-          <a href="../login.html" rel="nofollow">Student portal</a>
-        </div>
       </div>
     </div>
     <div class="footer-bottom">
