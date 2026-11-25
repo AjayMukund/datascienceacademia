@@ -59,7 +59,8 @@
 .feat-meta{display:flex;flex-wrap:wrap;gap:.5rem 1.75rem;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:.8rem;color:var(--fog2)}
 .feat-meta strong{color:var(--cream);font-weight:500}
 .feat-visual{position:relative}
-.feat-visual .float-badge{bottom:1rem;left:1rem}
+.feat-visual .float-badge{bottom:-1rem;left:auto;right:1rem}
+@media (max-width:900px){.feat-visual{margin-bottom:1.5rem}}
 .feat-roadmap{padding:0 2.75rem 2.75rem}
 .roadmap.compact .rq{padding:1.1rem 1.2rem;background:var(--glass2)}
 .roadmap.compact .rq-title{font-size:1.15rem}
@@ -259,7 +260,7 @@
     <div class="section-head center">
       <div class="eyebrow center" data-r>Which programme is for me?</div>
       <h2 class="sh" id="fit-title" data-r="1">Recommended by <em>where you are</em> today</h2>
-      <p class="lead" data-r="2">Most learners combine two: a skills programme plus a credential or communication track. If you are unsure, tell us your goal and we will recommend a path within one business day.</p>
+      <p class="lead" data-r="2" style="max-width:780px;text-wrap:balance">Most learners combine two: a skills programme plus a credential or communication track. If you are unsure, tell us your goal and we will recommend a path within one business day.</p>
     </div>
     <div class="grid grid-4">
       <article class="feature col" data-r>
