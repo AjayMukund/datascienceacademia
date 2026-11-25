@@ -558,7 +558,8 @@ textarea.input{min-height:130px;resize:vertical}
 .footer-contact{display:flex;flex-direction:column;gap:.7rem;font-size:.85rem;color:var(--fog);line-height:1.6}
 .footer-contact li{display:flex;gap:.6rem;align-items:flex-start}
 .footer-contact a:hover{color:var(--champ2)}
-.footer-contact .ic{flex-shrink:0;opacity:.8}
+.footer-contact .ic{flex-shrink:0;display:inline-flex;width:18px;height:1.6em;align-items:center;color:var(--gold-brand)}
+.footer-contact .ic svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .social-links{display:flex;gap:.6rem;margin-top:1.25rem}
 .social{width:38px;height:38px;border-radius:10px;border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;color:var(--fog);transition:all .25s}
 .social:hover{color:var(--champ2);border-color:var(--border3);background:rgba(200,169,110,.07);transform:translateY(-2px)}
