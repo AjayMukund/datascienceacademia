@@ -666,7 +666,17 @@ body{background:#fff;color:#000}
 .js [data-r]{opacity:1;transform:none}
 .card,.feature,.quote-card,.info-card{border-color:#ccc;background:none;box-shadow:none}
 a{color:#000}
-}</style>
+}
+:root{--ico:#10263D}
+[data-theme="dark"],:is(.footer,.cta-banner,.stats,.navy-band,.term){--ico:#C9A970}
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-.14em;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;color:var(--ico)}
+.icon-box,.icon-box.teal,.icon-box.green,.icon-box.pink,.icon-box.blue,.icon-box.violet,.icon-box.yellow,.icon-box.coral{width:auto;height:auto;background:none;border:0;border-radius:0;font-size:2rem;justify-content:flex-start}
+.icon-box.sm{width:auto;height:auto;font-size:1.65rem}
+.icon-box.lg{width:auto;height:auto;font-size:2.5rem}
+.icon-box .ico{stroke-width:1.5}
+.callout-icon .ico{stroke-width:1.3}
+.fb-icon{display:inline-flex;font-size:1.6rem}
+.card-foot .ico{font-size:1.05em;margin-right:.15em}</style>
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .aud-strip{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 3rem;padding:1.6rem 2rem;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--card)}
@@ -795,9 +805,9 @@ a{color:#000}
       <div>
         <span class="label">How they are delivered</span>
         <ul class="pills">
-          <li class="pill"><span aria-hidden="true">📡</span> Online — live &amp; recorded for replay</li>
-          <li class="pill"><span aria-hidden="true">🏛️</span> Offline — workshops &amp; bootcamps in Chennai</li>
-          <li class="pill"><span aria-hidden="true">🔀</span> Hybrid — online plus offline sessions</li>
+          <li class="pill"><span aria-hidden="true"><svg class="ico ico-radio" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/> <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/> <circle cx="12" cy="12" r="2"/> <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/> <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/></svg></span> Online — live &amp; recorded for replay</li>
+          <li class="pill"><span aria-hidden="true"><svg class="ico ico-landmark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="3" x2="21" y1="22" y2="22"/> <line x1="6" x2="6" y1="18" y2="11"/> <line x1="10" x2="10" y1="18" y2="11"/> <line x1="14" x2="14" y1="18" y2="11"/> <line x1="18" x2="18" y1="18" y2="11"/> <polygon points="12 2 20 7 4 7"/></svg></span> Offline — workshops &amp; bootcamps in Chennai</li>
+          <li class="pill"><span aria-hidden="true"><svg class="ico ico-blend" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="7"/> <circle cx="15" cy="15" r="7"/></svg></span> Hybrid — online plus offline sessions</li>
         </ul>
       </div>
     </div>
@@ -833,7 +843,7 @@ a{color:#000}
         </div>
         <div class="feat-visual">
           <div class="img-frame"><img src="assets/img/ai-mastery-track-visual-960.webp" srcset="assets/img/ai-mastery-track-visual-480.webp 480w, assets/img/ai-mastery-track-visual-720.webp 720w, assets/img/ai-mastery-track-visual-960.webp 960w, assets/img/ai-mastery-track-visual-1600.webp 1600w" sizes="(max-width:900px) 100vw, 520px" alt="12-Month AI and Data Science Mastery Track at Data Science Academia, Chennai" width="960" height="536" loading="eager" decoding="async" fetchpriority="high"></div>
-          <div class="float-badge"><span class="fb-icon" aria-hidden="true">🗓️</span><div><div class="fb-v">4 quarters · 16 courses</div><div class="fb-l">No prior experience required</div></div></div>
+          <div class="float-badge"><span class="fb-icon" aria-hidden="true"><svg class="ico ico-calendar-days" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2v4"/> <path d="M16 2v4"/> <rect width="18" height="18" x="3" y="4" rx="2"/> <path d="M3 10h18"/> <path d="M8 14h.01"/> <path d="M12 14h.01"/> <path d="M16 14h.01"/> <path d="M8 18h.01"/> <path d="M12 18h.01"/> <path d="M16 18h.01"/></svg></span><div><div class="fb-v">4 quarters · 16 courses</div><div class="fb-l">No prior experience required</div></div></div>
         </div>
       </div>
       <div class="roadmap compact feat-roadmap" aria-label="AI Mastery Track quarter roadmap">
@@ -868,7 +878,7 @@ a{color:#000}
           <p class="card-text">Structured 1–2 month data science and AI internships aligned with NEP 2020 and AICTE guidelines. Work on real projects under Ph.D.-qualified mentors and leave with a certificate, offer letter and project portfolio.</p>
           <ul class="check-list">
 <li>Six domains: ML, data analytics, computer vision, NLP &amp; GenAI, research, software tools</li><li>DSA Internship Certificate + formal Offer Letter</li><li>AICTE-aligned where your institution is accredited</li><li>Online or hybrid, with offline workshops in Chennai</li>          </ul>
-          <div class="card-foot"><span>⏱ 1–2 months · cohorts start monthly</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 1–2 months · cohorts start monthly</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="programmes/microsoft-certification.html" data-r="1">
@@ -882,7 +892,7 @@ a{color:#000}
           <p class="card-text">Focused preparation for Microsoft Azure and Power BI certifications — hands-on Azure labs, practice question banks and timed mock exams.</p>
           <ul class="check-list">
 <li>AI-901 Azure AI Fundamentals and DP-900 Data Fundamentals</li><li>PL-300 Power BI Data Analyst prep; AZ-900 as an add-on</li><li>Live sessions with Azure portal labs</li><li>Timed mock exams and exam-strategy sessions</li>          </ul>
-          <div class="card-foot"><span>⏱ 4–8 weeks per certification</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 4–8 weeks per certification</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="programmes/fdp.html" data-r="2">
@@ -896,7 +906,7 @@ a{color:#000}
           <p class="card-text">AICTE-aligned faculty development and corporate training in AI, machine learning, Power BI and Generative AI — from a two-day workshop to a four-week programme, on campus, on site or online.</p>
           <ul class="check-list">
 <li>FDPs on AI, ML, data science and research tools</li><li>Corporate MDP: Power BI, Generative AI, Python, Azure and AWS</li><li>Train-the-Trainer and Industry 4.0 workshops</li><li>Needs assessment first; MOU-based partnerships available</li>          </ul>
-          <div class="card-foot"><span>⏱ 2 days to 4 weeks · customisable</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 2 days to 4 weeks · customisable</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="programmes/exam-coaching.html" data-r="0">
@@ -910,7 +920,7 @@ a{color:#000}
           <p class="card-text">UGC NET, GATE, TNSET and PG-TRB coaching in Computer Science, taught by faculty who have cleared these examinations themselves — with weekly mock tests and personalised performance reports.</p>
           <ul class="check-list">
 <li>UGC NET / NET JRF, GATE CS · IT · DS &amp; AI, TNSET, PG-TRB</li><li>Topic weightage from 5+ years of previous papers</li><li>Weekly timed tests and full-length mock exams</li><li>Regular batches or intensive crash courses</li>          </ul>
-          <div class="card-foot"><span>⏱ Crash course 4–6 weeks · regular batch 3–6 months</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> Crash course 4–6 weeks · regular batch 3–6 months</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="programmes/research-assistance.html" data-r="1">
@@ -924,7 +934,7 @@ a{color:#000}
           <p class="card-text">End-to-end research support for Ph.D. scholars, faculty and independent researchers — from domain mapping and proposal writing to statistical analysis, proofreading and journal submission.</p>
           <ul class="check-list">
 <li>Topic finalisation, literature review and proposal writing</li><li>Statistical analysis in SPSS, R and Python</li><li>Journal targeting: Scopus, Web of Science, UGC Care</li><li>Technical support for Humanities, Education and Social Science scholars</li>          </ul>
-          <div class="card-foot"><span>⏱ Project-based · 1 week to 6 months</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> Project-based · 1 week to 6 months</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="programmes/language-communication.html" data-r="2">
@@ -938,7 +948,7 @@ a{color:#000}
           <p class="card-text">Practical, feedback-driven communication training for engineers, researchers and job seekers — academic writing, technical interviews, professional emails and presentations, anchored in real tech scenarios.</p>
           <ul class="check-list">
 <li>Academic writing: papers, abstracts and proposals</li><li>Interview prep: spoken English, STAR method, mock interviews</li><li>Emails, reports, LinkedIn profiles and slide design</li><li>100% practical, with 1-on-1 recorded mock sessions</li>          </ul>
-          <div class="card-foot"><span>⏱ 4–8 weeks · online, live + recorded</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 4–8 weeks · online, live + recorded</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card card-wide tinted c-violet" href="codechamps.html" data-r="0">
@@ -952,7 +962,7 @@ a{color:#000}
           <p class="card-text">DSA&#39;s school outreach wing brings AI and coding to Grades 3–12: four progressive levels from Scratch to Python, machine learning and computer vision, delivered in schools across Chennai and online. NEP 2020-aligned and activity-first, with a special focus on girls in STEM.</p>
           <ul class="check-list two">
 <li>Four levels: Code Explorers, Builders, Innovators and Pioneers</li><li>Scratch → Python → machine learning → computer vision</li><li>Fully managed school visits across Chennai, plus online live sessions</li><li>Level certificates, a parent showcase and a performance report for the school</li>          </ul>
-          <div class="card-foot"><span>⏱ 3–6 months per level · Grades 3–12</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 3–6 months per level · Grades 3–12</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
     </div>
@@ -969,7 +979,7 @@ a{color:#000}
     </div>
     <div class="grid grid-4">
       <article class="feature col" data-r>
-        <span class="icon-box teal" aria-hidden="true">🎓</span>
+        <span class="icon-box teal" aria-hidden="true"><svg class="ico ico-graduation-cap" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/> <path d="M22 10v6"/> <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>
         <div>
           <h3 class="feature-title">Students &amp; fresh graduates</h3>
           <p class="feature-text">Build a portfolio and credentials employers recognise before you leave college.</p>
@@ -982,7 +992,7 @@ a{color:#000}
         </div>
       </article>
       <article class="feature col" data-r="1">
-        <span class="icon-box blue" aria-hidden="true">💼</span>
+        <span class="icon-box blue" aria-hidden="true"><svg class="ico ico-briefcase" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/> <rect width="20" height="14" x="2" y="6" rx="2"/></svg></span>
         <div>
           <h3 class="feature-title">Working professionals &amp; career changers</h3>
           <p class="feature-text">Pivot into data science or AI without leaving your job — every live session is recorded for replay.</p>
@@ -995,7 +1005,7 @@ a{color:#000}
         </div>
       </article>
       <article class="feature col" data-r="2">
-        <span class="icon-box yellow" aria-hidden="true">🏛️</span>
+        <span class="icon-box yellow" aria-hidden="true"><svg class="ico ico-landmark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="3" x2="21" y1="22" y2="22"/> <line x1="6" x2="6" y1="18" y2="11"/> <line x1="10" x2="10" y1="18" y2="11"/> <line x1="14" x2="14" y1="18" y2="11"/> <line x1="18" x2="18" y1="18" y2="11"/> <polygon points="12 2 20 7 4 7"/></svg></span>
         <div>
           <h3 class="feature-title">Faculty, institutions &amp; schools</h3>
           <p class="feature-text">AICTE-aligned upskilling for your staff and NEP 2020-aligned AI programmes for your students.</p>
@@ -1008,7 +1018,7 @@ a{color:#000}
         </div>
       </article>
       <article class="feature col" data-r="3">
-        <span class="icon-box coral" aria-hidden="true">🔬</span>
+        <span class="icon-box coral" aria-hidden="true"><svg class="ico ico-microscope" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18h8"/> <path d="M3 22h18"/> <path d="M14 22a7 7 0 1 0 0-14h-1"/> <path d="M9 14h2"/> <path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/> <path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/></svg></span>
         <div>
           <h3 class="feature-title">Researchers &amp; Ph.D. scholars</h3>
           <p class="feature-text">From topic finalisation to journal submission, with technical support for any discipline.</p>

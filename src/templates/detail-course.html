@@ -6,7 +6,7 @@
 {% set _second = (_s[1] ~ ('' if _s[1].endswith('.') else '.')) if _s|length > 1 else '' %}
 {% set pitch = (_first ~ ' ' ~ _second) if (_first|length < 70 and _second and (_first|length + _second|length) < 230) else _first %}
 {% set tone = {'Beginner': 'teal', 'Intermediate': '', 'Advanced': 'violet'}.get(course.level, '') %}
-{% set ricons = {'docs': '📄', 'tutorial': '📖', 'video': '▶', 'course': '🎓', 'book': '📚'} %}
+{% set ricons = {'docs': '📄', 'tutorial': '📖', 'video': '🎥', 'course': '🎓', 'book': '📚'} %}
 {% set tn = namespace(topics=0, resources=0) %}
 {% for m in course.modules %}{% set tn.topics = tn.topics + (m.topics|length) %}{% set tn.resources = tn.resources + ((m.get('resources') or [])|length) %}{% endfor %}
 {% set enquire_url = rel ~ 'contact.html?course=' ~ (course.title|urlencode) %}

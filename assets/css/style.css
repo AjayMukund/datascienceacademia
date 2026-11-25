@@ -723,3 +723,17 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.025em;line-height:1.1}
   .card,.feature,.quote-card,.info-card{border-color:#ccc;background:none;box-shadow:none}
   a{color:#000}
 }
+
+/* ── Outline icon system (tools/icons.py swaps emoji for Lucide SVGs at build time) ──
+   One colour everywhere: brand Navy on light surfaces, Muted Gold on dark theme and navy surfaces.
+   Icons stand free (no tiles) — owner preference 2026-11-25. */
+:root{--ico:#10263D}
+[data-theme="dark"],:is(.footer,.cta-banner,.stats,.navy-band,.term){--ico:#C9A970}
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-.14em;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;color:var(--ico)}
+.icon-box,.icon-box.teal,.icon-box.green,.icon-box.pink,.icon-box.blue,.icon-box.violet,.icon-box.yellow,.icon-box.coral{width:auto;height:auto;background:none;border:0;border-radius:0;font-size:2rem;justify-content:flex-start}
+.icon-box.sm{width:auto;height:auto;font-size:1.65rem}
+.icon-box.lg{width:auto;height:auto;font-size:2.5rem}
+.icon-box .ico{stroke-width:1.5}
+.callout-icon .ico{stroke-width:1.3}
+.fb-icon{display:inline-flex;font-size:1.6rem}
+.card-foot .ico{font-size:1.05em;margin-right:.15em}

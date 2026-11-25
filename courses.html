@@ -666,7 +666,17 @@ body{background:#fff;color:#000}
 .js [data-r]{opacity:1;transform:none}
 .card,.feature,.quote-card,.info-card{border-color:#ccc;background:none;box-shadow:none}
 a{color:#000}
-}</style>
+}
+:root{--ico:#10263D}
+[data-theme="dark"],:is(.footer,.cta-banner,.stats,.navy-band,.term){--ico:#C9A970}
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-.14em;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;color:var(--ico)}
+.icon-box,.icon-box.teal,.icon-box.green,.icon-box.pink,.icon-box.blue,.icon-box.violet,.icon-box.yellow,.icon-box.coral{width:auto;height:auto;background:none;border:0;border-radius:0;font-size:2rem;justify-content:flex-start}
+.icon-box.sm{width:auto;height:auto;font-size:1.65rem}
+.icon-box.lg{width:auto;height:auto;font-size:2.5rem}
+.icon-box .ico{stroke-width:1.5}
+.callout-icon .ico{stroke-width:1.3}
+.fb-icon{display:inline-flex;font-size:1.6rem}
+.card-foot .ico{font-size:1.05em;margin-right:.15em}</style>
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .courses-banner{margin-top:2.5rem}
@@ -790,7 +800,7 @@ a{color:#000}
           <div class="card-cat">Foundation</div>
           <h3 class="card-title">Python Programming</h3>
           <p class="card-text">A comprehensive introduction to Python programming designed for absolute beginners. You will build a strong foundation…</p>
-          <div class="card-foot"><span>⏱ 8 weeks &middot; 40 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 8 weeks &middot; 40 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/sql.html" data-filter-item data-cat="foundation" data-r="1">
@@ -802,7 +812,7 @@ a{color:#000}
           <div class="card-cat">Foundation</div>
           <h3 class="card-title">SQL for Data Science</h3>
           <p class="card-text">SQL remains the most sought-after skill in data roles. This course takes you from zero to writing production-grade SQL…</p>
-          <div class="card-foot"><span>⏱ 5 weeks &middot; 25 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 5 weeks &middot; 25 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/r-programming.html" data-filter-item data-cat="foundation" data-r="2">
@@ -814,7 +824,7 @@ a{color:#000}
           <div class="card-cat">Foundation</div>
           <h3 class="card-title">R Programming</h3>
           <p class="card-text">R is the language of statisticians, academic researchers and data analysts. This course covers the R ecosystem end to…</p>
-          <div class="card-foot"><span>⏱ 6 weeks &middot; 30 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 6 weeks &middot; 30 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/machine-learning.html" data-filter-item data-cat="core-ml" data-r="0">
@@ -826,7 +836,7 @@ a{color:#000}
           <div class="card-cat">Core ML</div>
           <h3 class="card-title">Machine Learning</h3>
           <p class="card-text">The cornerstone of modern AI. This course covers the full spectrum of Machine Learning — from classical algorithms to…</p>
-          <div class="card-foot"><span>⏱ 10 weeks &middot; 50 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 10 weeks &middot; 50 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/nlp.html" data-filter-item data-cat="core-ml" data-r="1">
@@ -838,7 +848,7 @@ a{color:#000}
           <div class="card-cat">Core ML</div>
           <h3 class="card-title">Natural Language Processing</h3>
           <p class="card-text">Natural Language Processing bridges human communication and machine intelligence. This course covers the complete NLP…</p>
-          <div class="card-foot"><span>⏱ 8 weeks &middot; 40 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 8 weeks &middot; 40 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/feature-engineering.html" data-filter-item data-cat="core-ml" data-r="2">
@@ -850,7 +860,7 @@ a{color:#000}
           <div class="card-cat">Core ML</div>
           <h3 class="card-title">Feature Engineering &amp; Model Selection</h3>
           <p class="card-text">The difference between a mediocre model and a winning one is almost always in the features and tuning, not the…</p>
-          <div class="card-foot"><span>⏱ 6 weeks &middot; 30 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 6 weeks &middot; 30 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/deep-learning.html" data-filter-item data-cat="advanced-ai" data-r="0">
@@ -862,7 +872,7 @@ a{color:#000}
           <div class="card-cat">Advanced AI</div>
           <h3 class="card-title">Deep Learning</h3>
           <p class="card-text">Deep Learning is the engine behind image recognition, language models, speech synthesis and self-driving cars. This…</p>
-          <div class="card-foot"><span>⏱ 12 weeks &middot; 60 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 12 weeks &middot; 60 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/computer-vision.html" data-filter-item data-cat="advanced-ai" data-r="1">
@@ -874,7 +884,7 @@ a{color:#000}
           <div class="card-cat">Advanced AI</div>
           <h3 class="card-title">Computer Vision</h3>
           <p class="card-text">Computer Vision enables machines to see and understand the world. From self-driving cars to medical imaging to retail…</p>
-          <div class="card-foot"><span>⏱ 10 weeks &middot; 50 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 10 weeks &middot; 50 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/llm.html" data-filter-item data-cat="advanced-ai" data-r="2">
@@ -886,7 +896,7 @@ a{color:#000}
           <div class="card-cat">Advanced AI</div>
           <h3 class="card-title">Large Language Models</h3>
           <p class="card-text">Large Language Models have fundamentally changed software. This course gives you a deep, engineering-level…</p>
-          <div class="card-foot"><span>⏱ 10 weeks &middot; 50 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 10 weeks &middot; 50 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/generative-ai.html" data-filter-item data-cat="advanced-ai" data-r="0">
@@ -898,7 +908,7 @@ a{color:#000}
           <div class="card-cat">Advanced AI</div>
           <h3 class="card-title">Generative AI</h3>
           <p class="card-text">Generative AI is reshaping creative industries, drug discovery, game design and content creation. This course covers…</p>
-          <div class="card-foot"><span>⏱ 10 weeks &middot; 50 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 10 weeks &middot; 50 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/reinforcement-learning.html" data-filter-item data-cat="advanced-ai" data-r="1">
@@ -910,7 +920,7 @@ a{color:#000}
           <div class="card-cat">Advanced AI</div>
           <h3 class="card-title">Reinforcement Learning</h3>
           <p class="card-text">Reinforcement Learning is the paradigm behind AlphaGo, ChatGPT&#39;s RLHF training and autonomous robotics. This course…</p>
-          <div class="card-foot"><span>⏱ 8 weeks &middot; 40 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 8 weeks &middot; 40 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/mlops.html" data-filter-item data-cat="advanced-ai" data-r="2">
@@ -922,7 +932,7 @@ a{color:#000}
           <div class="card-cat">Advanced AI</div>
           <h3 class="card-title">MLOps &amp; Model Deployment</h3>
           <p class="card-text">Building a model is just 20% of the work. MLOps covers the other 80% — versioning data and experiments, containerising…</p>
-          <div class="card-foot"><span>⏱ 8 weeks &middot; 40 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 8 weeks &middot; 40 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/data-visualization.html" data-filter-item data-cat="analytics" data-r="0">
@@ -934,7 +944,7 @@ a{color:#000}
           <div class="card-cat">Analytics</div>
           <h3 class="card-title">Data Visualization</h3>
           <p class="card-text">Data without visualisation is just numbers. This course teaches you to translate complex datasets into clear…</p>
-          <div class="card-foot"><span>⏱ 6 weeks &middot; 30 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 6 weeks &middot; 30 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/excel.html" data-filter-item data-cat="analytics" data-r="1">
@@ -946,7 +956,7 @@ a{color:#000}
           <div class="card-cat">Analytics</div>
           <h3 class="card-title">Excel for Data Analysis</h3>
           <p class="card-text">Excel remains the most widely used data analysis tool in business — and the gap between casual users and power users…</p>
-          <div class="card-foot"><span>⏱ 4 weeks &middot; 20 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 4 weeks &middot; 20 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/tableau.html" data-filter-item data-cat="analytics" data-r="2">
@@ -958,7 +968,7 @@ a{color:#000}
           <div class="card-cat">Analytics</div>
           <h3 class="card-title">Tableau</h3>
           <p class="card-text">Tableau is the industry-leading BI and analytics platform used by data analysts worldwide. This course takes you from…</p>
-          <div class="card-foot"><span>⏱ 5 weeks &middot; 25 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 5 weeks &middot; 25 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/power-bi.html" data-filter-item data-cat="cloud-bi" data-r="0">
@@ -970,7 +980,7 @@ a{color:#000}
           <div class="card-cat">Cloud &amp; BI</div>
           <h3 class="card-title">Power BI</h3>
           <p class="card-text">Power BI is Microsoft&#39;s market-leading business intelligence platform. This course takes you from importing raw data…</p>
-          <div class="card-foot"><span>⏱ 6 weeks &middot; 30 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 6 weeks &middot; 30 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/azure.html" data-filter-item data-cat="cloud-bi" data-r="1">
@@ -982,7 +992,7 @@ a{color:#000}
           <div class="card-cat">Cloud &amp; BI</div>
           <h3 class="card-title">Microsoft Azure</h3>
           <p class="card-text">Microsoft Azure is the cloud platform of choice for enterprises worldwide. This course takes you from cloud…</p>
-          <div class="card-foot"><span>⏱ 8 weeks &middot; 40 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 8 weeks &middot; 40 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
       <a class="card" href="courses/aws.html" data-filter-item data-cat="cloud-bi" data-r="2">
@@ -994,7 +1004,7 @@ a{color:#000}
           <div class="card-cat">Cloud &amp; BI</div>
           <h3 class="card-title">AWS for Data Science</h3>
           <p class="card-text">AWS is the world&#39;s largest cloud platform with the most comprehensive set of AI and data services. This course equips…</p>
-          <div class="card-foot"><span>⏱ 8 weeks &middot; 40 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
+          <div class="card-foot"><span><svg class="ico ico-timer" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/> <line x1="12" x2="15" y1="14" y2="11"/> <circle cx="12" cy="14" r="8"/></svg> 8 weeks &middot; 40 contact hours</span><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
     </div>
@@ -1013,7 +1023,7 @@ a{color:#000}
     <div class="grid grid-3">
       <article class="feature col" data-r="0">
         <div class="path-head">
-          <span class="icon-box teal" aria-hidden="true">🌱</span>
+          <span class="icon-box teal" aria-hidden="true"><svg class="ico ico-sprout" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 20h10"/> <path d="M10 20c5.5-2.5.8-6.4 3-10"/> <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/> <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg></span>
           <span class="path-for teal">For absolute beginners</span>
         </div>
         <div>
@@ -1030,7 +1040,7 @@ a{color:#000}
       </article>
       <article class="feature col" data-r="1">
         <div class="path-head">
-          <span class="icon-box blue" aria-hidden="true">📊</span>
+          <span class="icon-box blue" aria-hidden="true"><svg class="ico ico-chart-column" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3v16a2 2 0 0 0 2 2h16"/> <path d="M18 17V9"/> <path d="M13 17V5"/> <path d="M8 17v-3"/></svg></span>
           <span class="path-for blue">For business analysts</span>
         </div>
         <div>
@@ -1047,7 +1057,7 @@ a{color:#000}
       </article>
       <article class="feature col" data-r="2">
         <div class="path-head">
-          <span class="icon-box violet" aria-hidden="true">⚙️</span>
+          <span class="icon-box violet" aria-hidden="true"><svg class="ico ico-settings" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/> <circle cx="12" cy="12" r="3"/></svg></span>
           <span class="path-for violet">For engineers &amp; developers</span>
         </div>
         <div>
@@ -1077,27 +1087,27 @@ a{color:#000}
     </div>
     <div class="how-grid">
       <div class="feature col" data-r>
-        <span class="icon-box teal" aria-hidden="true">🎥</span>
+        <span class="icon-box teal" aria-hidden="true"><svg class="ico ico-video" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/> <rect x="2" y="6" width="14" height="12" rx="2"/></svg></span>
         <div><h3 class="feature-title">Live sessions, recorded for replay</h3><p class="feature-text">Every session is taught live — at our Chennai centre or online — and the recording is available to enrolled students to replay at their own pace.</p></div>
       </div>
       <div class="feature col" data-r="1">
-        <span class="icon-box blue" aria-hidden="true">📊</span>
+        <span class="icon-box blue" aria-hidden="true"><svg class="ico ico-chart-column" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3v16a2 2 0 0 0 2 2h16"/> <path d="M18 17V9"/> <path d="M13 17V5"/> <path d="M8 17v-3"/></svg></span>
         <div><h3 class="feature-title">Hands-on projects on real datasets</h3><p class="feature-text">Each course ends in a capstone built on real-world data — an end-to-end EDA pipeline, an analytics report on an e-commerce dataset, a deployed model or a production LLM application.</p></div>
       </div>
       <div class="feature col" data-r="2">
-        <span class="icon-box" aria-hidden="true">🎓</span>
+        <span class="icon-box" aria-hidden="true"><svg class="ico ico-graduation-cap" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/> <path d="M22 10v6"/> <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>
         <div><h3 class="feature-title">Ph.D.-led, practitioner-taught</h3><p class="feature-text">Your instructor is a practising AI engineer and Ph.D. scholar at Anna University, so every concept is taught the way it is actually used in production.</p></div>
       </div>
       <div class="feature col" data-r>
-        <span class="icon-box yellow" aria-hidden="true">📜</span>
+        <span class="icon-box yellow" aria-hidden="true"><svg class="ico ico-scroll-text" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 12h-5"/> <path d="M15 8h-5"/> <path d="M19 17V5a2 2 0 0 0-2-2H4"/> <path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg></span>
         <div><h3 class="feature-title">Certificate on completion</h3><p class="feature-text">Complete the course and its capstone to receive a Data Science Academia certificate. Employers and institutions can <a href="verify.html">verify a certificate</a> online.</p></div>
       </div>
       <div class="feature col" data-r="1">
-        <span class="icon-box green" aria-hidden="true">🧭</span>
+        <span class="icon-box green" aria-hidden="true"><svg class="ico ico-compass" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/> <circle cx="12" cy="12" r="10"/></svg></span>
         <div><h3 class="feature-title">Internship pathways</h3><p class="feature-text">Move from a course into a 1–2 month <a href="programmes/internship.html">NEP- and AICTE-aligned internship</a> with a formal offer letter, real project work and a DSA Internship Certificate. Cohorts start monthly.</p></div>
       </div>
       <div class="feature col" data-r="2">
-        <span class="icon-box violet" aria-hidden="true">🤝</span>
+        <span class="icon-box violet" aria-hidden="true"><svg class="ico ico-handshake" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m11 17 2 2a1 1 0 1 0 3-3"/> <path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/> <path d="m21 3 1 11h-2"/> <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/> <path d="M3 4h8"/></svg></span>
         <div><h3 class="feature-title">Mentoring and career support</h3><p class="feature-text">Internship projects run under Ph.D.-qualified mentors, and the <a href="programmes/ai-mastery.html">AI Mastery Track</a> adds weekly one-on-one check-ins, mock interviews and placement assistance.</p></div>
       </div>
     </div>

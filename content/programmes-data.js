@@ -296,7 +296,7 @@ const DSA_PROGRAMMES = {
       sectionTitle: 'How It Works',
       items: [
         {icon:'📞', title:'Needs Assessment', desc:'A call with your institution or L&D head to understand goals and knowledge levels'},
-        {icon:'📐', title:'Curriculum Design', desc:'DSA builds a bespoke programme aligned to your team\'s tools and timelines'},
+        {icon:'✏️', title:'Curriculum Design', desc:'DSA builds a bespoke programme aligned to your team\'s tools and timelines'},
         {icon:'🎯', title:'Programme Delivery', desc:'Expert-led sessions — online, offline, or hybrid — at your preferred schedule'},
         {icon:'📊', title:'Assessment & Reports', desc:'Post-training evaluations and competency reports for all participants'},
         {icon:'📜', title:'Certification', desc:'AICTE-aligned certificates of participation issued to all attendees'}

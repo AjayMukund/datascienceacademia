@@ -666,7 +666,17 @@ body{background:#fff;color:#000}
 .js [data-r]{opacity:1;transform:none}
 .card,.feature,.quote-card,.info-card{border-color:#ccc;background:none;box-shadow:none}
 a{color:#000}
-}</style>
+}
+:root{--ico:#10263D}
+[data-theme="dark"],:is(.footer,.cta-banner,.stats,.navy-band,.term){--ico:#C9A970}
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-.14em;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;color:var(--ico)}
+.icon-box,.icon-box.teal,.icon-box.green,.icon-box.pink,.icon-box.blue,.icon-box.violet,.icon-box.yellow,.icon-box.coral{width:auto;height:auto;background:none;border:0;border-radius:0;font-size:2rem;justify-content:flex-start}
+.icon-box.sm{width:auto;height:auto;font-size:1.65rem}
+.icon-box.lg{width:auto;height:auto;font-size:2.5rem}
+.icon-box .ico{stroke-width:1.5}
+.callout-icon .ico{stroke-width:1.3}
+.fb-icon{display:inline-flex;font-size:1.6rem}
+.card-foot .ico{font-size:1.05em;margin-right:.15em}</style>
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .prog-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:3.5rem;align-items:center}
@@ -832,27 +842,27 @@ a{color:#000}
         <h2 class="section-label" id="domains-title">Exams We Cover</h2>
         <div class="grid grid-2 feat-grid">
   <div class="feature">
-    <span class="icon-box sm green" aria-hidden="true">📘</span>
+    <span class="icon-box sm green" aria-hidden="true"><svg class="ico ico-book-marked" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 2v8l3-3 3 3V2"/> <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg></span>
     <div><h3 class="feature-title">UGC NET</h3><p class="feature-text">Computer Science &amp; Applications — Paper I (General) + Paper II (Subject)</p></div>
   </div>
   <div class="feature">
-    <span class="icon-box sm green" aria-hidden="true">🎓</span>
+    <span class="icon-box sm green" aria-hidden="true"><svg class="ico ico-graduation-cap" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/> <path d="M22 10v6"/> <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>
     <div><h3 class="feature-title">NET JRF</h3><p class="feature-text">Junior Research Fellowship qualifying prep with advanced problem solving</p></div>
   </div>
   <div class="feature">
-    <span class="icon-box sm green" aria-hidden="true">⚙️</span>
+    <span class="icon-box sm green" aria-hidden="true"><svg class="ico ico-settings" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/> <circle cx="12" cy="12" r="3"/></svg></span>
     <div><h3 class="feature-title">GATE CS / IT</h3><p class="feature-text">CS, IT, Data Science &amp; AI streams — algorithms, OS, DBMS, networks and more</p></div>
   </div>
   <div class="feature">
-    <span class="icon-box sm green" aria-hidden="true">📋</span>
+    <span class="icon-box sm green" aria-hidden="true"><svg class="ico ico-clipboard-list" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/> <path d="M12 11h4"/> <path d="M12 16h4"/> <path d="M8 11h.01"/> <path d="M8 16h.01"/></svg></span>
     <div><h3 class="feature-title">TNSET</h3><p class="feature-text">Tamil Nadu State Eligibility Test — Computer Science paper preparation</p></div>
   </div>
   <div class="feature">
-    <span class="icon-box sm green" aria-hidden="true">🏫</span>
+    <span class="icon-box sm green" aria-hidden="true"><svg class="ico ico-school" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 22v-4a2 2 0 1 0-4 0v4"/> <path d="m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10"/> <path d="M18 5v17"/> <path d="m4 6 7.106-3.553a2 2 0 0 1 1.788 0L20 6"/> <path d="M6 5v17"/> <circle cx="12" cy="9" r="2"/></svg></span>
     <div><h3 class="feature-title">PG-TRB</h3><p class="feature-text">Tamil Nadu Postgraduate Teacher Recruitment Board — CS subject coaching</p></div>
   </div>
   <div class="feature">
-    <span class="icon-box sm green" aria-hidden="true">🗂️</span>
+    <span class="icon-box sm green" aria-hidden="true"><svg class="ico ico-folder-kanban" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/> <path d="M8 10v4"/> <path d="M12 10v2"/> <path d="M16 10v6"/></svg></span>
     <div><h3 class="feature-title">Other State Exams</h3><p class="feature-text">State-level computer science eligibility examinations across India</p></div>
   </div>
 </div>
@@ -940,7 +950,7 @@ a{color:#000}
       <section class="block" id="prerequisites" aria-labelledby="prereq-title" data-r>
         <h2 class="section-label" id="prereq-title">Eligibility &amp; prerequisites</h2>
         <div class="prereq">
-          <span class="icon-box sm green" aria-hidden="true">📋</span>
+          <span class="icon-box sm green" aria-hidden="true"><svg class="ico ico-clipboard-list" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/> <path d="M12 11h4"/> <path d="M12 16h4"/> <path d="M8 11h.01"/> <path d="M8 16h.01"/></svg></span>
           <div>
             <p class="info-note">Completed or currently pursuing a Bachelor&#39;s or Master&#39;s degree in Computer Science, IT, or a related discipline. For NET JRF, a postgraduate degree is mandatory as per UGC norms.</p>
             <span class="prereq-hint">Not sure whether you are eligible? <a href="../contact.html">Ask us</a> — we reply within one business day.</span>
@@ -1011,7 +1021,7 @@ a{color:#000}
     <!-- Sidebar -->
     <aside class="detail-side" aria-label="Programme summary">
       <div class="info-card sticky" data-r="1">
-        <span class="icon-box lg green" aria-hidden="true">🏆</span>
+        <span class="icon-box lg green" aria-hidden="true"><svg class="ico ico-trophy" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/> <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/> <path d="M4 22h16"/> <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/> <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/> <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span>
         <div class="info-title">Competitive Examination Training</div>
         <div class="info-cat">Exam Coaching</div>
         <div class="info-rows">

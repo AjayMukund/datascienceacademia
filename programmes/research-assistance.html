@@ -666,7 +666,17 @@ body{background:#fff;color:#000}
 .js [data-r]{opacity:1;transform:none}
 .card,.feature,.quote-card,.info-card{border-color:#ccc;background:none;box-shadow:none}
 a{color:#000}
-}</style>
+}
+:root{--ico:#10263D}
+[data-theme="dark"],:is(.footer,.cta-banner,.stats,.navy-band,.term){--ico:#C9A970}
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-.14em;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;color:var(--ico)}
+.icon-box,.icon-box.teal,.icon-box.green,.icon-box.pink,.icon-box.blue,.icon-box.violet,.icon-box.yellow,.icon-box.coral{width:auto;height:auto;background:none;border:0;border-radius:0;font-size:2rem;justify-content:flex-start}
+.icon-box.sm{width:auto;height:auto;font-size:1.65rem}
+.icon-box.lg{width:auto;height:auto;font-size:2.5rem}
+.icon-box .ico{stroke-width:1.5}
+.callout-icon .ico{stroke-width:1.3}
+.fb-icon{display:inline-flex;font-size:1.6rem}
+.card-foot .ico{font-size:1.05em;margin-right:.15em}</style>
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .prog-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:3.5rem;align-items:center}
@@ -832,27 +842,27 @@ a{color:#000}
         <h2 class="section-label" id="domains-title">Services Offered</h2>
         <div class="grid grid-2 feat-grid">
   <div class="feature">
-    <span class="icon-box sm coral" aria-hidden="true">🗺️</span>
+    <span class="icon-box sm coral" aria-hidden="true"><svg class="ico ico-map" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/> <path d="M15 5.764v15"/> <path d="M9 3.236v15"/></svg></span>
     <div><h3 class="feature-title">Domain Mapping</h3><p class="feature-text">Identify the right research gap, topic scope, and feasible methodology</p></div>
   </div>
   <div class="feature">
-    <span class="icon-box sm coral" aria-hidden="true">✍️</span>
+    <span class="icon-box sm coral" aria-hidden="true"><svg class="ico ico-pen-line" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20h9"/> <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/></svg></span>
     <div><h3 class="feature-title">Proposal &amp; Paper Drafting</h3><p class="feature-text">Structured writing for proposals, journal papers, and conference submissions</p></div>
   </div>
   <div class="feature">
-    <span class="icon-box sm coral" aria-hidden="true">📊</span>
+    <span class="icon-box sm coral" aria-hidden="true"><svg class="ico ico-chart-column" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3v16a2 2 0 0 0 2 2h16"/> <path d="M18 17V9"/> <path d="M13 17V5"/> <path d="M8 17v-3"/></svg></span>
     <div><h3 class="feature-title">Statistical Analysis</h3><p class="feature-text">SPSS, R, and Python — analysis, interpretation, and visualisation of findings</p></div>
   </div>
   <div class="feature">
-    <span class="icon-box sm coral" aria-hidden="true">📖</span>
+    <span class="icon-box sm coral" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>
     <div><h3 class="feature-title">Publication Support</h3><p class="feature-text">Journal targeting, formatting, plagiarism check, and submission assistance</p></div>
   </div>
   <div class="feature">
-    <span class="icon-box sm coral" aria-hidden="true">🔍</span>
+    <span class="icon-box sm coral" aria-hidden="true"><svg class="ico ico-search" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/> <path d="m21 21-4.3-4.3"/></svg></span>
     <div><h3 class="feature-title">Literature Review</h3><p class="feature-text">Systematic search, synthesis, and citation management with Mendeley / Zotero</p></div>
   </div>
   <div class="feature">
-    <span class="icon-box sm coral" aria-hidden="true">🌐</span>
+    <span class="icon-box sm coral" aria-hidden="true"><svg class="ico ico-globe" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/> <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/> <path d="M2 12h20"/></svg></span>
     <div><h3 class="feature-title">Interdisciplinary Aid</h3><p class="feature-text">Technical support for Humanities, Education, and Social Sciences researchers</p></div>
   </div>
 </div>
@@ -940,7 +950,7 @@ a{color:#000}
       <section class="block" id="prerequisites" aria-labelledby="prereq-title" data-r>
         <h2 class="section-label" id="prereq-title">Eligibility &amp; prerequisites</h2>
         <div class="prereq">
-          <span class="icon-box sm coral" aria-hidden="true">📋</span>
+          <span class="icon-box sm coral" aria-hidden="true"><svg class="ico ico-clipboard-list" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/> <path d="M12 11h4"/> <path d="M12 16h4"/> <path d="M8 11h.01"/> <path d="M8 16h.01"/></svg></span>
           <div>
             <p class="info-note">Open to all research scholars, faculty, and independent researchers regardless of discipline or technical background. A brief research brief or topic idea is sufficient to begin.</p>
             <span class="prereq-hint">Not sure whether you are eligible? <a href="../contact.html">Ask us</a> — we reply within one business day.</span>
@@ -1011,7 +1021,7 @@ a{color:#000}
     <!-- Sidebar -->
     <aside class="detail-side" aria-label="Programme summary">
       <div class="info-card sticky" data-r="1">
-        <span class="icon-box lg coral" aria-hidden="true">🔬</span>
+        <span class="icon-box lg coral" aria-hidden="true"><svg class="ico ico-microscope" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18h8"/> <path d="M3 22h18"/> <path d="M14 22a7 7 0 1 0 0-14h-1"/> <path d="M9 14h2"/> <path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/> <path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/></svg></span>
         <div class="info-title">Research Assistance &amp; Interdisciplinary Guidance</div>
         <div class="info-cat">Research Support</div>
         <div class="info-rows">

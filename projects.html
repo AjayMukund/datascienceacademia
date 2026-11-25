@@ -666,7 +666,17 @@ body{background:#fff;color:#000}
 .js [data-r]{opacity:1;transform:none}
 .card,.feature,.quote-card,.info-card{border-color:#ccc;background:none;box-shadow:none}
 a{color:#000}
-}</style>
+}
+:root{--ico:#10263D}
+[data-theme="dark"],:is(.footer,.cta-banner,.stats,.navy-band,.term){--ico:#C9A970}
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-.14em;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;color:var(--ico)}
+.icon-box,.icon-box.teal,.icon-box.green,.icon-box.pink,.icon-box.blue,.icon-box.violet,.icon-box.yellow,.icon-box.coral{width:auto;height:auto;background:none;border:0;border-radius:0;font-size:2rem;justify-content:flex-start}
+.icon-box.sm{width:auto;height:auto;font-size:1.65rem}
+.icon-box.lg{width:auto;height:auto;font-size:2.5rem}
+.icon-box .ico{stroke-width:1.5}
+.callout-icon .ico{stroke-width:1.3}
+.fb-icon{display:inline-flex;font-size:1.6rem}
+.card-foot .ico{font-size:1.05em;margin-right:.15em}</style>
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .page-hero{overflow-x:clip}
@@ -1794,19 +1804,19 @@ html.dlg-open{overflow:hidden}
     </div>
     <div class="how-grid">
       <div class="feature col" data-r>
-        <span class="icon-box" aria-hidden="true">🎓</span>
+        <span class="icon-box" aria-hidden="true"><svg class="ico ico-graduation-cap" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/> <path d="M22 10v6"/> <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>
         <div><h3 class="feature-title">Guided by faculty, not left to templates</h3><p class="feature-text">All 39 projects were supervised by Ajay Mukund S — AI engineer, Ph.D. scholar at Anna University and founder of DSA. Students choose the problem; the guide sets the methodology and reviews every milestone.</p></div>
       </div>
       <div class="feature col" data-r="1">
-        <span class="icon-box teal" aria-hidden="true">👥</span>
+        <span class="icon-box teal" aria-hidden="true"><svg class="ico ico-users" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/> <circle cx="9" cy="7" r="4"/> <path d="M22 21v-2a4 4 0 0 0-3-3.87"/> <path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
         <div><h3 class="feature-title">Small teams inside monthly cohorts</h3><p class="feature-text">Projects run inside 1–2 month <a href="programmes/internship.html">NEP- and AICTE-aligned internships</a> that start every month. Teams of one to 5 students share a team leader, a mid-internship milestone presentation and a final review.</p></div>
       </div>
       <div class="feature col" data-r="2">
-        <span class="icon-box blue" aria-hidden="true">🔬</span>
+        <span class="icon-box blue" aria-hidden="true"><svg class="ico ico-microscope" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18h8"/> <path d="M3 22h18"/> <path d="M14 22a7 7 0 1 0 0-14h-1"/> <path d="M9 14h2"/> <path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/> <path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/></svg></span>
         <div><h3 class="feature-title">Real problems, real evaluation</h3><p class="feature-text">Autonomous-driving aids in the CARLA simulator, Parkinson's freezing-of-gait detection, crop protection with CNNs, sarcasm detection, rainfall forecasting — compared across models with accuracy, precision and recall, not toy datasets.</p></div>
       </div>
       <div class="feature col" data-r="3">
-        <span class="icon-box violet" aria-hidden="true">📁</span>
+        <span class="icon-box violet" aria-hidden="true"><svg class="ico ico-folder-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg></span>
         <div><h3 class="feature-title">A portfolio you can show</h3><p class="feature-text">Every intern leaves with a DSA Internship Certificate naming the project and mentor, a formal offer letter and a domain-specific project portfolio — evidence for placements, higher studies and research applications.</p></div>
       </div>
     </div>

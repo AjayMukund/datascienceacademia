@@ -666,7 +666,17 @@ body{background:#fff;color:#000}
 .js [data-r]{opacity:1;transform:none}
 .card,.feature,.quote-card,.info-card{border-color:#ccc;background:none;box-shadow:none}
 a{color:#000}
-}</style>
+}
+:root{--ico:#10263D}
+[data-theme="dark"],:is(.footer,.cta-banner,.stats,.navy-band,.term){--ico:#C9A970}
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-.14em;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;color:var(--ico)}
+.icon-box,.icon-box.teal,.icon-box.green,.icon-box.pink,.icon-box.blue,.icon-box.violet,.icon-box.yellow,.icon-box.coral{width:auto;height:auto;background:none;border:0;border-radius:0;font-size:2rem;justify-content:flex-start}
+.icon-box.sm{width:auto;height:auto;font-size:1.65rem}
+.icon-box.lg{width:auto;height:auto;font-size:2.5rem}
+.icon-box .ico{stroke-width:1.5}
+.callout-icon .ico{stroke-width:1.3}
+.fb-icon{display:inline-flex;font-size:1.6rem}
+.card-foot .ico{font-size:1.05em;margin-right:.15em}</style>
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .prog-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:3.5rem;align-items:center}
@@ -832,19 +842,19 @@ a{color:#000}
         <h2 class="section-label" id="domains-title">Programme Tracks</h2>
         <div class="grid grid-2 feat-grid">
   <div class="feature">
-    <span class="icon-box sm " aria-hidden="true">🎓</span>
+    <span class="icon-box sm " aria-hidden="true"><svg class="ico ico-graduation-cap" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/> <path d="M22 10v6"/> <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>
     <div><h3 class="feature-title">Faculty Development (FDP)</h3><p class="feature-text">AI, ML, Data Science tools and UGC/AICTE curriculum-aligned teaching strategies</p></div>
   </div>
   <div class="feature">
-    <span class="icon-box sm " aria-hidden="true">🏢</span>
+    <span class="icon-box sm " aria-hidden="true"><svg class="ico ico-building-2" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/> <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/> <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/> <path d="M10 6h4"/> <path d="M10 10h4"/> <path d="M10 14h4"/> <path d="M10 18h4"/></svg></span>
     <div><h3 class="feature-title">Corporate Training (MDP)</h3><p class="feature-text">Power BI, Generative AI, Python for data-driven decision making in enterprise teams</p></div>
   </div>
   <div class="feature">
-    <span class="icon-box sm " aria-hidden="true">🧑‍🏫</span>
+    <span class="icon-box sm " aria-hidden="true"><svg class="ico ico-presentation" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 3h20"/> <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/> <path d="m7 21 5-5 5 5"/></svg></span>
     <div><h3 class="feature-title">Train-the-Trainer</h3><p class="feature-text">Methodology and content for internal L&amp;D champions to upskill their own teams</p></div>
   </div>
   <div class="feature">
-    <span class="icon-box sm " aria-hidden="true">⚙️</span>
+    <span class="icon-box sm " aria-hidden="true"><svg class="ico ico-settings" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/> <circle cx="12" cy="12" r="3"/></svg></span>
     <div><h3 class="feature-title">Industry 4.0 Workshops</h3><p class="feature-text">IoT, smart automation, AI in manufacturing, and digital transformation strategy</p></div>
   </div>
 </div>
@@ -932,7 +942,7 @@ a{color:#000}
       <section class="block" id="prerequisites" aria-labelledby="prereq-title" data-r>
         <h2 class="section-label" id="prereq-title">Eligibility &amp; prerequisites</h2>
         <div class="prereq">
-          <span class="icon-box sm " aria-hidden="true">📋</span>
+          <span class="icon-box sm " aria-hidden="true"><svg class="ico ico-clipboard-list" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/> <path d="M12 11h4"/> <path d="M12 16h4"/> <path d="M8 11h.01"/> <path d="M8 16h.01"/></svg></span>
           <div>
             <p class="info-note">No specific prerequisites — programmes are calibrated to the participants&#39; existing knowledge level. A pre-programme needs-assessment is conducted for all institutional and corporate engagements.</p>
             <span class="prereq-hint">Not sure whether you are eligible? <a href="../contact.html">Ask us</a> — we reply within one business day.</span>
@@ -1003,7 +1013,7 @@ a{color:#000}
     <!-- Sidebar -->
     <aside class="detail-side" aria-label="Programme summary">
       <div class="info-card sticky" data-r="1">
-        <span class="icon-box lg " aria-hidden="true">🏛️</span>
+        <span class="icon-box lg " aria-hidden="true"><svg class="ico ico-landmark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="3" x2="21" y1="22" y2="22"/> <line x1="6" x2="6" y1="18" y2="11"/> <line x1="10" x2="10" y1="18" y2="11"/> <line x1="14" x2="14" y1="18" y2="11"/> <line x1="18" x2="18" y1="18" y2="11"/> <polygon points="12 2 20 7 4 7"/></svg></span>
         <div class="info-title">Corporate &amp; Faculty Development Program</div>
         <div class="info-cat">FDP / MDP</div>
         <div class="info-rows">

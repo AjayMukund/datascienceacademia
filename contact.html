@@ -666,7 +666,17 @@ body{background:#fff;color:#000}
 .js [data-r]{opacity:1;transform:none}
 .card,.feature,.quote-card,.info-card{border-color:#ccc;background:none;box-shadow:none}
 a{color:#000}
-}</style>
+}
+:root{--ico:#10263D}
+[data-theme="dark"],:is(.footer,.cta-banner,.stats,.navy-band,.term){--ico:#C9A970}
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-.14em;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;color:var(--ico)}
+.icon-box,.icon-box.teal,.icon-box.green,.icon-box.pink,.icon-box.blue,.icon-box.violet,.icon-box.yellow,.icon-box.coral{width:auto;height:auto;background:none;border:0;border-radius:0;font-size:2rem;justify-content:flex-start}
+.icon-box.sm{width:auto;height:auto;font-size:1.65rem}
+.icon-box.lg{width:auto;height:auto;font-size:2.5rem}
+.icon-box .ico{stroke-width:1.5}
+.callout-icon .ico{stroke-width:1.3}
+.fb-icon{display:inline-flex;font-size:1.6rem}
+.card-foot .ico{font-size:1.05em;margin-right:.15em}</style>
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .two-col.contact-grid{align-items:start;grid-template-columns:.9fr 1.1fr;gap:2.5rem}
@@ -786,7 +796,7 @@ a{color:#000}
 
         <ul class="cl">
           <li>
-            <span class="icon-box sm" aria-hidden="true">📍</span>
+            <span class="icon-box sm" aria-hidden="true"><svg class="ico ico-map-pin" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/> <circle cx="12" cy="10" r="3"/></svg></span>
             <div>
               <span class="label">Address</span>
               <address class="cl-val">No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam,<br>Chennai, Tamil Nadu 600073, India</address>
@@ -794,7 +804,7 @@ a{color:#000}
             </div>
           </li>
           <li>
-            <span class="icon-box sm teal" aria-hidden="true">📞</span>
+            <span class="icon-box sm teal" aria-hidden="true"><svg class="ico ico-phone" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
             <div>
               <span class="label">Phone / WhatsApp</span>
               <div class="cl-val"><a href="tel:+919176498814">+91 91764 98814</a></div>
@@ -802,14 +812,14 @@ a{color:#000}
             </div>
           </li>
           <li>
-            <span class="icon-box sm blue" aria-hidden="true">✉️</span>
+            <span class="icon-box sm blue" aria-hidden="true"><svg class="ico ico-mail" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="20" height="16" x="2" y="4" rx="2"/> <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
             <div>
               <span class="label">Email</span>
               <div class="cl-val"><a href="mailto:info@datascienceacademia.in">info@datascienceacademia.in</a></div>
             </div>
           </li>
           <li>
-            <span class="icon-box sm yellow" aria-hidden="true">🕐</span>
+            <span class="icon-box sm yellow" aria-hidden="true"><svg class="ico ico-clock" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/> <polyline points="12 6 12 12 16 14"/></svg></span>
             <div>
               <span class="label">Office hours</span>
               <div class="cl-val">Mon – Sat 9 AM – 7 PM IST · Sunday closed</div>
@@ -953,7 +963,7 @@ a{color:#000}
         </form>
 
         <div class="form-success hidden" id="form-success" tabindex="-1" aria-live="polite">
-          <div class="form-success-icon" aria-hidden="true">✅</div>
+          <div class="form-success-icon" aria-hidden="true"><svg class="ico ico-circle-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/> <path d="m9 12 2 2 4-4"/></svg></div>
           <h3 class="sh sh-sm">Message <em>received</em></h3>
           <p>Thank you for reaching out. We will get back to you within one business day — check your inbox for a confirmation.</p>
           <div class="row" style="justify-content:center">
@@ -992,24 +1002,24 @@ a{color:#000}
     </div>
     <div class="ways">
       <a class="way" href="tel:+919176498814" data-r>
-        <span class="icon-box teal" aria-hidden="true">📞</span>
+        <span class="icon-box teal" aria-hidden="true"><svg class="ico ico-phone" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
         <div><h3 class="way-title">Call us</h3><div class="way-val">+91 91764 98814</div></div>
         <p class="way-text">Mon – Sat 9 AM – 7 PM IST · Sunday closed. Speak to DSA faculty about courses, batches and fees.</p>
       </a>
       <a class="way" href="https://wa.me/919176498814?text=Hello%20DSA%2C%20I%27d%20like%20to%20know%20more%20about%20your%20courses." target="_blank" rel="noopener" data-r="1">
-        <span class="icon-box green" aria-hidden="true">💬</span>
+        <span class="icon-box green" aria-hidden="true"><svg class="ico ico-messages-square" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"/> <path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg></span>
         <div><h3 class="way-title">WhatsApp</h3><div class="way-val">+91 91764 98814</div></div>
         <p class="way-text">The fastest route for urgent queries — start a chat with a pre-filled message.</p>
       </a>
       <a class="way" href="mailto:info@datascienceacademia.in" data-r="2">
-        <span class="icon-box blue" aria-hidden="true">✉️</span>
+        <span class="icon-box blue" aria-hidden="true"><svg class="ico ico-mail" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="20" height="16" x="2" y="4" rx="2"/> <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
         <div><h3 class="way-title">Email</h3><div class="way-val">info@datascienceacademia.in</div></div>
         <p class="way-text">Best for institutional proposals, FDP requests and documents such as college internship forms.</p>
       </a>
       <a class="way" href="https://www.google.com/maps/search/?api=1&amp;query=12.918342794186495%2C80.15253111461173" target="_blank" rel="noopener" data-r="3">
-        <span class="icon-box yellow" aria-hidden="true">📍</span>
+        <span class="icon-box yellow" aria-hidden="true"><svg class="ico ico-map-pin" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/> <circle cx="12" cy="10" r="3"/></svg></span>
         <div><h3 class="way-title">Visit</h3><div class="way-val">Rajakilpakkam, Chennai</div></div>
-        <p class="way-text">Madambakkam Main Road, near Tambaram — open seven days a week. Get directions in Google Maps.</p>
+        <p class="way-text">Madambakkam Main Road, near Tambaram — open Monday to Saturday, 9 AM to 7 PM. Get directions in Google Maps.</p>
       </a>
     </div>
   </div>
@@ -1019,7 +1029,7 @@ a{color:#000}
 <section class="section section-flush visit" aria-labelledby="visit-title">
   <div class="container">
     <div class="callout gold" data-r>
-      <div class="callout-icon" aria-hidden="true">🏢</div>
+      <div class="callout-icon" aria-hidden="true"><svg class="ico ico-building-2" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/> <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/> <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/> <path d="M10 6h4"/> <path d="M10 10h4"/> <path d="M10 14h4"/> <path d="M10 18h4"/></svg></div>
       <div class="callout-body">
         <div class="eyebrow" style="margin-bottom:.25rem">Visit us</div>
         <h2 class="callout-title" id="visit-title">Find us in <em>Rajakilpakkam</em>, Chennai</h2>

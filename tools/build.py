@@ -25,6 +25,9 @@ import sys
 from pathlib import Path
 
 import jinja2
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from icons import replace_emoji  # noqa: E402  (emoji → outline SVG icons)
 from markupsafe import Markup
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -416,7 +419,7 @@ def render(template: str, out_rel: str, changefreq: str | None = "monthly", prio
     context = dict(COMMON)
     context.update(rel=rel, depth=depth, out_path=out_rel, canonical=absolute(out_rel), nav_active=None, inline_css=inline_css(rel))
     context.update(ctx)
-    out = env.get_template(template).render(**context)
+    out = replace_emoji(env.get_template(template).render(**context))
     target = ROOT / out_rel
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(out, encoding="utf-8", newline="\n")

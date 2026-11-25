@@ -666,7 +666,17 @@ body{background:#fff;color:#000}
 .js [data-r]{opacity:1;transform:none}
 .card,.feature,.quote-card,.info-card{border-color:#ccc;background:none;box-shadow:none}
 a{color:#000}
-}</style>
+}
+:root{--ico:#10263D}
+[data-theme="dark"],:is(.footer,.cta-banner,.stats,.navy-band,.term){--ico:#C9A970}
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-.14em;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;color:var(--ico)}
+.icon-box,.icon-box.teal,.icon-box.green,.icon-box.pink,.icon-box.blue,.icon-box.violet,.icon-box.yellow,.icon-box.coral{width:auto;height:auto;background:none;border:0;border-radius:0;font-size:2rem;justify-content:flex-start}
+.icon-box.sm{width:auto;height:auto;font-size:1.65rem}
+.icon-box.lg{width:auto;height:auto;font-size:2.5rem}
+.icon-box .ico{stroke-width:1.5}
+.callout-icon .ico{stroke-width:1.3}
+.fb-icon{display:inline-flex;font-size:1.6rem}
+.card-foot .ico{font-size:1.05em;margin-right:.15em}</style>
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .course-hero .row{margin-top:1.75rem}
@@ -855,10 +865,10 @@ a{color:#000}
               <div class="res">
                 <div class="res-label">Free resources</div>
                 <div class="res-links">
-                  <a class="res-link docs" href="https://docs.python.org/3/tutorial/index.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📄</span>Python Official Tutorial</a>
-                  <a class="res-link tutorial" href="https://realpython.com/python-first-steps/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: Getting Started</a>
-                  <a class="res-link course" href="https://www.kaggle.com/learn/python" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">🎓</span>Kaggle: Python Course (Free)</a>
-                  <a class="res-link docs" href="https://code.visualstudio.com/docs/python/python-tutorial" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📄</span>VS Code Python Setup</a>
+                  <a class="res-link docs" href="https://docs.python.org/3/tutorial/index.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-file-text" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/> <path d="M14 2v4a2 2 0 0 0 2 2h4"/> <path d="M10 9H8"/> <path d="M16 13H8"/> <path d="M16 17H8"/></svg></span>Python Official Tutorial</a>
+                  <a class="res-link tutorial" href="https://realpython.com/python-first-steps/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: Getting Started</a>
+                  <a class="res-link course" href="https://www.kaggle.com/learn/python" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-graduation-cap" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/> <path d="M22 10v6"/> <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>Kaggle: Python Course (Free)</a>
+                  <a class="res-link docs" href="https://code.visualstudio.com/docs/python/python-tutorial" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-file-text" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/> <path d="M14 2v4a2 2 0 0 0 2 2h4"/> <path d="M10 9H8"/> <path d="M16 13H8"/> <path d="M16 17H8"/></svg></span>VS Code Python Setup</a>
                 </div>
               </div>
             </div>
@@ -880,10 +890,10 @@ a{color:#000}
               <div class="res">
                 <div class="res-label">Free resources</div>
                 <div class="res-links">
-                  <a class="res-link docs" href="https://docs.python.org/3/tutorial/controlflow.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📄</span>Python Docs: Control Flow</a>
-                  <a class="res-link tutorial" href="https://realpython.com/python-conditional-statements/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: Conditional Statements</a>
-                  <a class="res-link tutorial" href="https://realpython.com/python-for-loop/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: For Loops</a>
-                  <a class="res-link tutorial" href="https://realpython.com/list-comprehension-python/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: List Comprehensions</a>
+                  <a class="res-link docs" href="https://docs.python.org/3/tutorial/controlflow.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-file-text" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/> <path d="M14 2v4a2 2 0 0 0 2 2h4"/> <path d="M10 9H8"/> <path d="M16 13H8"/> <path d="M16 17H8"/></svg></span>Python Docs: Control Flow</a>
+                  <a class="res-link tutorial" href="https://realpython.com/python-conditional-statements/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: Conditional Statements</a>
+                  <a class="res-link tutorial" href="https://realpython.com/python-for-loop/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: For Loops</a>
+                  <a class="res-link tutorial" href="https://realpython.com/list-comprehension-python/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: List Comprehensions</a>
                 </div>
               </div>
             </div>
@@ -905,10 +915,10 @@ a{color:#000}
               <div class="res">
                 <div class="res-label">Free resources</div>
                 <div class="res-links">
-                  <a class="res-link docs" href="https://docs.python.org/3/tutorial/controlflow.html#defining-functions" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📄</span>Python Docs: Defining Functions</a>
-                  <a class="res-link tutorial" href="https://realpython.com/defining-your-own-python-function/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: Functions</a>
-                  <a class="res-link tutorial" href="https://realpython.com/python-lambda/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: Lambda Functions</a>
-                  <a class="res-link docs" href="https://docs.python.org/3/tutorial/modules.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📄</span>Python Docs: Modules</a>
+                  <a class="res-link docs" href="https://docs.python.org/3/tutorial/controlflow.html#defining-functions" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-file-text" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/> <path d="M14 2v4a2 2 0 0 0 2 2h4"/> <path d="M10 9H8"/> <path d="M16 13H8"/> <path d="M16 17H8"/></svg></span>Python Docs: Defining Functions</a>
+                  <a class="res-link tutorial" href="https://realpython.com/defining-your-own-python-function/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: Functions</a>
+                  <a class="res-link tutorial" href="https://realpython.com/python-lambda/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: Lambda Functions</a>
+                  <a class="res-link docs" href="https://docs.python.org/3/tutorial/modules.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-file-text" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/> <path d="M14 2v4a2 2 0 0 0 2 2h4"/> <path d="M10 9H8"/> <path d="M16 13H8"/> <path d="M16 17H8"/></svg></span>Python Docs: Modules</a>
                 </div>
               </div>
             </div>
@@ -930,10 +940,10 @@ a{color:#000}
               <div class="res">
                 <div class="res-label">Free resources</div>
                 <div class="res-links">
-                  <a class="res-link docs" href="https://docs.python.org/3/tutorial/datastructures.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📄</span>Python Docs: Data Structures</a>
-                  <a class="res-link tutorial" href="https://realpython.com/python-lists-tuples/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: Lists &amp; Tuples</a>
-                  <a class="res-link tutorial" href="https://realpython.com/python-dicts/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: Dictionaries</a>
-                  <a class="res-link tutorial" href="https://realpython.com/python-sets/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: Sets</a>
+                  <a class="res-link docs" href="https://docs.python.org/3/tutorial/datastructures.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-file-text" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/> <path d="M14 2v4a2 2 0 0 0 2 2h4"/> <path d="M10 9H8"/> <path d="M16 13H8"/> <path d="M16 17H8"/></svg></span>Python Docs: Data Structures</a>
+                  <a class="res-link tutorial" href="https://realpython.com/python-lists-tuples/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: Lists &amp; Tuples</a>
+                  <a class="res-link tutorial" href="https://realpython.com/python-dicts/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: Dictionaries</a>
+                  <a class="res-link tutorial" href="https://realpython.com/python-sets/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: Sets</a>
                 </div>
               </div>
             </div>
@@ -955,10 +965,10 @@ a{color:#000}
               <div class="res">
                 <div class="res-label">Free resources</div>
                 <div class="res-links">
-                  <a class="res-link docs" href="https://docs.python.org/3/tutorial/classes.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📄</span>Python Docs: Classes</a>
-                  <a class="res-link tutorial" href="https://realpython.com/python3-object-oriented-programming/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: OOP in Python 3</a>
-                  <a class="res-link tutorial" href="https://realpython.com/inheritance-composition-python/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: Inheritance &amp; Composition</a>
-                  <a class="res-link tutorial" href="https://realpython.com/python-classes/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: Python Classes</a>
+                  <a class="res-link docs" href="https://docs.python.org/3/tutorial/classes.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-file-text" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/> <path d="M14 2v4a2 2 0 0 0 2 2h4"/> <path d="M10 9H8"/> <path d="M16 13H8"/> <path d="M16 17H8"/></svg></span>Python Docs: Classes</a>
+                  <a class="res-link tutorial" href="https://realpython.com/python3-object-oriented-programming/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: OOP in Python 3</a>
+                  <a class="res-link tutorial" href="https://realpython.com/inheritance-composition-python/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: Inheritance &amp; Composition</a>
+                  <a class="res-link tutorial" href="https://realpython.com/python-classes/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: Python Classes</a>
                 </div>
               </div>
             </div>
@@ -980,10 +990,10 @@ a{color:#000}
               <div class="res">
                 <div class="res-label">Free resources</div>
                 <div class="res-links">
-                  <a class="res-link docs" href="https://docs.python.org/3/tutorial/inputoutput.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📄</span>Python Docs: Input &amp; Output</a>
-                  <a class="res-link tutorial" href="https://realpython.com/read-write-files-python/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: File I/O</a>
-                  <a class="res-link tutorial" href="https://realpython.com/python-exceptions/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: Python Exceptions</a>
-                  <a class="res-link tutorial" href="https://realpython.com/python-with-statement/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: The with Statement</a>
+                  <a class="res-link docs" href="https://docs.python.org/3/tutorial/inputoutput.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-file-text" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/> <path d="M14 2v4a2 2 0 0 0 2 2h4"/> <path d="M10 9H8"/> <path d="M16 13H8"/> <path d="M16 17H8"/></svg></span>Python Docs: Input &amp; Output</a>
+                  <a class="res-link tutorial" href="https://realpython.com/read-write-files-python/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: File I/O</a>
+                  <a class="res-link tutorial" href="https://realpython.com/python-exceptions/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: Python Exceptions</a>
+                  <a class="res-link tutorial" href="https://realpython.com/python-with-statement/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: The with Statement</a>
                 </div>
               </div>
             </div>
@@ -1005,10 +1015,10 @@ a{color:#000}
               <div class="res">
                 <div class="res-label">Free resources</div>
                 <div class="res-links">
-                  <a class="res-link docs" href="https://numpy.org/doc/stable/user/quickstart.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📄</span>NumPy Quickstart Tutorial</a>
-                  <a class="res-link docs" href="https://pandas.pydata.org/docs/getting_started/intro_tutorials/index.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📄</span>Pandas Getting Started Tutorials</a>
-                  <a class="res-link tutorial" href="https://cs231n.github.io/python-numpy-tutorial/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>CS231n: NumPy Tutorial</a>
-                  <a class="res-link course" href="https://www.kaggle.com/learn/pandas" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">🎓</span>Kaggle: Pandas (Free)</a>
+                  <a class="res-link docs" href="https://numpy.org/doc/stable/user/quickstart.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-file-text" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/> <path d="M14 2v4a2 2 0 0 0 2 2h4"/> <path d="M10 9H8"/> <path d="M16 13H8"/> <path d="M16 17H8"/></svg></span>NumPy Quickstart Tutorial</a>
+                  <a class="res-link docs" href="https://pandas.pydata.org/docs/getting_started/intro_tutorials/index.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-file-text" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/> <path d="M14 2v4a2 2 0 0 0 2 2h4"/> <path d="M10 9H8"/> <path d="M16 13H8"/> <path d="M16 17H8"/></svg></span>Pandas Getting Started Tutorials</a>
+                  <a class="res-link tutorial" href="https://cs231n.github.io/python-numpy-tutorial/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>CS231n: NumPy Tutorial</a>
+                  <a class="res-link course" href="https://www.kaggle.com/learn/pandas" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-graduation-cap" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/> <path d="M22 10v6"/> <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>Kaggle: Pandas (Free)</a>
                 </div>
               </div>
             </div>
@@ -1030,10 +1040,10 @@ a{color:#000}
               <div class="res">
                 <div class="res-label">Free resources</div>
                 <div class="res-links">
-                  <a class="res-link docs" href="https://matplotlib.org/stable/tutorials/index.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📄</span>Matplotlib Tutorials</a>
-                  <a class="res-link tutorial" href="https://realpython.com/python-matplotlib-guide/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📖</span>Real Python: Matplotlib Guide</a>
-                  <a class="res-link docs" href="https://seaborn.pydata.org/tutorial.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">📄</span>Seaborn Tutorial</a>
-                  <a class="res-link course" href="https://www.kaggle.com/learn/data-visualization" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true">🎓</span>Kaggle: Data Visualisation (Free)</a>
+                  <a class="res-link docs" href="https://matplotlib.org/stable/tutorials/index.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-file-text" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/> <path d="M14 2v4a2 2 0 0 0 2 2h4"/> <path d="M10 9H8"/> <path d="M16 13H8"/> <path d="M16 17H8"/></svg></span>Matplotlib Tutorials</a>
+                  <a class="res-link tutorial" href="https://realpython.com/python-matplotlib-guide/" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-book-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7v14"/> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Real Python: Matplotlib Guide</a>
+                  <a class="res-link docs" href="https://seaborn.pydata.org/tutorial.html" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-file-text" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/> <path d="M14 2v4a2 2 0 0 0 2 2h4"/> <path d="M10 9H8"/> <path d="M16 13H8"/> <path d="M16 17H8"/></svg></span>Seaborn Tutorial</a>
+                  <a class="res-link course" href="https://www.kaggle.com/learn/data-visualization" target="_blank" rel="noopener noreferrer"><span class="ri" aria-hidden="true"><svg class="ico ico-graduation-cap" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/> <path d="M22 10v6"/> <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>Kaggle: Data Visualisation (Free)</a>
                 </div>
               </div>
             </div>
@@ -1059,7 +1069,7 @@ a{color:#000}
       <section class="block" id="prerequisites" aria-labelledby="prereq-title" data-r>
         <h2 class="section-label" id="prereq-title">Prerequisites</h2>
         <div class="prereq">
-          <span class="icon-box sm teal" aria-hidden="true">📋</span>
+          <span class="icon-box sm teal" aria-hidden="true"><svg class="ico ico-clipboard-list" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/> <path d="M12 11h4"/> <path d="M12 16h4"/> <path d="M8 11h.01"/> <path d="M8 16h.01"/></svg></span>
           <div>
             <p class="info-note">No prior programming experience required. Basic computer literacy is sufficient.</p>
             <span class="prereq-hint">Not sure whether this is the right starting point? <a href="../contact.html">Ask us</a> — we'll recommend the right course for your background.</span>
@@ -1174,7 +1184,7 @@ a{color:#000}
     <!-- Sidebar -->
     <aside class="detail-side" aria-label="Course summary">
       <div class="info-card sticky" data-r="1">
-        <span class="icon-box lg teal" aria-hidden="true">🐍</span>
+        <span class="icon-box lg teal" aria-hidden="true"><svg class="ico ico-code-xml" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m18 16 4-4-4-4"/> <path d="m6 8-4 4 4 4"/> <path d="m14.5 4-5 16"/></svg></span>
         <div class="info-title">Python Programming</div>
         <div class="info-cat">Foundation</div>
         <div class="info-rows">

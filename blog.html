@@ -666,7 +666,17 @@ body{background:#fff;color:#000}
 .js [data-r]{opacity:1;transform:none}
 .card,.feature,.quote-card,.info-card{border-color:#ccc;background:none;box-shadow:none}
 a{color:#000}
-}</style>
+}
+:root{--ico:#10263D}
+[data-theme="dark"],:is(.footer,.cta-banner,.stats,.navy-band,.term){--ico:#C9A970}
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-.14em;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;color:var(--ico)}
+.icon-box,.icon-box.teal,.icon-box.green,.icon-box.pink,.icon-box.blue,.icon-box.violet,.icon-box.yellow,.icon-box.coral{width:auto;height:auto;background:none;border:0;border-radius:0;font-size:2rem;justify-content:flex-start}
+.icon-box.sm{width:auto;height:auto;font-size:1.65rem}
+.icon-box.lg{width:auto;height:auto;font-size:2.5rem}
+.icon-box .ico{stroke-width:1.5}
+.callout-icon .ico{stroke-width:1.3}
+.fb-icon{display:inline-flex;font-size:1.6rem}
+.card-foot .ico{font-size:1.05em;margin-right:.15em}</style>
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .author-strip{display:flex;align-items:center;gap:1.4rem;padding:1.5rem 1.75rem;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--card);margin-bottom:2.75rem}
@@ -994,7 +1004,7 @@ a{color:#000}
     </div>
     <div class="next-grid">
       <article class="feature col" data-r>
-        <span class="icon-box teal" aria-hidden="true">🐍</span>
+        <span class="icon-box teal" aria-hidden="true"><svg class="ico ico-code-xml" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m18 16 4-4-4-4"/> <path d="m6 8-4 4 4 4"/> <path d="m14.5 4-5 16"/></svg></span>
         <div>
           <h3 class="feature-title">Tutorials &rarr; hands-on courses</h3>
           <p class="feature-text">Python, feature engineering and the bias–variance tradeoff are taught week by week, on real datasets, in these courses.</p>
@@ -1006,7 +1016,7 @@ a{color:#000}
         </div>
       </article>
       <article class="feature col" data-r="1">
-        <span class="icon-box" aria-hidden="true">🧭</span>
+        <span class="icon-box" aria-hidden="true"><svg class="ico ico-compass" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/> <circle cx="12" cy="12" r="10"/></svg></span>
         <div>
           <h3 class="feature-title">Career guides &rarr; structured programmes</h3>
           <p class="feature-text">A mentor-guided year from beginner to job-ready, AICTE-aligned internships with an offer letter, and Microsoft certification preparation.</p>
@@ -1018,7 +1028,7 @@ a{color:#000}
         </div>
       </article>
       <article class="feature col" data-r="2">
-        <span class="icon-box violet" aria-hidden="true">🔬</span>
+        <span class="icon-box violet" aria-hidden="true"><svg class="ico ico-microscope" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18h8"/> <path d="M3 22h18"/> <path d="M14 22a7 7 0 1 0 0-14h-1"/> <path d="M9 14h2"/> <path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/> <path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/></svg></span>
         <div>
           <h3 class="feature-title">Industry &amp; research &rarr; advanced AI</h3>
           <p class="feature-text">Large language models, deep learning and research methodology — from Transformers and RAG pipelines to journal-ready statistical analysis.</p>
