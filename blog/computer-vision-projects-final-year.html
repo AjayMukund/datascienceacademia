@@ -232,11 +232,13 @@ body.nav-open{overflow:hidden}
 .nav-menu{position:fixed;top:0;right:0;bottom:0;width:min(340px,86vw);flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;padding:calc(var(--nav-h) + .5rem) 1.6rem 2rem;background:var(--ink2);border-left:1px solid var(--border);transform:translateX(102%);transition:transform .4s var(--ease);z-index:495;overflow-y:auto;box-shadow:var(--sd)}
 .nav-menu.open{transform:none}
 .nav-links{flex-direction:column;align-items:stretch;gap:0}
-.nav-links a{font-size:1.02rem;padding:.85rem 0;border-bottom:1px solid var(--border)}
+.nav-links li{display:block}
+.nav-links a{display:block;font-size:1.02rem;line-height:1.4;padding:.85rem .25rem;border-bottom:1px solid var(--border)}
+.nav-links a.active{color:var(--champ2);font-weight:600}
 .nav-links a::after{display:none}
 .nav-actions{flex-direction:column;align-items:stretch;gap:.7rem;margin-top:1.5rem}
 .nav-actions .btn{width:100%}
-.nav-signin{text-align:center;padding:.6rem}
+.nav-signin{display:block;text-align:center;padding:.75rem;font-size:.95rem;border:1px solid var(--border2);border-radius:var(--r)}
 .nav-tog{display:flex;z-index:501;position:relative}
 .theme-tog{z-index:501;position:relative;margin-left:auto}
 .nav-sub{display:none}
