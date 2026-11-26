@@ -51,7 +51,7 @@ _KEYS = sorted(EMOJI_ICONS, key=len, reverse=True)
 EMOJI_RE = re.compile("(?:" + "|".join(re.escape(k) for k in _KEYS) + ")" + _VS16 + "?")
 TOKEN_RE = re.compile(r"ico:((?:tabler/)?[a-z0-9-]+)")
 _cache: dict[str, str] = {}
-KEEP_TOGETHER = ("1-on-1", "+91 91764 98814", "problem-solving")   # visible-text phrases that must never wrap mid-phrase
+KEEP_TOGETHER = ("1-on-1", "+91 91764 98814", "problem-solving", "AI engineer", "AI Engineer", "Anna University")   # visible-text phrases that must never wrap mid-phrase
 
 
 def _unbreakable(phrase: str) -> str:
