@@ -51,6 +51,7 @@ const PROJECTS = [
     title: 'Drowsiness Detection Using Facial Landmarks',
     img: 'Website Images/Projects/Drowsiness Detection Using Facial Landmarks.jpeg',
     period: 'Sep 2023 – Nov 2023', cohort: 'sep23', cat: 'cv',
+    summary: 'Neural networks trained on about 53,000 facial landmarks spot drowsiness (alert, yawning or mild sleep) to keep drivers safe.',
     desc: 'Detects drowsiness using neural networks trained on approximately 53,000 facial landmarks, categorised as alert, yawning, or mild sleep — then converted to binary non-drowsy/drowsy classification. Targets safety in critical activities like driving, with future plans for multi-face frames and real-time webcam tracking.',
     guide: 'Ajay Mukund S', leader: 'Aashik H',
     members: ['Arvind S']

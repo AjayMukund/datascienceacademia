@@ -164,9 +164,9 @@ html.dlg-open{overflow:hidden}
             <span class="proj-size">{% if size > 1 %}Team of {{ size }}{% elif size == 1 %}Solo project{% else %}Student team{% endif %}</span>
           </div>
           <h3 class="card-title">{{ p.title }}</h3>
-          <p class="card-text">{{ p.desc | meta_desc(150) }}</p>
+          <p class="card-text">{{ p.summary if p.summary is defined and p.summary else p.desc | meta_desc(150) }}</p>{# summary: optional hand-written 3-line card text; full desc is in the dialog #}
           <div class="card-foot">
-            <p class="proj-team">Guide: <strong>{{ p.guide }}</strong>{% if p.leader %}<span class="sep" aria-hidden="true">·</span>Lead: {{ p.leader }}{% endif %}{% if p.members %}<span class="sep" aria-hidden="true">·</span>+{{ p.members | length }} member{% if p.members | length > 1 %}s{% endif %}{% endif %}</p>
+            <p class="proj-team">Guide: <strong style="white-space:nowrap">{{ p.guide }}</strong>{% if p.leader %}<span class="sep" aria-hidden="true">·</span><wbr><span style="white-space:nowrap">Lead: {{ p.leader }}</span>{% endif %}{% if p.members %}<span class="sep" aria-hidden="true">·</span><wbr><span style="white-space:nowrap">+{{ p.members | length }} member{% if p.members | length > 1 %}s{% endif %}</span>{% endif %}</p>
             <button type="button" class="btn btn-outline btn-sm" data-project="{{ p.idx }}" aria-haspopup="dialog" aria-controls="projDialog" aria-label="Details: {{ p.title }}">Details</button>
           </div>
           <div class="proj-full" id="proj-{{ p.idx }}" hidden>
