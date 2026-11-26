@@ -218,7 +218,7 @@
   <div class="container">
     <nav aria-label="Breadcrumb">
       <ol class="breadcrumbs">
-        <li><a href="{{ rel }}index.html">Home</a></li>
+        <li><a href="{{ rel or "./" }}">Home</a></li>
         <li><a href="{{ rel }}programmes.html">Programmes</a></li>
         <li aria-current="page">{{ programme.title }}</li>
       </ol>

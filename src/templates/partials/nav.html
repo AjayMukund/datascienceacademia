@@ -1,6 +1,6 @@
 <header class="nav" id="nav">
   <div class="nav-inner">
-    <a class="nav-brand" href="{{ rel }}index.html" aria-label="{{ site.name }} — home">
+    <a class="nav-brand" href="{{ rel or "./" }}" aria-label="{{ site.name }} — home">
       <img class="nav-logo" src="{{ rel }}assets/img/logo-mark-64.png" srcset="{{ rel }}assets/img/logo-mark-64.png 1x, {{ rel }}assets/img/logo-mark-128.png 2x" width="40" height="40" alt="" decoding="async">
       <span class="nav-name"><span class="wordmark"><span class="wm-1">Data Science</span><span class="wm-2">Academia</span></span><span class="nav-sub">{{ site.name_sub }}</span></span>
     </a>
