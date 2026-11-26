@@ -1883,6 +1883,60 @@
    }
   }
  },
+ "blog-aws-vs-azure": {
+  "src": "Website Images/Blog - AWS vs Azure.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/blog-aws-vs-azure-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "720": {
+    "file": "assets/img/blog-aws-vs-azure-720.webp",
+    "w": 720,
+    "h": 402
+   },
+   "960": {
+    "file": "assets/img/blog-aws-vs-azure-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/blog-aws-vs-azure-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "blog-azure-certifications-compared": {
+  "src": "Website Images/Blog - Azure Certifications Compared.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/blog-azure-certifications-compared-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "720": {
+    "file": "assets/img/blog-azure-certifications-compared-720.webp",
+    "w": 720,
+    "h": 402
+   },
+   "960": {
+    "file": "assets/img/blog-azure-certifications-compared-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/blog-azure-certifications-compared-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
  "blog-bias-variance-tradeoff": {
   "src": "Website Images/Blog - Bias-Variance Tradeoff.jpeg",
   "w": 2752,
@@ -1905,6 +1959,60 @@
    },
    "1600": {
     "file": "assets/img/blog-bias-variance-tradeoff-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "blog-computer-vision-projects": {
+  "src": "Website Images/Blog - Computer Vision Projects.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/blog-computer-vision-projects-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "720": {
+    "file": "assets/img/blog-computer-vision-projects-720.webp",
+    "w": 720,
+    "h": 402
+   },
+   "960": {
+    "file": "assets/img/blog-computer-vision-projects-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/blog-computer-vision-projects-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "blog-data-analyst-vs-data-scientist": {
+  "src": "Website Images/Blog - Data Analyst vs Data Scientist.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/blog-data-analyst-vs-data-scientist-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "720": {
+    "file": "assets/img/blog-data-analyst-vs-data-scientist-720.webp",
+    "w": 720,
+    "h": 402
+   },
+   "960": {
+    "file": "assets/img/blog-data-analyst-vs-data-scientist-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/blog-data-analyst-vs-data-scientist-1600.webp",
     "w": 1600,
     "h": 893
    }
@@ -1937,6 +2045,60 @@
    }
   }
  },
+ "blog-data-science-career-in-india-2026": {
+  "src": "Website Images/Blog - Data Science Career in India 2026.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/blog-data-science-career-in-india-2026-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "720": {
+    "file": "assets/img/blog-data-science-career-in-india-2026-720.webp",
+    "w": 720,
+    "h": 402
+   },
+   "960": {
+    "file": "assets/img/blog-data-science-career-in-india-2026-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/blog-data-science-career-in-india-2026-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "blog-data-science-course-fees-chennai": {
+  "src": "Website Images/Blog - Data Science Course Fees Chennai.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/blog-data-science-course-fees-chennai-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "720": {
+    "file": "assets/img/blog-data-science-course-fees-chennai-720.webp",
+    "w": 720,
+    "h": 402
+   },
+   "960": {
+    "file": "assets/img/blog-data-science-course-fees-chennai-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/blog-data-science-course-fees-chennai-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
  "blog-feature-engineering-mastery": {
   "src": "Website Images/Blog - Feature Engineering Mastery.jpeg",
   "w": 2752,
@@ -1959,6 +2121,33 @@
    },
    "1600": {
     "file": "assets/img/blog-feature-engineering-mastery-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "blog-internships-for-cse-students": {
+  "src": "Website Images/Blog - Internships for CSE Students.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/blog-internships-for-cse-students-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "720": {
+    "file": "assets/img/blog-internships-for-cse-students-720.webp",
+    "w": 720,
+    "h": 402
+   },
+   "960": {
+    "file": "assets/img/blog-internships-for-cse-students-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/blog-internships-for-cse-students-1600.webp",
     "w": 1600,
     "h": 893
    }
@@ -1991,6 +2180,33 @@
    }
   }
  },
+ "blog-power-bi-vs-tableau": {
+  "src": "Website Images/Blog - Power BI vs Tableau.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/blog-power-bi-vs-tableau-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "720": {
+    "file": "assets/img/blog-power-bi-vs-tableau-720.webp",
+    "w": 720,
+    "h": 402
+   },
+   "960": {
+    "file": "assets/img/blog-power-bi-vs-tableau-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/blog-power-bi-vs-tableau-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
  "blog-python-learning-roadmap-2025": {
   "src": "Website Images/Blog - Python Learning Roadmap 2025.jpeg",
   "w": 2752,
@@ -2013,6 +2229,33 @@
    },
    "1600": {
     "file": "assets/img/blog-python-learning-roadmap-2025-1600.webp",
+    "w": 1600,
+    "h": 893
+   }
+  }
+ },
+ "blog-python-vs-r": {
+  "src": "Website Images/Blog - Python vs R.jpeg",
+  "w": 2752,
+  "h": 1536,
+  "variants": {
+   "480": {
+    "file": "assets/img/blog-python-vs-r-480.webp",
+    "w": 480,
+    "h": 268
+   },
+   "720": {
+    "file": "assets/img/blog-python-vs-r-720.webp",
+    "w": 720,
+    "h": 402
+   },
+   "960": {
+    "file": "assets/img/blog-python-vs-r-960.webp",
+    "w": 960,
+    "h": 536
+   },
+   "1600": {
+    "file": "assets/img/blog-python-vs-r-1600.webp",
     "w": 1600,
     "h": 893
    }

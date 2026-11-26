@@ -19,7 +19,7 @@ const POSTS = [
   {
     slug: 'data-science-course-fees-chennai',
     courses: ['python', 'machine-learning', 'power-bi', 'p:ai-mastery'],   // shown as 'Put it into practice'; course pages list this post back
-    cover: 'foundation-category-banner',
+    cover: 'Website Images/Blog - Data Science Course Fees Chennai.jpeg',
     title: 'Data Science Course Fees in Chennai: What to Expect in 2026',
     seoTitle: 'Data Science Course Fees in Chennai (2026)',
     category: 'career',
@@ -92,7 +92,7 @@ const POSTS = [
   {
     slug: 'aicte-internships-cse-students',
     courses: ['python', 'machine-learning', 'sql', 'p:internship'],   // shown as 'Put it into practice'; course pages list this post back
-    cover: 'analytics-category-banner',
+    cover: 'Website Images/Blog - Internships for CSE Students.jpeg',
     title: 'AICTE Internships for CSE Students: How They Work and How to Choose One',
     seoTitle: 'AICTE Internships for CSE Students: A Guide',
     category: 'career',
@@ -157,7 +157,7 @@ const POSTS = [
   {
     slug: 'aws-vs-azure-for-data-science',
     courses: ['aws', 'azure', 'mlops', 'p:microsoft-certification'],   // shown as 'Put it into practice'; course pages list this post back
-    cover: 'cloud-and-bi-category-banner',
+    cover: 'Website Images/Blog - AWS vs Azure.jpeg',
     title: 'AWS vs Azure for Data Science: Which Cloud Should You Learn First?',
     seoTitle: 'AWS vs Azure for Data Science: Which First?',
     category: 'career',
@@ -225,7 +225,7 @@ const POSTS = [
   {
     slug: 'computer-vision-projects-final-year',
     courses: ['computer-vision', 'deep-learning', 'python', 'p:internship'],   // shown as 'Put it into practice'; course pages list this post back
-    cover: 'advanced-ai-category-banner',
+    cover: 'Website Images/Blog - Computer Vision Projects.jpeg',
     title: '10 Computer Vision Project Ideas for Final-Year Students (That Stand Out in 2026)',
     seoTitle: 'Computer Vision Final-Year Project Ideas 2026',
     category: 'tutorial',
@@ -312,7 +312,7 @@ const POSTS = [
   {
     slug: 'ai-901-vs-dp-900-vs-az-900',
     courses: ['azure', 'p:microsoft-certification', 'power-bi'],   // shown as 'Put it into practice'; course pages list this post back
-    cover: 'cloud-and-bi-category-banner',
+    cover: 'Website Images/Blog - Azure Certifications Compared.jpeg',
     title: 'AI-901, DP-900 or AZ-900: Which Microsoft Fundamentals Exam Should You Take First?',
     seoTitle: 'AI-901 vs DP-900 vs AZ-900: Which First?',
     category: 'career',
@@ -379,7 +379,7 @@ const POSTS = [
   {
     slug: 'data-analyst-vs-data-scientist-india',
     courses: ['sql', 'power-bi', 'python', 'machine-learning'],   // shown as 'Put it into practice'; course pages list this post back
-    cover: 'analytics-category-banner',
+    cover: 'Website Images/Blog - Data Analyst vs Data Scientist.jpeg',
     title: 'Data Analyst vs Data Scientist: Which Role Fits You in India?',
     seoTitle: 'Data Analyst vs Data Scientist in India',
     category: 'career',
@@ -453,7 +453,7 @@ const POSTS = [
   {
     slug: 'data-science-career-india-2026',
     courses: ['p:ai-mastery', 'python', 'sql', 'machine-learning'],   // shown as 'Put it into practice'; course pages list this post back
-    cover: 'Website Images/Blog - Data Science Career in India 2025.jpeg',
+    cover: 'Website Images/Blog - Data Science Career in India 2026.jpeg',
     title: 'Building a Data Science Career in India: The 2026 Roadmap',
     seoTitle: 'Data Science Career in India: 2026 Roadmap',
     category: 'career',
@@ -533,7 +533,7 @@ const POSTS = [
   {
     slug: 'python-vs-r-for-data-science',
     courses: ['python', 'r-programming', 'data-visualization'],   // shown as 'Put it into practice'; course pages list this post back
-    cover: 'foundation-category-banner',
+    cover: 'Website Images/Blog - Python vs R.jpeg',
     title: 'Python or R: Which Should You Learn First for Data Science?',
     seoTitle: 'Python vs R for Data Science: Which First?',
     category: 'tutorial',
@@ -614,7 +614,7 @@ df |&gt;
   {
     slug: 'power-bi-vs-tableau',
     courses: ['power-bi', 'tableau', 'excel'],   // shown as 'Put it into practice'; course pages list this post back
-    cover: 'analytics-category-banner',
+    cover: 'Website Images/Blog - Power BI vs Tableau.jpeg',
     title: 'Power BI vs Tableau: Which Should an Analyst in India Learn First?',
     seoTitle: 'Power BI vs Tableau: Which to Learn First?',
     category: 'career',
