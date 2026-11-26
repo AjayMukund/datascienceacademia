@@ -24,8 +24,20 @@
       </a>
     </div>
 
+    <!-- No ID: lookup form (what search engines and visitors without a link see) -->
+    <div id="state-form" style="display:none;">
+      <div class="auth-title" style="font-size:1.35rem;margin-bottom:.4rem;">Verify a certificate</div>
+      <p class="auth-sub" style="margin-bottom:1.2rem;">Every course, internship and programme certificate issued by Data Science Academia carries a unique certificate ID and a QR code. Scan the QR code, or paste the ID or verification link below, to confirm that the certificate is genuine and see who it was issued to.</p>
+      <form id="verify-form" style="display:flex;flex-direction:column;gap:.7rem;text-align:left;">
+        <label for="cert-input" style="font-family:var(--fm);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fog2);">Certificate ID or link</label>
+        <input id="cert-input" class="fi" type="text" autocomplete="off" spellcheck="false" placeholder="e.g. 3f2a9c1e-…" required style="width:100%;">
+        <button type="submit" class="auth-btn" style="width:100%;">Verify certificate</button>
+      </form>
+      <p style="font-family:var(--fb);font-size:.72rem;color:var(--fog2);line-height:1.7;margin-top:1.1rem;">Employers and colleges can use this page at any time. For help, contact Data Science Academia, Chennai on +91 91764 98814 or via the <a class="auth-link" href="contact.html">contact page</a>.</p>
+    </div>
+
     <!-- Loading -->
-    <div id="state-loading">
+    <div id="state-loading" style="display:none;">
       <div style="margin-bottom:1rem;color:#10263D;"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 22h14"/> <path d="M5 2h14"/> <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/> <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg></div>
       <div class="auth-title" style="font-size:1.35rem;">Verifying Certificate</div>
       <p class="auth-sub">Checking our records…</p>
@@ -60,7 +72,7 @@
       </div>
       <div style="font-family:var(--fb);font-size:.68rem;color:var(--fog2);line-height:1.7;">
         Issued by <strong style="color:rgba(201,169,112,.55);">Data Science Academia</strong><br>
-        AICTE-aligned &nbsp;·&nbsp; MSME Registered &nbsp;·&nbsp; Chennai, Tamil Nadu
+        NEP 2020-aligned &nbsp;·&nbsp; MSME Registered &nbsp;·&nbsp; Chennai, Tamil Nadu
       </div>
     </div>
 
@@ -76,7 +88,7 @@
     </div>
 
     <div style="margin-top:1.75rem;padding-top:1.1rem;border-top:1px solid var(--border);">
-      <a href="index.html" class="auth-link" style="font-size:.72rem;">&larr; &nbsp;datascienceacademia.in</a>
+      <a href="verify.html" class="auth-link" style="font-size:.72rem;">Check another certificate</a> &nbsp;·&nbsp; <a href="index.html" class="auth-link" style="font-size:.72rem;">datascienceacademia.in</a>
     </div>
 
   </div>
@@ -91,16 +103,25 @@
   const certId = params.get('id');
 
   function show(state) {
-    ['loading','valid','invalid'].forEach(s =>
+    ['form','loading','valid','invalid'].forEach(s =>
       document.getElementById('state-' + s).style.display = s === state ? 'block' : 'none'
     );
   }
 
+  const uuidFind = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
   if (!certId) {
-    document.getElementById('v-err').textContent = 'No certificate ID was provided in the URL.';
-    show('invalid');
+    show('form');
+    document.getElementById('verify-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const v = document.getElementById('cert-input').value.trim();
+      const m = v.match(uuidFind);
+      location.href = 'verify.html?id=' + encodeURIComponent(m ? m[0] : v);
+    });
     return;
   }
+  // result pages are per-visitor lookups, not content to index
+  const nr = document.querySelector('meta[name="robots"]'); if (nr) nr.content = 'noindex, follow';
+  show('loading');
 
   const uuidRx = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   if (!uuidRx.test(certId)) {
