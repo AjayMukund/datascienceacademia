@@ -51,6 +51,12 @@ _KEYS = sorted(EMOJI_ICONS, key=len, reverse=True)
 EMOJI_RE = re.compile("(?:" + "|".join(re.escape(k) for k in _KEYS) + ")" + _VS16 + "?")
 TOKEN_RE = re.compile(r"ico:((?:tabler/)?[a-z0-9-]+)")
 _cache: dict[str, str] = {}
+KEEP_TOGETHER = ("1-on-1", "+91 91764 98814")   # visible-text phrases that must never wrap mid-phrase
+
+
+def _unbreakable(phrase: str) -> str:
+    """Spaces → no-break spaces, hyphens → word-joined hyphens. No extra elements, so flex list items keep their layout."""
+    return phrase.replace(" ", " ").replace("-", "⁠-⁠")
 
 
 def svg_inner(name: str) -> str:
@@ -81,6 +87,8 @@ def replace_emoji(html: str) -> str:
             out.append(part)
         else:
             part = TOKEN_RE.sub(lambda m: icon_svg(m.group(1)), part)
+            for phrase in KEEP_TOGETHER:          # never break these across lines
+                part = part.replace(phrase, _unbreakable(phrase))
             out.append(EMOJI_RE.sub(lambda m: icon_svg(EMOJI_ICONS[m.group().rstrip(_VS16)]), part))
     return "".join(out)
 
