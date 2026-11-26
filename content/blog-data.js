@@ -149,7 +149,7 @@ const POSTS = [
 <blockquote>An internship you can explain in detail is worth more than three certificates you cannot.</blockquote>
 
 <h2>Internships with us</h2>
-<p>Our <a href="../programmes/internship.html">internship programme</a> is aligned with NEP 2020 and AICTE guidelines and runs in rolling monthly cohorts, online or hybrid, for one to two months. You choose a domain (machine learning, data analytics, Python and SQL, computer vision, or NLP and generative AI), work on a real project with a mentor, and receive an offer letter and a DSA Internship Certificate. If you need the basics first, start with <a href="../courses/python.html">Python</a> or <a href="../courses/sql.html">SQL</a>. Our centre is near Tambaram, Chennai; <a href="../contact.html">contact us</a> for the next cohort.</p>
+<p>Our <a href="../programmes/internship.html">internship programme</a> is aligned with NEP 2020, designed to meet typical university internship-credit requirements, and runs in rolling monthly cohorts, online or hybrid, for one to two months. You choose a domain (machine learning, data analytics, Python and SQL, computer vision, or NLP and generative AI), work on a real project with a mentor, and receive an offer letter and a DSA Internship Certificate. If you need the basics first, start with <a href="../courses/python.html">Python</a> or <a href="../courses/sql.html">SQL</a>. Our centre is near Tambaram, Chennai; <a href="../contact.html">contact us</a> for the next cohort.</p>
     `
   },
 

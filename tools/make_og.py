@@ -173,7 +173,7 @@ def make(name: str, title: str, kicker: str, image: Path | None, subtitle: str =
     # bottom strip
     d.line([(72, H - 80), (650, H - 80)], fill=GOLD, width=2)
     d.text((72, H - 64), "datascienceacademia.in", font=F_BOLD(20), fill=IVORY)
-    cred = "AICTE-aligned · MSME Registered · Est. 2019"
+    cred = "NEP 2020-aligned · MSME Registered · Est. 2019"
     d.text((72, H - 36), cred, font=F_BODY(16), fill=MIST)
     OUT.mkdir(parents=True, exist_ok=True)
     im.save(OUT / f"{name}.jpg", "JPEG", quality=84, optimize=True, progressive=True)
@@ -184,7 +184,7 @@ def main() -> None:
     d = load_all(ROOT)
     W_IMG = ROOT / "source-images"
     make("default", "Where Academic Rigour Meets Real-World AI Engineering", "Data Science & AI Institute · Chennai", None,
-         "18 courses · AICTE-aligned internships · Microsoft certification · 12-month AI Mastery Track")
+         "18 courses · project-based internships · Microsoft certification · 12-month AI Mastery Track")
     make("page-courses", "Data Science & AI Courses in Chennai", "18 specialised courses", W_IMG / "Website Images/Courses Page Hero Banner.jpeg",
          "Python · Machine Learning · Deep Learning · LLMs · Power BI · Azure · AWS")
     make("page-programmes", "Programmes for Students, Faculty & Enterprises", "Special programmes", W_IMG / "Website Images/AI Mastery Track Visual.jpeg",

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Data Science & AI Courses in Chennai | Data Science Academia{% endblock %}
-{% block description %}Ph.D.-led Data Science & AI institute in Chennai: Python, ML, Deep Learning & Power BI courses, AICTE-aligned internships and a 12-month AI Mastery Track.{% endblock %}
+{% block description %}Ph.D.-led Data Science & AI institute in Chennai: Python, ML, Deep Learning & Power BI courses, project-based internships and a 12-month AI Mastery Track.{% endblock %}
 {% block og_title %}Data Science Academia — Ph.D.-led AI & Data Science Education, Chennai{% endblock %}
 {% block body_class %}page-home{% endblock %}
 
@@ -29,7 +29,7 @@
   "mainEntity": [
     {"@type":"Question","name":"Where is Data Science Academia located?","acceptedAnswer":{"@type":"Answer","text":"We are at No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam, Chennai, Tamil Nadu 600073, near Tambaram. Courses are delivered live in Chennai and online across India."}},
     {"@type":"Question","name":"Do I need prior programming experience to join?","acceptedAnswer":{"@type":"Answer","text":"No. The Python Programming course and the 12-month AI Mastery Track are designed for absolute beginners — basic computer literacy and 10–12 hours a week are enough. Intermediate and advanced courses list their prerequisites on each course page."}},
-    {"@type":"Question","name":"Are DSA internships AICTE recognised?","acceptedAnswer":{"@type":"Answer","text":"Internships are aligned with NEP 2020 and AICTE guidelines. Where the student's institution is AICTE accredited the internship is AICTE aligned, and every intern receives a DSA Internship Certificate and Offer Letter."}},
+    {"@type":"Question","name":"Will a DSA internship count towards my college internship credits?","acceptedAnswer":{"@type":"Answer","text":"Internships are designed to meet typical university internship-credit requirements and are aligned with NEP 2020. Every intern receives an Offer Letter, an Internship Completion Certificate, a Project Completion Certificate and project documentation to submit to their college; check your own university's rules on how many hours or credits you need."}},
     {"@type":"Question","name":"Which certifications can I prepare for at DSA?","acceptedAnswer":{"@type":"Answer","text":"Microsoft Azure AI Fundamentals (AI-901), Azure Data Fundamentals (DP-900), Azure Fundamentals (AZ-900), Power BI Data Analyst (PL-300), AWS Cloud Practitioner (CLF-C02), plus UGC NET, GATE CS/IT, TNSET and PG-TRB coaching."}},
     {"@type":"Question","name":"Are sessions recorded and is there placement support?","acceptedAnswer":{"@type":"Answer","text":"Yes. All live sessions are recorded for enrolled students. The AI Mastery Track includes resume and LinkedIn preparation, technical and HR mock interviews and access to the DSA alumni network."}},
     {"@type":"Question","name":"What are the course fees?","acceptedAnswer":{"@type":"Answer","text":"Fees vary by course and programme. Call or WhatsApp +91 91764 98814 or email " ~ site.email ~ " for current pricing and batch dates — we respond within one business day."}}
@@ -45,9 +45,9 @@
     <div class="hero-grid">
       <div>
         {% set batch_compact = true %}{% include "partials/batch-callout.html" %}
-        <div class="hero-pill"><span class="dot" aria-hidden="true"></span><span>Ph.D.-led &middot; AICTE-aligned &middot; MSME registered &middot; Chennai</span></div>
+        <div class="hero-pill"><span class="dot" aria-hidden="true"></span><span>Ph.D.-led &middot; NEP 2020-aligned &middot; MSME registered &middot; Chennai</span></div>
         <h1 class="hero-title" id="hero-title">Learn Data Science <br>&amp; AI from <em>practitioners,</em> <br>not just professors</h1>
-        <p class="hero-lead">Data Science Academia is a Ph.D.-led AI institute in Chennai. 18 specialised courses, AICTE-aligned internships, Microsoft certification pathways and a 12-month AI Mastery Track — every module taught by a practising AI engineer with Anna University research depth.</p>
+        <p class="hero-lead">Data Science Academia is a Ph.D.-led AI institute in Chennai. 18 specialised courses, project-based internships, Microsoft certification pathways and a 12-month AI Mastery Track — every module taught by a practising AI engineer with Anna University research depth.</p>
         <div class="hero-ctas">
           <a class="btn btn-primary btn-lg" href="courses.html">Explore courses <span class="arr">&rarr;</span></a>
           <a class="btn btn-outline btn-lg" href="contact.html">Book a free trial session</a>
@@ -91,7 +91,7 @@
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
     {% for pass in range(2) %}
-    {% for item in ['Python Programming','Machine Learning','Deep Learning','LLMs & Generative AI','Power BI','Microsoft Azure','AWS for Data Science','AICTE Internships','Faculty Development','Corporate Training','UGC NET & GATE Coaching','Research Assistance'] %}
+    {% for item in ['Python Programming','Machine Learning','Deep Learning','LLMs & Generative AI','Power BI','Microsoft Azure','AWS for Data Science','Internships','Faculty Development','Corporate Training','UGC NET & GATE Coaching','Research Assistance'] %}
     <span class="ticker-item{% if pass %} dup{% endif %}">{{ item }}</span>
     {% endfor %}
     {% endfor %}
@@ -207,7 +207,7 @@
     </div>
     <div class="grid grid-3">
       {% set minis = [
-        ('internship','teal','🎓','1–2 month AICTE &amp; NEP-aligned internships with real projects, an offer letter and a DSA certificate. Rolling monthly cohorts.'),
+        ('internship','teal','🎓','1–2 month NEP 2020-aligned internships with real projects, an offer letter and a DSA certificate. Rolling monthly cohorts.'),
         ('microsoft-certification','blue','🏅','Focused preparation for Azure AI-901, DP-900, AZ-900 and Power BI PL-300 — labs, mock exams and exam strategy.'),
         ('fdp','','🏛️','Faculty Development and corporate training in AI, ML, Power BI and Generative AI — on campus, on site or online.'),
         ('exam-coaching','green','🏆','UGC NET, GATE CS/IT, TNSET and PG-TRB coaching by faculty who have cleared these exams themselves.'),
@@ -256,7 +256,7 @@
       </div>
       <div class="feature col" data-r="2">
         <span class="icon-box blue" aria-hidden="true">🏛️</span>
-        <div><h3 class="feature-title">AICTE &amp; NEP-aligned credentials</h3><p class="feature-text">Internships, FDPs and certificates aligned with AICTE guidelines and NEP 2020 — recognised by institutions across Tamil Nadu.</p></div>
+        <div><h3 class="feature-title">NEP 2020-aligned credentials</h3><p class="feature-text">Internships and certificates aligned with NEP 2020, and FDPs aligned with AICTE guidelines — recognised by institutions across Tamil Nadu.</p></div>
       </div>
       <div class="feature col" data-r="3">
         <span class="icon-box violet" aria-hidden="true">🚀</span>
@@ -335,7 +335,7 @@
     <div data-r>
       <details class="faq" open><summary>Where is Data Science Academia located?</summary><div class="faq-a">No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam, Chennai 600073 — near Tambaram. Courses are delivered live in Chennai and online across India.</div></details>
       <details class="faq"><summary>Do I need prior programming experience to join?</summary><div class="faq-a">No. The <a href="courses/python.html">Python Programming</a> course and the <a href="programmes/ai-mastery.html">AI Mastery Track</a> are designed for absolute beginners — basic computer literacy and 10–12 hours a week are enough. Intermediate and advanced courses list their prerequisites on each course page.</div></details>
-      <details class="faq"><summary>Are DSA internships AICTE recognised?</summary><div class="faq-a">Internships are aligned with NEP 2020 and AICTE guidelines. Where your institution is AICTE accredited the internship is AICTE aligned, and every intern receives a DSA Internship Certificate and Offer Letter. <a href="programmes/internship.html">Internship details &rarr;</a></div></details>
+      <details class="faq"><summary>Will a DSA internship count towards my college internship credits?</summary><div class="faq-a">Internships are designed to meet typical university internship-credit requirements and are aligned with NEP 2020. Every intern receives an Offer Letter, an Internship Completion Certificate, a Project Completion Certificate and project documentation to submit to their college; check your own university's rules on how many hours or credits you need.<a href="programmes/internship.html">Internship details &rarr;</a></div></details>
       <details class="faq"><summary>Which certifications can I prepare for at DSA?</summary><div class="faq-a">Microsoft Azure AI-901, DP-900 and AZ-900, Power BI PL-300 and AWS CLF-C02 through our courses and the <a href="programmes/microsoft-certification.html">Microsoft Certification Program</a>; UGC NET, GATE CS/IT, TNSET and PG-TRB through <a href="programmes/exam-coaching.html">Competitive Examination Training</a>.</div></details>
       <details class="faq"><summary>Are sessions recorded, and is there placement support?</summary><div class="faq-a">Yes — every live session is recorded for enrolled students. The AI Mastery Track adds resume and LinkedIn preparation, technical and HR mock interviews, and alumni-network job alerts.</div></details>
       <details class="faq"><summary>What are the course fees?</summary><div class="faq-a">Fees vary by course and programme. Call or <a href="{{ site.whatsapp_msg }}" target="_blank" rel="noopener">WhatsApp {{ site.phone }}</a> or email <a href="mailto:{{ site.email }}">{{ site.email }}</a> for current pricing and batch dates — we respond within one business day.</div></details>

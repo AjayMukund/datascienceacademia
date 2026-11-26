@@ -28,7 +28,7 @@ Where: business.google.com → your profile → **Edit profile**.
 - **Description** (Google's limit is 750 characters. Don't add links or phone numbers; Google rejects them):
 
 ```
-Data Science Academia is a Chennai academy for data science, AI and analytics, founded in 2019 and based in Rajakilpakkam, near Tambaram. We offer 18 courses, from Python, SQL and Excel to machine learning, deep learning, large language models, MLOps, Power BI and Azure, plus programmes for internships (NEP and AICTE aligned), Microsoft certification, faculty development, competitive exams and research guidance. Our Code Champs programme teaches coding and AI to school students aged 8 to 17. Every course is taught by a practising AI engineer and PhD scholar from Anna University, with hands-on projects. Learn live online (sessions recorded for replay), at our centre, or hybrid. More than 500 students trained.
+Data Science Academia is a Chennai academy for data science, AI and analytics, founded in 2019 and based in Rajakilpakkam, near Tambaram. We offer 18 courses, from Python, SQL and Excel to machine learning, deep learning, large language models, MLOps, Power BI and Azure, plus programmes for internships (NEP 2020 aligned), Microsoft certification, faculty development, competitive exams and research guidance. Our Code Champs programme teaches coding and AI to school students aged 8 to 17. Every course is taught by a practising AI engineer and PhD scholar from Anna University, with hands-on projects. Learn live online (sessions recorded for replay), at our centre, or hybrid. More than 500 students trained.
 ```
 
 - Afterwards, add a **post** (Add update): "We've moved! Our new centre is at Madambakkam Main Road, Rajakilpakkam, near Tambaram. New website: datascienceacademia.in". Put the website in the post's button link.
@@ -73,7 +73,7 @@ Data Science Academia (DSA) is a Chennai-based academy for data science, artific
 What we offer
 • 18 courses: Python, SQL and R; machine learning, feature engineering, deep learning and NLP; computer vision, large language models, generative AI, reinforcement learning and MLOps; Excel, data visualisation, Tableau and Power BI; Azure and AWS
 • The Complete AI & Data Science Mastery Track: a 12-month, mentor-guided path from beginner to job-ready
-• Internships aligned with NEP and AICTE guidelines, with certificate and offer letter
+• Internships aligned with NEP 2020, with offer letter, certificates and project documentation
 • Microsoft certification preparation (AI-901, DP-900, AZ-900, PL-300)
 • Corporate and faculty development programmes
 • Competitive examination training and research guidance
@@ -100,7 +100,7 @@ Where: studio.youtube.com → **Customisation → Profile** (description) and **
 ```
 Data Science Academia is a Chennai academy for data science, AI and analytics, founded in 2019. On this channel: tutorials, project walkthroughs and career guidance on Python, machine learning, deep learning, generative AI, Power BI and more, taught by a practising AI engineer and PhD scholar at Anna University.
 
-We offer 18 courses, internships (NEP and AICTE aligned), Microsoft certification preparation, and Code Champs, our coding and AI programme for school students aged 8 to 17. Learn live online, at our centre in Rajakilpakkam near Tambaram, or hybrid.
+We offer 18 courses, internships (NEP 2020 aligned), Microsoft certification preparation, and Code Champs, our coding and AI programme for school students aged 8 to 17. Learn live online, at our centre in Rajakilpakkam near Tambaram, or hybrid.
 
 🌐 datascienceacademia.in
 📧 info@datascienceacademia.in
@@ -122,7 +122,7 @@ Where: Justdial → **Free Listing / Edit business**. You'll need to sign in wit
 - **About / description:**
 
 ```
-Data Science Academia (est. 2019) offers data science and AI training in Rajakilpakkam, near Tambaram, Chennai, and live online. 18 courses: Python, SQL, Excel, Machine Learning, Feature Engineering, Deep Learning, NLP, Computer Vision, Large Language Models, Generative AI, MLOps, Reinforcement Learning, Power BI, Tableau, R, Data Visualisation, Azure and AWS. Also NEP/AICTE-aligned internships, Microsoft certification preparation (AI-901, DP-900, PL-300), faculty development programmes, and Code Champs coding classes for school students aged 8–17. Taught by a practising AI engineer and PhD scholar from Anna University. 500+ students trained. Website: datascienceacademia.in
+Data Science Academia (est. 2019) offers data science and AI training in Rajakilpakkam, near Tambaram, Chennai, and live online. 18 courses: Python, SQL, Excel, Machine Learning, Feature Engineering, Deep Learning, NLP, Computer Vision, Large Language Models, Generative AI, MLOps, Reinforcement Learning, Power BI, Tableau, R, Data Visualisation, Azure and AWS. Also NEP 2020-aligned internships, Microsoft certification preparation (AI-901, DP-900, PL-300), faculty development programmes, and Code Champs coding classes for school students aged 8–17. Taught by a practising AI engineer and PhD scholar from Anna University. 500+ students trained. Website: datascienceacademia.in
 ```
 
 ---

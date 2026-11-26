@@ -8,8 +8,8 @@ const DSA_PROGRAMMES = {
     id: 'internship',
     image: 'Website Images/Internship Programme.jpeg',
     title: 'Internships',
-    subtitle: 'NEP & AICTE Aligned',
-    tag: 'NEP & AICTE Aligned',
+    subtitle: 'NEP 2020 Aligned',
+    tag: 'NEP 2020 Aligned',
     tagClass: 'pta',
     icon: '🎓',
     iconClass: 'pi-intern',
@@ -18,13 +18,13 @@ const DSA_PROGRAMMES = {
     delivery: ['Online — Live & Recorded', 'Hybrid — Online + Offline Workshops'],
     duration: '1–2 Months',
     certificate: 'DSA Internship Certificate + Offer Letter',
-    overview: 'A structured internship programme designed in alignment with the National Education Policy 2020 and AICTE internship guidelines. Interns work on real, impactful data science and AI projects under the mentorship of PhD-qualified faculty — gaining hands-on experience that goes far beyond classroom learning. Each intern receives a formal offer letter, project completion certificate, and domain-specific project portfolio.',
+    overview: 'A structured internship programme designed in alignment with the National Education Policy 2020 and designed to meet typical university internship-credit requirements. Interns work on real, impactful data science and AI projects under the mentorship of PhD-qualified faculty — gaining hands-on experience that goes far beyond classroom learning. Each intern receives a formal offer letter, project completion certificate, and domain-specific project portfolio.',
     outcomes: [
       'Hands-on experience with real industry datasets and AI projects',
       'Formal DSA Internship Certificate + Offer Letter',
       'Domain-specific project portfolio for job/PhD applications',
       'Mentorship from PhD-qualified faculty and AI engineers',
-      'AICTE-recognised credential (where applicable)',
+      'Offer letter, certificates and project report for your college internship credits',
       'Professional exposure to end-to-end ML and data pipelines'
     ],
     sections: [
@@ -53,7 +53,7 @@ const DSA_PROGRAMMES = {
       {
         title: 'Certification & Recognition',
         points: [
-          'AICTE-aligned internship (where your institution is AICTE-accredited)',
+          'Documents for your college internship credits',
           'DSA Internship Certificate with project title and mentor name',
           'Formal Offer Letter issued at programme start',
           'Internship completion letter for university credit submission',
@@ -77,7 +77,7 @@ const DSA_PROGRAMMES = {
       {n:'2', label:'Duration Tracks'},
       {n:'6', label:'Project Domains'},
       {n:'Monthly', label:'Cohort Starts'},
-      {n:'AICTE', label:'Aligned'}
+      {n:'NEP', label:'2020 aligned'}
     ],
     cards: {
       sectionTitle: 'Project Domains',

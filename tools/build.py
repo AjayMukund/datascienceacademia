@@ -53,7 +53,7 @@ SITE = {
     "tagline": "Where Academic Rigour Meets Real-World AI Engineering",
     "description": (
         "Data Science Academia is a Ph.D.-led AI & Data Science institute in Chennai offering 18 courses "
-        "(Python, Machine Learning, Deep Learning, LLMs, Power BI, Azure, AWS), AICTE-aligned internships, "
+        "(Python, Machine Learning, Deep Learning, LLMs, Power BI, Azure, AWS), project-based internships, "
         "Microsoft certification prep and a 12-month AI Mastery Track — live in Chennai and online."
     ),
     "phone": "+91 91764 98814",
@@ -541,7 +541,7 @@ def build_llms_txt() -> None:
     a = SITE["address"]
     L = [f"# {SITE['name']}", "", f"> {SITE['description']}", "",
          f"Address: {a['street']}, {a['locality']}, {a['region']} {a['postal']}, India. Phone/WhatsApp: {SITE['phone']}. "
-         f"Email: {SITE['email']}. Hours: {SITE['hours']}. Founded {SITE['founded']}; MSME registered; AICTE-aligned internships and FDPs.",
+         f"Email: {SITE['email']}. Hours: {SITE['hours']}. Founded {SITE['founded']}; MSME registered; NEP 2020-aligned internships and AICTE-aligned FDPs.",
          "", "## Key pages", ""]
     for name, path in [("Home", ""), ("All courses", "courses.html"), ("Programmes", "programmes.html"),
                        ("DSA Code Champs (schools, Grades 3-12)", "codechamps.html"), ("Student projects", "projects.html"),

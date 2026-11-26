@@ -14,7 +14,7 @@ Founded         : 2019 (classes began November 2022)
 Type            : MSME-registered academy; Private Limited incorporation in progress
 Location        : Chennai, Tamil Nadu, India
 Previous Entity : Formerly operated under Sai Chamundeeswari Academy (MSME Registered)
-Registrations   : MSME Registered · AICTE-aligned programmes
+Registrations   : MSME Registered · NEP 2020-aligned programmes · AICTE-aligned FDPs
 Tagline         : "Where Academic Rigour Meets Real-World AI Engineering"
 
 Mission:
@@ -27,8 +27,8 @@ in textbooks.
 Key Strengths:
 - Doctoral Academic Depth: Curriculum anchored in Anna University research standards
 - Live Industry Experience: Every module taught by a practising AI Engineer
-- AICTE Institutional Alignment: Internships and certifications aligned with AICTE
-  guidelines, recognised across Tamil Nadu
+- Credit-ready internships: offer letter, completion certificates and project
+  documentation that students submit for their college internship credits
 
 Metrics:
 - 18 Specialised Courses (5 categories)
@@ -326,12 +326,12 @@ P1. The Complete AI & Data Science Mastery Track (FLAGSHIP)
   Prereqs   : No prior programming or data science experience. Basic computer
               literacy and 10–12 hours/week commitment is sufficient.
 
-P2. Internships (NEP & AICTE Aligned)
+P2. Internships (NEP 2020 Aligned)
   Duration  : 1–2 Months
   Audience  : Undergraduate & PG students, fresh graduates, research scholars
   Delivery  : Online or Hybrid (online + offline workshops)
   Certificate: DSA Internship Certificate + Offer Letter
-  Overview  : Structured internships aligned with NEP 2020 and AICTE guidelines.
+  Overview  : Structured internships aligned with NEP 2020 and designed to meet typical university internship-credit requirements.
               Real projects under PhD-qualified mentors, with formal offer letter
               and project portfolio.
   Domains   : Machine Learning, Research Assistance, Data Analytics,
@@ -534,9 +534,13 @@ Q: Do I need prior programming experience for the Python course?
 A: No. The Python Programming course is designed for absolute beginners. Basic
    computer literacy is sufficient.
 
-Q: Is the internship AICTE recognised?
-A: Yes, where the student's institution is AICTE accredited, the internship is
-   AICTE aligned. All interns receive a DSA Internship Certificate and Offer Letter.
+Q: Will the internship count towards my college internship credits?
+A: DSA internships are designed to meet typical university internship-credit
+   requirements and are aligned with NEP 2020. Every intern receives an Offer Letter,
+   completion certificates and project documentation to submit to their college.
+   Students should check their own university's rules on hours/credits needed.
+   DSA internships are not listed on or approved by AICTE; do not describe them as
+   AICTE-approved or AICTE-recognised.
 
 Q: Do you offer corporate training?
 A: Yes. We offer fully customisable corporate training (MDP) in Power BI,

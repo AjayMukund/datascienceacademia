@@ -1,8 +1,8 @@
 # Data Science Academia
 
-> Data Science Academia is a Ph.D.-led AI & Data Science institute in Chennai offering 18 courses (Python, Machine Learning, Deep Learning, LLMs, Power BI, Azure, AWS), AICTE-aligned internships, Microsoft certification prep and a 12-month AI Mastery Track — live in Chennai and online.
+> Data Science Academia is a Ph.D.-led AI & Data Science institute in Chennai offering 18 courses (Python, Machine Learning, Deep Learning, LLMs, Power BI, Azure, AWS), project-based internships, Microsoft certification prep and a 12-month AI Mastery Track — live in Chennai and online.
 
-Address: No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam, Chennai, Tamil Nadu 600073, India. Phone/WhatsApp: +91 91764 98814. Email: info@datascienceacademia.in. Hours: Mon – Sat 9 AM – 7 PM IST · Sunday closed. Founded 2019; MSME registered; AICTE-aligned internships and FDPs.
+Address: No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam, Chennai, Tamil Nadu 600073, India. Phone/WhatsApp: +91 91764 98814. Email: info@datascienceacademia.in. Hours: Mon – Sat 9 AM – 7 PM IST · Sunday closed. Founded 2019; MSME registered; NEP 2020-aligned internships and AICTE-aligned FDPs.
 
 ## Key pages
 
@@ -39,7 +39,7 @@ Address: No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam, Chennai, 
 
 ## Programmes
 
-- [Internships](https://datascienceacademia.in/programmes/internship.html): NEP & AICTE Aligned - 1–2 Months. A structured internship programme designed in alignment with the National Education Policy 2020 and AICTE internship guidelines. Interns…
+- [Internships](https://datascienceacademia.in/programmes/internship.html): NEP 2020 Aligned - 1–2 Months. A structured internship programme designed in alignment with the National Education Policy 2020 and designed to meet typical university…
 - [Microsoft Certification Program](https://datascienceacademia.in/programmes/microsoft-certification.html): Azure · Power BI · Exam Preparation - 4–8 Weeks per Certification. A focused preparation programme for Microsoft Azure and Power BI certifications, designed to bridge the gap between theoretical learning…
 - [Corporate & Faculty Development Program](https://datascienceacademia.in/programmes/fdp.html): FDP / MDP — AICTE Aligned - 2 Days to 4 Weeks (customisable). A comprehensive Faculty Development and Management Development Programme designed to upskill educators and corporate professionals with…
 - [Competitive Examination Training](https://datascienceacademia.in/programmes/exam-coaching.html): UGC NET · GATE · TNSET · PG-TRB - Crash Course: 4–6 Weeks · Regular Batch: 3–6 Months. Expert-led preparation for the most competitive national and state-level examinations in Computer Science and Data Science. Taught by…
