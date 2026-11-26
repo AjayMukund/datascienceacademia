@@ -113,7 +113,7 @@
 
     <!-- Author -->
     <div class="author-strip" data-r>
-      <span class="avatar" aria-hidden="true">{{ site.author.name | initials }}</span>
+      {% include "partials/author-avatar.html" %}
       <div>
         <div class="as-name">{{ site.author.name }}</div>
         <div class="as-role">{{ site.author.role }}</div>
@@ -158,7 +158,7 @@
           <p class="card-text">{{ featured.excerpt }}</p>
           <div class="card-foot">
             <span class="feat-by">
-              <span class="avatar" aria-hidden="true">{{ site.author.name | initials }}</span>
+              {% include "partials/author-avatar.html" %}
               <span><span class="feat-name">{{ site.author.name }}</span><span class="feat-meta"><time datetime="{{ featured.date }}">{{ featured.dateDisplay }}</time></span></span>
             </span>
             <span class="feat-read">Read the article <span class="arr" aria-hidden="true">&rarr;</span></span>

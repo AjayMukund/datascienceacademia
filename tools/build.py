@@ -87,7 +87,7 @@ SITE = {
     "clarity_id": "zi01v79mv9",  # Microsoft Clarity (heatmaps/recordings), loads 1.5 s after page load
     "maps_embed": "https://maps.google.com/maps?q=12.918342794186495,80.15253111461173&z=17&hl=en&output=embed",
     "maps_link": "https://www.google.com/maps/search/?api=1&query=12.918342794186495%2C80.15253111461173",
-    "author": {"name": "Ajay Mukund S", "role": "AI Engineer · Ph.D. Scholar, Anna University · Founder, Data Science Academia"},
+    "author": {"name": "Ajay Mukund S", "photo": "assets/img/ajay-mukund", "role": "AI Engineer · Ph.D. Scholar, Anna University · Founder, Data Science Academia"},
     # Current internship batch → ml-internship.html, the announcement strip (home, programmes, internship page)
     # and the contact-form option. The strip hides itself after apply_by (build-time AND in the browser).
     # For the next batch: change these values (and the plan/FAQ text in src/pages/ml-internship.html if needed).

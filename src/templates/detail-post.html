@@ -108,7 +108,7 @@
     <p class="page-hero-sub">{{ post.excerpt }}</p>
     <div class="byline">
       <div class="byline-who">
-        <span class="avatar" aria-hidden="true">{{ site.author.name | initials }}</span>
+        {% include "partials/author-avatar.html" %}
         <div>
           <div class="byline-name">{{ site.author.name }}</div>
           <div class="byline-role">{{ site.author.role }}</div>
@@ -147,7 +147,7 @@
 
   <!-- Author -->
   <aside class="author-box" aria-label="About the author">
-    <span class="avatar" aria-hidden="true">{{ site.author.name | initials }}</span>
+    {% include "partials/author-avatar.html" %}
     <div>
       <div class="ab-label">Written by</div>
       <div class="ab-name">{{ site.author.name }}</div>

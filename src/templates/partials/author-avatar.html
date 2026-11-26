@@ -1,0 +1,2 @@
+{# Founder photo avatar (replaces the "AM" initials). Crops: assets/img/ajay-mukund-{96,192,384}.webp from source-images/People/. #}
+<img class="avatar avatar-photo{% if avatar_lg is defined and avatar_lg %} lg{% endif %}" src="{{ rel }}{{ site.author.photo }}-192.webp" srcset="{{ rel }}{{ site.author.photo }}-96.webp 96w, {{ rel }}{{ site.author.photo }}-192.webp 192w, {{ rel }}{{ site.author.photo }}-384.webp 384w" sizes="58px" width="58" height="58" alt="{{ site.author.name }}" loading="lazy" decoding="async">
