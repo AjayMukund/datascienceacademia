@@ -685,7 +685,8 @@ a{color:#000}
 .step-text{text-wrap:balance}
 p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
 @media (min-width:769px){.faq-a{text-wrap:balance}}
-.avatar-photo{object-fit:cover;padding:0;background:var(--ink3);border:2px solid var(--b-gold);flex-shrink:0}</style>
+.avatar-photo{object-fit:cover;padding:0;background:var(--ink3);border:2px solid var(--b-gold);flex-shrink:0}
+@media (max-width:520px){.btn{white-space:normal;text-align:center}.badge{white-space:normal;max-width:100%;line-height:1.35;text-align:left}}</style>
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .post-hero .sh{font-size:clamp(2.1rem,4.4vw,3.4rem);text-wrap:pretty}
@@ -763,11 +764,11 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
       <ol class="breadcrumbs">
         <li><a href="../index.html">Home</a></li>
         <li><a href="../blog.html">Blog</a></li>
-        <li aria-current="page">Understanding the Bias-Variance Tradeoff</li>
+        <li aria-current="page">Understanding the Bias⁠-⁠Variance Tradeoff</li>
       </ol>
     </nav>
     <span class="badge badge-teal">Tutorial</span>
-    <h1 class="sh" id="post-title">Understanding the Bias-Variance Tradeoff</h1>
+    <h1 class="sh" id="post-title">Understanding the Bias⁠-⁠Variance Tradeoff</h1>
     <p class="page-hero-sub">Every ML practitioner faces this fundamental tension. Learn what bias and variance actually mean, why they trade off, and how to diagnose and correct both in your own models.</p>
     <div class="byline">
       <div class="byline-who">
@@ -796,16 +797,16 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
 <div class="container container-tight post-body">
   <article class="prose" id="article">
 
-<p>The bias-variance tradeoff is one of those ideas you encounter early in machine learning and keep understanding more deeply for years. At its core, it explains why making a model more complex doesn't always make it better — and why a simpler model often outperforms a sophisticated one on new data.</p>
+<p>The bias⁠-⁠variance tradeoff is one of those ideas you encounter early in machine learning and keep understanding more deeply for years. At its core, it explains why making a model more complex doesn't always make it better — and why a simpler model often outperforms a sophisticated one on new data.</p>
 
 <h2>What is Bias?</h2>
-<p>Bias is the error introduced by approximating a real-world problem with a model that is too simple. A model with <strong>high bias</strong> makes strong assumptions about the data and systematically misses patterns that are genuinely present.</p>
+<p>Bias is the error introduced by approximating a real⁠-⁠world problem with a model that is too simple. A model with <strong>high bias</strong> makes strong assumptions about the data and systematically misses patterns that are genuinely present.</p>
 <p>The classic example: fitting a straight line to data that follows a curve. The line cannot capture the curve regardless of how much training data you provide — it is fundamentally underfitting. The error isn't noise; it's a structural limitation of the model family.</p>
 <blockquote>High bias → underfitting → the model performs poorly on both training and test data.</blockquote>
 
 <h2>What is Variance?</h2>
 <p>Variance is the error introduced by the model's sensitivity to small fluctuations in the training data. A model with <strong>high variance</strong> learns the training data — including its noise — too precisely, and fails to generalise to new examples.</p>
-<p>Imagine fitting a 15th-degree polynomial to 20 data points. The curve passes through every single training point with near-zero training error. But show it new data and performance collapses — it learned the noise, not the underlying signal.</p>
+<p>Imagine fitting a 15th⁠-⁠degree polynomial to 20 data points. The curve passes through every single training point with near⁠-⁠zero training error. But show it new data and performance collapses — it learned the noise, not the underlying signal.</p>
 <blockquote>High variance → overfitting → strong training performance, weak test performance.</blockquote>
 
 <h2>The Fundamental Tradeoff</h2>
@@ -818,7 +819,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
 <ul>
 <li><strong>Both high:</strong> high bias (underfit). Make the model more expressive, add features, reduce regularisation.</li>
 <li><strong>Training low, validation high:</strong> high variance (overfit). Simplify, regularise, or get more data.</li>
-<li><strong>Both low:</strong> well-calibrated. Ship it.</li>
+<li><strong>Both low:</strong> well⁠-⁠calibrated. Ship it.</li>
 </ul>
 <p>Learning curves make this visual. Plot training and validation error against training set size:</p>
 <pre><code>from sklearn.model_selection import learning_curve
@@ -852,11 +853,11 @@ plt.show()</code></pre>
 <li>Collect more training data — often the most effective fix available</li>
 <li>Add regularisation (L1/L2 for linear models, dropout for neural networks)</li>
 <li>Use a simpler model or reduce the number of features</li>
-<li>Use ensemble methods: bagging (e.g., Random Forest) reduces variance by averaging multiple high-variance models</li>
+<li>Use ensemble methods: bagging (e.g., Random Forest) reduces variance by averaging multiple high⁠-⁠variance models</li>
 </ul>
 
 <h2>The Practical Implication</h2>
-<p>In production, you rarely achieve the theoretical optimum. What the bias-variance framework gives you is a <em>direction to move</em> when your model isn't performing. It turns "my model is bad" into "my model is underfitting, so I should try X" or "my model is overfitting, so I should try Y." That diagnostic clarity is what separates practitioners who improve models systematically from those who tune hyperparameters at random.</p>
+<p>In production, you rarely achieve the theoretical optimum. What the bias⁠-⁠variance framework gives you is a <em>direction to move</em> when your model isn't performing. It turns "my model is bad" into "my model is underfitting, so I should try X" or "my model is overfitting, so I should try Y." That diagnostic clarity is what separates practitioners who improve models systematically from those who tune hyperparameters at random.</p>
     
   </article>
 
@@ -885,7 +886,7 @@ plt.show()</code></pre>
     <div class="callout-body">
       <div class="eyebrow">Put it into practice</div>
       <h2 class="callout-title">Learn this properly — <em>live, with the author</em></h2>
-      <p class="callout-text">The ideas in this article are taught hands-on, on real datasets, in these Data Science Academia courses and programmes:</p>
+      <p class="callout-text">The ideas in this article are taught hands⁠-⁠on, on real datasets, in these Data Science Academia courses and programmes:</p>
       <div class="row mt-1">
         <a class="btn btn-outline btn-sm" href="../courses/machine-learning.html">Machine Learning <span class="arr">&rarr;</span></a>
         <a class="btn btn-outline btn-sm" href="../courses/feature-engineering.html">Feature Engineering &amp; Model Selection <span class="arr">&rarr;</span></a>
@@ -912,7 +913,7 @@ plt.show()</code></pre>
         </div>
         <div class="card-body">
           <div class="card-cat">Tutorial &middot; 9 min read</div>
-          <h3 class="card-title">10 Computer Vision Project Ideas for Final-Year Students (That Stand Out in 2026)</h3>
+          <h3 class="card-title">10 Computer Vision Project Ideas for Final⁠-⁠Year Students (That Stand Out in 2026)</h3>
           <p class="card-text">Ten computer vision projects for B.E., B.Tech and M.Sc. final years — with datasets, tools and what makes each one stand out — plus a semester plan…</p>
           <div class="card-foot"><time datetime="2026-11-19">November 19, 2026</time><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
@@ -924,7 +925,7 @@ plt.show()</code></pre>
         <div class="card-body">
           <div class="card-cat">Tutorial &middot; 7 min read</div>
           <h3 class="card-title">Python or R: Which Should You Learn First for Data Science?</h3>
-          <p class="card-text">Both languages are excellent — but they are built for different people and different jobs. A side-by-side comparison with real code, and a clear…</p>
+          <p class="card-text">Both languages are excellent — but they are built for different people and different jobs. A side⁠-⁠by⁠-⁠side comparison with real code, and a clear…</p>
           <div class="card-foot"><time datetime="2026-11-10">November 10, 2026</time><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
@@ -938,7 +939,7 @@ plt.show()</code></pre>
     <div class="cta-banner" data-r>
       <div class="eyebrow center">Go further</div>
       <h2 class="cta-title" id="cta-title">Ready to build <em>real AI skills?</em></h2>
-      <p class="cta-text">18 specialised courses, project-based internships and a 12-month AI Mastery Track — taught live in Rajakilpakkam, near Tambaram, Chennai, and online across India, with every session recorded. Book a free, no-commitment trial session; we reply within one business day.</p>
+      <p class="cta-text">18 specialised courses, project⁠-⁠based internships and a 12⁠-⁠month AI Mastery Track — taught live in Rajakilpakkam, near Tambaram, Chennai, and online across India, with every session recorded. Book a free, no⁠-⁠commitment trial session; we reply within one business day.</p>
       <div class="cta-actions">
         <a class="btn btn-primary btn-lg" href="../courses.html">Explore all 18 courses <span class="arr">&rarr;</span></a>
         <a class="btn btn-outline btn-lg" href="../contact.html">Book a free trial session</a>
@@ -956,10 +957,10 @@ plt.show()</code></pre>
           <img class="nav-logo" src="../assets/img/logo-mark-64.png" srcset="../assets/img/logo-mark-64.png 1x, ../assets/img/logo-mark-128.png 2x" width="44" height="44" alt="" loading="lazy" decoding="async">
           <span class="nav-name"><span class="wordmark"><span class="wm-1">Data Science</span><span class="wm-2">Academia</span></span><span class="nav-sub">Chennai · Est. 2019</span></span>
         </div>
-        <p class="footer-about">Ph.D.-led, industry-grounded education in Data Science and Artificial Intelligence — 18 specialised courses, project-based internships, Microsoft certification pathways and a 12-month AI Mastery Track, delivered live in Chennai and online across India.</p>
+        <p class="footer-about">Ph.D.-led, industry⁠-⁠grounded education in Data Science and Artificial Intelligence — 18 specialised courses, project⁠-⁠based internships, Microsoft certification pathways and a 12⁠-⁠month AI Mastery Track, delivered live in Chennai and online across India.</p>
         <div class="footer-badges">
           <span class="badge badge-teal">MSME Registered</span>
-          <span class="badge">NEP 2020-aligned</span>
+          <span class="badge">NEP 2020⁠-⁠aligned</span>
           <span class="badge badge-cream">Est. 2019</span>
         </div>
         <ul class="social-links" aria-label="Social media">
@@ -985,7 +986,7 @@ plt.show()</code></pre>
       <nav aria-label="Programmes">
         <div class="footer-h">Programmes</div>
         <div class="footer-links">
-          <a href="../programmes/ai-mastery.html">12-Month AI Mastery Track</a>
+          <a href="../programmes/ai-mastery.html">12⁠-⁠Month AI Mastery Track</a>
           <a href="../programmes/internship.html">Internships</a>
           <a href="../programmes/microsoft-certification.html">Microsoft Certification</a>
           <a href="../programmes/fdp.html">Corporate &amp; Faculty Development</a>

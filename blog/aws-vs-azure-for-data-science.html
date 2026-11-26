@@ -685,7 +685,8 @@ a{color:#000}
 .step-text{text-wrap:balance}
 p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
 @media (min-width:769px){.faq-a{text-wrap:balance}}
-.avatar-photo{object-fit:cover;padding:0;background:var(--ink3);border:2px solid var(--b-gold);flex-shrink:0}</style>
+.avatar-photo{object-fit:cover;padding:0;background:var(--ink3);border:2px solid var(--b-gold);flex-shrink:0}
+@media (max-width:520px){.btn{white-space:normal;text-align:center}.badge{white-space:normal;max-width:100%;line-height:1.35;text-align:left}}</style>
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .post-hero .sh{font-size:clamp(2.1rem,4.4vw,3.4rem);text-wrap:pretty}
@@ -801,7 +802,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
 <h2>The short answer</h2>
 <ul>
 <li><strong>Learn Azure first</strong> if you are heading towards data analysis or business intelligence, or into companies that already run on Microsoft 365, Power BI and Microsoft Fabric.</li>
-<li><strong>Learn AWS first</strong> if you are heading towards machine-learning engineering, data engineering or product start-ups, where AWS is very common.</li>
+<li><strong>Learn AWS first</strong> if you are heading towards machine⁠-⁠learning engineering, data engineering or product start⁠-⁠ups, where AWS is very common.</li>
 <li><strong>Not sure yet?</strong> Look at 20 job listings for the role you want, in the city you want, and count which cloud they name. That beats any general advice, including this article.</li>
 </ul>
 
@@ -811,7 +812,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
 <li><strong>Storing data:</strong> Amazon S3 on AWS; Azure Blob Storage and Azure Data Lake Storage on Azure.</li>
 <li><strong>Building, training and deploying models:</strong> Amazon SageMaker AI on AWS; Azure Machine Learning on Azure. Both give you managed notebooks, training jobs on CPUs or GPUs, a model registry and deployment endpoints.</li>
 <li><strong>Generative AI and foundation models:</strong> Amazon Bedrock on AWS; Microsoft Foundry (formerly Azure AI Foundry) on Azure. Both let you call large language models through an API, ground them on your own documents and build agents, without managing servers.</li>
-<li><strong>Moving and transforming data (ETL):</strong> AWS Glue on AWS; Azure Data Factory and the data-integration tools in Microsoft Fabric on Azure.</li>
+<li><strong>Moving and transforming data (ETL):</strong> AWS Glue on AWS; Azure Data Factory and the data⁠-⁠integration tools in Microsoft Fabric on Azure.</li>
 <li><strong>Querying and warehousing:</strong> Amazon Athena and Amazon Redshift on AWS; Microsoft Fabric (and Azure Synapse Analytics) on Azure.</li>
 <li><strong>Dashboards:</strong> Microsoft's Power BI is one of the most widely used BI tools in India, and it connects to data on either cloud.</li>
 </ul>
@@ -821,9 +822,9 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
 <p>Both providers reshaped their AI certifications this year, so check any study plan made before 2026:</p>
 <ul>
 <li><strong>AWS retired the Machine Learning – Specialty certification.</strong> The last day to take it was 31 March 2026 (<a href="https://aws.amazon.com/certification/certified-machine-learning-specialty/" target="_blank" rel="noopener">AWS</a>). Existing holders stay certified for three years from when they earned it.</li>
-<li><strong>AWS's main ML credential is now the Machine Learning Engineer – Associate</strong>, which is moving to an updated exam version (<a href="https://aws.amazon.com/certification/certified-machine-learning-engineer-associate/" target="_blank" rel="noopener">AWS</a>). The <strong>AI Practitioner</strong> remains the entry-level AI credential, and the <strong>Data Engineer – Associate</strong> covers data pipelines.</li>
-<li><strong>Microsoft retired DP-100 (Azure Data Scientist Associate) and AI-102 (Azure AI Engineer Associate).</strong> The newer <strong>AI-103</strong> leads to the Azure AI Apps and Agents Developer Associate certification, built around Python and Microsoft Foundry (<a href="https://learn.microsoft.com/en-us/credentials/certifications/exams/ai-103/" target="_blank" rel="noopener">Microsoft Learn</a>).</li>
-<li><strong>Microsoft's fundamentals exams</strong> — AI-901, DP-900 and AZ-900 — remain the usual first step. Our guide <a href="ai-901-vs-dp-900-vs-az-900.html">AI-901, DP-900 or AZ-900</a> explains which to take first.</li>
+<li><strong>AWS's main ML credential is now the Machine Learning Engineer – Associate</strong>, which is moving to an updated exam version (<a href="https://aws.amazon.com/certification/certified-machine-learning-engineer-associate/" target="_blank" rel="noopener">AWS</a>). The <strong>AI Practitioner</strong> remains the entry⁠-⁠level AI credential, and the <strong>Data Engineer – Associate</strong> covers data pipelines.</li>
+<li><strong>Microsoft retired DP⁠-⁠100 (Azure Data Scientist Associate) and AI⁠-⁠102 (Azure AI Engineer Associate).</strong> The newer <strong>AI⁠-⁠103</strong> leads to the Azure AI Apps and Agents Developer Associate certification, built around Python and Microsoft Foundry (<a href="https://learn.microsoft.com/en-us/credentials/certifications/exams/ai-103/" target="_blank" rel="noopener">Microsoft Learn</a>).</li>
+<li><strong>Microsoft's fundamentals exams</strong> — AI⁠-⁠901, DP⁠-⁠900 and AZ⁠-⁠900 — remain the usual first step. Our guide <a href="ai-901-vs-dp-900-vs-az-900.html">AI⁠-⁠901, DP⁠-⁠900 or AZ⁠-⁠900</a> explains which to take first.</li>
 </ul>
 <p>Exam codes and versions change often. Always confirm on the official AWS or Microsoft Learn page before you book.</p>
 
@@ -840,13 +841,13 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
 <li><strong>Python, SQL and core machine learning</strong> on your own laptop. The cloud is a place to run skills you already have.</li>
 <li><strong>Storage and a notebook:</strong> upload a dataset to S3 or Blob Storage and explore it from a cloud notebook.</li>
 <li><strong>Train and deploy one model</strong> with SageMaker AI or Azure Machine Learning, then call the endpoint from a short Python script.</li>
-<li><strong>Build one small generative-AI app</strong> with Bedrock or Foundry — for example, a question-answering assistant over your college's syllabus PDFs.</li>
+<li><strong>Build one small generative⁠-⁠AI app</strong> with Bedrock or Foundry — for example, a question⁠-⁠answering assistant over your college's syllabus PDFs.</li>
 <li><strong>Add the MLOps habits</strong> employers ask about: version your data and models, log experiments, monitor the deployed model.</li>
 </ol>
 <blockquote>Pick one cloud, build one complete project on it, and put that project on GitHub. That says more in an interview than a list of services.</blockquote>
 
 <h2>Learn it with us</h2>
-<p>Our <a href="../courses/aws.html">AWS for Data Science</a> and <a href="../courses/azure.html">Microsoft Azure</a> courses take you through exactly this path with hands-on labs, and the <a href="../courses/mlops.html">MLOps</a> course covers deployment and monitoring on both. For exam preparation, see the <a href="../programmes/microsoft-certification.html">Microsoft Certification Program</a>. Classes run at our centre near Tambaram, Chennai, and live online.</p>
+<p>Our <a href="../courses/aws.html">AWS for Data Science</a> and <a href="../courses/azure.html">Microsoft Azure</a> courses take you through exactly this path with hands⁠-⁠on labs, and the <a href="../courses/mlops.html">MLOps</a> course covers deployment and monitoring on both. For exam preparation, see the <a href="../programmes/microsoft-certification.html">Microsoft Certification Program</a>. Classes run at our centre near Tambaram, Chennai, and live online.</p>
     
   </article>
 
@@ -875,7 +876,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
     <div class="callout-body">
       <div class="eyebrow">Put it into practice</div>
       <h2 class="callout-title">Learn this properly — <em>live, with the author</em></h2>
-      <p class="callout-text">The ideas in this article are taught hands-on, on real datasets, in these Data Science Academia courses and programmes:</p>
+      <p class="callout-text">The ideas in this article are taught hands⁠-⁠on, on real datasets, in these Data Science Academia courses and programmes:</p>
       <div class="row mt-1">
         <a class="btn btn-outline btn-sm" href="../courses/aws.html">AWS for Data Science <span class="arr">&rarr;</span></a>
         <a class="btn btn-outline btn-sm" href="../courses/azure.html">Microsoft Azure <span class="arr">&rarr;</span></a>
@@ -929,7 +930,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
     <div class="cta-banner" data-r>
       <div class="eyebrow center">Go further</div>
       <h2 class="cta-title" id="cta-title">Ready to build <em>real AI skills?</em></h2>
-      <p class="cta-text">18 specialised courses, project-based internships and a 12-month AI Mastery Track — taught live in Rajakilpakkam, near Tambaram, Chennai, and online across India, with every session recorded. Book a free, no-commitment trial session; we reply within one business day.</p>
+      <p class="cta-text">18 specialised courses, project⁠-⁠based internships and a 12⁠-⁠month AI Mastery Track — taught live in Rajakilpakkam, near Tambaram, Chennai, and online across India, with every session recorded. Book a free, no⁠-⁠commitment trial session; we reply within one business day.</p>
       <div class="cta-actions">
         <a class="btn btn-primary btn-lg" href="../courses.html">Explore all 18 courses <span class="arr">&rarr;</span></a>
         <a class="btn btn-outline btn-lg" href="../contact.html">Book a free trial session</a>
@@ -947,10 +948,10 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
           <img class="nav-logo" src="../assets/img/logo-mark-64.png" srcset="../assets/img/logo-mark-64.png 1x, ../assets/img/logo-mark-128.png 2x" width="44" height="44" alt="" loading="lazy" decoding="async">
           <span class="nav-name"><span class="wordmark"><span class="wm-1">Data Science</span><span class="wm-2">Academia</span></span><span class="nav-sub">Chennai · Est. 2019</span></span>
         </div>
-        <p class="footer-about">Ph.D.-led, industry-grounded education in Data Science and Artificial Intelligence — 18 specialised courses, project-based internships, Microsoft certification pathways and a 12-month AI Mastery Track, delivered live in Chennai and online across India.</p>
+        <p class="footer-about">Ph.D.-led, industry⁠-⁠grounded education in Data Science and Artificial Intelligence — 18 specialised courses, project⁠-⁠based internships, Microsoft certification pathways and a 12⁠-⁠month AI Mastery Track, delivered live in Chennai and online across India.</p>
         <div class="footer-badges">
           <span class="badge badge-teal">MSME Registered</span>
-          <span class="badge">NEP 2020-aligned</span>
+          <span class="badge">NEP 2020⁠-⁠aligned</span>
           <span class="badge badge-cream">Est. 2019</span>
         </div>
         <ul class="social-links" aria-label="Social media">
@@ -976,7 +977,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
       <nav aria-label="Programmes">
         <div class="footer-h">Programmes</div>
         <div class="footer-links">
-          <a href="../programmes/ai-mastery.html">12-Month AI Mastery Track</a>
+          <a href="../programmes/ai-mastery.html">12⁠-⁠Month AI Mastery Track</a>
           <a href="../programmes/internship.html">Internships</a>
           <a href="../programmes/microsoft-certification.html">Microsoft Certification</a>
           <a href="../programmes/fdp.html">Corporate &amp; Faculty Development</a>

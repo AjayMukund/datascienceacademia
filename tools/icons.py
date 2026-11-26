@@ -51,12 +51,22 @@ _KEYS = sorted(EMOJI_ICONS, key=len, reverse=True)
 EMOJI_RE = re.compile("(?:" + "|".join(re.escape(k) for k in _KEYS) + ")" + _VS16 + "?")
 TOKEN_RE = re.compile(r"ico:((?:tabler/)?[a-z0-9-]+)")
 _cache: dict[str, str] = {}
-KEEP_TOGETHER = ("1-on-1", "+91 91764 98814", "problem-solving", "AI engineer", "AI Engineer", "Anna University")   # visible-text phrases that must never wrap mid-phrase
+KEEP_TOGETHER = ("1-on-1", "+91 91764 98814", "problem-solving", "AI engineer", "AI Engineer", "Anna University", "pre-filled", "enquiry form", "Grades 3 to 12", "3 to 12")   # visible-text phrases that must never wrap mid-phrase
 
 
 def _unbreakable(phrase: str) -> str:
     """Spaces → no-break spaces, hyphens → word-joined hyphens. No extra elements, so flex list items keep their layout."""
     return phrase.replace(" ", " ").replace("-", "⁠-⁠")
+
+
+# Short hyphenated words (pre-filled, real-world, AI-901, end-to-end) never break at the hyphen. Skips URLs, file names,
+# e-mails and anything longer than 24 characters so long strings can still wrap on phones.
+HYPHEN_RE = re.compile(r"(?<![\w./@:#=-])(\w+(?:-\w+)+)(?![\w/@=-]|\.\w)")
+
+
+def _join_hyphens(m: re.Match) -> str:
+    w = m.group(1)
+    return w.replace("-", "⁠-⁠") if len(w) <= 24 else w
 
 
 def svg_inner(name: str) -> str:
@@ -86,9 +96,10 @@ def replace_emoji(html: str) -> str:
         if part.startswith("<"):
             out.append(part)
         else:
-            part = TOKEN_RE.sub(lambda m: icon_svg(m.group(1)), part)
             for phrase in KEEP_TOGETHER:          # never break these across lines
                 part = part.replace(phrase, _unbreakable(phrase))
+            part = HYPHEN_RE.sub(_join_hyphens, part)   # plain text only — must run before SVG icons are inserted
+            part = TOKEN_RE.sub(lambda m: icon_svg(m.group(1)), part)
             out.append(EMOJI_RE.sub(lambda m: icon_svg(EMOJI_ICONS[m.group().rstrip(_VS16)]), part))
     return "".join(out)
 

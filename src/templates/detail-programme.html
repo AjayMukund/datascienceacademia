@@ -165,7 +165,7 @@
 .others-grid .card-foot{font-size:.72rem}
 .cc-callout .btn{margin-left:auto}
 @media (max-width:960px){.detail-side .sticky{max-height:none;overflow:visible}}
-@media (max-width:900px){.prog-hero-grid{grid-template-columns:1fr;gap:2.25rem}.prog-hero-img{max-width:440px}}
+@media (max-width:900px){.prog-hero-grid{grid-template-columns:minmax(0,1fr);gap:2.25rem}.prog-hero-img{max-width:min(440px,100%)}}
 @media (max-width:640px){.prog-banner{margin-bottom:2.5rem}.block-head{align-items:flex-start;flex-direction:column}.prereq{padding:1.1rem 1.15rem}.detail-main .roadmap{grid-template-columns:1fr}.cc-callout .btn{margin-left:0}}
 </style>
 {% endblock %}

@@ -685,7 +685,8 @@ a{color:#000}
 .step-text{text-wrap:balance}
 p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
 @media (min-width:769px){.faq-a{text-wrap:balance}}
-.avatar-photo{object-fit:cover;padding:0;background:var(--ink3);border:2px solid var(--b-gold);flex-shrink:0}</style>
+.avatar-photo{object-fit:cover;padding:0;background:var(--ink3);border:2px solid var(--b-gold);flex-shrink:0}
+@media (max-width:520px){.btn{white-space:normal;text-align:center}.badge{white-space:normal;max-width:100%;line-height:1.35;text-align:left}}</style>
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .post-hero .sh{font-size:clamp(2.1rem,4.4vw,3.4rem);text-wrap:pretty}
@@ -768,7 +769,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
     </nav>
     <span class="badge badge-teal">Tutorial</span>
     <h1 class="sh" id="post-title">Feature Engineering: The Craft Behind Great ML Models</h1>
-    <p class="page-hero-sub">Raw data is almost never model-ready. Feature engineering — transforming inputs into signals a model can use — is often the difference between a mediocre model and a genuinely useful one.</p>
+    <p class="page-hero-sub">Raw data is almost never model⁠-⁠ready. Feature engineering — transforming inputs into signals a model can use — is often the difference between a mediocre model and a genuinely useful one.</p>
     <div class="byline">
       <div class="byline-who">
 <img class="avatar avatar-photo" src="../assets/img/ajay-mukund-192.webp" srcset="../assets/img/ajay-mukund-96.webp 96w, ../assets/img/ajay-mukund-192.webp 192w, ../assets/img/ajay-mukund-384.webp 384w" sizes="58px" width="58" height="58" alt="Ajay Mukund S" loading="lazy" decoding="async">        <div>
@@ -796,11 +797,11 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
 <div class="container container-tight post-body">
   <article class="prose" id="article">
 
-<p>There is a persistent myth in machine learning: that with enough data and a powerful enough model, feature engineering becomes unnecessary. AutoML and deep learning have fed this myth. In practice, thoughtful feature engineering remains one of the highest-leverage skills a data scientist can have — and understanding why reveals something important about how models actually work.</p>
+<p>There is a persistent myth in machine learning: that with enough data and a powerful enough model, feature engineering becomes unnecessary. AutoML and deep learning have fed this myth. In practice, thoughtful feature engineering remains one of the highest⁠-⁠leverage skills a data scientist can have — and understanding why reveals something important about how models actually work.</p>
 
 <h2>What Feature Engineering Is (and Is Not)</h2>
 <p>Feature engineering is the process of using domain knowledge and data understanding to <strong>create, transform, or select variables</strong> that make a machine learning model more effective. It is not data cleaning — though clean data is a prerequisite. It is the step between cleaned data and model training.</p>
-<p>Bad features make powerful models useless. Good features make simple models competitive. This is not theoretical: Kaggle competition winners routinely beat deep learning ensembles with well-engineered features fed into gradient boosting.</p>
+<p>Bad features make powerful models useless. Good features make simple models competitive. This is not theoretical: Kaggle competition winners routinely beat deep learning ensembles with well⁠-⁠engineered features fed into gradient boosting.</p>
 
 <h2>The Core Techniques</h2>
 
@@ -816,9 +817,9 @@ df['income_missing'] = df['income'].isna().astype(int)
 df['income'] = df['income'].fillna(df['income'].median())</code></pre>
 
 <h3>2. Encoding Categorical Variables</h3>
-<p>One-hot encoding is appropriate for low-cardinality nominal categories. For high-cardinality categories (city, product ID with thousands of values), it creates thousands of sparse columns. Better alternatives:</p>
+<p>One⁠-⁠hot encoding is appropriate for low⁠-⁠cardinality nominal categories. For high⁠-⁠cardinality categories (city, product ID with thousands of values), it creates thousands of sparse columns. Better alternatives:</p>
 <ul>
-<li><strong>Target encoding:</strong> replace each category with the mean target value for that category. Powerful but requires careful cross-validation to avoid leakage.</li>
+<li><strong>Target encoding:</strong> replace each category with the mean target value for that category. Powerful but requires careful cross⁠-⁠validation to avoid leakage.</li>
 <li><strong>Frequency encoding:</strong> replace with count or frequency of the category in training data.</li>
 <li><strong>Embeddings:</strong> for very high cardinality, learned embeddings (as in deep learning) capture richer relationships.</li>
 </ul>
@@ -842,7 +843,7 @@ df['bounce_rate_x_time'] = df['bounce_rate'] * df['avg_session_time']</code></pr
 <p>Be disciplined here. Creating hundreds of interaction features without domain justification leads to overfitting and is computationally expensive. Start with interactions that have a plausible causal story.</p>
 
 <h3>5. Scaling and Normalisation</h3>
-<p>Tree-based models (Random Forest, XGBoost) are invariant to monotonic transformations of features — scaling doesn't matter. But linear models, SVMs, and neural networks are sensitive to feature scales. Use <code>StandardScaler</code> or <code>MinMaxScaler</code>, and always fit the scaler on training data only, then transform both train and test.</p>
+<p>Tree⁠-⁠based models (Random Forest, XGBoost) are invariant to monotonic transformations of features — scaling doesn't matter. But linear models, SVMs, and neural networks are sensitive to feature scales. Use <code>StandardScaler</code> or <code>MinMaxScaler</code>, and always fit the scaler on training data only, then transform both train and test.</p>
 <pre><code>from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 
@@ -858,7 +859,7 @@ pipe.score(X_test, y_test)</code></pre>
 <ul>
 <li>Scaling or imputing using statistics computed on the full dataset (including test rows)</li>
 <li>Including features that are only known after the outcome (e.g., total_purchases in a churn model when the customer has already churned)</li>
-<li>Target encoding without cross-validation</li>
+<li>Target encoding without cross⁠-⁠validation</li>
 </ul>
 <blockquote>If your model's performance seems too good to be true, look for leakage before celebrating.</blockquote>
 
@@ -893,7 +894,7 @@ pipe.score(X_test, y_test)</code></pre>
     <div class="callout-body">
       <div class="eyebrow">Put it into practice</div>
       <h2 class="callout-title">Learn this properly — <em>live, with the author</em></h2>
-      <p class="callout-text">The ideas in this article are taught hands-on, on real datasets, in these Data Science Academia courses and programmes:</p>
+      <p class="callout-text">The ideas in this article are taught hands⁠-⁠on, on real datasets, in these Data Science Academia courses and programmes:</p>
       <div class="row mt-1">
         <a class="btn btn-outline btn-sm" href="../courses/feature-engineering.html">Feature Engineering &amp; Model Selection <span class="arr">&rarr;</span></a>
         <a class="btn btn-outline btn-sm" href="../courses/machine-learning.html">Machine Learning <span class="arr">&rarr;</span></a>
@@ -920,7 +921,7 @@ pipe.score(X_test, y_test)</code></pre>
         </div>
         <div class="card-body">
           <div class="card-cat">Tutorial &middot; 9 min read</div>
-          <h3 class="card-title">10 Computer Vision Project Ideas for Final-Year Students (That Stand Out in 2026)</h3>
+          <h3 class="card-title">10 Computer Vision Project Ideas for Final⁠-⁠Year Students (That Stand Out in 2026)</h3>
           <p class="card-text">Ten computer vision projects for B.E., B.Tech and M.Sc. final years — with datasets, tools and what makes each one stand out — plus a semester plan…</p>
           <div class="card-foot"><time datetime="2026-11-19">November 19, 2026</time><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
@@ -932,7 +933,7 @@ pipe.score(X_test, y_test)</code></pre>
         <div class="card-body">
           <div class="card-cat">Tutorial &middot; 7 min read</div>
           <h3 class="card-title">Python or R: Which Should You Learn First for Data Science?</h3>
-          <p class="card-text">Both languages are excellent — but they are built for different people and different jobs. A side-by-side comparison with real code, and a clear…</p>
+          <p class="card-text">Both languages are excellent — but they are built for different people and different jobs. A side⁠-⁠by⁠-⁠side comparison with real code, and a clear…</p>
           <div class="card-foot"><time datetime="2026-11-10">November 10, 2026</time><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
@@ -946,7 +947,7 @@ pipe.score(X_test, y_test)</code></pre>
     <div class="cta-banner" data-r>
       <div class="eyebrow center">Go further</div>
       <h2 class="cta-title" id="cta-title">Ready to build <em>real AI skills?</em></h2>
-      <p class="cta-text">18 specialised courses, project-based internships and a 12-month AI Mastery Track — taught live in Rajakilpakkam, near Tambaram, Chennai, and online across India, with every session recorded. Book a free, no-commitment trial session; we reply within one business day.</p>
+      <p class="cta-text">18 specialised courses, project⁠-⁠based internships and a 12⁠-⁠month AI Mastery Track — taught live in Rajakilpakkam, near Tambaram, Chennai, and online across India, with every session recorded. Book a free, no⁠-⁠commitment trial session; we reply within one business day.</p>
       <div class="cta-actions">
         <a class="btn btn-primary btn-lg" href="../courses.html">Explore all 18 courses <span class="arr">&rarr;</span></a>
         <a class="btn btn-outline btn-lg" href="../contact.html">Book a free trial session</a>
@@ -964,10 +965,10 @@ pipe.score(X_test, y_test)</code></pre>
           <img class="nav-logo" src="../assets/img/logo-mark-64.png" srcset="../assets/img/logo-mark-64.png 1x, ../assets/img/logo-mark-128.png 2x" width="44" height="44" alt="" loading="lazy" decoding="async">
           <span class="nav-name"><span class="wordmark"><span class="wm-1">Data Science</span><span class="wm-2">Academia</span></span><span class="nav-sub">Chennai · Est. 2019</span></span>
         </div>
-        <p class="footer-about">Ph.D.-led, industry-grounded education in Data Science and Artificial Intelligence — 18 specialised courses, project-based internships, Microsoft certification pathways and a 12-month AI Mastery Track, delivered live in Chennai and online across India.</p>
+        <p class="footer-about">Ph.D.-led, industry⁠-⁠grounded education in Data Science and Artificial Intelligence — 18 specialised courses, project⁠-⁠based internships, Microsoft certification pathways and a 12⁠-⁠month AI Mastery Track, delivered live in Chennai and online across India.</p>
         <div class="footer-badges">
           <span class="badge badge-teal">MSME Registered</span>
-          <span class="badge">NEP 2020-aligned</span>
+          <span class="badge">NEP 2020⁠-⁠aligned</span>
           <span class="badge badge-cream">Est. 2019</span>
         </div>
         <ul class="social-links" aria-label="Social media">
@@ -993,7 +994,7 @@ pipe.score(X_test, y_test)</code></pre>
       <nav aria-label="Programmes">
         <div class="footer-h">Programmes</div>
         <div class="footer-links">
-          <a href="../programmes/ai-mastery.html">12-Month AI Mastery Track</a>
+          <a href="../programmes/ai-mastery.html">12⁠-⁠Month AI Mastery Track</a>
           <a href="../programmes/internship.html">Internships</a>
           <a href="../programmes/microsoft-certification.html">Microsoft Certification</a>
           <a href="../programmes/fdp.html">Corporate &amp; Faculty Development</a>

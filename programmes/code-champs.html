@@ -681,7 +681,8 @@ a{color:#000}
 .step-text{text-wrap:balance}
 p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
 @media (min-width:769px){.faq-a{text-wrap:balance}}
-.avatar-photo{object-fit:cover;padding:0;background:var(--ink3);border:2px solid var(--b-gold);flex-shrink:0}</style>
+.avatar-photo{object-fit:cover;padding:0;background:var(--ink3);border:2px solid var(--b-gold);flex-shrink:0}
+@media (max-width:520px){.btn{white-space:normal;text-align:center}.badge{white-space:normal;max-width:100%;line-height:1.35;text-align:left}}</style>
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .prog-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:3.5rem;align-items:center}
@@ -730,7 +731,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
 .others-grid .card-foot{font-size:.72rem}
 .cc-callout .btn{margin-left:auto}
 @media (max-width:960px){.detail-side .sticky{max-height:none;overflow:visible}}
-@media (max-width:900px){.prog-hero-grid{grid-template-columns:1fr;gap:2.25rem}.prog-hero-img{max-width:440px}}
+@media (max-width:900px){.prog-hero-grid{grid-template-columns:minmax(0,1fr);gap:2.25rem}.prog-hero-img{max-width:min(440px,100%)}}
 @media (max-width:640px){.prog-banner{margin-bottom:2.5rem}.block-head{align-items:flex-start;flex-direction:column}.prereq{padding:1.1rem 1.15rem}.detail-main .roadmap{grid-template-columns:1fr}.cc-callout .btn{margin-left:0}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":["EducationalOrganization","LocalBusiness"],"@id":"https://datascienceacademia.in/#organization","name":"Data Science Academia","alternateName":["DSA","DSA Chennai"],"url":"https://datascienceacademia.in/","logo":{"@type":"ImageObject","url":"https://datascienceacademia.in/assets/icons/favicon-192.png","width":192,"height":192},"image":"https://datascienceacademia.in/assets/og/default.jpg","description":"Data Science Academia is a Ph.D.-led AI & Data Science institute in Chennai offering 18 courses (Python, Machine Learning, Deep Learning, LLMs, Power BI, Azure, AWS), project-based internships, Microsoft certification prep and a 12-month AI Mastery Track — live in Chennai and online.","slogan":"Where Academic Rigour Meets Real-World AI Engineering","foundingDate":"2019","telephone":"+919176498814","email":"info@datascienceacademia.in","priceRange":"₹₹","address":{"@type":"PostalAddress","streetAddress":"No. 52/1A, First Floor, Madambakkam Main Road, Rajakilpakkam","addressLocality":"Chennai","addressRegion":"Tamil Nadu","postalCode":"600073","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":12.918342794186495,"longitude":80.15253111461173},"hasMap":"https://www.google.com/maps/search/?api=1&query=12.918342794186495%2C80.15253111461173","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"19:00"}],"areaServed":[{"@type":"City","name":"Chennai"},{"@type":"State","name":"Tamil Nadu"},{"@type":"Country","name":"India"}],"sameAs":["https://www.linkedin.com/company/data-science-academia/","https://www.youtube.com/@Data_Science_Academia","https://www.instagram.com/data_science_academia","https://wa.me/919176498814"],"contactPoint":[{"@type":"ContactPoint","telephone":"+919176498814","contactType":"admissions","email":"info@datascienceacademia.in","availableLanguage":["English","Tamil"],"areaServed":"IN"}]},{"@type":"WebSite","@id":"https://datascienceacademia.in/#website","url":"https://datascienceacademia.in/","name":"Data Science Academia","publisher":{"@id":"https://datascienceacademia.in/#organization"},"inLanguage":"en-IN"}]}</script>
@@ -785,7 +786,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
       <div>
         <div class="eyebrow">School Outreach</div>
         <h1 class="sh sh-lg" id="prog-title">DSA Code Champs</h1>
-<p class="hero-kicker">School Outreach Programme — Grades 3 to 12</p>        <p class="page-hero-sub">DSA&#39;s school outreach wing brings AI and coding to Grades 3–12 through four progressive levels — Scratch, Python, machine learning and computer vision — in schools across Chennai and online.</p>
+<p class="hero-kicker">School Outreach Programme — Grades 3 to 12</p>        <p class="page-hero-sub">DSA&#39;s school outreach wing brings AI and coding to Grades 3–12 through four progressive levels — Scratch, Python, machine learning and computer vision — in schools across Chennai and online.</p>
         <div class="hero-badges" aria-label="Programme format">
           <span class="badge badge-cream">3–6 Months per level (2 sessions a week) · Weekend Bootcamps available</span>
           <span class="badge badge-teal">Online · Offline in Chennai</span>
@@ -813,8 +814,8 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
       <section class="block" id="overview" aria-labelledby="overview-title" data-r>
         <h2 class="section-label" id="overview-title">Overview</h2>
         <div class="prose">
-          <p>DSA Code Champs is a school outreach initiative designed to nurture early interest in STEM and AI among school students from Grade 3 to Grade 12. Through fun, activity-based, and project-driven learning across four progressive levels — from Scratch and introductory Python to machine learning and computer vision — we plant the seeds for tomorrow&#39;s AI engineers, researchers, and innovators. Every session is designed to be engaging, visual, and hands-on, making technology accessible and exciting for young minds.</p>
-          <p>Code Champs is delivered through fully managed school visits across Chennai and nearby areas, or as online interactive live sessions, with all materials, activity sheets and kits provided by DSA. The programme now runs as four progressive levels — Code Explorers, Builders, Innovators and Pioneers — for Grades 3 to 12, covering Scratch, Python, machine learning and computer vision, aligned with NEP 2020 and with a special focus on girls in STEM.</p>
+          <p>DSA Code Champs is a school outreach initiative designed to nurture early interest in STEM and AI among school students from Grade 3 to Grade 12. Through fun, activity⁠-⁠based, and project⁠-⁠driven learning across four progressive levels — from Scratch and introductory Python to machine learning and computer vision — we plant the seeds for tomorrow&#39;s AI engineers, researchers, and innovators. Every session is designed to be engaging, visual, and hands⁠-⁠on, making technology accessible and exciting for young minds.</p>
+          <p>Code Champs is delivered through fully managed school visits across Chennai and nearby areas, or as online interactive live sessions, with all materials, activity sheets and kits provided by DSA. The programme now runs as four progressive levels — Code Explorers, Builders, Innovators and Pioneers — for Grades 3 to 12, covering Scratch, Python, machine learning and computer vision, aligned with NEP 2020 and with a special focus on girls in STEM.</p>
         </div>
         <div class="stats stats-strip" aria-label="DSA Code Champs at a glance">
           <div class="stat"><div class="stat-n">Gr 3–12</div><div class="stat-l">Target Age Group</div></div>
@@ -831,7 +832,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
           <div class="callout-body">
             <div class="eyebrow violet" style="margin-bottom:.25rem">Four levels · Grades 3–12</div>
             <h3 class="callout-title">Explore the full <em>Code Champs</em> programme</h3>
-            <p class="callout-text">Level-by-level journeys, projects, session formats and certificates for Code Explorers, Builders, Innovators and Pioneers.</p>
+            <p class="callout-text">Level⁠-⁠by⁠-⁠level journeys, projects, session formats and certificates for Code Explorers, Builders, Innovators and Pioneers.</p>
           </div>
           <a class="btn btn-violet" href="../codechamps.html">Go to DSA Code Champs <span class="arr">&rarr;</span></a>
         </div>
@@ -860,11 +861,11 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
         <div class="grid grid-2 feat-grid">
   <div class="feature">
     <span class="icon-box sm violet" aria-hidden="true"><svg class="ico ico-cat" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3-9-7.56c0-1.25.5-2.4 1-3.44 0 0-1.89-6.42-.5-7 1.39-.58 4.72.23 6.5 2.23A9.04 9.04 0 0 1 12 5Z"/> <path d="M8 14v.5"/> <path d="M16 14v.5"/> <path d="M11.25 16.25h1.5L12 17l-.75-.75Z"/></svg></span>
-    <div><h3 class="feature-title">Scratch Programming</h3><p class="feature-text">Visual drag-and-drop coding to build games, stories, and animations</p></div>
+    <div><h3 class="feature-title">Scratch Programming</h3><p class="feature-text">Visual drag⁠-⁠and⁠-⁠drop coding to build games, stories, and animations</p></div>
   </div>
   <div class="feature">
     <span class="icon-box sm violet" aria-hidden="true"><svg class="ico ico-tabler-brand-python" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 9h-7a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h3"/> <path d="M12 15h7a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-3"/> <path d="M8 9v-4a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v5a2 2 0 0 1 -2 2h-4a2 2 0 0 0 -2 2v5a2 2 0 0 0 2 2h4a2 2 0 0 0 2 -2v-4"/> <path d="M11 6l0 .01"/> <path d="M13 18l0 .01"/></svg></span>
-    <div><h3 class="feature-title">Introductory Python</h3><p class="feature-text">Simple programs, turtle graphics, and mini-games — first real code</p></div>
+    <div><h3 class="feature-title">Introductory Python</h3><p class="feature-text">Simple programs, turtle graphics, and mini⁠-⁠games — first real code</p></div>
   </div>
   <div class="feature">
     <span class="icon-box sm violet" aria-hidden="true"><svg class="ico ico-puzzle" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"/></svg></span>
@@ -880,7 +881,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
   </div>
   <div class="feature">
     <span class="icon-box sm violet" aria-hidden="true"><svg class="ico ico-zap" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg></span>
-    <div><h3 class="feature-title">Robotics &amp; IoT</h3><p class="feature-text">Live demonstrations and hands-on kits exploring real-world automation</p></div>
+    <div><h3 class="feature-title">Robotics &amp; IoT</h3><p class="feature-text">Live demonstrations and hands⁠-⁠on kits exploring real⁠-⁠world automation</p></div>
   </div>
 </div>
 
@@ -892,20 +893,20 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
           <h2 class="section-label" id="sec-1-title">What Students Learn</h2>
           <ul class="check-list two">
             <li>Basics of Programming — variables, loops, conditions using Scratch</li>
-            <li>Introductory Python — simple programs, turtle graphics, mini-games</li>
+            <li>Introductory Python — simple programs, turtle graphics, mini⁠-⁠games</li>
             <li>Computational Thinking — problem decomposition, pattern recognition</li>
             <li>Mathematical Logic — puzzles, number patterns, algorithm thinking</li>
             <li>Introduction to Artificial Intelligence — what is AI and how it works</li>
-            <li>Robotics &amp; IoT — live demos and hands-on kits (where available)</li>
+            <li>Robotics &amp; IoT — live demos and hands⁠-⁠on kits (where available)</li>
           </ul>
         </section>
         <section class="block sec-block" id="sec-2" aria-labelledby="sec-2-title" data-r>
           <h2 class="section-label" id="sec-2-title">Session Format</h2>
           <ul class="check-list two">
-            <li>Two 90-minute interactive sessions a week (or weekend bootcamp format)</li>
-            <li>Activity-first approach — students do before they are taught theory</li>
-            <li>Team challenges and mini-hackathons to build collaboration skills</li>
-            <li>Show-and-tell: students present their mini-projects each session</li>
+            <li>Two 90⁠-⁠minute interactive sessions a week (or weekend bootcamp format)</li>
+            <li>Activity⁠-⁠first approach — students do before they are taught theory</li>
+            <li>Team challenges and mini⁠-⁠hackathons to build collaboration skills</li>
+            <li>Show⁠-⁠and⁠-⁠tell: students present their mini⁠-⁠projects each session</li>
             <li>Q&amp;A time with DSA faculty — demystifying AI and technology</li>
             <li>Fun quizzes and leaderboard — gamified learning experience</li>
           </ul>
@@ -917,7 +918,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
             <li>Fully managed programme — no teacher preparation required</li>
             <li>Custom scheduling to fit the school calendar and timetable</li>
             <li>All materials, activity sheets, and kits provided by DSA</li>
-            <li>Post-programme student performance report for the school</li>
+            <li>Post⁠-⁠programme student performance report for the school</li>
             <li>Parents invited to a closing showcase of student projects</li>
           </ul>
         </section>
@@ -929,7 +930,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
             <li>Special focus on encouraging girls in STEM and AI</li>
             <li>Bridges the gap between school curriculum and future careers</li>
             <li>Inspiring the next generation of Data Scientists and AI researchers</li>
-            <li>Supported by DSA&#39;s team of PhD-qualified faculty and AI engineers</li>
+            <li>Supported by DSA&#39;s team of PhD⁠-⁠qualified faculty and AI engineers</li>
           </ul>
         </section>
       </div>
@@ -944,7 +945,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
   </li>
   <li class="step">
     <div class="step-num" aria-hidden="true">2</div>
-    <div><h3 class="step-title">Schedule Sessions</h3><p class="step-text">4-week calendar built around school timetable and academic calendar</p></div>
+    <div><h3 class="step-title">Schedule Sessions</h3><p class="step-text">4⁠-⁠week calendar built around school timetable and academic calendar</p></div>
   </li>
   <li class="step">
     <div class="step-num" aria-hidden="true">3</div>
@@ -952,7 +953,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
   </li>
   <li class="step">
     <div class="step-num" aria-hidden="true">4</div>
-    <div><h3 class="step-title">Interactive Sessions</h3><p class="step-text">90-minute fun, project-based sessions each week with team challenges</p></div>
+    <div><h3 class="step-title">Interactive Sessions</h3><p class="step-text">90⁠-⁠minute fun, project⁠-⁠based sessions each week with team challenges</p></div>
   </li>
   <li class="step">
     <div class="step-num" aria-hidden="true">5</div>
@@ -982,7 +983,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
     <span class="block-meta">5 answers</span>
   </div>
   <div class="faq-list">
-    <details class="faq" open><summary>Who is this programme for?</summary><div class="faq-a">It is designed for:<ul class="faq-ul"><li>School Students — Grades 3 to 12 (ages 8 to 17)</li><li>School Coordinators &amp; STEM Clubs</li><li>Parents of Young Learners</li></ul></div></details>
+    <details class="faq" open><summary>Who is this programme for?</summary><div class="faq-a">It is designed for:<ul class="faq-ul"><li>School Students — Grades 3 to 12 (ages 8 to 17)</li><li>School Coordinators &amp; STEM Clubs</li><li>Parents of Young Learners</li></ul></div></details>
     <details class="faq"><summary>How long does it take, and how is it delivered?</summary><div class="faq-a">Duration: 3–6 Months per level (2 sessions a week) · Weekend Bootcamps available. Delivery options: Offline — School Visits (Chennai); Online — Interactive Live Sessions.</div></details>
     <details class="faq"><summary>What are the eligibility requirements?</summary><div class="faq-a">No prior technology experience needed. Open to students aged 8 to 17 (Grades 3–12): complete beginners start at Code Explorers, and each level builds on the one before. All a student needs is curiosity and enthusiasm.</div></details>
     <details class="faq"><summary>What do I receive on completion?</summary><div class="faq-a">DSA Code Champs Participation Certificate.</div></details>
@@ -1042,7 +1043,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
         <div class="info-title">DSA Code Champs</div>
         <div class="info-cat">School Outreach</div>
         <div class="info-rows">
-          <div class="info-row col"><span class="info-row-label">Audience</span><ul class="info-row-val info-list"><li>School Students — Grades 3 to 12 (ages 8 to 17)</li><li>School Coordinators &amp; STEM Clubs</li><li>Parents of Young Learners</li></ul></div>
+          <div class="info-row col"><span class="info-row-label">Audience</span><ul class="info-row-val info-list"><li>School Students — Grades 3 to 12 (ages 8 to 17)</li><li>School Coordinators &amp; STEM Clubs</li><li>Parents of Young Learners</li></ul></div>
 
           <div class="info-row col"><span class="info-row-label">Delivery</span><ul class="info-row-val info-list"><li>Offline — School Visits (Chennai)</li><li>Online — Interactive Live Sessions</li></ul></div>
 
@@ -1088,10 +1089,10 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
           <img class="nav-logo" src="../assets/img/logo-mark-64.png" srcset="../assets/img/logo-mark-64.png 1x, ../assets/img/logo-mark-128.png 2x" width="44" height="44" alt="" loading="lazy" decoding="async">
           <span class="nav-name"><span class="wordmark"><span class="wm-1">Data Science</span><span class="wm-2">Academia</span></span><span class="nav-sub">Chennai · Est. 2019</span></span>
         </div>
-        <p class="footer-about">Ph.D.-led, industry-grounded education in Data Science and Artificial Intelligence — 18 specialised courses, project-based internships, Microsoft certification pathways and a 12-month AI Mastery Track, delivered live in Chennai and online across India.</p>
+        <p class="footer-about">Ph.D.-led, industry⁠-⁠grounded education in Data Science and Artificial Intelligence — 18 specialised courses, project⁠-⁠based internships, Microsoft certification pathways and a 12⁠-⁠month AI Mastery Track, delivered live in Chennai and online across India.</p>
         <div class="footer-badges">
           <span class="badge badge-teal">MSME Registered</span>
-          <span class="badge">NEP 2020-aligned</span>
+          <span class="badge">NEP 2020⁠-⁠aligned</span>
           <span class="badge badge-cream">Est. 2019</span>
         </div>
         <ul class="social-links" aria-label="Social media">
@@ -1117,7 +1118,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
       <nav aria-label="Programmes">
         <div class="footer-h">Programmes</div>
         <div class="footer-links">
-          <a href="../programmes/ai-mastery.html">12-Month AI Mastery Track</a>
+          <a href="../programmes/ai-mastery.html">12⁠-⁠Month AI Mastery Track</a>
           <a href="../programmes/internship.html">Internships</a>
           <a href="../programmes/microsoft-certification.html">Microsoft Certification</a>
           <a href="../programmes/fdp.html">Corporate &amp; Faculty Development</a>

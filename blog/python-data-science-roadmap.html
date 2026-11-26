@@ -685,7 +685,8 @@ a{color:#000}
 .step-text{text-wrap:balance}
 p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
 @media (min-width:769px){.faq-a{text-wrap:balance}}
-.avatar-photo{object-fit:cover;padding:0;background:var(--ink3);border:2px solid var(--b-gold);flex-shrink:0}</style>
+.avatar-photo{object-fit:cover;padding:0;background:var(--ink3);border:2px solid var(--b-gold);flex-shrink:0}
+@media (max-width:520px){.btn{white-space:normal;text-align:center}.badge{white-space:normal;max-width:100%;line-height:1.35;text-align:left}}</style>
 <script>(function(r){r.classList.add('js');try{if(localStorage.getItem('dsa-theme')==='dark'){r.setAttribute('data-theme','dark');document.querySelector('meta[name="theme-color"]').content='#0B1B2C'}}catch(e){}})(document.documentElement);</script>
 <style>
 .post-hero .sh{font-size:clamp(2.1rem,4.4vw,3.4rem);text-wrap:pretty}
@@ -768,7 +769,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
     </nav>
     <span class="badge badge-teal">Tutorial</span>
     <h1 class="sh" id="post-title">Python for Data Science: The Beginner&#39;s Roadmap</h1>
-    <p class="page-hero-sub">Python is the lingua franca of data science. This guide walks through the essential libraries, a practical learning sequence, and the project-first mindset that separates people who learn data science from those who do it.</p>
+    <p class="page-hero-sub">Python is the lingua franca of data science. This guide walks through the essential libraries, a practical learning sequence, and the project⁠-⁠first mindset that separates people who learn data science from those who do it.</p>
     <div class="byline">
       <div class="byline-who">
 <img class="avatar avatar-photo" src="../assets/img/ajay-mukund-192.webp" srcset="../assets/img/ajay-mukund-96.webp 96w, ../assets/img/ajay-mukund-192.webp 192w, ../assets/img/ajay-mukund-384.webp 384w" sizes="58px" width="58" height="58" alt="Ajay Mukund S" loading="lazy" decoding="async">        <div>
@@ -803,7 +804,7 @@ p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
 <pre><code># Create an isolated environment for each project
 conda create -n dsenv python=3.11
 conda activate dsenv
-pip install numpy pandas matplotlib seaborn scikit-learn jupyter
+pip install numpy pandas matplotlib seaborn scikit⁠-⁠learn jupyter
 
 # Launch Jupyter
 jupyter notebook</code></pre>
@@ -812,7 +813,7 @@ jupyter notebook</code></pre>
 <h2>The Core Stack: Four Libraries to Learn First</h2>
 
 <h3>NumPy — The Foundation</h3>
-<p>NumPy is the numerical backbone of Python's data science ecosystem. Pandas, Scikit-learn, and TensorFlow all build on NumPy arrays. Use it for vectorised operations, linear algebra, and random number generation.</p>
+<p>NumPy is the numerical backbone of Python's data science ecosystem. Pandas, Scikit⁠-⁠learn, and TensorFlow all build on NumPy arrays. Use it for vectorised operations, linear algebra, and random number generation.</p>
 <pre><code>import numpy as np
 
 a = np.array([1, 2, 3, 4, 5])
@@ -823,10 +824,10 @@ print(a[a > 2])       # [3 4 5]
 # Vectorisation: apply operations to entire arrays without loops
 b = np.random.randn(1_000_000)
 print(b.mean(), b.std())  # Milliseconds, not seconds</code></pre>
-<p>The key insight is <strong>vectorisation</strong>: array operations apply element-wise without explicit Python loops, and they execute in compiled C code under the hood. A loop over a million elements might take seconds; NumPy does it in milliseconds.</p>
+<p>The key insight is <strong>vectorisation</strong>: array operations apply element⁠-⁠wise without explicit Python loops, and they execute in compiled C code under the hood. A loop over a million elements might take seconds; NumPy does it in milliseconds.</p>
 
 <h3>Pandas — Data Wrangling</h3>
-<p>If NumPy is the foundation, Pandas is where you'll spend most of your time. It gives you the <strong>DataFrame</strong> — a labelled, two-dimensional table — and rich tools to load, clean, filter, group, and reshape data.</p>
+<p>If NumPy is the foundation, Pandas is where you'll spend most of your time. It gives you the <strong>DataFrame</strong> — a labelled, two⁠-⁠dimensional table — and rich tools to load, clean, filter, group, and reshape data.</p>
 <pre><code>import pandas as pd
 
 df = pd.read_csv('sales_data.csv')
@@ -839,10 +840,10 @@ monthly = (df[df['region'] == 'South']
              .groupby('month')['revenue']
              .sum()
              .reset_index())</code></pre>
-<p>The most valuable Pandas skills are <code>groupby</code>, <code>merge/join</code>, and handling missing data. Master these and you can wrangle 90% of real-world datasets.</p>
+<p>The most valuable Pandas skills are <code>groupby</code>, <code>merge/join</code>, and handling missing data. Master these and you can wrangle 90% of real⁠-⁠world datasets.</p>
 
 <h3>Matplotlib and Seaborn — Visualisation</h3>
-<p>Matplotlib is low-level and flexible; Seaborn is high-level and opinionated. Use Seaborn for exploratory analysis, Matplotlib for custom publication-quality figures.</p>
+<p>Matplotlib is low⁠-⁠level and flexible; Seaborn is high⁠-⁠level and opinionated. Use Seaborn for exploratory analysis, Matplotlib for custom publication⁠-⁠quality figures.</p>
 <pre><code>import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -855,8 +856,8 @@ plt.figure(figsize=(10, 8))
 sns.heatmap(df.corr(), annot=True, cmap='coolwarm', center=0)
 plt.show()</code></pre>
 
-<h3>Scikit-learn — Machine Learning</h3>
-<p>Scikit-learn's unified API — <code>fit()</code>, <code>predict()</code>, <code>transform()</code> — is one of the best-designed interfaces in open-source software. It covers preprocessing, dimensionality reduction, model selection, and almost every classical ML algorithm.</p>
+<h3>Scikit⁠-⁠learn — Machine Learning</h3>
+<p>Scikit⁠-⁠learn's unified API — <code>fit()</code>, <code>predict()</code>, <code>transform()</code> — is one of the best⁠-⁠designed interfaces in open⁠-⁠source software. It covers preprocessing, dimensionality reduction, model selection, and almost every classical ML algorithm.</p>
 <pre><code>from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import classification_report
@@ -875,13 +876,13 @@ pipe.fit(X_train, y_train)
 print(classification_report(y_test, pipe.predict(X_test)))</code></pre>
 
 <h2>A Practical Learning Sequence</h2>
-<p>The biggest mistake beginners make is tutorial-hopping — watching video after video without building anything. Here is a sequence that actually works:</p>
+<p>The biggest mistake beginners make is tutorial⁠-⁠hopping — watching video after video without building anything. Here is a sequence that actually works:</p>
 <ul>
 <li><strong>Weeks 1–2:</strong> Python fundamentals (variables, control flow, functions, classes, file I/O). <em>Automate the Boring Stuff with Python</em> is free and excellent.</li>
-<li><strong>Weeks 3–4:</strong> NumPy and Pandas. Work through a real dataset — the Titanic dataset is overused but genuinely useful for first-time learning.</li>
+<li><strong>Weeks 3–4:</strong> NumPy and Pandas. Work through a real dataset — the Titanic dataset is overused but genuinely useful for first⁠-⁠time learning.</li>
 <li><strong>Weeks 5–6:</strong> Visualisation and basic statistics (mean, median, standard deviation, correlation, distributions).</li>
-<li><strong>Weeks 7–8:</strong> Scikit-learn — linear regression, logistic regression, decision trees. Focus on the process, not the algorithms.</li>
-<li><strong>Month 3+:</strong> Build one project end-to-end. Data sourcing → cleaning → EDA → modelling → written summary. The project is the credential.</li>
+<li><strong>Weeks 7–8:</strong> Scikit⁠-⁠learn — linear regression, logistic regression, decision trees. Focus on the process, not the algorithms.</li>
+<li><strong>Month 3+:</strong> Build one project end⁠-⁠to⁠-⁠end. Data sourcing → cleaning → EDA → modelling → written summary. The project is the credential.</li>
 </ul>
 
 <h2>The Mindset That Matters Most</h2>
@@ -915,7 +916,7 @@ print(classification_report(y_test, pipe.predict(X_test)))</code></pre>
     <div class="callout-body">
       <div class="eyebrow">Put it into practice</div>
       <h2 class="callout-title">Learn this properly — <em>live, with the author</em></h2>
-      <p class="callout-text">The ideas in this article are taught hands-on, on real datasets, in these Data Science Academia courses and programmes:</p>
+      <p class="callout-text">The ideas in this article are taught hands⁠-⁠on, on real datasets, in these Data Science Academia courses and programmes:</p>
       <div class="row mt-1">
         <a class="btn btn-outline btn-sm" href="../courses/python.html">Python Programming <span class="arr">&rarr;</span></a>
         <a class="btn btn-outline btn-sm" href="../courses/data-visualization.html">Data Visualization <span class="arr">&rarr;</span></a>
@@ -942,7 +943,7 @@ print(classification_report(y_test, pipe.predict(X_test)))</code></pre>
         </div>
         <div class="card-body">
           <div class="card-cat">Tutorial &middot; 9 min read</div>
-          <h3 class="card-title">10 Computer Vision Project Ideas for Final-Year Students (That Stand Out in 2026)</h3>
+          <h3 class="card-title">10 Computer Vision Project Ideas for Final⁠-⁠Year Students (That Stand Out in 2026)</h3>
           <p class="card-text">Ten computer vision projects for B.E., B.Tech and M.Sc. final years — with datasets, tools and what makes each one stand out — plus a semester plan…</p>
           <div class="card-foot"><time datetime="2026-11-19">November 19, 2026</time><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
@@ -954,7 +955,7 @@ print(classification_report(y_test, pipe.predict(X_test)))</code></pre>
         <div class="card-body">
           <div class="card-cat">Tutorial &middot; 7 min read</div>
           <h3 class="card-title">Python or R: Which Should You Learn First for Data Science?</h3>
-          <p class="card-text">Both languages are excellent — but they are built for different people and different jobs. A side-by-side comparison with real code, and a clear…</p>
+          <p class="card-text">Both languages are excellent — but they are built for different people and different jobs. A side⁠-⁠by⁠-⁠side comparison with real code, and a clear…</p>
           <div class="card-foot"><time datetime="2026-11-10">November 10, 2026</time><span class="card-arr" aria-hidden="true">&rarr;</span></div>
         </div>
       </a>
@@ -968,7 +969,7 @@ print(classification_report(y_test, pipe.predict(X_test)))</code></pre>
     <div class="cta-banner" data-r>
       <div class="eyebrow center">Go further</div>
       <h2 class="cta-title" id="cta-title">Ready to build <em>real AI skills?</em></h2>
-      <p class="cta-text">18 specialised courses, project-based internships and a 12-month AI Mastery Track — taught live in Rajakilpakkam, near Tambaram, Chennai, and online across India, with every session recorded. Book a free, no-commitment trial session; we reply within one business day.</p>
+      <p class="cta-text">18 specialised courses, project⁠-⁠based internships and a 12⁠-⁠month AI Mastery Track — taught live in Rajakilpakkam, near Tambaram, Chennai, and online across India, with every session recorded. Book a free, no⁠-⁠commitment trial session; we reply within one business day.</p>
       <div class="cta-actions">
         <a class="btn btn-primary btn-lg" href="../courses.html">Explore all 18 courses <span class="arr">&rarr;</span></a>
         <a class="btn btn-outline btn-lg" href="../contact.html">Book a free trial session</a>
@@ -986,10 +987,10 @@ print(classification_report(y_test, pipe.predict(X_test)))</code></pre>
           <img class="nav-logo" src="../assets/img/logo-mark-64.png" srcset="../assets/img/logo-mark-64.png 1x, ../assets/img/logo-mark-128.png 2x" width="44" height="44" alt="" loading="lazy" decoding="async">
           <span class="nav-name"><span class="wordmark"><span class="wm-1">Data Science</span><span class="wm-2">Academia</span></span><span class="nav-sub">Chennai · Est. 2019</span></span>
         </div>
-        <p class="footer-about">Ph.D.-led, industry-grounded education in Data Science and Artificial Intelligence — 18 specialised courses, project-based internships, Microsoft certification pathways and a 12-month AI Mastery Track, delivered live in Chennai and online across India.</p>
+        <p class="footer-about">Ph.D.-led, industry⁠-⁠grounded education in Data Science and Artificial Intelligence — 18 specialised courses, project⁠-⁠based internships, Microsoft certification pathways and a 12⁠-⁠month AI Mastery Track, delivered live in Chennai and online across India.</p>
         <div class="footer-badges">
           <span class="badge badge-teal">MSME Registered</span>
-          <span class="badge">NEP 2020-aligned</span>
+          <span class="badge">NEP 2020⁠-⁠aligned</span>
           <span class="badge badge-cream">Est. 2019</span>
         </div>
         <ul class="social-links" aria-label="Social media">
@@ -1015,7 +1016,7 @@ print(classification_report(y_test, pipe.predict(X_test)))</code></pre>
       <nav aria-label="Programmes">
         <div class="footer-h">Programmes</div>
         <div class="footer-links">
-          <a href="../programmes/ai-mastery.html">12-Month AI Mastery Track</a>
+          <a href="../programmes/ai-mastery.html">12⁠-⁠Month AI Mastery Track</a>
           <a href="../programmes/internship.html">Internships</a>
           <a href="../programmes/microsoft-certification.html">Microsoft Certification</a>
           <a href="../programmes/fdp.html">Corporate &amp; Faculty Development</a>
