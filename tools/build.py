@@ -28,6 +28,7 @@ import jinja2
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from icons import replace_emoji  # noqa: E402  (emoji → outline SVG icons)
+from lastmod import page_lastmod, save as save_lastmod  # noqa: E402  (honest sitemap lastmod)
 from markupsafe import Markup
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -503,8 +504,12 @@ def build_redirects() -> None:
 def build_sitemap_robots() -> None:
     lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for path, cf, pr in SITEMAP + [("verify.html", "yearly", "0.3")]:
-        lines.append(f"  <url><loc>{absolute(path)}</loc><lastmod>{TODAY}</lastmod><changefreq>{cf}</changefreq><priority>{pr}</priority></url>")
+        loc = absolute(path)
+        f = path.lstrip("/") or "index.html"
+        mod = page_lastmod(loc[len(SITE["url"]) + 1:], (ROOT / f).read_text(encoding="utf-8"))   # date main text last changed
+        lines.append(f"  <url><loc>{loc}</loc><lastmod>{mod}</lastmod><changefreq>{cf}</changefreq><priority>{pr}</priority></url>")
     lines.append("</urlset>")
+    save_lastmod()
     (ROOT / "sitemap.xml").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     robots = f"""User-agent: *
 Allow: /

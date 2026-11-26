@@ -1,0 +1,230 @@
+{
+ "": {
+  "hash": "74b0772ebfdb9713",
+  "date": "2026-11-26"
+ },
+ "about.html": {
+  "hash": "6089c531b99cf0c9",
+  "date": "2026-11-26"
+ },
+ "blog.html": {
+  "hash": "669d179ec61ef9c4",
+  "date": "2026-11-26"
+ },
+ "blog/ai-901-vs-dp-900-vs-az-900.html": {
+  "hash": "122042a69d78d5a1",
+  "date": "2026-11-26"
+ },
+ "blog/aicte-internships-cse-students.html": {
+  "hash": "ea506afb10be3332",
+  "date": "2026-11-26"
+ },
+ "blog/aws-vs-azure-for-data-science.html": {
+  "hash": "1c8d734ed27637ab",
+  "date": "2026-11-26"
+ },
+ "blog/bias-variance-tradeoff.html": {
+  "hash": "b7b0b02f66900118",
+  "date": "2026-11-26"
+ },
+ "blog/computer-vision-projects-final-year.html": {
+  "hash": "2a5441e8789cad2f",
+  "date": "2026-11-26"
+ },
+ "blog/data-analyst-vs-data-scientist-india.html": {
+  "hash": "93b33460fdc3b2c9",
+  "date": "2026-11-26"
+ },
+ "blog/data-science-career-india-2025.html": {
+  "hash": "fc93939412df9a0a",
+  "date": "2026-11-26"
+ },
+ "blog/data-science-career-india-2026.html": {
+  "hash": "26f7dd443eeac84f",
+  "date": "2026-11-26"
+ },
+ "blog/data-science-course-fees-chennai.html": {
+  "hash": "ab57204db3070ef9",
+  "date": "2026-11-26"
+ },
+ "blog/feature-engineering-craft.html": {
+  "hash": "02a08f87b463c249",
+  "date": "2026-11-26"
+ },
+ "blog/llms-every-data-scientist-needs-to-know.html": {
+  "hash": "83f9d38a9669b5b3",
+  "date": "2026-11-26"
+ },
+ "blog/power-bi-vs-tableau.html": {
+  "hash": "379fc125488faf91",
+  "date": "2026-11-26"
+ },
+ "blog/python-data-science-roadmap.html": {
+  "hash": "c19c7421bfc8eb3e",
+  "date": "2026-11-26"
+ },
+ "blog/python-vs-r-for-data-science.html": {
+  "hash": "dcde1f7ccb190b64",
+  "date": "2026-11-26"
+ },
+ "blog/statistics-still-matters-deep-learning.html": {
+  "hash": "cd2fa245049b2ede",
+  "date": "2026-11-26"
+ },
+ "codechamps.html": {
+  "hash": "8be38f188606f522",
+  "date": "2026-11-26"
+ },
+ "codechamps/builders.html": {
+  "hash": "12fca0689ee5c508",
+  "date": "2026-11-24"
+ },
+ "codechamps/explorers.html": {
+  "hash": "f7c23cba5f91091a",
+  "date": "2026-11-24"
+ },
+ "codechamps/innovators.html": {
+  "hash": "0de9301c33de86bd",
+  "date": "2026-11-25"
+ },
+ "codechamps/pioneers.html": {
+  "hash": "3d6ec7f9a4541de3",
+  "date": "2026-11-24"
+ },
+ "contact.html": {
+  "hash": "2d6a676e95833876",
+  "date": "2026-11-26"
+ },
+ "courses.html": {
+  "hash": "27274ce7a3d84dd1",
+  "date": "2026-11-26"
+ },
+ "courses/aws.html": {
+  "hash": "84f17b209fc58493",
+  "date": "2026-11-24"
+ },
+ "courses/azure.html": {
+  "hash": "f10dc8f9d9dcd626",
+  "date": "2026-11-24"
+ },
+ "courses/computer-vision.html": {
+  "hash": "445befbb4663d539",
+  "date": "2026-11-24"
+ },
+ "courses/data-visualization.html": {
+  "hash": "7521bb59a75155e9",
+  "date": "2026-11-24"
+ },
+ "courses/deep-learning.html": {
+  "hash": "9c5638ee262284ee",
+  "date": "2026-11-24"
+ },
+ "courses/excel.html": {
+  "hash": "1535c2ad79003fb0",
+  "date": "2026-11-24"
+ },
+ "courses/feature-engineering.html": {
+  "hash": "5e37ea6319c08272",
+  "date": "2026-11-24"
+ },
+ "courses/generative-ai.html": {
+  "hash": "4e3d4e8b163c2dcc",
+  "date": "2026-11-24"
+ },
+ "courses/llm.html": {
+  "hash": "673968112d851ae5",
+  "date": "2026-11-24"
+ },
+ "courses/machine-learning.html": {
+  "hash": "9f69ebee6d374217",
+  "date": "2026-11-25"
+ },
+ "courses/mlops.html": {
+  "hash": "7ebc5b527c6bd71e",
+  "date": "2026-11-24"
+ },
+ "courses/nlp.html": {
+  "hash": "45b0886b749fc55a",
+  "date": "2026-11-24"
+ },
+ "courses/power-bi.html": {
+  "hash": "e4b1129f16d3fd5b",
+  "date": "2026-11-24"
+ },
+ "courses/python.html": {
+  "hash": "09fd0d171c255b13",
+  "date": "2026-11-24"
+ },
+ "courses/r-programming.html": {
+  "hash": "a34cd58c1d975f14",
+  "date": "2026-11-24"
+ },
+ "courses/reinforcement-learning.html": {
+  "hash": "8d741932692d1384",
+  "date": "2026-11-24"
+ },
+ "courses/sql.html": {
+  "hash": "9cec681c72b12f8e",
+  "date": "2026-11-24"
+ },
+ "courses/tableau.html": {
+  "hash": "3a71567640870432",
+  "date": "2026-11-24"
+ },
+ "ml-internship.html": {
+  "hash": "37d452af0731e178",
+  "date": "2026-11-25"
+ },
+ "privacy.html": {
+  "hash": "f4e1423beeac0e85",
+  "date": "2026-11-25"
+ },
+ "programmes.html": {
+  "hash": "9aadafde89bc7338",
+  "date": "2026-11-26"
+ },
+ "programmes/ai-mastery.html": {
+  "hash": "f0e39a4552cbb94b",
+  "date": "2026-11-26"
+ },
+ "programmes/code-champs.html": {
+  "hash": "6cd7e76adbc42d92",
+  "date": "2026-11-26"
+ },
+ "programmes/exam-coaching.html": {
+  "hash": "400d6f0ba4ccbccd",
+  "date": "2026-11-26"
+ },
+ "programmes/fdp.html": {
+  "hash": "4520daf5dc42395c",
+  "date": "2026-11-26"
+ },
+ "programmes/internship.html": {
+  "hash": "be95d74894ace98e",
+  "date": "2026-11-26"
+ },
+ "programmes/language-communication.html": {
+  "hash": "d2837f23d8696f10",
+  "date": "2026-11-26"
+ },
+ "programmes/microsoft-certification.html": {
+  "hash": "46f422b469ab7a11",
+  "date": "2026-11-26"
+ },
+ "programmes/research-assistance.html": {
+  "hash": "44e4b0a568f5c069",
+  "date": "2026-11-26"
+ },
+ "projects.html": {
+  "hash": "0c23df62ffe7276e",
+  "date": "2026-11-26"
+ },
+ "testimonials.html": {
+  "hash": "cc4ea621b45b75fa",
+  "date": "2026-11-26"
+ },
+ "verify.html": {
+  "hash": "9e4d9da5f868cdd7",
+  "date": "2026-11-26"
+ }
+}
