@@ -15,8 +15,8 @@
 
 {% block head_extra %}
 <style>
-.author-strip{display:flex;align-items:center;gap:1.4rem;padding:1.5rem 1.75rem;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--card);margin-bottom:2.75rem}
-.author-strip .avatar{width:58px;height:58px;font-size:1.3rem}
+.author-strip{display:flex;align-items:center;gap:2rem;padding:1.5rem 1.75rem;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--card);margin-bottom:2.75rem}
+.author-strip .avatar{width:112px;height:112px;font-size:1.3rem;border-width:3px}
 .as-name{font-family:var(--fd);font-size:1.3rem;font-weight:600;color:var(--cream);line-height:1.2}
 .as-role{font-size:.8rem;color:var(--fog);margin-top:.25rem;line-height:1.5}
 .as-tags{margin-top:.7rem}
@@ -45,7 +45,7 @@
 .next-links a:hover{color:var(--champ2)}
 @media (max-width:1024px){.next-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:900px){.featured{grid-template-columns:1fr}.featured .card-img{aspect-ratio:16/9;min-height:0;border-right:0;border-bottom:1px solid var(--border)}.featured .card-body{padding:1.75rem}}
-@media (max-width:640px){.author-strip{flex-direction:column;align-items:flex-start;gap:1rem;padding:1.4rem}.as-link{margin-left:0}.next-grid{grid-template-columns:1fr}.featured .card-foot{flex-wrap:wrap}}
+@media (max-width:640px){.author-strip{flex-direction:column;align-items:flex-start;gap:1.1rem;padding:1.4rem}.author-strip .avatar{width:96px;height:96px}.as-link{margin-left:0}.next-grid{grid-template-columns:1fr}.featured .card-foot{flex-wrap:wrap}}
 </style>
 {% endblock %}
 
@@ -113,7 +113,7 @@
 
     <!-- Author -->
     <div class="author-strip" data-r>
-      {% include "partials/author-avatar.html" %}
+      {% set avatar_px = 112 %}{% include "partials/author-avatar.html" %}
       <div>
         <div class="as-name">{{ site.author.name }}</div>
         <div class="as-role">{{ site.author.role }}</div>
@@ -158,7 +158,7 @@
           <p class="card-text">{{ featured.excerpt }}</p>
           <div class="card-foot">
             <span class="feat-by">
-              {% include "partials/author-avatar.html" %}
+              {% set avatar_px = 36 %}{% include "partials/author-avatar.html" %}
               <span><span class="feat-name">{{ site.author.name }}</span><span class="feat-meta"><time datetime="{{ featured.date }}">{{ featured.dateDisplay }}</time></span></span>
             </span>
             <span class="feat-read">Read the article <span class="arr" aria-hidden="true">&rarr;</span></span>
