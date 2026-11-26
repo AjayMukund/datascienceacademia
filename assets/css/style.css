@@ -739,3 +739,5 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.025em;line-height:1.1}
 .fb-icon{display:inline-flex;font-size:1.6rem}
 .card-foot .ico{font-size:1.05em;margin-right:.15em}
 .step-text{text-wrap:balance}
+/* never leave one word alone on a paragraph's last line (Chrome/Edge/Safari; others ignore it) */
+p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
