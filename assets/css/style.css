@@ -741,3 +741,4 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.025em;line-height:1.1}
 .step-text{text-wrap:balance}
 /* never leave one word alone on a paragraph's last line (Chrome/Edge/Safari; others ignore it) */
 p,li,.faq-a,.callout-text,.insight>span{text-wrap:pretty}
+@media (min-width:769px){.faq-a{text-wrap:balance}}
