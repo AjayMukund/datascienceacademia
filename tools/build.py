@@ -83,7 +83,7 @@ SITE = {
     # Google Business Profile — update the rating/count when they change (as shown on the profile)
     "google_profile": "https://g.page/r/CZYQoW1hzglDEBM",
     "google_rating": "4.9",
-    "google_reviews": 91,
+    "google_reviews": 93,
     "google_tag": "GTM-K7TB3NBD",  # Google tag → GA4 (loads after page load; events in base.html + contact.html)
     "clarity_id": "zi01v79mv9",  # Microsoft Clarity (heatmaps/recordings), loads 1.5 s after page load
     "maps_embed": "https://maps.google.com/maps?q=12.918342794186495,80.15253111461173&z=17&hl=en&output=embed",
